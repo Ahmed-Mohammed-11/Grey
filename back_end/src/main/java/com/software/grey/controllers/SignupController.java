@@ -8,13 +8,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.software.grey.utils.EndPoints.SIGNUP;
+
 @RestController
 public class SignupController {
+
     private final UserService userService;
+
     public SignupController(UserService userService){
         this.userService = userService;
     }
-    @PostMapping("/signup")
+
+    @PostMapping(SIGNUP)
     public ResponseEntity<String> signup(@RequestBody UserDTO userDTO){
         if(userService.userExists(userDTO)){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists");

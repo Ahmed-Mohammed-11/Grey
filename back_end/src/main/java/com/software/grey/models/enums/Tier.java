@@ -1,6 +1,8 @@
 package com.software.grey.models.enums;
 
 public enum Tier {
-    Standard
-
+    Standard,
+    One,
+    Two,
+    Three
 }

@@ -6,19 +6,16 @@ import com.software.grey.models.entities.User;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.mappers.UserMapper;
 import com.software.grey.repositories.UserRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class UserService {
     private UserRepo userRepo;
     private UserMapper userMapper;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    public UserService(UserRepo userRepo, UserMapper userMapper, BCryptPasswordEncoder bCryptPasswordEncoder){
-        this.userRepo = userRepo;
-        this.userMapper = userMapper;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
 
     public void save(UserDTO userDTO){
         userDTO.password = bCryptPasswordEncoder.encode(userDTO.password);
@@ -32,7 +29,6 @@ public class UserService {
     }
 
     public boolean userExists(UserDTO userDTO){
-        return userRepo.findByUsername(userDTO.username) != null || userRepo.findByEmail(userDTO.email) != null;
+        return userRepo.existsByUsername(userDTO.username) || userRepo.existsByEmail(userDTO.email);
     }
-
 }

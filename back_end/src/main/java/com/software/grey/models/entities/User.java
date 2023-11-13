@@ -34,7 +34,6 @@ public class User {
     private Tier tier;
 
     @ManyToOne
-    @JoinColumn(name = "avatar_id", referencedColumnName = "id")
     private Avatar avatar;
 
     private boolean enabled;
