@@ -1,4 +1,4 @@
-package com.software.grey.models;
+package com.software.grey.models.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,5 +16,6 @@ public class Avatar {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
     private String path;
 }
