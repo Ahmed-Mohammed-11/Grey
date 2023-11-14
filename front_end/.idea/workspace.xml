@@ -4,10 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" />
+    <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="Google sign in button added">
+      <change afterPath="$PROJECT_DIR$/src/app/signup/GoogleButton.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/signup/Providers.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/front_end.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/front_end.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/ThemeRegistry.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ThemeRegistry.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/signup/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/page.module.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/signup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -15,23 +24,16 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="DaemonCodeAnalyzer">
-    <disable_hints>
-      <file url="file://$PROJECT_DIR$/src/app/signup/page.tsx" />
-    </disable_hints>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/app/signup/page.tsx" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -47,7 +49,6 @@
       <option value="100" />
       <option value="200" />
     </hideBySeverity>
-    <option name="selectedTabId" value="ProjectErrors" />
     <option name="sortBySeverity" value="false" />
   </component>
   <component name="ProjectColorInfo">{
@@ -61,24 +62,28 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "SG-42-Front-Sign-up-form-design-using-HTML-and-CSS",
-    "ignore.virus.scanning.warn.message": "true",
+    "git-widget-placeholder": "SG-44-Front-Sign-up-Google-OAuth-Integration",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "D:\\Projects\\SWE-Grey\\SWE-Project\\front_end\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "C:\\Users\\Belal\\Desktop\\First Semester\\Software Engineering\\Project\\SWE-Project\\front_end\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Projects\SWE-Grey\SWE-Project\front_end\src\app" />
+      <recent name="C:\Users\Belal\Desktop\First Semester\Software Engineering\Project\SWE-Project\front_end\src\pages" />
+      <recent name="C:\Users\Belal\Desktop\First Semester\Software Engineering\Project\SWE-Project\front_end\src" />
+      <recent name="C:\Users\Belal\Desktop\First Semester\Software Engineering\Project\SWE-Project\front_end\src\api" />
+      <recent name="C:\Users\Belal\Desktop\First Semester\Software Engineering\Project\SWE-Project\front_end\src\app\pages\api\auth" />
+      <recent name="C:\Users\Belal\Desktop\First Semester\Software Engineering\Project\SWE-Project\front_end\src\app\pages\api" />
     </key>
   </component>
   <component name="RunManager">
@@ -101,12 +106,19 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1699940167339</updated>
-      <workItem from="1699940168122" duration="2147000" />
-      <workItem from="1699942357958" duration="1819000" />
+      <workItem from="1699940168122" duration="233000" />
+      <workItem from="1699956751164" duration="329000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Google sign in button added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Google sign in button added" />
   </component>
 </project>

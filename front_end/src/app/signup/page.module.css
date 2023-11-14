@@ -33,13 +33,14 @@
 
 
 .paneltext {
+    font-family: "Montserrat ExtraBold";
     -webkit-text-stroke: 1px #333;
     -moz-text-stroke: 1px #333;
     -o-text-stroke: 1px #333;
     font-variation-settings: "wght" 1000;
     font-size: 100px;
     color: transparent;
-    text-shadow: 4px 4px 0 #9DB2BF;
+    text-shadow: -4px -4px 0 #9DB2BF;
     letter-spacing: 20px;
 }
 
