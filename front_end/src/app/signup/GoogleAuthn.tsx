@@ -31,10 +31,17 @@ fill="#EB4335"
     />
     </svg>
 );
-const GoogleButton = () => {
+const GoogleAuthn = () => {
     const {data : session} = useSession()
 
     if(session && session.user){
+
+        // TODO send info to server
+        let userName = session.user.name
+        let userEmail = session.user.email
+
+
+
         return (
             <Link onClick={() => signOut()}>
                 Signed in {session.user.name}
@@ -48,5 +55,5 @@ const GoogleButton = () => {
     );
 };
 
-export default GoogleButton;
+export default GoogleAuthn;
 

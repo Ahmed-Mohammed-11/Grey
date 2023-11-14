@@ -64,6 +64,12 @@
     margin: 2.2% !important;
 }
 
+.helperText{
+    color: red !important;
+    font-family: "Montserrat" !important;
+    font-size: small !important;
+}
+
 
 .button {
     width: 60%;

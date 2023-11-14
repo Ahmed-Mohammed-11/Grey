@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="Google sign in button added">
-      <change afterPath="$PROJECT_DIR$/src/app/themes/darkTheme.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/themes/lightTheme.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/themes/themeRegistry.tsx" afterDir="false" />
+    <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="Google button enhanced &amp; side button added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/signup/GoogleButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/GoogleButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/signup/GoogleButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/GoogleAuthn.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/signup/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/page.module.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/signup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/page.tsx" afterDir="false" />
     </list>
@@ -117,8 +112,17 @@
       <updated>1699940167339</updated>
       <workItem from="1699940168122" duration="2147000" />
       <workItem from="1699942357958" duration="1819000" />
-      <workItem from="1699957661065" duration="1781000" />
+      <workItem from="1699957661065" duration="4924000" />
     </task>
+    <task id="LOCAL-00001" summary="Google button enhanced &amp; side button added">
+      <option name="closed" value="true" />
+      <created>1699959647319</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1699959647319</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -126,5 +130,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Google button enhanced &amp; side button added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Google button enhanced &amp; side button added" />
   </component>
 </project>
