@@ -92,7 +92,7 @@ class SignupControllerTest {
         mockMvc.perform(post(SIGNUP)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(myUser)))
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isBadRequest());
     }
 
     @Test
