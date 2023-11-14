@@ -1,5 +1,5 @@
 "use client";
-import {Button} from "@mui/material";
+import {Button, Link} from "@mui/material";
 import styles from "@/app/signup/page.module.css";
 import {signIn, signOut, useSession} from "next-auth/react";
 import {Box} from "@mui/system";
@@ -36,13 +36,13 @@ const GoogleButton = () => {
 
     if(session && session.user){
         return (
-            <Box className={[styles.button]} onClick={() => signOut()}>
+            <Link onClick={() => signOut()}>
                 Signed in {session.user.name}
-            </Box>)
+            </Link>)
     }
 
     return (
-        <Button className={[styles.button]} onClick={() => signIn()}>
+        <Button className={[styles.googleButton].join()} onClick={() => signIn()}>
             <GoogleLogo /> Sign in with Google
         </Button>
     );

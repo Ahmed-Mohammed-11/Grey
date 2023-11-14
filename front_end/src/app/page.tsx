@@ -1,12 +1,9 @@
-import Login from "@/app/signup/page";
-import {SessionProvider} from "next-auth/react";
+import SignUp from "@/app/signup/page";
 
 
-function Home({}) {
+function Home() {
     return (
-        // <SessionProvider>
-            <Login/>
-        // </SessionProvider>
+        <SignUp/>
     )
 }
 
