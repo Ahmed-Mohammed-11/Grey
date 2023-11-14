@@ -7,24 +7,25 @@ import ThemeRegistry from "@/app/ThemeRegistry";
 
 function Page() {
     return (
-        <Box className={[styles.container]}>
-            <Box className={[styles.login_form]}>
-                <ThemeRegistry options={{key: 'mui'}}>
-                    <TextField className={[styles.textarea]} label='Username' placeholder='pick a username' required
+        <ThemeRegistry options={{key: 'mui'}}>
+            <Box className={[styles.container].join()}>
+                <Box className={[styles.login_form].join()}>
+                    <TextField className={[styles.textarea].join()} label='Username' placeholder='pick a username' required
                                helperText="min 5 characters and max 15" size="small"></TextField>
-                    <TextField className={[styles.textarea]} label='Email' type="email" placeholder='Email' required
+                    <TextField className={[styles.textarea].join()} label='Email' type="email" placeholder='Email' required
                                size="small"></TextField>
-                    <TextField className={[styles.textarea]} label='Password' type="password"
+                    <TextField className={[styles.textarea].join()} label='Password' type="password"
                                placeholder='pick a password' required
                                size="small" helperText="don't share your password with anyone"></TextField>
-                    <Button className={[styles.button]} variant="contained" size="large"> Create Account </Button>
-                </ThemeRegistry>
+                    <Button className={[styles.button].join()} variant="contained" size="large"> Create Account </Button>
+
+                </Box>
+                <Box className={[styles.panel].join()}>
+                    <Box className={[styles.paneltext].join()}> GR </Box>
+                    <Box className={[styles.paneltext].join()}> &nbsp;&nbsp; EY </Box>
+                </Box>
             </Box>
-            <Box className={[styles.panel]}>
-                <Box className={[styles.paneltext]}> GR </Box>
-                <Box className={[styles.paneltext]}> &nbsp;&nbsp; EY </Box>
-            </Box>
-        </Box>
+        </ThemeRegistry>
     )
 }
 

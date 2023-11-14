@@ -19,7 +19,6 @@ const theme = createTheme({
         },
     },
     palette: {
-        type: 'light',
         primary: {
             light: '#9DB2BF',
             main: '#526D82',
@@ -36,7 +35,6 @@ const theme = createTheme({
         success: {
             light: '#E8F5E9',
             main: '#C8E6C9',
-            main: '#03C988',
             dark: '#388E3C',
             contrastText: '#fff',
         },
@@ -60,7 +58,6 @@ const theme = createTheme({
             primary: '#526D82',
             secondary: '#526D82',
             disabled: '#9DB2BF',
-            hint: '#DDE6ED',
         },
 
 
@@ -99,7 +96,6 @@ const theme = createTheme({
         fontWeightRegular: 400,
         fontWeightMedium: 500,
         fontWeightBold: 700,
-        useNextVariants: true,
         body1: {
             fontWeight: 400,
             fontSize: '1.2rem',
@@ -183,18 +179,15 @@ const theme = createTheme({
         },
     },
     direction: 'ltr',
-    props: {},
     shape: {
         borderRadius: 10,
     },
     transitions: {
         easing: {
-            easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
             easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
+            easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
             easeOut: 'cubic-bezier(0, 0, 0.2, 1)',
-            easeInOutBack: 'cubic-bezier(0.6, -0.28, 0.735, 0.045)',
-            easeInBack: 'cubic-bezier(0.6, 0.04, 0.98, 0.335)',
-            easeOutBack: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+
         },
         duration: {
             shortest: 150,
@@ -228,7 +221,6 @@ const darkTheme = createTheme({
         },
     },
     palette: {
-        type: 'dark',
         primary: {
             light: '#9DB2BF',
             main: '#526D82',
@@ -245,7 +237,6 @@ const darkTheme = createTheme({
         success: {
             light: '#E8F5E9',
             main: '#C8E6C9',
-            main: '#03C988',
             dark: '#388E3C',
             contrastText: '#fff',
         },
@@ -268,7 +259,6 @@ const darkTheme = createTheme({
             primary: '#526D82',
             secondary: '#526D82',
             disabled: '#9DB2BF',
-            hint: '#DDE6ED',
         },
 
         background: {
@@ -283,7 +273,6 @@ const darkTheme = createTheme({
         fontWeightRegular: 400,
         fontWeightMedium: 500,
         fontWeightBold: 700,
-        useNextVariants: true,
         body1: {
             fontWeight: 400,
             fontSize: '1rem',
@@ -367,7 +356,6 @@ const darkTheme = createTheme({
         },
     },
     direction: 'ltr',
-    props: {},
     shape: {
         borderRadius: 10,
     },
@@ -376,9 +364,6 @@ const darkTheme = createTheme({
             easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
             easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
             easeOut: 'cubic-bezier(0, 0, 0.2, 1)',
-            easeInOutBack: 'cubic-bezier(0.6, -0.28, 0.735, 0.045)',
-            easeInBack: 'cubic-bezier(0.6, 0.04, 0.98, 0.335)',
-            easeOutBack: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
         },
         duration: {
             shortest: 150,
@@ -403,7 +388,7 @@ const darkTheme = createTheme({
 
 // This implementation is from emotion-js
 // https://github.com/emotion-js/emotion/issues/2928#issuecomment-1319747902
-export default function ThemeRegistry(props) {
+export default function ThemeRegistry(props:any) {
     const {options, children} = props;
 
     const [{cache, flush}] = React.useState(() => {
