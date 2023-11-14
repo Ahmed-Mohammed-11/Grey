@@ -1,9 +1,8 @@
-package com.software.grey.TestUtil;
+package com.software.grey.TestDataUtil;
 
-import com.software.grey.models.User;
+import com.software.grey.models.entities.Post;
+import com.software.grey.models.entities.User;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Component
 public class ObjectsBuilder {
@@ -33,5 +32,20 @@ public class ObjectsBuilder {
                 .username("Eren eager")
                 .build();
         return userA;
+    }
+    public Post createPostA(User user) {
+        Post post = Post.builder()
+                .text("new post aa")
+                .user(user)
+                .build();
+        return post;
+    }
+
+    public Post createPostB(User user) {
+        Post post = Post.builder()
+                .text("new post bb")
+                .user(user)
+                .build();
+        return post;
     }
 }

@@ -1,7 +1,7 @@
 package com.software.grey.repositories;
 
-import com.software.grey.models.SavedPost;
-import com.software.grey.models.SavedPostId;
+import com.software.grey.models.entities.SavedPost;
+import com.software.grey.models.entities.SavedPostId;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

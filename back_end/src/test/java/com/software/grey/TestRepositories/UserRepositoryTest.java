@@ -1,16 +1,14 @@
 package com.software.grey.TestRepositories;
 
 
-import com.software.grey.TestUtil.ObjectsBuilder;
-import com.software.grey.models.User;
+import com.software.grey.TestDataUtil.ObjectsBuilder;
+import com.software.grey.models.entities.User;
 import com.software.grey.repositories.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
-import org.assertj.core.api.Assertions.*;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;

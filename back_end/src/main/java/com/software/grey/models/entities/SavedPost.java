@@ -1,4 +1,4 @@
-package com.software.grey.models;
+package com.software.grey.models.entities;
 
 
 import jakarta.persistence.*;
@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 @IdClass(SavedPostId.class)
 public class SavedPost {
     @Id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @Id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post post;
 }

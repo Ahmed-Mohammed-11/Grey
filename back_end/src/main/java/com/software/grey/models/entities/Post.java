@@ -1,4 +1,4 @@
-package com.software.grey.models;
+package com.software.grey.models.entities;
 
 
 import jakarta.persistence.*;
@@ -19,7 +19,7 @@ public class Post {
 
     private String text;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 }

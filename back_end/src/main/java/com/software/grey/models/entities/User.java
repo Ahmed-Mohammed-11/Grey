@@ -1,4 +1,4 @@
-package com.software.grey.models;
+package com.software.grey.models.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
