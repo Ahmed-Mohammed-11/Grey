@@ -5,6 +5,7 @@ import {Box} from "@mui/system";
 import ThemeRegistry from "@/app/themes/themeRegistry";
 import GoogleAuthn from "@/app/signup/GoogleAuthn";
 import lightTheme from "@/app/themes/lightTheme";
+import { FaArrowRight  } from "react-icons/fa";
 
 
 function Page() {
@@ -35,7 +36,7 @@ function Page() {
                         type="password"
                         placeholder='pick a password'
                         required
-                        helperText="sharing is caring, except for passwords"
+                        helperText="Make it strong"
                         InputProps={{style: {background: "#FFF",},}}
                         FormHelperTextProps={{className: styles.helperText}}>
                     </TextField>
@@ -60,15 +61,14 @@ function Page() {
 
                 <Box className={[styles.panel].join()}>
                     <Box className={[styles.panelbanner].join()}> GREY </Box>
-                    <text className={[styles.paneltextheader].join()}>Who Are We??</text>
-                    <text className={[styles.paneltext].join()}>We are a social media platform that provides anonymous
+                    <text className={[styles.paneltext].join()}>social media platform that provides anonymous
                         experience for users to freely express there feelings and opinions, participate in events and
                         much more.
                     </text>
                 </Box>
 
                 <Button className={[styles.iconButton].join()} variant="contained" size="large">
-                    Z
+                    <FaArrowRight size={40}/>
                 </Button>
             </Box>
         </ThemeRegistry>
