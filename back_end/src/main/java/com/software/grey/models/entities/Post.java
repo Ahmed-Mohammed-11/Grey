@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.util.UUID;
-
 @Entity
 @Table(name = "post")
 @AllArgsConstructor
@@ -18,6 +16,7 @@ import java.util.UUID;
 @Setter
 public class Post extends BasicEntity{
 
+    @Column(name = "post_Text")
     private String postText;
 
     @ManyToOne

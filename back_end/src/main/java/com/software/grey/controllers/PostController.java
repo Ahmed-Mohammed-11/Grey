@@ -29,7 +29,8 @@ public class PostController {
             description = "Use this end point to enable the user to create new post")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "The post is created successfully"),
-            @ApiResponse(responseCode = "400", description = "The post is not save due to invalid request body")
+            @ApiResponse(responseCode = "400", description = "The post is not save due to invalid request body"),
+            @ApiResponse(responseCode = "401", description = "The user is not authenticated")
     })
     @PostMapping(EndPoints.ADD_POST)
     public ResponseEntity<UUID> addPost(@Valid @RequestBody PostDTO postDTO){

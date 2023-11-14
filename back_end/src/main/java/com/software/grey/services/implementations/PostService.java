@@ -5,6 +5,7 @@ import com.software.grey.models.entities.Post;
 import com.software.grey.models.mappers.PostMapper;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.services.IPostService;
+import com.software.grey.services.UserService;
 import com.software.grey.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,8 @@ public class PostService implements IPostService {
 
     public UUID add(PostDTO postDTO) {
         Post post = postMapper.toPost(postDTO);
-        post.setUser(userService.findById(SecurityUtils.getCurrentUserId()));
+        // TODO: should i check if the user not authenticated?
+        post.setUser(userService.findByUserName (SecurityUtils.getCurrentUserName()));
         postRepository.save(post);
         return post.getId();
     }

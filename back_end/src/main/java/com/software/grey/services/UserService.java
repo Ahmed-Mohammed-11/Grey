@@ -1,9 +1,9 @@
 package com.software.grey.services;
 
+import com.software.grey.models.dtos.UserDTO;
+import com.software.grey.models.entities.User;
 import com.software.grey.models.enums.Role;
 import com.software.grey.models.enums.Tier;
-import com.software.grey.models.entities.User;
-import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.mappers.UserMapper;
 import com.software.grey.repositories.UserRepo;
 import lombok.AllArgsConstructor;
@@ -30,5 +30,9 @@ public class UserService {
 
     public boolean userExists(UserDTO userDTO){
         return userRepo.existsByUsername(userDTO.username) || userRepo.existsByEmail(userDTO.email);
+    }
+
+    public User findByUserName(String userName){
+        return userRepo.findByUsername(userName);
     }
 }

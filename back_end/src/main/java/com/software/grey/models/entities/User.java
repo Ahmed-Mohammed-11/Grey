@@ -3,9 +3,11 @@ package com.software.grey.models.entities;
 import com.software.grey.models.enums.Role;
 import com.software.grey.models.enums.Tier;
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "user")
@@ -13,11 +15,8 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+@SuperBuilder
+public class User extends BasicEntity{
 
     @Column(unique = true)
     private String username;

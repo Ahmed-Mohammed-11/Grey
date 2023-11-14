@@ -14,8 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
 
-import static com.software.grey.utils.EndPoints.SIGNUP;
-import static com.software.grey.utils.EndPoints.TEST;
+import static com.software.grey.utils.EndPoints.*;
 
 @Configuration
 public class SecurityConfig {
@@ -36,6 +35,7 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(auth ->
                     auth
+                            .requestMatchers(HttpMethod.POST, POST).permitAll()
                             .requestMatchers(HttpMethod.POST, SIGNUP).permitAll()
                             .requestMatchers("/").hasAnyRole("USER", "MODERATOR", "ADMIN")
                             .requestMatchers(HttpMethod.GET, TEST).hasRole("ADMIN")
