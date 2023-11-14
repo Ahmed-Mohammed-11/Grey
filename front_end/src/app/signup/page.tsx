@@ -5,10 +5,24 @@ import {Box} from "@mui/system";
 import ThemeRegistry from "@/app/themes/themeRegistry";
 import GoogleAuthn from "@/app/signup/GoogleAuthn";
 import lightTheme from "@/app/themes/lightTheme";
-import { FaArrowRight  } from "react-icons/fa";
+import {FaArrowRight} from "react-icons/fa";
+import {useRef} from "react";
 
 
 function Page() {
+    const usernameRef = useRef()
+    const emailRef = useRef()
+    const passwordRef = useRef()
+
+    const handleSubmit = () => {
+        const formData = {
+            username: usernameRef.current.value,
+            email: emailRef.current.value,
+            password: passwordRef.current.value
+        }
+        sendInfoToServer(formData)
+    }
+
     return (
         <ThemeRegistry options={{key: 'mui'}}>
             <Box className={[styles.container].join()}>
@@ -17,17 +31,20 @@ function Page() {
                         className={styles.textarea}
                         label='Username'
                         placeholder='Pick a username'
+                        inputRef={usernameRef}
                         required
                         helperText="Min 5 characters and max 15"
                         InputProps={{style: {background: "#FFF",},}}
                         FormHelperTextProps={{className: styles.helperText}}>
                     </TextField>
 
-                    <TextField className={[styles.textarea].join()}
-                               label='Email' type="email"
-                               placeholder='Email'
-                               required
-                               InputProps={{style: {background: "#FFF",},}}>
+                    <TextField
+                        className={[styles.textarea].join()}
+                        label='Email' type="email"
+                        placeholder='Email'
+                        inputRef={emailRef}
+                        required
+                        InputProps={{style: {background: "#FFF",},}}>
                     </TextField>
 
                     <TextField
@@ -35,6 +52,7 @@ function Page() {
                         label='Password'
                         type="password"
                         placeholder='pick a password'
+                        inputRef={passwordRef}
                         required
                         helperText="Make it strong"
                         InputProps={{style: {background: "#FFF",},}}
@@ -44,7 +62,8 @@ function Page() {
                     <Button
                         className={[styles.button].join()}
                         variant="contained"
-                        size="large">
+                        size="large"
+                        onClick={handleSubmit}>
                         Create Account
                     </Button>
 
@@ -55,7 +74,7 @@ function Page() {
                         className={[styles.link].join()}
                         href="/login"
                         color="secondary">
-                            Already have an account? Sign In
+                        Already have an account? Sign In
                     </Link>
                 </Box>
 
@@ -68,11 +87,20 @@ function Page() {
                 </Box>
 
                 <Button className={[styles.iconButton].join()} variant="contained" size="large">
-                    <FaArrowRight size={40}/>
+                    <FaArrowRight size={40} style={{strokeWidth: '2', stroke: 'black'}}/>
                 </Button>
             </Box>
         </ThemeRegistry>
     )
+}
+
+function sendInfoToServer(formData: any) {
+    let userDTO : UserDTO = {
+        name: formData.username,
+        email: formData.email,
+        password: formData.password
+    }
+    console.log(userDTO)
 }
 
 export default Page;

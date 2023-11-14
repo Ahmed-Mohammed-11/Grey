@@ -3,6 +3,7 @@ import {Button, Link} from "@mui/material";
 import styles from "@/app/signup/page.module.css";
 import {signIn, signOut, useSession} from "next-auth/react";
 import {Box} from "@mui/system";
+import {useRef} from "react";
 
 const GoogleLogo = (props) => (
     <svg
@@ -33,27 +34,34 @@ fill="#EB4335"
 );
 const GoogleAuthn = () => {
     const {data : session} = useSession()
-
+    let zz = 0
     if(session && session.user){
-
-        // TODO send info to server
-        let userName = session.user.name
-        let userEmail = session.user.email
-
-
-
         return (
             <Link onClick={() => signOut()}>
                 Signed in {session.user.name}
             </Link>)
     }
 
-    return (
-        <Button className={[styles.googleButton].join()} onClick={() => signIn()}>
-            <GoogleLogo /> Sign in with Google
-        </Button>
+    else return (
+            <Button
+                className={[styles.googleButton].join()}
+                onClick={() => {
+                    signIn().then(r => {
+                            sendInfoToServer({username: session?.user?.name, email: session?.user?.email})
+                        }
+                    )}}>
+                <GoogleLogo /> Sign in with Google
+            </Button>
     );
 };
+
+function sendInfoToServer(formData: any) {
+    let userDTO : UserDTO = {
+        name: formData.username,
+        email: formData.email,
+    }
+    console.log(userDTO)
+}
 
 export default GoogleAuthn;
 
