@@ -1,29 +1,24 @@
+import axios from "axios";
+
 const url = 'http://localhost:8080';
 
 class UserController {
-    sendCredentials(credentials : UserDTO) {
+    async sendCredentials(credentials: UserDTO) {
+        try {
+            const endpoint = '/signup';
 
-        const endpoint = url + '/signup';
-        let headers = new Headers();
+            const response = await axios.post(endpoint, credentials);
 
-        headers.append('Content-Type', 'application/json');
-        headers.append('Accept', 'application/json');
-
-        headers.append('Access-Control-Allow-Origin', 'http://127.0.0.1:3000');
-        headers.append('Access-Control-Allow-Methods', 'POST');
-        headers.append('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-        headers.append('Access-Control-Allow-Credentials', 'true');
-
-        fetch(endpoint, {
-            credentials: 'include',
-            method: 'POST',
-            body: JSON.stringify(credentials),
-            headers: headers
-        })
-            .then(response => response.json())
-            .then(json => console.log(json))
-            .catch(error => console.log('Authorization failed : ' + error.message));
+            if (response.status === 200) {
+                console.log('Server response:', response.data);
+            } else {
+                console.error('Server error:', response.statusText);
+            }
+        } catch (error) {
+            console.error('An error occurred:', error.message);
+        }
     }
+
 }
 
 export default new UserController();
