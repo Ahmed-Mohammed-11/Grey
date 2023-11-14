@@ -6,16 +6,12 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    position: fixed;
+    position: absolute;
     border-radius: 40px;
-    width: 80%;
-    height: 90%;
+    width: 80vw;
+    height: 90vh;
     box-shadow: rgba(50, 50, 93, 0.25) 0 2px 5px -1px, rgba(0, 0, 0, 0.3) 0 1px 3px -1px;
     background-color: #DDE6ED;
-    max-width: 1400px;
-    max-height: 1200px;
-    min-width: 300px;
-    min-height: 500px;
 }
 
 .login_form {
@@ -25,10 +21,6 @@
     justify-content: center;
     align-items: center;
     margin: auto;
-    max-width: 600px;
-    max-height: 480px;
-    min-width: 150px;
-    min-height: 500px;
 }
 
 .panel {
@@ -37,24 +29,18 @@
     flex: 60%;
     justify-content: center;
     align-items: center;
-    max-width: 900px;
-    max-height: 720px;
-    min-width: 150px;
-    min-height: 500px;
 }
 
 
-.panelbanner {
+.paneltext {
     -webkit-text-stroke: 1px #333;
     -moz-text-stroke: 1px #333;
     -o-text-stroke: 1px #333;
-    font-weight: 1000;
-    font-family: "Helvetica Neue";
-    font-size: 10rem;
+    font-variation-settings: "wght" 1000;
+    font-size: 100px;
     color: transparent;
     text-shadow: 4px 4px 0 #9DB2BF;
-    letter-spacing: 2rem;
-    height: 20vh;
+    letter-spacing: 20px;
 }
 
 
@@ -76,45 +62,6 @@
 .button:hover {
     box-shadow: none !important;
 }
-
-
-.link{
-    text-decoration: none !important;
-}
-
-.paneltext
-{
-    text-align: center;
-    width: 70%;
-}
-
-.paneltextheader
-{
-    margin-top: 10%;
-}
-
-
-@media (max-width: 768px)
-{
-    .container
-    {
-        justify-content: center;
-        align-items: center;
-    }
-
-    .login_form {
-        display: flex;
-        flex: 100%;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .panel {
-        display: none;
-    }
-}
-
 
 
 

@@ -1,9 +1,9 @@
-import SignUp from "@/app/signup/page";
+import Login from "@/app/signup/page";
 
 
 function Home() {
     return (
-        <SignUp/>
+        <Login/>
     )
 }
 
