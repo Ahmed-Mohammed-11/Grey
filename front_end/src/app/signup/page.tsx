@@ -7,6 +7,7 @@ import GoogleAuthn from "@/app/signup/GoogleAuthn";
 import lightTheme from "@/app/themes/lightTheme";
 import {FaArrowRight} from "react-icons/fa";
 import {useRef} from "react";
+import userController from "@/app/signup/Controllers/userController";
 
 
 function Page() {
@@ -16,9 +17,9 @@ function Page() {
 
     const handleSubmit = () => {
         const formData = {
-            username: usernameRef.current.value,
-            email: emailRef.current.value,
-            password: passwordRef.current.value
+            username: usernameRef.current?.value,
+            email: emailRef.current?.value,
+            password: passwordRef.current?.value
         }
         sendInfoToServer(formData)
     }
@@ -100,7 +101,7 @@ function sendInfoToServer(formData: any) {
         email: formData.email,
         password: formData.password
     }
-    console.log(userDTO)
+    userController.sendCredentials(userDTO).then(r => console.log(r))
 }
 
 export default Page;
