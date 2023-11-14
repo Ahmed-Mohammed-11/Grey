@@ -15,7 +15,6 @@ import java.util.UUID;
 @SuperBuilder
 @Getter
 @Setter
-@ToString
 public class Post {
 
     @Id
@@ -29,7 +28,7 @@ public class Post {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "post_feelings", joinColumns = @JoinColumn(name = "post_id"))
     @Column(name = "feeling")

@@ -1,7 +1,6 @@
 package com.software.grey.controllers;
 
 import com.software.grey.models.dtos.PostDTO;
-import com.software.grey.models.enums.Feeling;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.EndPoints;
 import org.apache.commons.lang3.StringUtils;
