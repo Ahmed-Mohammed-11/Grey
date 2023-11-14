@@ -1,8 +1,8 @@
 'use client';
 import styles from './page.module.css'
-import {Button, TextField} from "@mui/material";
+import {Button, TextField, Link} from "@mui/material";
 import {Box} from "@mui/system";
-import ThemeRegistry from "@/app/ThemeRegistry";
+import ThemeRegistry from "@/app/themes/themeRegistry";
 
 
 function Page() {
@@ -18,11 +18,15 @@ function Page() {
                                placeholder='pick a password' required
                                size="small" helperText="don't share your password with anyone"></TextField>
                     <Button className={[styles.button].join()} variant="contained" size="large"> Create Account </Button>
-
+                    <text className={[styles.text].join()}> OR </text>
+                    <Link className={[styles.link].join()} href="https://google.com/">Continue with Google</Link>
+                    <br></br>
+                    <Link className={[styles.link].join()} href="/login" color="secondary">Already have an account? Sign In</Link>
                 </Box>
                 <Box className={[styles.panel].join()}>
-                    <Box className={[styles.paneltext].join()}> GR </Box>
-                    <Box className={[styles.paneltext].join()}> &nbsp;&nbsp; EY </Box>
+                    <Box className={[styles.panelbanner].join()}> GREY </Box>
+                    <text className={[styles.paneltextheader].join()}>Who Are We??</text>
+                    <text className={[styles.paneltext].join()}>We are a social media platform that provides anonymous experience for users to freely express there feelings and opinions, participate in events and much more.</text>
                 </Box>
             </Box>
         </ThemeRegistry>
