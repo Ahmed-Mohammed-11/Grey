@@ -1,11 +1,12 @@
 package com.software.grey.models.entities;
 
+import com.software.grey.models.enums.Feeling;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "post")
@@ -14,7 +15,12 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Getter
 @Setter
-public class Post extends BasicEntity{
+@ToString
+public class Post {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(name = "post_Text")
     private String postText;
@@ -22,4 +28,10 @@ public class Post extends BasicEntity{
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "post_feelings", joinColumns = @JoinColumn(name = "post_id"))
+    @Column(name = "feeling")
+    private Set<Feeling> postFeelings;
 }

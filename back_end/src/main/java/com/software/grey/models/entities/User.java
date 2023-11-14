@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "user")
 @Getter
@@ -16,7 +18,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class User extends BasicEntity{
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(unique = true)
     private String username;
@@ -36,6 +42,7 @@ public class User extends BasicEntity{
     private Avatar avatar;
 
     private boolean enabled;
+
     private boolean authenticated;
 
 }

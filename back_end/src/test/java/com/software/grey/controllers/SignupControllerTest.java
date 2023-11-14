@@ -1,8 +1,8 @@
 package com.software.grey.controllers;
 
-import com.software.grey.models.enums.Role;
-import com.software.grey.models.entities.User;
 import com.software.grey.models.dtos.UserDTO;
+import com.software.grey.models.entities.User;
+import com.software.grey.models.enums.Role;
 import com.software.grey.repositories.UserRepo;
 import com.software.grey.services.UserService;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 class SignupControllerTest {
     private MockMvc mockMvc;

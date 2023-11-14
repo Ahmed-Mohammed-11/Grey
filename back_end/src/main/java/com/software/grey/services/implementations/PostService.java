@@ -26,7 +26,6 @@ public class PostService implements IPostService {
 
     public UUID add(PostDTO postDTO) {
         Post post = postMapper.toPost(postDTO);
-        // TODO: should i check if the user not authenticated?
         post.setUser(userService.findByUserName (securityUtils.getCurrentUserName()));
         postRepository.save(post);
         return post.getId();

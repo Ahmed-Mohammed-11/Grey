@@ -21,7 +21,7 @@ public class UserService {
         userDTO.password = bCryptPasswordEncoder.encode(userDTO.password);
         User user = User.builder()
                 .role(Role.ROLE_USER)
-                .tier(Tier.Standard)
+                .tier(Tier.STANDARD)
                 .enabled(true)
                 .build();
         user = userMapper.toUser(userDTO, user);

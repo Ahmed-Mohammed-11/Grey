@@ -1,7 +1,8 @@
 package com.software.grey.services;
 
 import com.software.grey.models.dtos.PostDTO;
-import com.software.grey.models.entities.Post;
+import com.software.grey.models.dtos.UserDTO;
+import com.software.grey.models.entities.User;
 import com.software.grey.models.mappers.PostMapper;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.services.implementations.PostService;
@@ -9,49 +10,57 @@ import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.core.context.SecurityContextHolder;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import java.util.Set;
+import java.util.UUID;
+
+import static com.software.grey.models.enums.Feeling.HAPPY;
+import static com.software.grey.models.enums.Feeling.LOVE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
-@ExtendWith(MockitoExtension.class)
+//@ExtendWith(MockitoExtension.class)
 class PostServiceTest {
 
-    @MockBean
+    @Autowired
     private PostRepository postRepository;
 
-    @MockBean
-    private PostMapper postMapper;
+//    @Autowired
+//    private PostMapper postMapper;
 
-    @MockBean
-    private SecurityContextHolder contextHolder;
 
     @MockBean
     private SecurityUtils securityUtils;
 
-    @MockBean
+    @Autowired
     private UserService userService;
 
-    @InjectMocks
+    @Autowired
     private PostService postService;
 
 
     @Test
     void addPostCorrectly() throws Exception {
-        Mockito.when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName");
-        when(postRepository.save(any(Post.class))).thenReturn(new Post());
-        when(postMapper.toPost(any(PostDTO.class))).thenReturn(new Post());
-        when(userService.findByUserName("mockedUserName")).thenReturn(null);
-        postService.add(new PostDTO());
-        verify(postMapper,times(1)).toPost(any(PostDTO.class));
-        verify(postRepository,times(1)).save(any(Post.class));
-        verify(userService,times(1)).findByUserName("mockedUserName");
-        verify(securityUtils,times(1)).getCurrentUserName();
+
+        PostDTO postDTO = PostDTO.builder()
+                .postText("this is a mocked text")
+                .postFeelings(Set.of(LOVE, HAPPY)).build();
+
+        UserDTO userDTO = new UserDTO("mockEmail@gmail.com", "mockedUserName","mockPas");
+
+        userService.save(userDTO);
+
+        when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName");
+
+        UUID postId = postService.add(postDTO);
+
+        assertThat(postId).isNotNull();
+        assertThat(postRepository.existsById(postId)).isTrue();
     }
 
 }
