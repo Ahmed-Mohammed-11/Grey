@@ -5,12 +5,15 @@ import com.software.grey.models.entities.Post;
 import com.software.grey.models.mappers.PostMapper;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.services.implementations.PostService;
+import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -25,17 +28,30 @@ class PostServiceTest {
     @MockBean
     private PostMapper postMapper;
 
+    @MockBean
+    private SecurityContextHolder contextHolder;
+
+    @MockBean
+    private SecurityUtils securityUtils;
+
+    @MockBean
+    private UserService userService;
+
     @InjectMocks
     private PostService postService;
 
 
     @Test
     void addPostCorrectly() throws Exception {
+        Mockito.when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName");
         when(postRepository.save(any(Post.class))).thenReturn(new Post());
         when(postMapper.toPost(any(PostDTO.class))).thenReturn(new Post());
+        when(userService.findByUserName("mockedUserName")).thenReturn(null);
         postService.add(new PostDTO());
         verify(postMapper,times(1)).toPost(any(PostDTO.class));
         verify(postRepository,times(1)).save(any(Post.class));
+        verify(userService,times(1)).findByUserName("mockedUserName");
+        verify(securityUtils,times(1)).getCurrentUserName();
     }
 
 }
