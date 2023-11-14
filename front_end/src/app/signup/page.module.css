@@ -146,6 +146,45 @@
 
 
 
+.link{
+    text-decoration: none !important;
+}
+
+.paneltext
+{
+    text-align: center;
+    width: 70%;
+}
+
+.paneltextheader
+{
+    margin-top: 10%;
+}
+
+
+@media (max-width: 768px)
+{
+    .container
+    {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login_form {
+        display: flex;
+        flex: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .panel {
+        display: none;
+    }
+}
+
+
+
 
 
 
