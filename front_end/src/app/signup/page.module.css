@@ -1,5 +1,4 @@
-.container
-{
+.container {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -10,13 +9,12 @@
     position: absolute;
     border-radius: 40px;
     width: 80vw;
-    height: 90vh ;
+    height: 90vh;
     box-shadow: rgba(50, 50, 93, 0.25) 0 2px 5px -1px, rgba(0, 0, 0, 0.3) 0 1px 3px -1px;
     background-color: #DDE6ED;
 }
 
-.login_form
-{
+.login_form {
     display: flex;
     flex: 40%;
     flex-direction: column;
@@ -25,8 +23,7 @@
     margin: auto;
 }
 
-.panel
-{
+.panel {
     display: flex;
     flex-direction: column;
     flex: 60%;
@@ -35,29 +32,26 @@
 }
 
 
-.paneltext{
-    -webkit-text-stroke:1px #333;
-    -moz-text-stroke:1px #333;
-    -o-text-stroke:1px #333;
+.paneltext {
+    -webkit-text-stroke: 1px #333;
+    -moz-text-stroke: 1px #333;
+    -o-text-stroke: 1px #333;
     font-variation-settings: "wght" 1000;
-    font-size:100px;
-    color:transparent;
+    font-size: 100px;
+    color: transparent;
     text-shadow: 4px 4px 0 #9DB2BF;
     letter-spacing: 20px;
 }
 
 
-.textarea
-{
+.textarea {
     width: 60%;
     height: 100%;
     margin: 2.2% !important;
 }
 
 
-
-.button
-{
+.button {
     width: 60%;
     height: 100%;
     margin: 2.2% !important;
@@ -65,8 +59,7 @@
 }
 
 
-.button:hover
-{
+.button:hover {
     box-shadow: none !important;
 }
 
