@@ -4,12 +4,14 @@ import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import static com.software.grey.utils.EndPoints.SIGNUP;
 
+@CrossOrigin
 @RestController
 public class SignupController {
 

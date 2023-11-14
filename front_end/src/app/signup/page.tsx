@@ -101,7 +101,8 @@ function sendInfoToServer(formData: any) {
         email: formData.email,
         password: formData.password
     }
-    userController.sendCredentials(userDTO).then(r => console.log(r))
+    console.log(userDTO)
+    userController.sendCredentials(userDTO)
 }
 
 export default Page;

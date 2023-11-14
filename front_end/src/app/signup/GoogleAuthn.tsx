@@ -56,11 +56,11 @@ const GoogleAuthn = () => {
 };
 
 function sendInfoToServer(formData: any) {
-    let userDTO: { name: any; email: any } = {
+    let userDTO = {
         name: formData.username,
         email: formData.email,
     }
-    userController.sendCredentials(userDTO).then(r => console.log(r))
+    userController.sendCredentials(userDTO)
 }
 
 export default GoogleAuthn;
