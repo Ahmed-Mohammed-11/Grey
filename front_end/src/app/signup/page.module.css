@@ -31,6 +31,64 @@
     min-height: 500px;
 }
 
+.textarea {
+    width: 60%;
+    height: 100%;
+    margin: 2.2% !important;
+}
+
+.helperText{
+    font-family: "Montserrat" !important;
+    font-size: small !important;
+}
+
+.helperTextInvalid{
+    color: red !important;
+}
+
+
+.button {
+    width: 60%;
+    height: 100%;
+    margin: 2.2% !important;
+    box-shadow: none !important;
+}
+
+.googleButton{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between !important;
+    text-transform: capitalize !important;
+    margin: 2.2% 0 -7% !important;
+    box-shadow: none !important;
+}
+
+.iconButton{
+    position: absolute !important;
+    width: 80px;
+    height: 80px;
+    padding: 3px !important;
+    box-sizing: border-box;
+    left: calc(100% - 40px);
+    top: calc(50% - 40px);
+    border-radius: 50% !important;
+}
+
+.button:hover {
+    box-shadow: none !important;
+}
+
+.googleButton:hover {
+    background: transparent !important;
+}
+
+.link{
+    text-decoration: none !important;
+}
+
+
+
 .panel {
     display: flex;
     flex-direction: column;
@@ -43,39 +101,50 @@
     min-height: 500px;
 }
 
+.panel * {
+    width: 100%;
+    box-sizing: border-box;
+}
 
 .panelbanner {
     -webkit-text-stroke: 1px #333;
     -moz-text-stroke: 1px #333;
     -o-text-stroke: 1px #333;
     font-weight: 1000;
-    font-family: "Helvetica Neue";
+    font-family: "Montserrat ExtraBold", serif;
     font-size: 10rem;
     color: transparent;
-    text-shadow: 4px 4px 0 #9DB2BF;
+    text-shadow: -12px -4px 0 #9DB2BF;
     letter-spacing: 2rem;
-    height: 20vh;
+    padding: 0 0 0 5vh;
 }
 
-
-.textarea {
-    width: 60%;
-    height: 100%;
-    margin: 2.2% !important;
+.paneltext {
+    /*text-align: center;*/
+    padding: 4vh 5vh;
 }
 
+@media (max-width: 768px)
+{
+    .container
+    {
+        justify-content: center;
+        align-items: center;
+    }
 
-.button {
-    width: 60%;
-    height: 100%;
-    margin: 2.2% !important;
-    box-shadow: none !important;
+    .login_form {
+        display: flex;
+        flex: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .panel {
+        display: none;
+    }
 }
 
-
-.button:hover {
-    box-shadow: none !important;
-}
 
 
 .link{
