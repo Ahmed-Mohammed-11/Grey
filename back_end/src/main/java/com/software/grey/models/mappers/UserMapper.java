@@ -8,6 +8,6 @@ import org.mapstruct.*;
 public interface UserMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    User toUser(UserDTO postDTO, @MappingTarget User user);
+    User toUser(UserDTO userDTO, @MappingTarget User user);
 
 }

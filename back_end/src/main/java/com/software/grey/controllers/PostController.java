@@ -25,12 +25,12 @@ public class PostController {
     private PostService postService;
 
     @Operation(
-            summary = "to create a new post",
+            summary = "Create a new post",
             description = "Use this end point to enable the user to create new post")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "The post is created successfully"),
-            @ApiResponse(responseCode = "400", description = "The post is not save due to invalid request body"),
-            @ApiResponse(responseCode = "401", description = "The user is not authenticated")
+            @ApiResponse(responseCode = "201", description = "Post created successfully"),
+            @ApiResponse(responseCode = "400", description = "Post was not save due to invalid request body"),
+            @ApiResponse(responseCode = "401", description = "User is not authenticated")
     })
     @PostMapping(EndPoints.ADD_POST)
     public ResponseEntity<UUID> addPost(@Valid @RequestBody PostDTO postDTO){
