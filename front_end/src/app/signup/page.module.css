@@ -31,33 +31,6 @@
     min-height: 500px;
 }
 
-.panel {
-    display: flex;
-    flex-direction: column;
-    flex: 60%;
-    justify-content: center;
-    align-items: center;
-    max-width: 900px;
-    max-height: 720px;
-    min-width: 150px;
-    min-height: 500px;
-}
-
-
-.panelbanner {
-    -webkit-text-stroke: 1px #333;
-    -moz-text-stroke: 1px #333;
-    -o-text-stroke: 1px #333;
-    font-weight: 1000;
-    font-family: "Helvetica Neue";
-    font-size: 10rem;
-    color: transparent;
-    text-shadow: 4px 4px 0 #9DB2BF;
-    letter-spacing: 2rem;
-    height: 20vh;
-}
-
-
 .textarea {
     width: 60%;
     height: 100%;
@@ -65,9 +38,12 @@
 }
 
 .helperText{
-    color: red !important;
     font-family: "Montserrat" !important;
     font-size: small !important;
+}
+
+.helperTextInvalid{
+    color: red !important;
 }
 
 
@@ -90,9 +66,10 @@
 
 .iconButton{
     position: absolute !important;
-    width: 40px;
-    height: 40px;
-    padding: 40px !important;
+    width: 80px;
+    height: 80px;
+    padding: 3px !important;
+    box-sizing: border-box;
     left: calc(100% - 40px);
     top: calc(50% - 40px);
     border-radius: 50% !important;
@@ -106,22 +83,46 @@
     background: transparent !important;
 }
 
-
 .link{
     text-decoration: none !important;
 }
 
-.paneltext
-{
-    text-align: center;
-    width: 70%;
+
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    flex: 60%;
+    justify-content: center;
+    align-items: center;
+    max-width: 900px;
+    max-height: 720px;
+    min-width: 150px;
+    min-height: 500px;
 }
 
-.paneltextheader
-{
-    margin-top: 10%;
+.panel * {
+    width: 100%;
+    box-sizing: border-box;
 }
 
+.panelbanner {
+    -webkit-text-stroke: 1px #333;
+    -moz-text-stroke: 1px #333;
+    -o-text-stroke: 1px #333;
+    font-weight: 1000;
+    font-family: "Montserrat ExtraBold", serif;
+    font-size: 10rem;
+    color: transparent;
+    text-shadow: -12px -4px 0 #9DB2BF;
+    letter-spacing: 2rem;
+    padding: 0 0 0 5vh;
+}
+
+.paneltext {
+    /*text-align: center;*/
+    padding: 4vh 5vh;
+}
 
 @media (max-width: 768px)
 {
