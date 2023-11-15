@@ -5,6 +5,9 @@ import {signIn, signOut, useSession} from "next-auth/react";
 import {Box} from "@mui/system";
 import {useRef} from "react";
 import userController from "@/app/signup/Controllers/userController";
+import { useState } from 'react';
+import axios from 'axios';
+import {Session} from "next-auth";
 
 const GoogleLogo = (props: any) => (
     <svg
@@ -30,38 +33,116 @@ const GoogleLogo = (props: any) => (
 );
 
 const GoogleAuthn = () => {
-    const {data: session} = useSession();
+    const { data: session, status } = useSession();
+    const [loading, setLoading] = useState(false);
+
+
+    if (status === "loading") {
+        return <p>Loading...</p>;
+    }
 
     if (session && session.user) {
-
         return (
             <Link onClick={() => signOut()}>
                 Signed in {session.user.name}
             </Link>)
 
-    } else return (
+    } else
+        return (
 
-        <Button
-            className={[styles.googleButton].join()}
-            onClick={() => {
-                signIn().then(r => {
-                        sendInfoToServer({username: session?.user?.name, email: session?.user?.email})
-                    }
-                )
-            }}>
-            <GoogleLogo size={10}/> Sign in with Google
-        </Button>
+            <a href={"http://localhost:8080/oauth2/authorization/google"}>
+                <GoogleLogo size={10}/>
+                Sign in with Google
+            </a>
 
     );
+
 };
 
-function sendInfoToServer(formData: any) {
-    let userDTO = {
-        name: formData.username,
-        email: formData.email,
-    }
-    userController.sendCredentials(userDTO)
-}
 
+
+
+// const GoogleAuthn = () => {
+//     const { data: session } = useSession();
+//     const [loading, setLoading] = useState(false);
+//
+//     const handleSignInWithGoogle = async () => {
+//         await signIn('google')
+//     }
+//
+//     const sendInfoToServer = async (userInfo : UserDTO) => {
+//         userController.sendCredentials(userInfo)
+//     };
+//
+//     if (session && session.user) {
+//         return (
+//             <Link onClick={() => signOut()}>
+//                 Signed in {session.user.name}
+//             </Link>)
+//
+//     } else
+//         return (
+//
+//         <Button
+//             className={[styles.googleButton].join()}
+//             onClick={() => {
+//                 handleSignInWithGoogle().then(r => {
+//                     sendInfoToServer(session?.user as UserDTO)
+//                 })
+//             }}
+//             disabled={loading}>
+//                 <GoogleLogo size={10}/>
+//                 {loading ? 'Signing in ...' : 'Continue with Google'}
+//         </Button>
+//
+//     );
+// };
+//
 export default GoogleAuthn;
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
+//
+// const GoogleAuthn = () => {
+//     const {data: session} = useSession();
+//
+//     if (session && session.user) {
+//         return (
+//             <Link onClick={() => signOut()}>
+//                 Signed in {session.user.name}
+//             </Link>)
+//
+//     } else return (
+//
+//         <Button
+//             className={[styles.googleButton].join()}
+//             onClick={() => {
+//                 signIn().then(r => {
+//                         sendInfoToServer({username: session?.user?.name, email: session?.user?.email})
+//                     }
+//                 )
+//             }}>
+//             <GoogleLogo size={10}/> Sign in with Google
+//         </Button>
+//
+//     );
+// };
+//
+// function sendInfoToServer(formData: any) {
+//     let userDTO = {
+//         name: formData.username,
+//         email: formData.email,
+//         password: formData.password
+//     }
+//     userController.sendCredentials(userDTO)
+// }
+//
+// export default GoogleAuthn;
+//

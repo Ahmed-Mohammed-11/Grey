@@ -41,6 +41,7 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.GET, TEST).hasRole("ADMIN")
                             .anyRequest().authenticated()
             )
+            .oauth2Login(Customizer.withDefaults())
             .formLogin(Customizer.withDefaults())
             .logout(LogoutConfigurer::permitAll)
             .formLogin(f ->
