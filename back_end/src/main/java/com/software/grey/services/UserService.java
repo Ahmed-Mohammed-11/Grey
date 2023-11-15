@@ -1,5 +1,6 @@
 package com.software.grey.services;
 
+import com.software.grey.exceptions.UserExistsException;
 import com.software.grey.models.enums.Role;
 import com.software.grey.models.enums.Tier;
 import com.software.grey.models.entities.User;
@@ -17,7 +18,10 @@ public class UserService {
     private UserMapper userMapper;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public void save(UserDTO userDTO){
+    public void save(UserDTO userDTO) {
+        if(userExists(userDTO))
+            throw new UserExistsException("User already exists");
+
         userDTO.password = bCryptPasswordEncoder.encode(userDTO.password);
         User user = User.builder()
                 .role(Role.ROLE_USER)

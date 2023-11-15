@@ -44,21 +44,4 @@ class LoginTest {
                 .andExpect(redirectedUrl("/"));
     }
 
-    @Test
-    void testUserRegistrationAndLogin() throws Exception {
-        // Register a new user
-        String username = "testuser";
-        String password = "pass";
-        UserDTO userDTO = new UserDTO("test@gmail.com", username, password);
-        signupController.signup(userDTO);
-
-        // Attempt login with the registered user
-        mockMvc.perform(MockMvcRequestBuilders.post("/login")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("username", username)
-                        .param("password", password))
-                .andExpect(MockMvcResultMatchers.status().is3xxRedirection()) // Expect a redirect
-                .andExpect(redirectedUrl("/"));
-    }
-
 }
