@@ -23,17 +23,17 @@ class AuthorizationTest {
     @Autowired
     MockMvc mockMvc;
 
-    @WithMockUser(username = "greyadmin", roles = "ROLES_USER")
+    @WithMockUser(username = "greyadmin", roles = "ROLES_ADMIN")
     @Test
     void givenAdminRequestOnTestEndpoint_ShouldSucceed() throws Exception {
-        mockMvc.perform(get(TEST).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get(TEST))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testUnauthorizedAccess() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/test"))
+    void testUnauthorizedAccess() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/"))
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized());
-        // Add more assertions based on the expected behavior for unauthorized access
+
     }
 }
