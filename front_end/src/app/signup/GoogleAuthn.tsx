@@ -5,11 +5,12 @@ import {signIn, signOut, useSession} from "next-auth/react";
 import {Box} from "@mui/system";
 import {useRef} from "react";
 import userController from "@/app/signup/Controllers/userController";
+import ThemeRegistry from "@/app/themes/themeRegistry";
 
 const GoogleLogo = (props: any) => (
     <svg
-        width="24"
-        height="24"
+        width="22"
+        height="22"
         viewBox="0 0 775 794"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -41,16 +42,19 @@ const GoogleAuthn = () => {
 
     } else return (
 
-        <Button
-            className={[styles.googleButton].join()}
-            onClick={() => {
-                signIn().then(r => {
-                        sendInfoToServer({username: session?.user?.name, email: session?.user?.email})
-                    }
-                )
-            }}>
-            <GoogleLogo size={10}/> Sign in with Google
-        </Button>
+        <ThemeRegistry options={{key: 'mui'}}>
+            <Button
+                className={[styles.googleButton].join()}
+                onClick={() => {
+                    signIn().then(r => {
+                            sendInfoToServer({username: session?.user?.name, email: session?.user?.email})
+                        }
+                    )
+                }}>
+                <GoogleLogo size={8}/>
+                <text className={styles.googleButtonText}>Continue with Google</text>
+            </Button>
+        </ThemeRegistry>
 
     );
 };

@@ -34,7 +34,8 @@ function Page() {
                         placeholder='Pick a username'
                         inputRef={usernameRef}
                         required
-                        helperText="Min 5 characters and max 15"
+                        variant="filled"
+                        helperText="Username shall be 5 - 20 characters long"
                         InputProps={{style: {background: "#FFF",},}}
                         FormHelperTextProps={{className: styles.helperText}}>
                     </TextField>
@@ -45,6 +46,7 @@ function Page() {
                         placeholder='Email'
                         inputRef={emailRef}
                         required
+                        variant="filled"
                         InputProps={{style: {background: "#FFF",},}}>
                     </TextField>
 
@@ -55,6 +57,7 @@ function Page() {
                         placeholder='pick a password'
                         inputRef={passwordRef}
                         required
+                        variant="filled"
                         helperText="Make it strong"
                         InputProps={{style: {background: "#FFF",},}}
                         FormHelperTextProps={{className: styles.helperText}}>
@@ -70,26 +73,28 @@ function Page() {
 
                     <text className={[styles.text].join()}> OR</text>
                     <GoogleAuthn/>
-                    <br></br>
-                    <Link
-                        className={[styles.link].join()}
-                        href="/login"
-                        color="secondary">
-                        Already have an account? Sign In
-                    </Link>
+                    {/*<br></br>*/}
+                    {/*<Link*/}
+                    {/*    className={[styles.link].join()}*/}
+                    {/*    href="/login"*/}
+                    {/*    color="secondary">*/}
+                    {/*    Already have an account? Sign In*/}
+                    {/*</Link>*/}
                 </Box>
 
                 <Box className={[styles.panel].join()}>
                     <Box className={[styles.panelbanner].join()}> GREY </Box>
                     <text className={[styles.paneltext].join()}>social media platform that provides anonymous
-                        experience for users to freely express there feelings and opinions, participate in events and
+                        experience for users to freely express their feelings and opinions, participate in events and
                         much more.
                     </text>
                 </Box>
+                <Link href="/login">
+                    <Button className={[styles.iconButton].join()} variant="contained" size="large">
+                        <FaArrowRight size={40} style={{strokeWidth: '2', stroke: 'black'}}/>
 
-                <Button className={[styles.iconButton].join()} variant="contained" size="large">
-                    <FaArrowRight size={40} style={{strokeWidth: '2', stroke: 'black'}}/>
-                </Button>
+                    </Button>
+                </Link>
             </Box>
         </ThemeRegistry>
     )
