@@ -1,7 +1,9 @@
 package com.software.grey.services;
 
-import com.software.grey.models.dtos.SavedPostDto;
+import com.software.grey.SavedPostEnum;
+
+import java.util.UUID;
 
 public interface SavedPostService {
-    Integer saveUnsavePost(SavedPostDto savedPostDto);
+    SavedPostEnum saveUnsavePost(UUID postId);
 }

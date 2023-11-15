@@ -1,30 +1,30 @@
 package com.software.grey.controller;
 
-import com.software.grey.models.dtos.SavedPostDto;
+import com.software.grey.SavedPostEnum;
 import com.software.grey.services.SavedPostService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
-@RequestMapping(path = "/grey")
+@RequestMapping(path = "post")
 @CrossOrigin
 public class Controller {
 
-    SavedPostService savedPostService;
+    private SavedPostService savedPostService;
 
-    @Autowired
     Controller(SavedPostService savedPostService) {
         this.savedPostService = savedPostService;
     }
 
-    @GetMapping(path = "/saveUnsavePost")
-    public ResponseEntity<String> savePost(@RequestBody SavedPostDto savedPostDto) {
-        Integer saved = savedPostService.saveUnsavePost(savedPostDto);
-        if (saved == 1) {
+    @PostMapping(path = "/toggle/save/{id}")
+    public ResponseEntity<String> savePost(@PathVariable("id") UUID postId) {
+        SavedPostEnum saved = savedPostService.saveUnsavePost(postId);
+        if (saved == SavedPostEnum.SAVED) {
             return new ResponseEntity<>("Saved successfully", HttpStatus.OK);
-        } else if (saved == 0) {
+        } else if (saved == SavedPostEnum.REMOVED) {
             return new ResponseEntity<>("Removed successfully", HttpStatus.OK);
         }
         return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);

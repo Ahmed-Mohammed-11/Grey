@@ -4,6 +4,8 @@ package com.software.grey.models.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 
 @Data
 @NoArgsConstructor
@@ -14,8 +16,8 @@ import lombok.*;
 public class Post {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String text;
 

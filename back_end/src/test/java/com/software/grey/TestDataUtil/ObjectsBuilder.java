@@ -8,44 +8,32 @@ import org.springframework.stereotype.Component;
 public class ObjectsBuilder {
 
     public User createUserA() {
-        User userA = User.builder()
+        return User.builder()
                 .email("abdulrahman@gmail.com")
                 .password("sha256jj")
                 .username("abdulrahman")
                 .build();
-        return userA;
     }
 
     public User createUserB() {
-        User userA = User.builder()
+        return User.builder()
                 .email("h@gmail.com")
                 .password("xxxxxx")
                 .username("7a7a")
                 .build();
-        return userA;
     }
 
-    public User createUserC() {
-        User userA = User.builder()
-                .email("hamada@gmail.com")
-                .password("Manga")
-                .username("Eren eager")
-                .build();
-        return userA;
-    }
     public Post createPostA(User user) {
-        Post post = Post.builder()
+        return Post.builder()
                 .text("new post aa")
                 .user(user)
                 .build();
-        return post;
     }
 
     public Post createPostB(User user) {
-        Post post = Post.builder()
+        return Post.builder()
                 .text("new post bb")
                 .user(user)
                 .build();
-        return post;
     }
 }
