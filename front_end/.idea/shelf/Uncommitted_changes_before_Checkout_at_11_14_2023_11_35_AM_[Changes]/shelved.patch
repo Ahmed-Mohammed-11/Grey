@@ -1,0 +1,19 @@
+Index: src/app/signup/page.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>'use client';\r\nimport styles from './page.module.css'\r\nimport {Button, TextField, Link} from \"@mui/material\";\r\nimport {Box} from \"@mui/system\";\r\nimport ThemeRegistry from \"@/app/themes/themeRegistry\";\r\n\r\n\r\nfunction Page() {\r\n    return (\r\n        <ThemeRegistry options={{key: 'mui'}}>\r\n            <Box className={[styles.container].join()}>\r\n                <Box className={[styles.login_form].join()}>\r\n                    <TextField className={[styles.textarea].join()} label='Username' placeholder='pick a username' required\r\n                               helperText=\"min 5 characters and max 15\" size=\"small\"></TextField>\r\n                    <TextField className={[styles.textarea].join()} label='Email' type=\"email\" placeholder='Email' required\r\n                               size=\"small\"></TextField>\r\n                    <TextField className={[styles.textarea].join()} label='Password' type=\"password\"\r\n                               placeholder='pick a password' required\r\n                               size=\"small\" helperText=\"don't share your password with anyone\"></TextField>\r\n                    <Button className={[styles.button].join()} variant=\"contained\" size=\"large\"> Create Account </Button>\r\n                    <text className={[styles.text].join()}> OR </text>\r\n                    <Link className={[styles.link].join()} href=\"https://google.com/\">Continue with Google</Link>\r\n                    <br></br>\r\n                    <Link className={[styles.link].join()} href=\"/login\" color=\"secondary\">Already have an account? Sign In</Link>\r\n                </Box>\r\n                <Box className={[styles.panel].join()}>\r\n                    <Box className={[styles.panelbanner].join()}> GREY </Box>\r\n                    <text className={[styles.paneltextheader].join()}>Who Are We??</text>\r\n                    <text className={[styles.paneltext].join()}>We are a social media platform that provides anonymous experience for users to freely express there feelings and opinions, participate in events and much more.</text>\r\n                </Box>\r\n            </Box>\r\n        </ThemeRegistry>\r\n    )\r\n}\r\n\r\nexport default Page;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/signup/page.tsx b/src/app/signup/page.tsx
+--- a/src/app/signup/page.tsx	(revision c4787367091b17febd80e9ab671ee2ce8c7559ff)
++++ b/src/app/signup/page.tsx	(date 1699954491486)
+@@ -2,7 +2,7 @@
+ import styles from './page.module.css'
+ import {Button, TextField, Link} from "@mui/material";
+ import {Box} from "@mui/system";
+-import ThemeRegistry from "@/app/themes/themeRegistry";
++import ThemeRegistry from "@/app/themes/ThemeRegistry";
+ 
+ 
+ function Page() {

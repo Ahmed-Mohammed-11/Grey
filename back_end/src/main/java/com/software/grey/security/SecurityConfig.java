@@ -47,7 +47,9 @@ public class SecurityConfig {
                     f.defaultSuccessUrl("/")
             )
             .httpBasic(Customizer.withDefaults())
-            .csrf(AbstractHttpConfigurer::disable);
+            .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.disable());
+
 
         return http.build();
     }

@@ -4,11 +4,35 @@ import {Button, TextField, Link, IconButton, FormControl} from "@mui/material";
 import {Box} from "@mui/system";
 import ThemeRegistry from "@/app/themes/themeRegistry";
 import GoogleAuthn from "@/app/signup/GoogleAuthn";
+import {useState} from "react";
+import axios from "axios";
 import lightTheme from "@/app/themes/lightTheme";
-import { FaArrowRight  } from "react-icons/fa";
+// import { FaArrowRight  } from "react-icons/fa";
+
 
 
 function Page() {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [responseStatusCode, setResponseStatusCode] = useState(0);
+    const [responseMessage, setResponseMessage] = useState('');
+
+    const userDetails = {username, password, email};
+    const handleCreateAccount = () => {
+        console.log(userDetails);
+        fetch('http://localhost:8080/signup', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(userDetails)
+        }).then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
+
     return (
         <ThemeRegistry options={{key: 'mui'}}>
             <Box className={[styles.container].join()}>
@@ -19,15 +43,14 @@ function Page() {
                         placeholder='Pick a username'
                         required
                         helperText="Min 5 characters and max 15"
-                        InputProps={{style: {background: "#FFF",},}}
-                        FormHelperTextProps={{className: styles.helperText}}>
+                        onChange={(e) => setUsername(e.target.value)}>
                     </TextField>
 
                     <TextField className={[styles.textarea].join()}
                                label='Email' type="email"
                                placeholder='Email'
                                required
-                               InputProps={{style: {background: "#FFF",},}}>
+                               onChange={(e) => setEmail(e.target.value)}>
                     </TextField>
 
                     <TextField
@@ -37,19 +60,19 @@ function Page() {
                         placeholder='pick a password'
                         required
                         helperText="Make it strong"
-                        InputProps={{style: {background: "#FFF",},}}
-                        FormHelperTextProps={{className: styles.helperText}}>
+                        onChange={(e) => setPassword(e.target.value)}>
                     </TextField>
 
                     <Button
                         className={[styles.button].join()}
                         variant="contained"
-                        size="large">
+                        size="large"
+                        onClick={() => {handleCreateAccount()}}>
                         Create Account
                     </Button>
 
                     <text className={[styles.text].join()}> OR</text>
-                    <GoogleAuthn/>
+                    <GoogleAuthn />
                     <br></br>
                     <Link
                         className={[styles.link].join()}
@@ -67,9 +90,9 @@ function Page() {
                     </text>
                 </Box>
 
-                <Button className={[styles.iconButton].join()} variant="contained" size="large">
-                    <FaArrowRight size={40}/>
-                </Button>
+                {/*<Button className={[styles.iconButton].join()} variant="contained" size="large">*/}
+                {/*    <FaArrowRight size={40}/>*/}
+                {/*</Button>*/}
             </Box>
         </ThemeRegistry>
     )

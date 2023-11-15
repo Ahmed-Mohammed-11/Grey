@@ -1,0 +1,128 @@
+Index: src/app/signup/page.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>'use client';\r\nimport styles from './page.module.css'\r\nimport {Button, TextField, Link} from \"@mui/material\";\r\nimport {Box} from \"@mui/system\";\r\nimport ThemeRegistry from \"@/app/themes/themeRegistry\";\r\n\r\n\r\nfunction Page() {\r\n    return (\r\n        <ThemeRegistry options={{key: 'mui'}}>\r\n            <Box className={[styles.container].join()}>\r\n                <Box className={[styles.login_form].join()}>\r\n                    <TextField className={[styles.textarea].join()} label='Username' placeholder='pick a username' required\r\n                               helperText=\"min 5 characters and max 15\" size=\"small\"></TextField>\r\n                    <TextField className={[styles.textarea].join()} label='Email' type=\"email\" placeholder='Email' required\r\n                               size=\"small\"></TextField>\r\n                    <TextField className={[styles.textarea].join()} label='Password' type=\"password\"\r\n                               placeholder='pick a password' required\r\n                               size=\"small\" helperText=\"don't share your password with anyone\"></TextField>\r\n                    <Button className={[styles.button].join()} variant=\"contained\" size=\"large\"> Create Account </Button>\r\n                    <text className={[styles.text].join()}> OR </text>\r\n                    <Link className={[styles.link].join()} href=\"https://google.com/\">Continue with Google</Link>\r\n                    <br></br>\r\n                    <Link className={[styles.link].join()} href=\"/login\" color=\"secondary\">Already have an account? Sign In</Link>\r\n                </Box>\r\n                <Box className={[styles.panel].join()}>\r\n                    <Box className={[styles.panelbanner].join()}> GREY </Box>\r\n                    <text className={[styles.paneltextheader].join()}>Who Are We??</text>\r\n                    <text className={[styles.paneltext].join()}>We are a social media platform that provides anonymous experience for users to freely express there feelings and opinions, participate in events and much more.</text>\r\n                </Box>\r\n            </Box>\r\n        </ThemeRegistry>\r\n    )\r\n}\r\n\r\nexport default Page;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/signup/page.tsx b/src/app/signup/page.tsx
+--- a/src/app/signup/page.tsx	
++++ b/src/app/signup/page.tsx	
+@@ -13,7 +13,7 @@
+                     <TextField className={[styles.textarea].join()} label='Username' placeholder='pick a username' required
+                                helperText="min 5 characters and max 15" size="small"></TextField>
+                     <TextField className={[styles.textarea].join()} label='Email' type="email" placeholder='Email' required
+-                               size="small"></TextField>
++                               size="small" ></TextField>
+                     <TextField className={[styles.textarea].join()} label='Password' type="password"
+                                placeholder='pick a password' required
+                                size="small" helperText="don't share your password with anyone"></TextField>
+Index: src/app/signup/page.module.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>.container {\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: center;\r\n    align-items: center;\r\n    top: 50%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\r\n    position: fixed;\r\n    border-radius: 40px;\r\n    width: 80%;\r\n    height: 90%;\r\n    box-shadow: rgba(50, 50, 93, 0.25) 0 2px 5px -1px, rgba(0, 0, 0, 0.3) 0 1px 3px -1px;\r\n    background-color: #DDE6ED;\r\n    max-width: 1400px;\r\n    max-height: 1200px;\r\n    min-width: 300px;\r\n    min-height: 500px;\r\n}\r\n\r\n.login_form {\r\n    display: flex;\r\n    flex: 40%;\r\n    flex-direction: column;\r\n    justify-content: center;\r\n    align-items: center;\r\n    margin: auto;\r\n    max-width: 600px;\r\n    max-height: 480px;\r\n    min-width: 150px;\r\n    min-height: 500px;\r\n}\r\n\r\n.panel {\r\n    display: flex;\r\n    flex-direction: column;\r\n    flex: 60%;\r\n    justify-content: center;\r\n    align-items: center;\r\n    max-width: 900px;\r\n    max-height: 720px;\r\n    min-width: 150px;\r\n    min-height: 500px;\r\n}\r\n\r\n\r\n.panelbanner {\r\n    -webkit-text-stroke: 1px #333;\r\n    -moz-text-stroke: 1px #333;\r\n    -o-text-stroke: 1px #333;\r\n    font-weight: 1000;\r\n    font-family: \"Helvetica Neue\";\r\n    font-size: 10rem;\r\n    color: transparent;\r\n    text-shadow: 4px 4px 0 #9DB2BF;\r\n    letter-spacing: 2rem;\r\n    height: 20vh;\r\n}\r\n\r\n\r\n.textarea {\r\n    width: 60%;\r\n    height: 100%;\r\n    margin: 2.2% !important;\r\n}\r\n\r\n\r\n.button {\r\n    width: 60%;\r\n    height: 100%;\r\n    margin: 2.2% !important;\r\n    box-shadow: none !important;\r\n}\r\n\r\n\r\n.button:hover {\r\n    box-shadow: none !important;\r\n}\r\n\r\n\r\n.link{\r\n    text-decoration: none !important;\r\n}\r\n\r\n.paneltext\r\n{\r\n    text-align: center;\r\n    width: 70%;\r\n}\r\n\r\n.paneltextheader\r\n{\r\n    margin-top: 10%;\r\n}\r\n\r\n\r\n@media (max-width: 768px)\r\n{\r\n    .container\r\n    {\r\n        justify-content: center;\r\n        align-items: center;\r\n    }\r\n\r\n    .login_form {\r\n        display: flex;\r\n        flex: 100%;\r\n        flex-direction: column;\r\n        justify-content: center;\r\n        align-items: center;\r\n    }\r\n\r\n    .panel {\r\n        display: none;\r\n    }\r\n}\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/signup/page.module.css b/src/app/signup/page.module.css
+--- a/src/app/signup/page.module.css	
++++ b/src/app/signup/page.module.css	
+@@ -84,7 +84,7 @@
+ 
+ .paneltext
+ {
+-    text-align: center;
++    /*text-align: center;*/
+     width: 70%;
+ }
+ 
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"f049c4c5-4e42-40af-95ac-c71fd7a6a4ac\" name=\"Changes\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/.eslintrc.json\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/ThemeRegistry.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/ThemeRegistry.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/signup/page.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/signup/page.tsx\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"DaemonCodeAnalyzer\">\r\n    <disable_hints>\r\n      <file url=\"file://$PROJECT_DIR$/src/app/signup/page.tsx\" />\r\n    </disable_hints>\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"JavaScript File\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$/..\" />\r\n  </component>\r\n  <component name=\"HighlightingSettingsPerFile\">\r\n    <setting file=\"file://$PROJECT_DIR$/src/app/signup/page.tsx\" root0=\"SKIP_INSPECTION\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProblemsViewState\">\r\n    <hideBySeverity>\r\n      <option value=\"11\" />\r\n      <option value=\"12\" />\r\n      <option value=\"13\" />\r\n      <option value=\"14\" />\r\n      <option value=\"15\" />\r\n      <option value=\"16\" />\r\n      <option value=\"100\" />\r\n      <option value=\"200\" />\r\n    </hideBySeverity>\r\n    <option name=\"selectedTabId\" value=\"ProjectErrors\" />\r\n    <option name=\"sortBySeverity\" value=\"false\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2Y9aHTjHe9A24X1QS3X4VZHrB5L\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n    <option name=\"showMembers\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"WebServerToolWindowFactoryState\": \"false\",\r\n    \"git-widget-placeholder\": \"SG-42-Front-Sign-up-form-design-using-HTML-and-CSS\",\r\n    \"ignore.virus.scanning.warn.message\": \"true\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"settings.editor.selected.configurable\": \"preferences.pluginManager\",\r\n    \"ts.external.directory.path\": \"D:\\\\Projects\\\\SWE-Grey\\\\SWE-Project\\\\front_end\\\\node_modules\\\\typescript\\\\lib\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\Projects\\SWE-Grey\\SWE-Project\\front_end\\src\\app\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"grey\" type=\"js.build_tools.npm\">\r\n      <package-json value=\"$PROJECT_DIR$/package.json\" />\r\n      <command value=\"run\" />\r\n      <scripts>\r\n        <script value=\"dev\" />\r\n      </scripts>\r\n      <node-interpreter value=\"project\" />\r\n      <envs />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"f049c4c5-4e42-40af-95ac-c71fd7a6a4ac\" name=\"Changes\" comment=\"\" />\r\n      <created>1699940167339</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1699940167339</updated>\r\n      <workItem from=\"1699940168122\" duration=\"2147000\" />\r\n      <workItem from=\"1699942357958\" duration=\"1819000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -5,9 +5,8 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="">
+-      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/ThemeRegistry.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ThemeRegistry.tsx" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/app/signup/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/page.module.css" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/app/signup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/page.tsx" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -28,8 +27,42 @@
+     </option>
+   </component>
+   <component name="Git.Settings">
++    <option name="RECENT_BRANCH_BY_REPOSITORY">
++      <map>
++        <entry key="$PROJECT_DIR$/.." value="SG-42-Front-Sign-up-form-design-using-HTML-and-CSS" />
++      </map>
++    </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+   </component>
++  <component name="GitToolBoxStore">
++    <option name="recentBranches">
++      <RecentBranches>
++        <option name="branchesForRepo">
++          <list>
++            <RecentBranchesForRepo>
++              <option name="branches">
++                <list>
++                  <RecentBranch>
++                    <option name="branchName" value="SG-21-Sign-Up" />
++                    <option name="lastUsedInstant" value="1699954567" />
++                  </RecentBranch>
++                  <RecentBranch>
++                    <option name="branchName" value="SG-42-Front-Sign-up-form-design-using-HTML-and-CSS" />
++                    <option name="lastUsedInstant" value="1699954411" />
++                  </RecentBranch>
++                  <RecentBranch>
++                    <option name="branchName" value="main" />
++                    <option name="lastUsedInstant" value="1699954410" />
++                  </RecentBranch>
++                </list>
++              </option>
++              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$/.." />
++            </RecentBranchesForRepo>
++          </list>
++        </option>
++      </RecentBranches>
++    </option>
++  </component>
+   <component name="HighlightingSettingsPerFile">
+     <setting file="file://$PROJECT_DIR$/src/app/signup/page.tsx" root0="SKIP_INSPECTION" />
+   </component>
+@@ -64,7 +97,7 @@
+     "RunOnceActivity.OpenProjectViewOnStart": "true",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+     "WebServerToolWindowFactoryState": "false",
+-    "git-widget-placeholder": "SG-42-Front-Sign-up-form-design-using-HTML-and-CSS",
++    "git-widget-placeholder": "SG-21-Sign-Up",
+     "ignore.virus.scanning.warn.message": "true",
+     "node.js.detected.package.eslint": "true",
+     "node.js.detected.package.tslint": "true",
+@@ -109,4 +142,15 @@
+   <component name="TypeScriptGeneratedFilesManager">
+     <option name="version" value="3" />
+   </component>
++  <component name="Vcs.Log.Tabs.Properties">
++    <option name="TAB_STATES">
++      <map>
++        <entry key="MAIN">
++          <value>
++            <State />
++          </value>
++        </entry>
++      </map>
++    </option>
++  </component>
+ </project>
+\ No newline at end of file

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static com.software.grey.utils.EndPoints.SIGNUP;
 
+
 @RestController
 public class SignupController {
 

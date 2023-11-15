@@ -37,16 +37,6 @@
     margin: 2.2% !important;
 }
 
-.helperText{
-    font-family: "Montserrat" !important;
-    font-size: small !important;
-}
-
-.helperTextInvalid{
-    color: red !important;
-}
-
-
 .button {
     width: 60%;
     height: 100%;
@@ -55,27 +45,12 @@
 }
 
 .googleButton{
-    width: 50%;
+    width: 60%;
     height: 100%;
     display: flex;
-    justify-content: space-between !important;
+    justify-content: center !important;
     text-transform: capitalize !important;
-    margin: 2.2% 0 -7% !important;
-    box-shadow: none !important;
-}
-
-.iconButton{
-    position: absolute !important;
-    width: 80px;
-    height: 80px;
-    padding: 3px !important;
-    box-sizing: border-box;
-    left: calc(100% - 40px);
-    top: calc(50% - 40px);
-    border-radius: 50% !important;
-}
-
-.button:hover {
+    margin: 2.2% !important;
     box-shadow: none !important;
 }
 
@@ -83,10 +58,25 @@
     background: transparent !important;
 }
 
+/*.iconButton{*/
+/*    position: absolute !important;*/
+/*    width: 80px;*/
+/*    height: 80px;*/
+/*    padding: 3px !important;*/
+/*    box-sizing: border-box;*/
+/*    left: calc(100% - 40px);*/
+/*    top: calc(50% - 40px);*/
+/*    border-radius: 50% !important;*/
+/*}*/
+
+.button:hover {
+    box-shadow: none !important;
+}
+
+
 .link{
     text-decoration: none !important;
 }
-
 
 
 .panel {
@@ -102,7 +92,6 @@
 }
 
 .panel * {
-    width: 100%;
     box-sizing: border-box;
 }
 
@@ -111,17 +100,15 @@
     -moz-text-stroke: 1px #333;
     -o-text-stroke: 1px #333;
     font-weight: 1000;
-    font-family: "Montserrat ExtraBold", serif;
+    font-family: "Arial", serif;
     font-size: 10rem;
     color: transparent;
-    text-shadow: -12px -4px 0 #9DB2BF;
+    text-shadow: -4px 4px 0 #9DB2BF;
     letter-spacing: 2rem;
-    padding: 0 0 0 5vh;
 }
 
 .paneltext {
-    /*text-align: center;*/
-    padding: 4vh 5vh;
+    padding: 3vh 5vh;
 }
 
 @media (max-width: 768px)
@@ -144,7 +131,6 @@
         display: none;
     }
 }
-
 
 
 .link{

@@ -3,8 +3,9 @@ import {Button, Link} from "@mui/material";
 import styles from "@/app/signup/page.module.css";
 import {signIn, signOut, useSession} from "next-auth/react";
 import {Box} from "@mui/system";
+import classNames from "classnames";
 
-const GoogleLogo = (props) => (
+const GoogleLogo = (props:any) => (
     <svg
         width="24"
 height="24"
@@ -47,9 +48,10 @@ const GoogleAuthn = () => {
                 Signed in {session.user.name}
             </Link>)
     }
-
+    let buttonClasses = classNames(styles.test, styles.googleButton, styles.button);
     return (
-        <Button className={[styles.googleButton].join()} onClick={() => signIn()}>
+
+        <Button className={buttonClasses} onClick={() => signIn()}>
             <GoogleLogo /> Sign in with Google
         </Button>
     );
