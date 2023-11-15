@@ -97,7 +97,7 @@ function Page() {
 
 function sendInfoToServer(formData: any) {
     let userDTO : UserDTO = {
-        name: formData.username,
+        username: formData.username,
         email: formData.email,
         password: formData.password
     }
