@@ -21,7 +21,7 @@ public class Controller {
 
     @PostMapping(path = "/toggle/save/{id}")
     public ResponseEntity<String> savePost(@PathVariable("id") UUID postId) {
-        SavedPostEnum saved = savedPostService.saveUnsavePost(postId);
+        SavedPostEnum saved = savedPostService.toggleSavedPost(postId);
         if (saved == SavedPostEnum.SAVED) {
             return new ResponseEntity<>("Saved successfully", HttpStatus.OK);
         } else if (saved == SavedPostEnum.REMOVED) {

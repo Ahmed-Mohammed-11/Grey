@@ -54,7 +54,7 @@ class TestSavedPostService {
         postRepository.save(postA);
         postRepository.save(postB);
 
-        SavedPostEnum savedPostEnum = savedPostService.saveUnsavePost(postB.getId());
+        SavedPostEnum savedPostEnum = savedPostService.toggleSavedPost(postB.getId());
         assertThat(savedPostEnum).isEqualTo(SavedPostEnum.SAVED);
 
         // get all saved posts
@@ -92,7 +92,7 @@ class TestSavedPostService {
         postRepository.save(postB);
 
         // save post
-        SavedPostEnum savedPostEnum = savedPostService.saveUnsavePost(postB.getId());
+        SavedPostEnum savedPostEnum = savedPostService.toggleSavedPost(postB.getId());
         assertThat(savedPostEnum).isEqualTo(SavedPostEnum.SAVED);
 
         // assert that the post is saved
@@ -100,7 +100,7 @@ class TestSavedPostService {
         assertThat(savedPost).hasSize(1);
 
         // un-save the post
-        savedPostEnum = savedPostService.saveUnsavePost(postB.getId());
+        savedPostEnum = savedPostService.toggleSavedPost(postB.getId());
         assertThat(savedPostEnum).isEqualTo(SavedPostEnum.REMOVED);
 
         savedPost = savedPostRepository.findAll();
@@ -125,7 +125,7 @@ class TestSavedPostService {
 
         Post post = objectsBuilder.createPostA(b);
 
-        SavedPostEnum savedPostEnum = savedPostService.saveUnsavePost(post.getId());
+        SavedPostEnum savedPostEnum = savedPostService.toggleSavedPost(post.getId());
         assertThat(savedPostEnum).isEqualTo(SavedPostEnum.NOT_FOUND);
     }
 
@@ -135,7 +135,7 @@ class TestSavedPostService {
 
         Post post = objectsBuilder.createPostA(b);
 
-        SavedPostEnum savedPostEnum = savedPostService.saveUnsavePost(post.getId());
+        SavedPostEnum savedPostEnum = savedPostService.toggleSavedPost(post.getId());
         assertThat(savedPostEnum).isEqualTo(SavedPostEnum.NOT_FOUND);
     }
 }

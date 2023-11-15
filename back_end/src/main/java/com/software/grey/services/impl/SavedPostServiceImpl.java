@@ -25,14 +25,14 @@ public class SavedPostServiceImpl implements SavedPostService {
     private PostRepository postRepository;
 
     @Override
-    public SavedPostEnum saveUnsavePost(UUID postId) {
+    public SavedPostEnum toggleSavedPost(UUID postId) {
         User user = getUser();
         if (postId == null || user == null) {
             return SavedPostEnum.NOT_FOUND;
         }
         Optional<Post> post = postRepository.findById(postId);
 
-        if (post.isPresent()) {
+        if (post.isPresent() && userIsNotThePostAuthor(user, post.get())) {
             // create saved post ID
             SavedPostId savedPostId = new SavedPostId(user, post.get());
 
@@ -48,7 +48,11 @@ public class SavedPostServiceImpl implements SavedPostService {
         return SavedPostEnum.NOT_FOUND;
     }
 
-    User getUser() {
+    private boolean userIsNotThePostAuthor(User user, Post post) {
+        return user.getId() != post.getUser().getId();
+    }
+
+    private User getUser() {
         Iterable<User> users = userRepository.findAll();
         if (users.iterator().hasNext()) {
             return users.iterator().next();
