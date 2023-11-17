@@ -37,15 +37,6 @@
     margin: 2.2% !important;
 }
 
-.helperText{
-    font-family: "Montserrat" !important;
-    font-size: small !important;
-}
-
-.helperTextInvalid{
-    color: red !important;
-}
-
 
 .button {
     width: 60%;
@@ -55,13 +46,18 @@
 }
 
 .googleButton{
-    width: 50%;
+    width: 70%;
     height: 100%;
     display: flex;
-    justify-content: space-between !important;
+    justify-content: center !important;
     text-transform: capitalize !important;
-    margin: 2.2% 0 -7% !important;
+    margin: 2.2% !important;
     box-shadow: none !important;
+}
+
+.googleButtonText{
+    margin-left: 2% !important;
+    font-size: 1.4rem !important;
 }
 
 .iconButton{
@@ -88,7 +84,6 @@
 }
 
 
-
 .panel {
     display: flex;
     flex-direction: column;
@@ -111,17 +106,28 @@
     -moz-text-stroke: 1px #333;
     -o-text-stroke: 1px #333;
     font-weight: 1000;
-    font-family: "Montserrat ExtraBold", serif;
-    font-size: 10rem;
+    font-family: 'Arial', sans-serif;
+    align-content: center;
+    text-align: center;
+    font-size: 12rem;
     color: transparent;
-    text-shadow: -12px -4px 0 #9DB2BF;
+    text-shadow: -4px 4px 0 #9DB2BF;
     letter-spacing: 2rem;
-    padding: 0 0 0 5vh;
 }
 
-.paneltext {
-    /*text-align: center;*/
-    padding: 4vh 5vh;
+.link{
+    text-decoration: none !important;
+}
+
+.paneltext
+{
+    text-align: center;
+    width: 70%;
+}
+
+.paneltextheader
+{
+    margin-top: 10%;
 }
 
 @media (max-width: 768px)
@@ -145,22 +151,6 @@
     }
 }
 
-
-
-.link{
-    text-decoration: none !important;
-}
-
-.paneltext
-{
-    text-align: center;
-    width: 70%;
-}
-
-.paneltextheader
-{
-    margin-top: 10%;
-}
 
 
 @media (max-width: 768px)

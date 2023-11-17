@@ -5,10 +5,25 @@ import {Box} from "@mui/system";
 import ThemeRegistry from "@/app/themes/themeRegistry";
 import GoogleAuthn from "@/app/signup/GoogleAuthn";
 import lightTheme from "@/app/themes/lightTheme";
-import { FaArrowRight  } from "react-icons/fa";
+import {FaArrowRight} from "react-icons/fa";
+import {useRef} from "react";
+import userController from "@/app/signup/Controllers/userController";
 
 
 function Page() {
+    const usernameRef = useRef()
+    const emailRef = useRef()
+    const passwordRef = useRef()
+
+    const handleSubmit = () => {
+        const formData = {
+            username: usernameRef.current?.value,
+            email: emailRef.current?.value,
+            password: passwordRef.current?.value
+        }
+        sendInfoToServer(formData)
+    }
+
     return (
         <ThemeRegistry options={{key: 'mui'}}>
             <Box className={[styles.container].join()}>
@@ -17,17 +32,22 @@ function Page() {
                         className={styles.textarea}
                         label='Username'
                         placeholder='Pick a username'
+                        inputRef={usernameRef}
                         required
-                        helperText="Min 5 characters and max 15"
+                        variant="filled"
+                        helperText="Username shall be 5 - 20 characters long"
                         InputProps={{style: {background: "#FFF",},}}
                         FormHelperTextProps={{className: styles.helperText}}>
                     </TextField>
 
-                    <TextField className={[styles.textarea].join()}
-                               label='Email' type="email"
-                               placeholder='Email'
-                               required
-                               InputProps={{style: {background: "#FFF",},}}>
+                    <TextField
+                        className={[styles.textarea].join()}
+                        label='Email' type="email"
+                        placeholder='Email'
+                        inputRef={emailRef}
+                        required
+                        variant="filled"
+                        InputProps={{style: {background: "#FFF",},}}>
                     </TextField>
 
                     <TextField
@@ -35,7 +55,9 @@ function Page() {
                         label='Password'
                         type="password"
                         placeholder='pick a password'
+                        inputRef={passwordRef}
                         required
+                        variant="filled"
                         helperText="Make it strong"
                         InputProps={{style: {background: "#FFF",},}}
                         FormHelperTextProps={{className: styles.helperText}}>
@@ -44,35 +66,48 @@ function Page() {
                     <Button
                         className={[styles.button].join()}
                         variant="contained"
-                        size="large">
+                        size="large"
+                        onClick={handleSubmit}>
                         Create Account
                     </Button>
 
                     <text className={[styles.text].join()}> OR</text>
                     <GoogleAuthn/>
-                    <br></br>
-                    <Link
-                        className={[styles.link].join()}
-                        href="/login"
-                        color="secondary">
-                            Already have an account? Sign In
-                    </Link>
+                    {/*<br></br>*/}
+                    {/*<Link*/}
+                    {/*    className={[styles.link].join()}*/}
+                    {/*    href="/login"*/}
+                    {/*    color="secondary">*/}
+                    {/*    Already have an account? Sign In*/}
+                    {/*</Link>*/}
                 </Box>
 
                 <Box className={[styles.panel].join()}>
                     <Box className={[styles.panelbanner].join()}> GREY </Box>
                     <text className={[styles.paneltext].join()}>social media platform that provides anonymous
-                        experience for users to freely express there feelings and opinions, participate in events and
+                        experience for users to freely express their feelings and opinions, participate in events and
                         much more.
                     </text>
                 </Box>
+                <Link href="/login">
+                    <Button className={[styles.iconButton].join()} variant="contained" size="large">
+                        <FaArrowRight size={40} style={{strokeWidth: '2', stroke: 'black'}}/>
 
-                <Button className={[styles.iconButton].join()} variant="contained" size="large">
-                    <FaArrowRight size={40}/>
-                </Button>
+                    </Button>
+                </Link>
             </Box>
         </ThemeRegistry>
     )
+}
+
+function sendInfoToServer(formData: any) {
+    let userDTO : UserDTO = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password
+    }
+    console.log(userDTO)
+    userController.sendCredentials(userDTO)
 }
 
 export default Page;
