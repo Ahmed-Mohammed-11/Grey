@@ -33,7 +33,7 @@ class AuthorizationTest {
     @Test
     void testUnauthorizedAccess() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/"))
-                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
 
     }
 }
