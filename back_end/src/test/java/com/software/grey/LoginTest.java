@@ -31,9 +31,9 @@ class LoginTest {
     @Test
     void testUserLogin_ShouldSucceed() throws Exception {
         // Register a new user
-        String username = "testuser";
+        String username = "testusershouldsucceed";
         String password = "pass";
-        UserDTO userDTO = new UserDTO("test@gmail.com", username, password);
+        UserDTO userDTO = new UserDTO("testusershouldsucceed@gmail.com", username, password);
         signupController.signup(userDTO);
 
         // Attempt login with the registered user
@@ -49,9 +49,9 @@ class LoginTest {
     @DisplayName("Test login with incorrect password")
     void testLoginWithIncorrectPassword() throws Exception {
         // Register a new user
-        String username = "testuser";
+        String username = "testuserbadpass12345";
         String password = "pass";
-        UserDTO userDTO = new UserDTO("test@gmail.com", username, password);
+        UserDTO userDTO = new UserDTO("testloginbadpass@gmail.com", username, password);
         signupController.signup(userDTO);
 
         // Attempt login with incorrect password
