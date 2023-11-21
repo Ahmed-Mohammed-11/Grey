@@ -1,5 +1,6 @@
 package com.software.grey.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,6 +22,13 @@ import static com.software.grey.utils.EndPoints.TEST;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    private OAuth2LoginSuccessHandler oauth2LoginSuccessHandler;
+
+    public SecurityConfig(OAuth2LoginSuccessHandler oauth2LoginSuccessHandler) {
+        this.oauth2LoginSuccessHandler = oauth2LoginSuccessHandler;
+    }
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -43,11 +51,12 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.GET, TEST).hasRole("ADMIN")
                             .anyRequest().authenticated()
             )
-            .oauth2Login(Customizer.withDefaults())
-            .formLogin(Customizer.withDefaults())
+            .oauth2Login(oauth2 ->
+                    oauth2.successHandler(oauth2LoginSuccessHandler)
+            )
             .logout(LogoutConfigurer::permitAll)
             .formLogin(f ->
-                    f.defaultSuccessUrl("/")
+                    f.defaultSuccessUrl("http://localhost:3000", true)
             )
             .httpBasic(Customizer.withDefaults())
             .csrf(AbstractHttpConfigurer::disable)
