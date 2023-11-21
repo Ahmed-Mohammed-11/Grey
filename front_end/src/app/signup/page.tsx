@@ -9,7 +9,7 @@ import {useRef} from "react";
 import postController from "@/app/controllers/postController";
 import {signinRoute, signupEndPoint} from "@/app/constants/apiConstants";
 import {signupPanelText} from "@/app/constants/displayTextConstants";
-
+import classNames from "classnames";
 
 function Page() {
     const usernameRef = useRef<HTMLInputElement>(null)
@@ -35,13 +35,16 @@ function Page() {
         postController.sendPostRequest(userDTO, signupEndPoint)
     }
 
+    let topLeftShapeClass = classNames(styles.topLeft, styles.cornerShapes);
+    let bottomRightShapeClass = classNames(styles.bottomRight, styles.cornerShapes);
+
     return (
         <ThemeRegistry options={{key: 'mui'}}>
-            <Box className={styles.topLeft} sx={{
+            <Box className={topLeftShapeClass} sx={{
                 background: (theme) => theme.palette.primary.light
             }}
             ></Box>
-            <Box className={styles.bottomRight}
+            <Box className={bottomRightShapeClass}
                  sx={{
                      background: (theme) => theme.palette.primary.light
                  }}
