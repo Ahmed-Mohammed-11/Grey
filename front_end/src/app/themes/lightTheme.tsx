@@ -90,19 +90,19 @@ const lightTheme = createTheme({
         fontWeightBold: 700,
         body1: {
             fontWeight: 400,
-            fontSize: '1.2rem',
+            fontSize: '1.3rem',
             lineHeight: 1.5,
             letterSpacing: '0.00938em',
         },
         body2: {
             fontWeight: 400,
-            fontSize: '1.2rem',
+            fontSize: '1.3rem',
             lineHeight: 1.5,
             letterSpacing: '0.00938em',
         },
         button: {
             fontWeight: 500,
-            fontSize: '1.2rem',
+            fontSize: '1.3rem',
             lineHeight: 1.75,
             letterSpacing: '0.02857em',
             textTransform: 'uppercase',
@@ -158,14 +158,14 @@ const lightTheme = createTheme({
         },
         subtitle1: {
             fontWeight: 400,
-            fontSize: '1.2rem',
+            fontSize: '0.1rem',
             lineHeight: 1.5,
             letterSpacing: '0.00938em',
 
         },
         subtitle2: {
             fontWeight: 500,
-            fontSize: '1rem',
+            fontSize: '0.1rem',
             lineHeight: 1.57,
             letterSpacing: '0.00714em',
         },
