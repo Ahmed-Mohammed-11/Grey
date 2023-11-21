@@ -6,6 +6,7 @@ import GoogleAuthn from "@/app/signup/GoogleAuthn";
 import {useRef} from "react";
 import {FaArrowLeft} from "react-icons/fa";
 import ThemeRegistry from "@/app/themes/themeRegistry";
+import classNames from "classnames";
 
 
 function Page() {
@@ -15,13 +16,15 @@ function Page() {
     const handleSubmit = () => {
     }
 
+    let topLeftShapeClass = classNames(styles.topLeft, styles.cornerShapes);
+    let bottomRightShapeClass = classNames(styles.bottomRight, styles.cornerShapes);
     return (
         <ThemeRegistry options={{key: 'mui'}}>
-            <Box className={styles.topLeft} sx={{
+            <Box className={topLeftShapeClass} sx={{
                 background: (theme) => theme.palette.primary.light
             }}
             ></Box>
-            <Box className={styles.bottomRight}
+            <Box className={bottomRightShapeClass}
                  sx={{
                 background: (theme) => theme.palette.primary.light
                 }}
