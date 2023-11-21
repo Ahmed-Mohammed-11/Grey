@@ -7,7 +7,7 @@ interface Props {
     children: ReactNode
 }
 
-const Providers = (props : Props) => {
+const Providers = (props: Props) => {
     return (
         <SessionProvider>
             {props.children}

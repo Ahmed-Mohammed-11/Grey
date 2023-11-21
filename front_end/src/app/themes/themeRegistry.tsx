@@ -5,11 +5,9 @@ import {CacheProvider} from '@emotion/react';
 import {ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import React from "react";
-import LightTheme from "@/app/themes/lightTheme";
-import darkTheme from "@/app/themes/darkTheme";
 import lightTheme from "@/app/themes/lightTheme";
 
-export default function ThemeRegistry(props:any) {
+export default function ThemeRegistry(props: any) {
     const {options, children} = props;
 
     const [{cache, flush}] = React.useState(() => {
