@@ -89,7 +89,7 @@ function Page() {
                         much more.
                     </text>
                 </Box>
-                <Link href="/login">
+                <Link href="http://localhost:8080/oauth2/authorization/google">
                     <Button className={[styles.iconButton].join()} variant="contained" size="large">
                         <FaArrowRight size={40} style={{strokeWidth: '2', stroke: 'black'}}/>
 

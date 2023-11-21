@@ -4,16 +4,18 @@ import com.software.grey.models.enums.Role;
 import com.software.grey.models.enums.Tier;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "user")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
+@Inheritance(strategy = InheritanceType.JOINED)
+
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -23,9 +25,10 @@ public class User {
     private String username;
 
     @Column(unique = true)
-    private String email;
+    private String registrationType;
 
-    private String password;
+    @Column(unique = true)
+    private String email;
 
     @Enumerated(EnumType.STRING)
     private Role role;

@@ -11,3 +11,6 @@ spring:
                 - email
                 - profile
                 - openid
+          provider:
+            google:
+              user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo

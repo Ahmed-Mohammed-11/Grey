@@ -1,9 +1,10 @@
 package com.software.grey.controllers;
 
+import com.software.grey.models.entities.BasicUser;
 import com.software.grey.models.enums.Role;
 import com.software.grey.models.entities.User;
 import com.software.grey.models.dtos.UserDTO;
-import com.software.grey.repositories.UserRepo;
+import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +19,18 @@ import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class SignupControllerTest {
-    private MockMvc mockMvc;
-    @Autowired
-    private UserService userService;
+
     @Autowired
     private SignupController signupController;
     @Autowired
-    private UserRepo userRepo;
+    private BasicUserRepo basicUserRepo;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Test
     void signupCorrectUser() {
         UserDTO myUser = new UserDTO("mockEmail@gmail.com", "mockUser", "mockPassword");
         signupController.signup(myUser);
-        User user = userRepo.findByUsername("mockUser");
+        BasicUser user = basicUserRepo.findByUsername("mockUser");
         assert(Objects.equals(user.getUsername(), "mockUser"));
         assert(Objects.equals(user.getEmail(), "mockEmail@gmail.com"));
         assertTrue(bCryptPasswordEncoder.matches("mockPassword", user.getPassword()));
