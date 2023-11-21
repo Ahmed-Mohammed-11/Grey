@@ -50,7 +50,8 @@ const GoogleAuthn = () => {
 
     return (
         <Button className={[styles.googleButton].join()} onClick={() => signIn()}>
-            <GoogleLogo /> Sign in with Google
+            <GoogleLogo />
+            <Box> Continue with Google </Box>
         </Button>
     );
 };

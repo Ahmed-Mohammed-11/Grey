@@ -53,7 +53,7 @@ function Page() {
                     <br></br>
                     <Link
                         className={[styles.link].join()}
-                        href="/login"
+                        href="/signin"
                         color="secondary">
                             Already have an account? Sign In
                     </Link>
@@ -62,7 +62,7 @@ function Page() {
                 <Box className={[styles.panel].join()}>
                     <Box className={[styles.panelbanner].join()}> GREY </Box>
                     <text className={[styles.paneltext].join()}>social media platform that provides anonymous
-                        experience for users to freely express there feelings and opinions, participate in events and
+                        experience for users to freely express their feelings and opinions, participate in events and
                         much more.
                     </text>
                 </Box>
