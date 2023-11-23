@@ -5,17 +5,31 @@ import {Box} from "@mui/system";
 import ThemeRegistry from "@/app/themes/themeRegistry";
 import GoogleAuthn from "@/app/googleAuthentication/GoogleAuthn";
 import {FaArrowRight} from "react-icons/fa";
-import {useRef} from "react";
-import postController from "@/app/controllers/postController";
+import {useRef, useState} from "react";
+import postController from "@/app/services/postController";
+import {SIGNUP_PANEL_TEXT} from "@/app/constants/displayTextMessages";
 import {signinRoute, signupEndPoint} from "@/app/constants/apiConstants";
-import {signupPanelText} from "@/app/constants/displayTextConstants";
 import classNames from "classnames";
+import clientValidateForm from "@/app/security/clientFormValidation";
 
 function Page() {
-    const usernameRef = useRef<HTMLInputElement>(null)
-    const emailRef = useRef<HTMLInputElement>(null)
-    const passwordRef = useRef<HTMLInputElement>(null)
+    const usernameRef = useRef<HTMLInputElement>(null);
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const [responseMessage, setResponseMessage] = useState({});
+    const [responseError, setResponseError] = useState({});
+    const [isFormValid, setIsFormValid] = useState({
+        username: true,
+        email: true,
+        password: true
+    });
+    const [errors, setErrors] = useState({
+        username: "",
+        email: "",
+        password: ""
+    });
 
+    let test = {}
     const handleSubmit = () => {
         const formData = {
             username: usernameRef.current?.value,
@@ -25,14 +39,23 @@ function Page() {
         sendInfoToServer(formData)
     }
 
-    function sendInfoToServer(formData: any) {
+    async function sendInfoToServer(formData: any) {
         let userDTO: UserDTO = {
             username: formData.username,
             email: formData.email,
             password: formData.password
         }
-        console.log(userDTO)
-        postController.sendPostRequest(userDTO, signupEndPoint)
+        let {isFormValid, errors} = clientValidateForm(userDTO)
+        setIsFormValid(isFormValid)
+        setErrors(errors)
+
+        if (isFormValid.username && isFormValid.email && isFormValid.password)
+        {
+            await postController.sendPostRequest(userDTO, signupEndPoint)
+                .then(response => response.json())
+                .then(data => {setResponseMessage(data)})
+                .catch(error => {setResponseError(error)})
+        }
     }
 
     let topLeftShapeClass = classNames(styles.topLeft, styles.cornerShapes);
@@ -58,8 +81,9 @@ function Page() {
                         inputRef={usernameRef}
                         required
                         variant="filled"
-                        helperText="Username shall be 5 - 20 characters long"
-                        InputProps={{style: {background: "#FFF",},}}
+                        error = {!isFormValid.username}
+                        helperText = {(isFormValid.username)? "": errors.username}
+                        InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
 
@@ -70,6 +94,8 @@ function Page() {
                         inputRef={emailRef}
                         required
                         variant="filled"
+                        error = {!isFormValid.email}
+                        helperText = {(isFormValid.email)? "": errors.email}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
@@ -81,7 +107,8 @@ function Page() {
                         inputRef={passwordRef}
                         required
                         variant="filled"
-                        helperText="Make it strong"
+                        error = {!isFormValid.password}
+                        helperText = {(isFormValid.password)? "Make it strong": errors.password}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
@@ -98,7 +125,7 @@ function Page() {
 
                 <Box className={styles.panel}>
                     <Box className={styles.panelBanner}> GREY </Box>
-                    <text className={styles.panelText}> {signupPanelText} </text>
+                    <text className={styles.panelText}> {SIGNUP_PANEL_TEXT} </text>
                 </Box>
 
                 <Link href={signinRoute}>
