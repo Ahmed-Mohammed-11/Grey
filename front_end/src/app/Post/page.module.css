@@ -9,17 +9,13 @@
 }
 
 .post{
-    margin: 20px auto;
-    padding: 20px;
+    margin: 20px 0;
+    padding: 10px;
     border-radius: 10px;
     background-color: #526D82;
     color: #FFF;
 }
 
-.feeling{
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #526D82;
-    color: #FFF;
+.postText{
+    padding: 0 16px;
 }

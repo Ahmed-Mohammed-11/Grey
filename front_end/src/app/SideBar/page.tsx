@@ -10,7 +10,9 @@ import Profile from "@/app/SideBar/profile";
 
 
 export default function SideBar(props: any) {
+    // TODO: change active tab index when clicked
     var active_tab = 0
+
     const buttonsText = ["feed", "explore", "profile", "settings", "saved"]
     const buttonsIcons = [
         <AiFillHome/>,
@@ -20,7 +22,7 @@ export default function SideBar(props: any) {
         <BsFillBookmarkFill/>]
     const buttons = buttonsText.map((text, index) => {
         return (
-            <Button className={(index === active_tab ? styles.button : styles.button)} key={index}>
+            <Button className={`${styles.button} ${index === active_tab ? styles.active : styles.button}`} key={index}>
                 {buttonsIcons[index]}
                 {text}
             </Button>
@@ -29,7 +31,7 @@ export default function SideBar(props: any) {
 
     return (
         <Box className={styles.side_bar} width={props.width}>
-            <Profile name={"@teez_tammam"}></Profile>
+            <Profile name={"@hesham09"}></Profile>
             <Box className={styles.container_buttons}>{buttons}</Box>
         </Box>
     )

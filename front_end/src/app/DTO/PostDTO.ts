@@ -5,3 +5,5 @@ class PostDTO {
     postText!: string;
     postFeelings!: Set<Feeling>;
 }
+
+export default PostDTO;
