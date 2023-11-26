@@ -1,6 +1,8 @@
 package com.software.grey.repositories;
+
 import com.software.grey.models.entities.GoogleUser;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.UUID;
 
 

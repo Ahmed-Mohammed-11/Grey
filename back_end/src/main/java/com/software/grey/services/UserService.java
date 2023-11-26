@@ -1,15 +1,14 @@
 package com.software.grey.services;
 
+import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.BasicUser;
 import com.software.grey.models.entities.GoogleUser;
 import com.software.grey.models.enums.Role;
 import com.software.grey.models.enums.Tier;
-import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.mappers.UserMapper;
-import com.software.grey.repositories.GoogleUserRepo;
 import com.software.grey.repositories.BasicUserRepo;
+import com.software.grey.repositories.GoogleUserRepo;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
@@ -37,23 +36,25 @@ public class UserService {
                 .enabled(true)
                 .build();
 
-        user = (BasicUser) userMapper.toUser(userDTO, user);
+        user = userMapper.toUser(userDTO, user);
         userRepo.save(user);
     }
 
     public void saveGoogleUser(OAuth2User principal) {
-
-        // TODO name can be not unique and needs change
         UserDTO userDTO = new UserDTO();
         userDTO.username = principal.getAttribute("name");
+        userDTO.username = userDTO.username.split("@")[0];
         userDTO.email = principal.getAttribute("email");
 
-        if (!userExists(userDTO)) {
+        saveGoogleUser(userDTO);
+    }
+
+    public void saveGoogleUser(UserDTO userDTO) {
+        if(userExists(userDTO)) {
             return;
         }
 
         GoogleUser user = GoogleUser.builder()
-                .externalID(principal.getAttribute("sub"))
                 .role(Role.ROLE_USER)
                 .tier(Tier.Standard)
                 .registrationType("google")

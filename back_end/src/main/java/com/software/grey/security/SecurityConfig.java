@@ -1,6 +1,7 @@
 package com.software.grey.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -26,6 +27,9 @@ public class SecurityConfig {
     @Autowired
     private OAuth2LoginSuccessHandler oauth2LoginSuccessHandler;
 
+    @Value("${front.url}")
+    private String frontUrl;
+
     public SecurityConfig(OAuth2LoginSuccessHandler oauth2LoginSuccessHandler) {
         this.oauth2LoginSuccessHandler = oauth2LoginSuccessHandler;
     }
@@ -38,7 +42,11 @@ public class SecurityConfig {
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource){
         JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
-        userDetailsManager.setUsersByUsernameQuery("SELECT username, password, enabled FROM user WHERE username=?");
+        userDetailsManager.setUsersByUsernameQuery("" +
+                "SELECT username, password, enabled " +
+                "FROM user " +
+                "JOIN user_basic_auth ON user.id = user_basic_auth.local_id " +
+                "WHERE username=?;");
         userDetailsManager.setAuthoritiesByUsernameQuery("SELECT username, role FROM user WHERE username=?");
         return userDetailsManager;
     }
@@ -58,7 +66,7 @@ public class SecurityConfig {
             .formLogin(Customizer.withDefaults())
             .logout(LogoutConfigurer::permitAll)
             .formLogin(f ->
-                    f.defaultSuccessUrl("/${front.url}")
+                    f.defaultSuccessUrl("/" + frontUrl)
             )
             .httpBasic(Customizer.withDefaults())
             .csrf(AbstractHttpConfigurer::disable)

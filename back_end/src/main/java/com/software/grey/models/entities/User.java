@@ -3,7 +3,9 @@ package com.software.grey.models.entities;
 import com.software.grey.models.enums.Role;
 import com.software.grey.models.enums.Tier;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.util.UUID;
