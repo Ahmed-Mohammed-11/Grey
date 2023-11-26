@@ -18,12 +18,6 @@ function Page() {
     const usernameRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
-    const [responseMessage, setResponseMessage] = useState({
-        username: "",
-        email: "",
-        password: ""
-    });
-    const [responseStatus, setResponseStatus] = useState(0);
     const [isUserValid, setIsUserValid] = useState({
         username: true,
         email: true,
@@ -36,37 +30,45 @@ function Page() {
     });
 
     const handleSubmit = () => {
+        // user credentials
         let user: User = {
             username: usernameRef.current!.value,
             email: emailRef.current!.value,
             password: passwordRef.current!.value
         }
+
+        // validate user credentials on client side
         let { isUserValid, errors} = clientValidateForm(user)
         setIsUserValid(isUserValid)
         setErrors(errors);
+
+        // if user credentials are valid, try send to server
         isUserValid.username && isUserValid.email && isUserValid.password && sendInfoToServer(user)
     }
 
     async function sendInfoToServer(user: UserDTO) {
+        // prepare user data to send to server
         let userDTO: UserDTO = {
             username: user.username,
             email: user.email,
             password: user.password
         }
+
         fetchResponse(userDTO);
     }
 
     const fetchResponse = async (userDTO: UserDTO) => {
-        setIsUserValid({username: true, email: true, password: true})
-        setErrors({username: "", email: "", password: ""})
-        const response = await postController.sendPostRequest(userDTO, signupEndPoint)
-        setResponseMessage(await toJSON(response.body!))
-        setResponseStatus(response.status)
-        let {isUserValid, errors} = serverValidateMapper(responseStatus, responseMessage)
+        let response = await postController.sendPostRequest(userDTO, signupEndPoint);
+        // toJSON util to convert ReadableStream to JSON
+        let jsonResponse = await toJSON(response.body!);
+        let responseStat = response.status;
+        let {isUserValid, errors} = serverValidateMapper(responseStat, jsonResponse)
         setIsUserValid(isUserValid);
         setErrors(errors);
     }
 
+
+    // classes of the corner shapes
     let topLeftShapeClass = classNames(styles.topLeft, styles.cornerShapes);
     let bottomRightShapeClass = classNames(styles.bottomRight, styles.cornerShapes);
 

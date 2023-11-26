@@ -17,19 +17,40 @@ let errors = {
 
 function handleTakenCredentials()
 {
-    errors.username = USER_EMAIL_TAKEN_MSG
-    errors.email = USER_EMAIL_TAKEN_MSG
     isUserValid.username = false ;
     isUserValid.email = false;
+    errors.username = USER_EMAIL_TAKEN_MSG;
+    errors.email = USER_EMAIL_TAKEN_MSG;
+    return;
 }
 
-function serverValidateMapper(responseStatus: number, responseBody: UserValidationResponse ) {
+function handleInvalidCredentials(responseBody: UserValidationResponse)
+{
+    if (responseBody.username)
+    {
+        errors.username = responseBody.username;
+        isUserValid.username = false;
+    }
+    if (responseBody.email)
+    {
+        errors.email = responseBody.email;
+        isUserValid.email = false;
+    }
+    if (responseBody.password)
+    {
+        errors.password = responseBody.password;
+        isUserValid.password = false;
+    }
+}
+
+function serverValidateMapper(responseStatus: number, responseBody: UserValidationResponse) {
 
     isUserValid = {
         username: true,
         email: true,
         password: true
     };
+
     errors = {
         username: "",
         email: "",
@@ -39,13 +60,16 @@ function serverValidateMapper(responseStatus: number, responseBody: UserValidati
     switch (responseStatus) {
         case 200:
             break;
+        case 400:
+            handleInvalidCredentials(responseBody);
+            break;
         case 401:
             handleTakenCredentials();
             break;
         case 404:
             break;
         default:
-            return {isUserValid, errors};
+            break;
     }
 
     return {isUserValid, errors};

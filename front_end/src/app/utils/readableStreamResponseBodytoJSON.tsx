@@ -1,3 +1,4 @@
+// this util is used to convert ReadableStream to JSON
 async function toJSON(body: ReadableStream) {
     const reader = body.getReader(); // `ReadableStreamDefaultReader`
     const decoder = new TextDecoder();
@@ -8,7 +9,14 @@ async function toJSON(body: ReadableStream) {
 
         // all chunks have been read?
         if (done) {
-            return JSON.parse(chunks.join(''));
+
+            // parse the chunks as JSON if it's possible
+            try {
+                return JSON.parse(chunks.join(''));
+            }
+            catch (error) {
+                return chunks.join('');
+            }
         }
 
         const chunk = decoder.decode(value, { stream: true });
