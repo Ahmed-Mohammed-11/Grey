@@ -26,7 +26,7 @@ public class User {
     @Column(unique = true)
     private String username;
 
-    @Column(unique = true)
+    @Column(name="registration_type")
     private String registrationType;
 
     @Column(unique = true)

@@ -1,4 +1,3 @@
-
 CREATE TABLE user
 (
     id            BINARY(16) PRIMARY KEY,
@@ -12,7 +11,6 @@ CREATE TABLE user
     authenticated TINYINT(1),
     FOREIGN KEY (avatar_id) REFERENCES avatar (id)
 );
-
 
 CREATE TABLE user_google_oauth
 (
