@@ -40,18 +40,18 @@ class SignupControllerTest {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Test
     void signupCorrectUser() {
-        UserDTO myUser = new UserDTO("mockEmail12@gmail.com", "testUser", "mockPassword");
+        UserDTO myUser = new UserDTO("mockEmail12@gmail.com", "testUser", "mock Password test");
         signupController.signup(myUser);
         User user = userRepo.findByUsername("testUser");
         assert(Objects.equals(user.getUsername(), "testUser"));
         assert(Objects.equals(user.getEmail(), "mockEmail12@gmail.com"));
-        assertTrue(bCryptPasswordEncoder.matches("mockPassword", user.getPassword()));
+        assertTrue(bCryptPasswordEncoder.matches("mock Password test", user.getPassword()));
         assert(user.getRole() == Role.ROLE_USER);
     }
 
     @Test
     void signUpDuplicateUsername() {
-        UserDTO myUser = new UserDTO("mockEmail@gmail.com", "mockUser", "mockPassword");
+        UserDTO myUser = new UserDTO("mockEmail@gmail.com", "mockUser", "mock Password test");
         signupController.signup(myUser);
         myUser.email = "mockEmail2@gmail.com";
         assertThrows(UserExistsException.class, () -> signupController.signup(myUser));
@@ -59,7 +59,7 @@ class SignupControllerTest {
 
     @Test
     void signUpDuplicateEmail() {
-        UserDTO myUser = new UserDTO("mockEmail132@gmail.com", "mockUser1243", "mockPassword");
+        UserDTO myUser = new UserDTO("mockEmail132@gmail.com", "mockUser1243", "mock Password test");
         signupController.signup(myUser);
         myUser.username = "notMockUser";
         assertThrows(UserExistsException.class, () -> signupController.signup(myUser));
@@ -67,7 +67,7 @@ class SignupControllerTest {
 
     @Test
     void signupWithNonValidEmail_ShouldFail() throws Exception {
-        UserDTO myUser = new UserDTO("mockEmail", "mockUser12", "mockPassword");
+        UserDTO myUser = new UserDTO("mockEmail", "mockUser12", "mock Password test");
         mockMvc.perform(post(SIGNUP)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(myUser)))
@@ -77,7 +77,7 @@ class SignupControllerTest {
 
     @Test
     void signupWithNonValidEmail2_ShouldFail() throws Exception {
-        UserDTO myUser = new UserDTO("_mockE@m_ail@gmail.com", "mockUser13", "mockPassword");
+        UserDTO myUser = new UserDTO("_mockE@m_ail@gmail.com", "mockUser13", "mock Password test");
         mockMvc.perform(post(SIGNUP)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(myUser)))
@@ -87,7 +87,7 @@ class SignupControllerTest {
 
     @Test
     void signupWithEmptyEmail_ShouldFail() throws Exception {
-        UserDTO myUser = new UserDTO("", "mockUser14", "mockPassword");
+        UserDTO myUser = new UserDTO("", "mockUser14", "mock Password test");
         mockMvc.perform(post(SIGNUP)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(myUser)))
@@ -96,7 +96,7 @@ class SignupControllerTest {
 
     @Test
     void signupWithEmptyUsername_ShouldFail() throws Exception {
-        UserDTO myUser = new UserDTO("valid@gmail.com", "", "mockPassword");
+        UserDTO myUser = new UserDTO("valid@gmail.com", "", "mock Password test");
         mockMvc.perform(post(SIGNUP)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(myUser)))
