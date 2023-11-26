@@ -1,8 +1,10 @@
 package com.software.grey.services;
 
+
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.BasicUser;
 import com.software.grey.models.entities.GoogleUser;
+import com.software.grey.exceptions.UserExistsException;
 import com.software.grey.models.enums.Role;
 import com.software.grey.models.enums.Tier;
 import com.software.grey.models.mappers.UserMapper;
@@ -13,21 +15,17 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 @Service
-
+@AllArgsConstructor
 public class UserService {
     private BasicUserRepo userRepo;
     private GoogleUserRepo googleUserRepo;
     private UserMapper userMapper;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserService(BasicUserRepo userRepo, GoogleUserRepo googleUserRepo, UserMapper userMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userRepo = userRepo;
-        this.googleUserRepo = googleUserRepo;
-        this.userMapper = userMapper;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
-
     public void save(UserDTO userDTO) {
+        if(userExists(userDTO))
+            throw new UserExistsException("User already exists");
+
         userDTO.password = bCryptPasswordEncoder.encode(userDTO.password);
         BasicUser user = BasicUser.builder()
                 .role(Role.ROLE_USER)
