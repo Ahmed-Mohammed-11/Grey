@@ -10,15 +10,21 @@ import postController from "@/app/services/postController";
 import {SIGNUP_PANEL_TEXT} from "@/app/constants/displayTextMessages";
 import {signinRoute, signupEndPoint} from "@/app/constants/apiConstants";
 import classNames from "classnames";
-import clientValidateForm from "@/app/security/clientFormValidation";
+import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
+import serverValidateMapper from "@/app/security/userValidation/serverFormValidationMapper";
+import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
 
 function Page() {
     const usernameRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
-    const [responseMessage, setResponseMessage] = useState({});
-    const [responseError, setResponseError] = useState({});
-    const [isFormValid, setIsFormValid] = useState({
+    const [responseMessage, setResponseMessage] = useState({
+        username: "",
+        email: "",
+        password: ""
+    });
+    const [responseStatus, setResponseStatus] = useState(0);
+    const [isUserValid, setIsUserValid] = useState({
         username: true,
         email: true,
         password: true
@@ -29,49 +35,52 @@ function Page() {
         password: ""
     });
 
-    let test = {}
     const handleSubmit = () => {
-        const formData = {
-            username: usernameRef.current?.value,
-            email: emailRef.current?.value,
-            password: passwordRef.current?.value
+        let user: User = {
+            username: usernameRef.current!.value,
+            email: emailRef.current!.value,
+            password: passwordRef.current!.value
         }
-        sendInfoToServer(formData)
+        let { isUserValid, errors} = clientValidateForm(user)
+        setIsUserValid(isUserValid)
+        setErrors(errors);
+        isUserValid.username && isUserValid.email && isUserValid.password && sendInfoToServer(user)
     }
 
-    async function sendInfoToServer(formData: any) {
+    async function sendInfoToServer(user: UserDTO) {
         let userDTO: UserDTO = {
-            username: formData.username,
-            email: formData.email,
-            password: formData.password
+            username: user.username,
+            email: user.email,
+            password: user.password
         }
-        let {isFormValid, errors} = clientValidateForm(userDTO)
-        setIsFormValid(isFormValid)
-        setErrors(errors)
+        fetchResponse(userDTO);
+    }
 
-        if (isFormValid.username && isFormValid.email && isFormValid.password)
-        {
-            await postController.sendPostRequest(userDTO, signupEndPoint)
-                .then(response => response.json())
-                .then(data => {setResponseMessage(data)})
-                .catch(error => {setResponseError(error)})
-        }
+    const fetchResponse = async (userDTO: UserDTO) => {
+        setIsUserValid({username: true, email: true, password: true})
+        setErrors({username: "", email: "", password: ""})
+        const response = await postController.sendPostRequest(userDTO, signupEndPoint)
+        setResponseMessage(await toJSON(response.body!))
+        setResponseStatus(response.status)
+        let {isUserValid, errors} = serverValidateMapper(responseStatus, responseMessage)
+        setIsUserValid(isUserValid);
+        setErrors(errors);
     }
 
     let topLeftShapeClass = classNames(styles.topLeft, styles.cornerShapes);
     let bottomRightShapeClass = classNames(styles.bottomRight, styles.cornerShapes);
 
     return (
+
         <ThemeRegistry options={{key: 'mui'}}>
-            <Box className={topLeftShapeClass} sx={{
-                background: (theme) => theme.palette.primary.light
-            }}
-            ></Box>
+            <Box className={topLeftShapeClass}
+                 sx={{background: (theme) => theme.palette.primary.light}}>
+            </Box>
             <Box className={bottomRightShapeClass}
-                 sx={{
-                     background: (theme) => theme.palette.primary.light
-                 }}
-            ></Box>
+                 sx={{background: (theme) => theme.palette.primary.light}}>
+            </Box>
+
+
             <Box className={styles.container}>
                 <Box className={styles.signupForm}>
                     <TextField
@@ -81,8 +90,8 @@ function Page() {
                         inputRef={usernameRef}
                         required
                         variant="filled"
-                        error = {!isFormValid.username}
-                        helperText = {(isFormValid.username)? "": errors.username}
+                        error = {!isUserValid.username}
+                        helperText = {(isUserValid.username)? "": errors.username}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
@@ -94,8 +103,8 @@ function Page() {
                         inputRef={emailRef}
                         required
                         variant="filled"
-                        error = {!isFormValid.email}
-                        helperText = {(isFormValid.email)? "": errors.email}
+                        error = {!isUserValid.email}
+                        helperText = {(isUserValid.email)? "": errors.email}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
@@ -107,8 +116,8 @@ function Page() {
                         inputRef={passwordRef}
                         required
                         variant="filled"
-                        error = {!isFormValid.password}
-                        helperText = {(isFormValid.password)? "Make it strong": errors.password}
+                        error = {!isUserValid.password}
+                        helperText = {(isUserValid.password)? "Make it strong": errors.password}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
@@ -136,6 +145,7 @@ function Page() {
 
             </Box>
         </ThemeRegistry>
+
     )
 }
 
