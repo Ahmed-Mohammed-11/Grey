@@ -10,17 +10,26 @@ import com.software.grey.repositories.UserRepo;
 import com.software.grey.utils.emailsender.EmailDetails;
 import com.software.grey.utils.emailsender.EmailSender;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.simplejavamail.api.email.Email;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
 public class UserService {
-    private UserRepo userRepo;
-    private UserMapper userMapper;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private EmailSender emailSender;
+    private final UserRepo userRepo;
+    private final UserMapper userMapper;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final EmailSender emailSender;
+    @Value("${grey.from}") private String fromAddress;
+
+    public UserService(UserRepo userRepo, UserMapper userMapper, BCryptPasswordEncoder bCryptPasswordEncoder, EmailSender emailSender) {
+        this.userRepo = userRepo;
+        this.userMapper = userMapper;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.emailSender = emailSender;
+    }
 
     public void save(UserDTO userDTO) {
         if(userExists(userDTO))
@@ -30,18 +39,37 @@ public class UserService {
         User user = User.builder()
                 .role(Role.ROLE_USER)
                 .tier(Tier.Standard)
-                .enabled(true)
+                .enabled(false)
                 .build();
         user = userMapper.toUser(userDTO, user);
         userRepo.save(user);
+        sendVerificationEmail(userDTO.email);
+    }
+
+
+    private void sendVerificationEmail(String toAddress){
         EmailDetails emailDetails = EmailDetails.builder()
-                        .from("omartammam25@gmail.com")
-                        .to(userDTO.email)
-                        .subject("Grey welcomes you :)")
-                        .content("enta ragl gd3")
-                        .build();
+                .from(fromAddress)
+                .to(toAddress)
+                .subject("Welcome to Grey!")
+                .content(populateEmailContentMessage())
+                .build();
 
         emailSender.send(emailDetails);
+    }
+
+    // TODO add a link containing site url + verify URL + ?userID=&registerationCode=
+    private String populateEmailContentMessage(){
+        return "Please click the following link to verify email: ";
+    }
+
+    public void verifyUser(String userID, String registerCode){
+        // get user id and register code from db and check if they match
+        if(true){
+            // update user's enabled field in db to true
+        }else{
+            // return user not found exception
+        }
     }
 
     public boolean userExists(UserDTO userDTO){

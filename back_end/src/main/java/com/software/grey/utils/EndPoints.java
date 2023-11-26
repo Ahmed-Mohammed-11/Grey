@@ -5,5 +5,6 @@ public class EndPoints {
     public static final String TEST = "/test";
     public static final String LOGIN = "/login";
     public static final String ROOT = "/";
+    public static final String VERIFY_REGISTERATION = "user/verify";
 
 }
