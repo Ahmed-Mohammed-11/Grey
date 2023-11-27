@@ -1,6 +1,9 @@
 package com.software.grey.security;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -24,6 +27,8 @@ import static com.software.grey.utils.EndPoints.TEST;
 public class SecurityConfig {
 
     private OAuth2LoginSuccessHandler oauth2LoginSuccessHandler;
+    @Value("${front.url}")
+    private String frontURL;
 
     public SecurityConfig(OAuth2LoginSuccessHandler oauth2LoginSuccessHandler) {
         this.oauth2LoginSuccessHandler = oauth2LoginSuccessHandler;
@@ -56,7 +61,7 @@ public class SecurityConfig {
             )
             .logout(LogoutConfigurer::permitAll)
             .formLogin(f ->
-                    f.defaultSuccessUrl("http://localhost:3000", true)
+                    f.defaultSuccessUrl(frontURL, true)
             )
             .httpBasic(Customizer.withDefaults())
             .csrf(AbstractHttpConfigurer::disable)
