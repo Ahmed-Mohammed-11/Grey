@@ -4,6 +4,8 @@ import com.software.grey.services.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
@@ -13,11 +15,13 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+
 @Component
 public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     @Value("${front.url}")
     private String frontUrl;
+
     private UserService userService;
 
     public OAuth2LoginSuccessHandler(@Lazy UserService userService) {

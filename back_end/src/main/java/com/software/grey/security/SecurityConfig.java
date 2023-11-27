@@ -42,11 +42,11 @@ public class SecurityConfig {
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource){
         JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
-        userDetailsManager.setUsersByUsernameQuery("" +
-                "SELECT username, password, enabled " +
-                "FROM user " +
-                "JOIN user_basic_auth ON user.id = user_basic_auth.local_id " +
-                "WHERE username=?");
+        userDetailsManager.setUsersByUsernameQuery("""
+                SELECT username, password, enabled
+                FROM user
+                JOIN user_basic_auth ON user.id = user_basic_auth.local_id
+                WHERE username=?""");
         userDetailsManager.setAuthoritiesByUsernameQuery("SELECT username, role FROM user WHERE username=?");
         return userDetailsManager;
     }
