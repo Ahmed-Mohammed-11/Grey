@@ -13,17 +13,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-
+@AllArgsConstructor
 public class UserService {
     private UserRepo userRepo;
     private UserMapper userMapper;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    public UserService(UserRepo userRepo, UserMapper userMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userRepo = userRepo;
-        this.userMapper = userMapper;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
 
     public void save(UserDTO userDTO) {
         if(userExists(userDTO))
