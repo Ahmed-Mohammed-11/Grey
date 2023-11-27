@@ -10,6 +10,7 @@ import com.software.grey.models.enums.Tier;
 import com.software.grey.models.mappers.UserMapper;
 import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.repositories.GoogleUserRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;

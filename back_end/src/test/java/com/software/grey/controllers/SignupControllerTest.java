@@ -7,8 +7,10 @@ import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.BasicUser;
 import com.software.grey.models.enums.Role;
 import com.software.grey.repositories.BasicUserRepo;
+import com.software.grey.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
@@ -42,11 +44,12 @@ class SignupControllerTest {
     private BasicUserRepo basicUserRepo;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Test
     void signupCorrectUser() {
         UserDTO myUser = new UserDTO("mockEmail12@gmail.com", "testUser", "mockPassword");
         signupController.signup(myUser);
-        User user = userRepo.findByUsername("testUser");
+        BasicUser user = basicUserRepo.findByUsername("testUser");
         assert(Objects.equals(user.getUsername(), "testUser"));
         assert(Objects.equals(user.getEmail(), "mockEmail12@gmail.com"));
         assertTrue(bCryptPasswordEncoder.matches("mockPassword", user.getPassword()));
@@ -55,9 +58,9 @@ class SignupControllerTest {
 
     @Test
     void signUpDuplicateUsername() {
-        UserDTO myUser = new UserDTO("mockEmail@gmail.com", "mockUser", "mockPassword");
+        UserDTO myUser = new UserDTO("mockEmailduplicatus@gmail.com", "mockUserdupusername", "mockPassword");
         signupController.signup(myUser);
-        myUser.email = "mockEmail2@gmail.com";
+        myUser.email = "mockEmaildupuser2@gmail.com";
         assertThrows(UserExistsException.class, () -> signupController.signup(myUser));
     }
 

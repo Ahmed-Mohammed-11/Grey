@@ -17,7 +17,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @SuperBuilder
 @Inheritance(strategy = InheritanceType.JOINED)
-
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -46,7 +46,7 @@ public class SecurityConfig {
                 "SELECT username, password, enabled " +
                 "FROM user " +
                 "JOIN user_basic_auth ON user.id = user_basic_auth.local_id " +
-                "WHERE username=?;");
+                "WHERE username=?");
         userDetailsManager.setAuthoritiesByUsernameQuery("SELECT username, role FROM user WHERE username=?");
         return userDetailsManager;
     }
