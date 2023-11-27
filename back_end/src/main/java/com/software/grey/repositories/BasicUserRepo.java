@@ -1,13 +1,13 @@
 package com.software.grey.repositories;
 
-import com.software.grey.models.entities.User;
+import com.software.grey.models.entities.BasicUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface UserRepo extends JpaRepository<User, UUID> {
-    User findByUsername(String username);
-    User findByEmail(String email);
+public interface BasicUserRepo extends JpaRepository<BasicUser, UUID> {
+    BasicUser findByUsername(String username);
+    BasicUser findByEmail(String email);
     Boolean existsByUsername(String username);
     Boolean existsByEmail(String email);
 }

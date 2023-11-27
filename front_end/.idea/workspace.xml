@@ -5,8 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="SG-103 APIs added but not working">
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/BasicUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/GoogleUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/repositories/GoogleUserRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/security/OAuth2LoginSuccessHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/resources/db/migration/V3__User.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/controllers/OAuth2LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/controllers/OAuth2LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/mappers/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/mappers/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/resources/db/migration/V2__User.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/resources/db/migration/V2__User.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_12_22_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_12_22_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/signup/GoogleAuthn.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/GoogleAuthn.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/signup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
