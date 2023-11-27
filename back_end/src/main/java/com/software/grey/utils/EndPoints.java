@@ -13,6 +13,7 @@ public class EndPoints {
     public static final String LOGIN = "/login";
 
     public static final String ROOT = "/";
+    public static final String GET_DIARY = "/ALL";
 
     private EndPoints() {}
 

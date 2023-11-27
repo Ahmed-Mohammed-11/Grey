@@ -1,6 +1,7 @@
 package com.software.grey.controllers;
 
 import com.software.grey.models.dtos.PostDTO;
+import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.EndPoints;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,5 +37,16 @@ public class PostController {
     @PostMapping(EndPoints.ADD_POST)
     public ResponseEntity<UUID> addPost(@Valid @RequestBody PostDTO postDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(postService.add(postDTO));
+    }
+
+    @Operation(
+            summary = "Get the Diary",
+            description = "Get all the posts of a user with pagination")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Posts retrieved correctly")
+    })
+    @PostMapping(EndPoints.GET_DIARY)
+    public ResponseEntity<Page<PostDTO>> GetDiary(@Valid @RequestBody PostFilterDTO postFilterDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(postService.getAll(postFilterDTO));
     }
 }
