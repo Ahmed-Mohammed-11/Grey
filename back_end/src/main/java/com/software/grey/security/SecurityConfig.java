@@ -1,5 +1,8 @@
 package com.software.grey.security;
 
+
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -65,7 +68,7 @@ public class SecurityConfig {
             .formLogin(Customizer.withDefaults())
             .logout(LogoutConfigurer::permitAll)
             .formLogin(f ->
-                    f.defaultSuccessUrl("/" + frontUrl)
+                    f.defaultSuccessUrl(frontUrl, true)
             )
             .httpBasic(Customizer.withDefaults())
             .csrf(AbstractHttpConfigurer::disable)
