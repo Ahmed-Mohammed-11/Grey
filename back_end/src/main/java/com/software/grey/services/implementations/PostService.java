@@ -11,9 +11,11 @@ import com.software.grey.services.IPostService;
 import com.software.grey.services.UserService;
 import com.software.grey.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
+import org.hibernate.boot.model.source.spi.Sortable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -48,7 +50,7 @@ public class PostService implements IPostService {
 
     public Page<PostDTO> getAll(PostFilterDTO postFilterDTO) {
         String userName = securityUtils.getCurrentUserName();
-        Pageable pageable = PageRequest.of(postFilterDTO.getPageNumber(), postFilterDTO.getPageSize());
+        Pageable pageable = PageRequest.of(postFilterDTO.getPageNumber(), postFilterDTO.getPageSize(), Sort.by("postTime").descending());
         return postRepository.findAllByUsernameAndDayMonthYear(
                 userName,
                 postFilterDTO.getDay(),
