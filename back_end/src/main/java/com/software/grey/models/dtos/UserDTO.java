@@ -24,4 +24,5 @@ public class UserDTO {
     @Pattern(regexp = PASSWORD_REGEX, message = "Password Format isn't valid")
     public String password;
 
+    public String externalID;
 }
