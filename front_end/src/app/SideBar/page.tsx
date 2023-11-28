@@ -1,3 +1,4 @@
+"use client"
 import Button from '@mui/material/Button';
 import styles from "./page.module.css"
 import {Box} from "@mui/system";
@@ -7,6 +8,7 @@ import {FaUserLarge} from "react-icons/fa6";
 import {RiSettings4Fill} from "react-icons/ri";
 import {BsBookmark, BsFillBookmarkFill} from "react-icons/bs";
 import Profile from "@/app/SideBar/profile";
+import PopupScreen from "@/app/Popup/page";
 
 
 export default function SideBar(props: any) {
@@ -33,6 +35,7 @@ export default function SideBar(props: any) {
         <Box className={styles.side_bar} width={props.width}>
             <Profile name={"@hesham09"}></Profile>
             <Box className={styles.container_buttons}>{buttons}</Box>
+            <PopupScreen/>
         </Box>
     )
 }
