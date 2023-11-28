@@ -1,12 +1,14 @@
 package com.software.grey.models.entities;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.UUID;
 
 @Entity
 @Data
+@Builder
 @Table(name = "user_verification")
 public class UserVerification {
     @Id

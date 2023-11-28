@@ -70,12 +70,15 @@ public class UserService {
 
         user = userMapper.toUser(userDTO, user);
         basicUserRepo.save(user);
-        String confirmationCode = generateConfirmationCode();
-        UserVerification userVerification = new UserVerification();
-        userVerification.setUser(user);
-        userVerification.setRegistrationConfirmationCode(confirmationCode);
+
+        String confirmationCode = securityUtils.generateConfirmationCode();
+        UserVerification userVerification = UserVerification.builder()
+                .user(user)
+                .registrationConfirmationCode(confirmationCode)
+                .build();
         userVerificationRepo.save(userVerification);
-        sendVerificationEmail(userDTO.email, basicUserRepo.findByEmail(userDTO.email).getId());
+
+        emailSender.send(userDTO, confirmationCode);
     }
 
     public void saveGoogleUser(OAuth2User principal) {
@@ -104,31 +107,6 @@ public class UserService {
         user = userMapper.toGoogleUser(userDTO, user);
         googleUserRepo.save(user);
         userRepo.save(user);
-    }
-
-
-    private void sendVerificationEmail(String toAddress, String userID){
-        EmailDetails emailDetails = EmailDetails.builder()
-                .from(fromAddress)
-                .to(toAddress)
-                .subject("Welcome to Grey!")
-                .content(populateEmailContentMessage(userID))
-                .build();
-
-        emailSender.send(emailDetails);
-    }
-
-    private String populateEmailContentMessage(String userID){
-        String confirmationCode = generateConfirmationCode();
-        System.out.println(confirmationCode);
-        String verificationURL = backendURL + EndPoints.VERIFY_REGISTERATION + "?userID=" +  userID +
-                "&registrationCode=" + confirmationCode;
-
-        return "Please click the following link to verify email: " + verificationURL;
-    }
-
-    private String generateConfirmationCode(){
-        return RandomStringUtils.random(10, 0, 0, true, true, null, new SecureRandom());
     }
 
     @Transactional

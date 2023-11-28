@@ -27,4 +27,6 @@ class UserServiceTest {
         UserDTO user = new UserDTO("iDoNotExist@gmail.com", "accursedNotExists", "pass");
         assertFalse(userService.userExists(user));
     }
+
+
 }
