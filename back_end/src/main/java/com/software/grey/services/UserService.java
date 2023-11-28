@@ -7,26 +7,20 @@ import com.software.grey.models.entities.GoogleUser;
 import com.software.grey.models.entities.UserVerification;
 import com.software.grey.models.enums.Role;
 import com.software.grey.models.enums.Tier;
-import com.software.grey.models.entities.User;
 import com.software.grey.models.mappers.UserMapper;
 import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.repositories.GoogleUserRepo;
 import com.software.grey.repositories.UserRepo;
 import com.software.grey.repositories.UserVerificationRepo;
-import com.software.grey.utils.EndPoints;
 import com.software.grey.utils.SecurityUtils;
-import com.software.grey.utils.emailsender.EmailDetails;
 import com.software.grey.utils.emailsender.EmailSender;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.security.SecureRandom;
-import java.util.UUID;
 
 @Service
 public class UserService {
