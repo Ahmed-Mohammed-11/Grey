@@ -149,41 +149,62 @@ class PostControllerTest {
     @ParameterizedTest
     @MethodSource("paginationOfDiaryPostsFailParameters")
     @WithMockUser(username = "greyUser", roles = "ROLES_USER")
-    void getDiaryOfUserWithFailPagination(Integer pageNumber, Integer pageSize, ResultMatcher status) throws Exception {
-        PostFilterDTO postFilterDTO = PostFilterDTO.builder().pageNumber(pageNumber).pageSize(pageSize).build();
+    void getDiaryOfUserWithFailPagination(Integer pageNumber,
+                                          Integer pageSize,
+                                          Integer day,
+                                          Integer month,
+                                          Integer year) throws Exception {
+        PostFilterDTO postFilterDTO = PostFilterDTO.builder()
+                .pageNumber(pageNumber).pageSize(pageSize).day(day).month(month).year(year).build();
         mockMvc.perform(post(EndPoints.POST + EndPoints.GET_DIARY)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(postFilterDTO)))
-                .andExpect(status);
+                .andExpect(status().isBadRequest());
         verify(postService, never()).getAll(any(PostFilterDTO.class));
     }
 
     static Stream<Arguments> paginationOfDiaryPostsFailParameters() {
         return Stream.of(
-                Arguments.of(0, 0, status().isBadRequest()),// page size must be more than 0
-                Arguments.of(-1, 1, status().isBadRequest()), // page number must be at least 0
-                Arguments.of(null, 4, status().isBadRequest()),// page number must not be null
-                Arguments.of(4, null, status().isBadRequest()),// page size must not be null
-                Arguments.of(null, null, status().isBadRequest())// page number and size must not be null
+                Arguments.of(0, 0, null, null, null),// page size must be more than 0
+                Arguments.of(-1, 1, null, null, null), // page number must be at least 0
+                Arguments.of(null, 4, null, null, null),// page number must not be null
+                Arguments.of(4, null, null, null, null),// page size must not be null
+                Arguments.of(null, null, null, null, null),// page number and size must not be null
+                Arguments.of(0, 1, 0, null, null), // day must be bigger than 0
+                Arguments.of(0, 1, -5, null, null),
+                Arguments.of(0, 1, 32, null, null), // day must be less than or equal to 31
+                Arguments.of(0, 1, 2, 0, null),// month must be bigger than 0
+                Arguments.of(0, 1, 2, -1, null),
+                Arguments.of(0, 1, null, 13, null)// month must be less than or equal to 12
         );
     }
 
     @ParameterizedTest
     @MethodSource("paginationOfDiaryPostsAcceptParameters")
     @WithMockUser(username = "greyUser", roles = "ROLES_USER")
-    void getDiaryOfUserWithAcceptPagination(Integer pageNumber, Integer pageSize, ResultMatcher status) throws Exception {
-        PostFilterDTO postFilterDTO = PostFilterDTO.builder().pageNumber(pageNumber).pageSize(pageSize).build();
+    void getDiaryOfUserWithAcceptPagination(Integer pageNumber,
+                                            Integer pageSize,
+                                            Integer day,
+                                            Integer month,
+                                            Integer year) throws Exception {
+        PostFilterDTO postFilterDTO = PostFilterDTO.builder()
+                .pageNumber(pageNumber).pageSize(pageSize).day(day).month(month).year(year).build();
         mockMvc.perform(post(EndPoints.POST + EndPoints.GET_DIARY)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(postFilterDTO)))
-                .andExpect(status);
+                .andExpect(status().isOk());
         verify(postService, times(1)).getAll(any(PostFilterDTO.class));
     }
 
     static Stream<Arguments> paginationOfDiaryPostsAcceptParameters() {
         return Stream.of(
-                Arguments.of(0, 1, status().isOk()),
-                Arguments.of(10, 10, status().isOk())
+                Arguments.of(0, 1, null, null, null),
+                Arguments.of(10, 10, null, null, null),
+                Arguments.of(10, 10, 10, null, null),
+                Arguments.of(10, 10, 10, 11, null),
+                Arguments.of(10, 10, 10, 11, 2020),
+                Arguments.of(10, 10, null, 11, 2020),
+                Arguments.of(10, 10, null, null, 2020)
         );
     }
 }
