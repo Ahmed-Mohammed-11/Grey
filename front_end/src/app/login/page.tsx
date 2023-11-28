@@ -9,7 +9,7 @@ import ThemeRegistry from "@/app/themes/themeRegistry";
 import classNames from "classnames";
 import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
 import postController from "@/app/services/postController";
-import {signinEndPoint, signupRoute} from "@/app/constants/apiConstants";
+import {SIGN_IN_BACKEND_ENDPOINT, SIGN_UP_ROUTE} from "@/app/constants/apiConstants";
 import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
 import serverValidateMapper from "@/app/security/userValidation/serverFormValidationMapper";
 
@@ -51,7 +51,7 @@ function Page() {
     }
 
     const fetchResponse = async (userDTO: UserDTO) => {
-        let response = await postController.sendPostRequest(userDTO, signinEndPoint);
+        let response = await postController.sendPostRequest(userDTO, SIGN_IN_BACKEND_ENDPOINT);
         // toJSON util to convert ReadableStream to JSON
         let jsonResponse = await toJSON(response.body!);
         console.log(jsonResponse);
@@ -121,7 +121,7 @@ function Page() {
                     <Box className={styles.panelBanner}> GREY </Box>
                     <Box typography="body1" color="text.primary" fontSize="2rem" className={styles.panelText}> Welcome Back! </Box>
                 </Box>
-                <Link href={signupRoute}>
+                <Link href={SIGN_UP_ROUTE}>
                     <Button className={styles.iconButton} variant="contained" size="large">
                         <FaArrowLeft size={40} style={{strokeWidth: '2', stroke: 'black'}}/>
                     </Button>

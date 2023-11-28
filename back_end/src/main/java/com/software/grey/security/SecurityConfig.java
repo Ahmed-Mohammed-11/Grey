@@ -80,7 +80,6 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults());
-//        http.addFilter(new JsonUsernamePasswordAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()));
         return http.build();
     }
 }
