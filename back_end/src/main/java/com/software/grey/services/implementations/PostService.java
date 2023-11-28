@@ -14,8 +14,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.UUID;
 
 @Service
@@ -35,6 +38,7 @@ public class PostService implements IPostService {
         String userName = securityUtils.getCurrentUserName();
         User user = userService.findByUserName(userName);
         post.setUser(user);
+        post.setPostTime(Timestamp.from(Instant.now()));
         postRepository.save(post);
         return post.getId();
     }
@@ -45,7 +49,12 @@ public class PostService implements IPostService {
 
     public Page<PostDTO> getAll(PostFilterDTO postFilterDTO) {
         String userName = securityUtils.getCurrentUserName();
-        Pageable pageable = PageRequest.of(postFilterDTO.getPageNumber(), postFilterDTO.getPageSize());
-        return postRepository.findAllByUser_Username(pageable, userName).map(postMapper::toPostDTO);
+        Pageable pageable = PageRequest.of(postFilterDTO.getPageNumber(), postFilterDTO.getPageSize(), Sort.by("postTime").descending());
+        return postRepository.findAllByUsernameAndDayMonthYear(
+                userName,
+                postFilterDTO.getDay(),
+                postFilterDTO.getMonth(),
+                postFilterDTO.getYear(),
+                pageable).map(postMapper::toPostDTO);
     }
 }

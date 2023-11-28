@@ -46,7 +46,7 @@ public class PostController {
             @ApiResponse(responseCode = "200", description = "Posts retrieved correctly")
     })
     @PostMapping(EndPoints.GET_DIARY)
-    public ResponseEntity<Page<PostDTO>> GetDiary(@Valid @RequestBody PostFilterDTO postFilterDTO){
+    public ResponseEntity<Page<PostDTO>> getDiary(@Valid @RequestBody PostFilterDTO postFilterDTO){
         return ResponseEntity.status(HttpStatus.OK).body(postService.getAll(postFilterDTO));
     }
 }
