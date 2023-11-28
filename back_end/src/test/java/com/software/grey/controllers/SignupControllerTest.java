@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Objects;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 class SignupControllerTest {
@@ -44,7 +45,7 @@ class SignupControllerTest {
         signupController.signup(myUser);
         myUser.email = "mockEmail2@gmail.com";
         ResponseEntity<String> responseEntity =  signupController.signup(myUser);
-        assertTrue(responseEntity.getStatusCode() == HttpStatus.BAD_REQUEST);
+        assertSame(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
     }
 
     @Test
@@ -53,6 +54,6 @@ class SignupControllerTest {
         signupController.signup(myUser);
         myUser.username = "notMockUser";
         ResponseEntity<String> responseEntity =  signupController.signup(myUser);
-        assertTrue(responseEntity.getStatusCode() == HttpStatus.BAD_REQUEST);
+        assertSame(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
     }
 }

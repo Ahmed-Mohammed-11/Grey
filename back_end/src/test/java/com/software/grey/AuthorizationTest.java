@@ -28,7 +28,7 @@ class AuthorizationTest {
     }
 
     @Test
-    public void testUnauthorizedAccess() throws Exception {
+     void testUnauthorizedAccess() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/test"))
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized());
         // Add more assertions based on the expected behavior for unauthorized access
