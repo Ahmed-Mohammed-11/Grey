@@ -57,6 +57,7 @@ class PostServiceTest {
         postRepository.deleteAll();
         userRepo.deleteAll();
     }
+
     @Test
     void addPostCorrectly(){
 
