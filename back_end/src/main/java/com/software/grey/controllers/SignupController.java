@@ -28,8 +28,9 @@ public class SignupController {
     }
 
     @PutMapping(VERIFY_REGISTERATION)
-    public ResponseEntity<String> verify(@RequestParam String userID, @RequestParam String registerationCode){
-        userService.verifyUser(userID, registerationCode);
+    public ResponseEntity<String> verify(@RequestParam String userID, @RequestParam String registrationCode){
+        System.out.println("argokk");
+        userService.verifyUser(userID, registrationCode);
         return ResponseEntity.status(HttpStatus.OK).body("User verified");
     }
 
