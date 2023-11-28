@@ -52,11 +52,11 @@ class PostServiceTest {
     @Autowired
     private PostService postService;
 
-//    @AfterEach
-//    void cleanUp() {
-//        postRepository.deleteAll();
-//        userRepo.deleteAll();
-//    }
+    @AfterEach
+    void cleanUp() {
+        postRepository.deleteAll();
+        userRepo.deleteAll();
+    }
     @Test
     void addPostCorrectly(){
 
