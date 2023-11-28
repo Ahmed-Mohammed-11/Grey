@@ -3,17 +3,63 @@ import styles from './page.module.css'
 import {Button, TextField, Link} from "@mui/material";
 import {Box} from "@mui/system";
 import GoogleAuthn from "@/app/googleAuthentication/GoogleAuthn"
-import {useRef} from "react";
+import {useRef, useState} from "react";
 import {FaArrowLeft} from "react-icons/fa";
 import ThemeRegistry from "@/app/themes/themeRegistry";
 import classNames from "classnames";
+import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
+import postController from "@/app/services/postController";
+import {signinEndPoint, signupRoute} from "@/app/constants/apiConstants";
+import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
+import serverValidateMapper from "@/app/security/userValidation/serverFormValidationMapper";
 
 
 function Page() {
-    const usernameEmailRef = useRef()
-    const passwordRef = useRef()
+    const usernameRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const [isUserValid, setIsUserValid] = useState({
+        username: true,
+        password: true
+    });
+    const [errors, setErrors] = useState({
+        username: "",
+        password: ""
+    });
 
     const handleSubmit = () => {
+        let user: User = {
+            username: usernameRef.current!.value,
+            password: passwordRef.current!.value
+        }
+
+        // validate user credentials on client side
+        let { isUserValid, errors} = clientValidateForm(user)
+        setIsUserValid(isUserValid)
+        setErrors(errors);
+
+        // if user credentials are valid, try send to server
+        isUserValid.username && isUserValid.password && sendInfoToServer(user)
+    }
+
+    async function sendInfoToServer(user: UserDTO) {
+        // prepare user data to send to server
+        let userDTO: UserDTO = {
+            username: user.username,
+            password: user.password
+        }
+        fetchResponse(userDTO);
+    }
+
+    const fetchResponse = async (userDTO: UserDTO) => {
+        let response = await postController.sendPostRequest(userDTO, signinEndPoint);
+        // toJSON util to convert ReadableStream to JSON
+        let jsonResponse = await toJSON(response.body!);
+        console.log(jsonResponse);
+        console.log("ofah");
+        let responseStat = response.status;
+        let {isUserValid, errors} = serverValidateMapper(responseStat, jsonResponse)
+        setIsUserValid(isUserValid);
+        setErrors(errors);
     }
 
     let topLeftShapeClass = classNames(styles.topLeft, styles.cornerShapes);
@@ -33,11 +79,13 @@ function Page() {
                 <Box className={styles.signinForm}>
                     <TextField
                         className={styles.textArea}
-                        label='Username/Email'
+                        label='Username'
                         placeholder='Enter your username/email'
-                        inputRef={usernameEmailRef}
+                        inputRef={usernameRef}
                         required
                         variant="filled"
+                        error = {!isUserValid.username}
+                        helperText = {(isUserValid.username)? "": errors.username}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
@@ -50,6 +98,8 @@ function Page() {
                         inputRef={passwordRef}
                         required
                         variant="filled"
+                        error = {!isUserValid.password}
+                        helperText = {(isUserValid.password)? "": errors.password}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
@@ -71,7 +121,7 @@ function Page() {
                     <Box className={styles.panelBanner}> GREY </Box>
                     <Box typography="body1" color="text.primary" fontSize="2rem" className={styles.panelText}> Welcome Back! </Box>
                 </Box>
-                <Link href="/signup">
+                <Link href={signupRoute}>
                     <Button className={styles.iconButton} variant="contained" size="large">
                         <FaArrowLeft size={40} style={{strokeWidth: '2', stroke: 'black'}}/>
                     </Button>
