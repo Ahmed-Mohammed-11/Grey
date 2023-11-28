@@ -16,7 +16,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.UUID;
 
 @Service
@@ -36,6 +37,7 @@ public class PostService implements IPostService {
         String userName = securityUtils.getCurrentUserName();
         User user = userService.findByUserName(userName);
         post.setUser(user);
+        post.setPostTime(Timestamp.from(Instant.now()));
         postRepository.save(post);
         return post.getId();
     }

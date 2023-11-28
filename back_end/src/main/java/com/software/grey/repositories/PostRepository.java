@@ -8,23 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.UUID;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, UUID> {
-//    Page<Post> findAllByUser_Username(Pageable pageable, String userName);
-//
-////    @Query(value = "SELECT * FROM post e WHERE DAY(e.post_time) = :day AND MONTH(e.post_time) = :month AND YEAR(e.post_time) = :year", nativeQuery = true)
-////    List<Post> findByDayMonthYear(@Param("day") int day, @Param("month") int month, @Param("year") int year);
-//
-//    @Query(value = "SELECT * FROM post e WHERE DAY(e.post_time) = :day AND MONTH(e.post_time) = :month AND YEAR(e.post_time) = :year", nativeQuery = true)
-//    Page<Post> findByDayMonthYear(
-//            @Param("day") int day,
-//            @Param("month") int month,
-//            @Param("year") int year,
-//            Pageable pageable
-//    );
 
     @Query("""
         SELECT p FROM Post p
