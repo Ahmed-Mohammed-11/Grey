@@ -81,21 +81,23 @@ class PostServiceTest {
         assertThat(difference).isLessThan(Duration.ofMinutes(1));
     }
 
-    void prepareDataUser1(){
+    void prepareDataUser1() throws InterruptedException {
         when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName1");
         UserDTO userDTO1 = new UserDTO("mockEmail1@gmail.com", "mockedUserName1","mockPas1");
         userService.save(userDTO1);
         for(int i = 0;i<5;i++){
             postService.add(PostDTO.builder().postText(i + " user1").postFeelings(Set.of(LOVE, HAPPY)).build());
+            Thread.sleep(30);
         }
     }
 
-    void prepareDataUser2(){
+    void prepareDataUser2() throws InterruptedException {
         when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName2");
         UserDTO userDTO2 = new UserDTO("mockEmail2@gmail.com", "mockedUserName2","mockPas2");
         userService.save(userDTO2);
         for(int i = 0;i<3;i++){
             postService.add(PostDTO.builder().postText(i + " user2").postFeelings(Set.of(LOVE, HAPPY)).build());
+            Thread.sleep(30);
         }
     }
 
@@ -104,7 +106,7 @@ class PostServiceTest {
     @MethodSource("paginationOfDiaryPostsParameters")
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     void getDiaryOfUser1(String userName, Integer pageSize, Integer pageNumber, Integer day, Integer month,
-                         Integer year, Integer contentSize){
+                         Integer year, Integer contentSize) throws InterruptedException {
         prepareDataUser1();
         prepareDataUser2();
 
