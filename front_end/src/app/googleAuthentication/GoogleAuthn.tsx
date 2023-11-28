@@ -2,7 +2,7 @@
 import {Link} from "@mui/material";
 import {signOut, useSession} from "next-auth/react";
 import {useState} from 'react';
-import {googleAuthUrl} from "@/app/constants/apiConstants";
+import {GOOGLE_AUTH_URL} from "@/app/constants/apiConstants";
 import styles from "@/app/signup/page.module.css";
 import classNames from "classnames";
 
@@ -51,7 +51,7 @@ const GoogleAuthn = () => {
 
         return (
 
-            <Link className={googleButtonClasses} href={googleAuthUrl}>
+            <Link className={googleButtonClasses} href={GOOGLE_AUTH_URL}>
                 <GoogleLogo size={8}/> &nbsp;
                 Continue with Google
             </Link>

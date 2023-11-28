@@ -8,7 +8,7 @@ import {FaArrowRight} from "react-icons/fa";
 import {useRef, useState} from "react";
 import postController from "@/app/services/postController";
 import {SIGNUP_PANEL_TEXT} from "@/app/constants/displayTextMessages";
-import {signinRoute, signupEndPoint} from "@/app/constants/apiConstants";
+import {SIGN_IN_ROUTE, SIGN_UP_BACKEND_ENDPOINT} from "@/app/constants/apiConstants";
 import classNames from "classnames";
 import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
 import serverValidateMapper from "@/app/security/userValidation/serverFormValidationMapper";
@@ -58,7 +58,7 @@ function Page() {
     }
 
     const fetchResponse = async (userDTO: UserDTO) => {
-        let response = await postController.sendPostRequest(userDTO, signupEndPoint);
+        let response = await postController.sendPostRequest(userDTO, SIGN_UP_BACKEND_ENDPOINT);
         // toJSON util to convert ReadableStream to JSON
         let jsonResponse = await toJSON(response.body!);
         let responseStat = response.status;
@@ -139,7 +139,7 @@ function Page() {
                     <text className={styles.panelText}> {SIGNUP_PANEL_TEXT} </text>
                 </Box>
 
-                <Link href={signinRoute}>
+                <Link href={SIGN_IN_ROUTE}>
                     <Button className={[styles.iconButton].join()} variant="contained" size="large">
                         <FaArrowRight size={40} style={{strokeWidth: '2', stroke: 'black'}}/>
                     </Button>
