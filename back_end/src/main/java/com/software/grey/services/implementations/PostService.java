@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -46,6 +47,11 @@ public class PostService implements IPostService {
     public Page<PostDTO> getAll(PostFilterDTO postFilterDTO) {
         String userName = securityUtils.getCurrentUserName();
         Pageable pageable = PageRequest.of(postFilterDTO.getPageNumber(), postFilterDTO.getPageSize());
-        return postRepository.findAllByUser_Username(pageable, userName).map(postMapper::toPostDTO);
+        return postRepository.findAllByUsernameAndDayMonthYear(
+                userName,
+                postFilterDTO.getDay(),
+                postFilterDTO.getMonth(),
+                postFilterDTO.getYear(),
+                pageable).map(postMapper::toPostDTO);
     }
 }
