@@ -51,7 +51,6 @@ public class UserService {
         this.securityUtils = securityUtils;
     }
 
-
     public void save(UserDTO userDTO) {
         if(userExists(userDTO))
             throw new UserExistsException("User already exists");
@@ -65,7 +64,6 @@ public class UserService {
                 .build();
 
         user = userMapper.toUser(userDTO, user);
-        basicUserRepo.save(user);
 
         String confirmationCode = securityUtils.generateConfirmationCode();
         UserVerification userVerification = UserVerification.builder()
