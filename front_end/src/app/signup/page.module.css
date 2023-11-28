@@ -1,3 +1,24 @@
+.cornerShapes{
+    width:700px;
+    height:700px;
+    position:fixed;
+    border-radius: 150px;
+}
+
+.topLeft
+{
+    top:0;
+    left:0;
+    transform: rotate(45deg)  translate(-70%, 0%);
+}
+
+.bottomRight
+{
+    right:0;
+    bottom:0;
+    transform: rotate(45deg) translate(70%, 0%);
+}
+
 .container {
     display: flex;
     flex-direction: row;
@@ -18,7 +39,7 @@
     min-height: 500px;
 }
 
-.login_form {
+.signupForm {
     display: flex;
     flex: 40%;
     flex-direction: column;
@@ -31,7 +52,7 @@
     min-height: 500px;
 }
 
-.textarea {
+.textArea {
     width: 60%;
     height: 100%;
     margin: 2.2% !important;
@@ -45,7 +66,7 @@
     box-shadow: none !important;
 }
 
-.googleButton{
+.googleButton {
     width: 70%;
     height: 100%;
     display: flex;
@@ -55,12 +76,16 @@
     box-shadow: none !important;
 }
 
-.googleButtonText{
-    margin-left: 2% !important;
+.googleButtonText {
     font-size: 1.4rem !important;
+    text-decoration: none !important;
 }
 
-.iconButton{
+.googleButton:hover {
+    background: transparent !important;
+}
+
+.iconButton {
     position: absolute !important;
     width: 80px;
     height: 80px;
@@ -75,11 +100,8 @@
     box-shadow: none !important;
 }
 
-.googleButton:hover {
-    background: transparent !important;
-}
 
-.link{
+.link {
     text-decoration: none !important;
 }
 
@@ -101,7 +123,7 @@
     box-sizing: border-box;
 }
 
-.panelbanner {
+.panelBanner {
     -webkit-text-stroke: 1px #333;
     -moz-text-stroke: 1px #333;
     -o-text-stroke: 1px #333;
@@ -115,25 +137,18 @@
     letter-spacing: 2rem;
 }
 
-.link{
+.link {
     text-decoration: none !important;
 }
 
-.paneltext
-{
+.panelText {
     text-align: center;
     width: 70%;
 }
 
-.paneltextheader
-{
-    margin-top: 10%;
-}
 
-@media (max-width: 768px)
-{
-    .container
-    {
+@media (max-width: 1100px) {
+    .container {
         justify-content: center;
         align-items: center;
     }
@@ -149,28 +164,17 @@
     .panel {
         display: none;
     }
-}
 
-
-
-@media (max-width: 768px)
-{
-    .container
-    {
-        justify-content: center;
-        align-items: center;
+    .topLeft {
+        width: 600px;
+        height: 600px;
+        border-radius: 100px;
     }
 
-    .login_form {
-        display: flex;
-        flex: 100%;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .panel {
-        display: none;
+    .bottomRight {
+        width: 600px;
+        height: 600px;
+        border-radius: 100px;
     }
 }
 

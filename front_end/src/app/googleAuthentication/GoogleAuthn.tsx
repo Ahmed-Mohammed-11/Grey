@@ -1,13 +1,11 @@
 "use client";
-import {Button, Link} from "@mui/material";
+import {Link} from "@mui/material";
+import {signOut, useSession} from "next-auth/react";
+import {useState} from 'react';
+import {googleAuthUrl} from "@/app/constants/apiConstants";
 import styles from "@/app/signup/page.module.css";
-import {signIn, signOut, useSession} from "next-auth/react";
-import {Box} from "@mui/system";
-import {useRef} from "react";
-import userController from "@/app/signup/Controllers/userController";
-import { useState } from 'react';
-import axios from 'axios';
-import {Session} from "next-auth";
+import classNames from "classnames";
+
 
 const GoogleLogo = (props: any) => (
     <svg
@@ -33,8 +31,9 @@ const GoogleLogo = (props: any) => (
 );
 
 const GoogleAuthn = () => {
-    const { data: session, status } = useSession();
+    const {data: session, status} = useSession();
     const [loading, setLoading] = useState(false);
+    let googleButtonClasses = classNames(styles.googleButton, styles.googleButtonText);
 
 
     if (status === "loading") {
@@ -48,18 +47,16 @@ const GoogleAuthn = () => {
             </Link>)
 
     } else
+
+
         return (
 
-            <a href={"http://localhost:8080/oauth2/authorization/google"}>
-                <GoogleLogo size={10}/>
-                Sign in with Google
-            </a>
-
-    );
-
+            <Link className={googleButtonClasses} href={googleAuthUrl}>
+                <GoogleLogo size={8}/> &nbsp;
+                Continue with Google
+            </Link>
+        );
 };
-
-
 
 
 // const GoogleAuthn = () => {

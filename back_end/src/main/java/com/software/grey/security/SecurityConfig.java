@@ -1,5 +1,6 @@
 package com.software.grey.security;
 
+
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,11 @@ import static com.software.grey.utils.EndPoints.TEST;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Autowired
     private OAuth2LoginSuccessHandler oauth2LoginSuccessHandler;
+
     @Value("${front.url}")
-    private String frontURL;
+    private String frontUrl;
 
     public SecurityConfig(OAuth2LoginSuccessHandler oauth2LoginSuccessHandler) {
         this.oauth2LoginSuccessHandler = oauth2LoginSuccessHandler;
@@ -42,7 +45,11 @@ public class SecurityConfig {
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource){
         JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
-        userDetailsManager.setUsersByUsernameQuery("SELECT username, password, enabled FROM user WHERE username=?");
+        userDetailsManager.setUsersByUsernameQuery("""
+                SELECT username, password, enabled
+                FROM user
+                JOIN user_basic_auth ON user.id = user_basic_auth.local_id
+                WHERE username=?""");
         userDetailsManager.setAuthoritiesByUsernameQuery("SELECT username, role FROM user WHERE username=?");
         return userDetailsManager;
     }
@@ -57,11 +64,11 @@ public class SecurityConfig {
                             .anyRequest().authenticated()
             )
             .oauth2Login(oauth2 ->
-                    oauth2.successHandler(oauth2LoginSuccessHandler)
-            )
+                    oauth2.successHandler(oauth2LoginSuccessHandler))
+            .formLogin(Customizer.withDefaults())
             .logout(LogoutConfigurer::permitAll)
             .formLogin(f ->
-                    f.defaultSuccessUrl(frontURL, true)
+                    f.defaultSuccessUrl(frontUrl, true)
             )
             .httpBasic(Customizer.withDefaults())
             .csrf(AbstractHttpConfigurer::disable)
