@@ -13,10 +13,14 @@ public class EmailConfigurations {
     private String username;
     @Value("${grey.password}")
     private String password;
+    @Value("${grey.email.port}")
+    private int emailPort;
+    @Value("${grey.email.host}")
+    private String host;
     @Bean
     public Mailer mailer() {
         return MailerBuilder
-                .withSMTPServer("smtp.gmail.com", 587, username, password)
+                .withSMTPServer(host, emailPort, username, password)
                 .async()
                 .buildMailer();
     }

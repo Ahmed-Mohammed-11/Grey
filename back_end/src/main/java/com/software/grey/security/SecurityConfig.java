@@ -72,7 +72,7 @@ public class SecurityConfig {
             )
             .httpBasic(Customizer.withDefaults())
             .csrf(AbstractHttpConfigurer::disable)
-                .cors(Customizer.withDefaults());
+            .cors(Customizer.withDefaults());
 
         return http.build();
     }
