@@ -72,7 +72,7 @@ class SignupControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(myUser)))
                 .andExpect(status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("Email form not valid"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("Email Format isn't valid"));
     }
 
     @Test
@@ -82,7 +82,7 @@ class SignupControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(myUser)))
                 .andExpect(status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("Email form not valid"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("Email Format isn't valid"));
     }
 
     @Test
