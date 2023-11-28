@@ -2,11 +2,11 @@ package com.software.grey.models.dtos;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.validator.constraints.Range;
 
 @Data
 @AllArgsConstructor
@@ -22,10 +22,10 @@ public class PostFilterDTO {
     @NotNull(message = "page number must not be null")
     private Integer pageNumber;
 
-    @Range(min = 1, max = 31, message = "the day must range from day 1 to 31")
+    @Size(min = 1, max = 31, message = "the day must range from day 1 to 31")
     private Integer day;
 
-    @Range(min = 1, max = 12, message = "the month must range from month 1 to 12")
+    @Size(min = 1, max = 12, message = "the month must range from month 1 to 12")
     private Integer month;
 
     private Integer year;
