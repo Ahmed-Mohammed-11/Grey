@@ -83,7 +83,7 @@ const lightTheme = createTheme({
     },
     typography: {
         fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-        fontSize: 18,
+        fontSize: 20,
         fontWeightLight: 300,
         fontWeightRegular: 400,
         fontWeightMedium: 500,

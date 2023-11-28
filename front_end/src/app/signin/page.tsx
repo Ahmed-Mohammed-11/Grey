@@ -2,7 +2,7 @@
 import styles from './page.module.css'
 import {Button, TextField, Link} from "@mui/material";
 import {Box} from "@mui/system";
-import GoogleAuthn from "@/app/signup/GoogleAuthn";
+import GoogleAuthn from "@/app/googleAuthentication/GoogleAuthn"
 import {useRef} from "react";
 import {FaArrowLeft} from "react-icons/fa";
 import ThemeRegistry from "@/app/themes/themeRegistry";
