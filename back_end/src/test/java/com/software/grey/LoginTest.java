@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static com.software.grey.utils.EndPoints.ROOT;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -36,7 +37,7 @@ class LoginTest {
 
         String username = "testusershouldsucceed";
         String password = "pass";
-        UserDTO userDTO = new UserDTO("testusershouldsucceed@gmail.com", username, password);
+        UserDTO userDTO = new UserDTO("testusershouldsucceed`@gmail.com", username, password);
         signupController.signup(userDTO);
 
         // Attempt login with the registered user
@@ -45,7 +46,7 @@ class LoginTest {
                         .param("username", username)
                         .param("password", password))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection()); // Expect a redirect
-//                .andExpect(redirectedUrl("/"));
+                // .andExpect(redirectedUrl(ROOT));
     }
 
     @Test
@@ -91,7 +92,7 @@ class LoginTest {
                 .param("username", username)
                 .param("password", password))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
-//                .andExpect(redirectedUrl("/"));
+                // .andExpect(redirectedUrl(ROOT));
 
         // Perform logout
         mockMvc.perform(MockMvcRequestBuilders.post("/logout"))

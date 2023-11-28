@@ -12,6 +12,7 @@ import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.repositories.GoogleUserRepo;
 import com.software.grey.repositories.UserRepo;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
