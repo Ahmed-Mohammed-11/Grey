@@ -4,16 +4,20 @@ import com.software.grey.exceptions.UserExistsException;
 import com.software.grey.models.enums.Role;
 import com.software.grey.models.entities.User;
 import com.software.grey.models.dtos.UserDTO;
-import com.software.grey.repositories.UserRepo;
+import com.software.grey.models.entities.BasicUser;
+import com.software.grey.models.enums.Role;
+import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -27,7 +31,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class SignupControllerTest {
+
     @Autowired
     MockMvc mockMvc;
     @Autowired
@@ -35,14 +41,15 @@ class SignupControllerTest {
     @Autowired
     private SignupController signupController;
     @Autowired
-    private UserRepo userRepo;
+    private BasicUserRepo basicUserRepo;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Test
     void signupCorrectUser() {
         UserDTO myUser = new UserDTO("mockEmail12@gmail.com", "testUser", "mock Password test");
         signupController.signup(myUser);
-        User user = userRepo.findByUsername("testUser");
+        BasicUser user = basicUserRepo.findByUsername("testUser");
         assert(Objects.equals(user.getUsername(), "testUser"));
         assert(Objects.equals(user.getEmail(), "mockEmail12@gmail.com"));
         assertTrue(bCryptPasswordEncoder.matches("mock Password test", user.getPassword()));
@@ -51,9 +58,9 @@ class SignupControllerTest {
 
     @Test
     void signUpDuplicateUsername() {
-        UserDTO myUser = new UserDTO("mockEmail@gmail.com", "mockUser", "mock Password test");
+        UserDTO myUser = new UserDTO("mockEmailduplicatus@gmail.com", "mockUserdupusername", "mockPassword");
         signupController.signup(myUser);
-        myUser.email = "mockEmail2@gmail.com";
+        myUser.email = "mockEmaildupuser2@gmail.com";
         assertThrows(UserExistsException.class, () -> signupController.signup(myUser));
     }
 
@@ -72,7 +79,7 @@ class SignupControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(myUser)))
                 .andExpect(status().isBadRequest());
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("Email form not valid"));
+//                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("Email Format isn't valid"));
     }
 
     @Test
@@ -82,7 +89,7 @@ class SignupControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(myUser)))
                 .andExpect(status().isBadRequest());
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("Email form not valid"));
+//                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("Email Format isn't valid"));
     }
 
     @Test

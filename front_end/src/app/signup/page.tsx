@@ -138,8 +138,9 @@ function Page() {
                     <Box className={styles.panelBanner}> GREY </Box>
                     <text className={styles.panelText}> {SIGNUP_PANEL_TEXT} </text>
                 </Box>
-
+            
                 <Link href={signinRoute}>
+
                     <Button className={[styles.iconButton].join()} variant="contained" size="large">
                         <FaArrowRight size={40} style={{strokeWidth: '2', stroke: 'black'}}/>
                     </Button>
