@@ -45,7 +45,7 @@ class LoginTest {
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("username", username)
                         .param("password", password))
-                .andExpect(MockMvcResultMatchers.status().is3xxRedirection()) // Expect a redirect
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection()); // Expect a redirect
                 // .andExpect(redirectedUrl(ROOT));
     }
 
@@ -91,7 +91,7 @@ class LoginTest {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("username", username)
                 .param("password", password))
-                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
                 // .andExpect(redirectedUrl(ROOT));
 
         // Perform logout
