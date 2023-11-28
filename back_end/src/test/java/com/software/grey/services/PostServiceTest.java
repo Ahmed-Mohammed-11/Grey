@@ -5,8 +5,10 @@ import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.repositories.PostRepository;
+import com.software.grey.repositories.UserRepo;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.SecurityUtils;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -38,6 +40,9 @@ class PostServiceTest {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private UserRepo userRepo;
+
     @MockBean
     private SecurityUtils securityUtils;
 
@@ -47,7 +52,11 @@ class PostServiceTest {
     @Autowired
     private PostService postService;
 
-
+    @AfterEach
+    void cleanUp() {
+        postRepository.deleteAll();
+        userRepo.deleteAll();
+    }
     @Test
     void addPostCorrectly(){
 
