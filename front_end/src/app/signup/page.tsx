@@ -5,50 +5,84 @@ import {Box} from "@mui/system";
 import ThemeRegistry from "@/app/themes/themeRegistry";
 import GoogleAuthn from "@/app/googleAuthentication/GoogleAuthn";
 import {FaArrowRight} from "react-icons/fa";
-import {useRef} from "react";
-import postController from "@/app/controllers/postController";
+import {useRef, useState} from "react";
+import postController from "@/app/services/postController";
+import {SIGNUP_PANEL_TEXT} from "@/app/constants/displayTextMessages";
 import {signinRoute, signupEndPoint} from "@/app/constants/apiConstants";
-import {signupPanelText} from "@/app/constants/displayTextConstants";
 import classNames from "classnames";
+import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
+import serverValidateMapper from "@/app/security/userValidation/serverFormValidationMapper";
+import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
 
 function Page() {
-    const usernameRef = useRef<HTMLInputElement>(null)
-    const emailRef = useRef<HTMLInputElement>(null)
-    const passwordRef = useRef<HTMLInputElement>(null)
+    const usernameRef = useRef<HTMLInputElement>(null);
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const [isUserValid, setIsUserValid] = useState({
+        username: true,
+        email: true,
+        password: true
+    });
+    const [errors, setErrors] = useState({
+        username: "",
+        email: "",
+        password: ""
+    });
 
     const handleSubmit = () => {
-        const formData = {
-            username: usernameRef.current?.value,
-            email: emailRef.current?.value,
-            password: passwordRef.current?.value
+        // user credentials
+        let user: User = {
+            username: usernameRef.current!.value,
+            email: emailRef.current!.value,
+            password: passwordRef.current!.value
         }
-        sendInfoToServer(formData)
+
+        // validate user credentials on client side
+        let { isUserValid, errors} = clientValidateForm(user)
+        setIsUserValid(isUserValid)
+        setErrors(errors);
+
+        // if user credentials are valid, try send to server
+        isUserValid.username && isUserValid.email && isUserValid.password && sendInfoToServer(user)
     }
 
-    function sendInfoToServer(formData: any) {
+    async function sendInfoToServer(user: UserDTO) {
+        // prepare user data to send to server
         let userDTO: UserDTO = {
-            username: formData.username,
-            email: formData.email,
-            password: formData.password
+            username: user.username,
+            email: user.email,
+            password: user.password
         }
-        console.log(userDTO)
-        postController.sendPostRequest(userDTO, signupEndPoint)
+
+        fetchResponse(userDTO);
     }
 
+    const fetchResponse = async (userDTO: UserDTO) => {
+        let response = await postController.sendPostRequest(userDTO, signupEndPoint);
+        // toJSON util to convert ReadableStream to JSON
+        let jsonResponse = await toJSON(response.body!);
+        let responseStat = response.status;
+        let {isUserValid, errors} = serverValidateMapper(responseStat, jsonResponse)
+        setIsUserValid(isUserValid);
+        setErrors(errors);
+    }
+
+
+    // classes of the corner shapes
     let topLeftShapeClass = classNames(styles.topLeft, styles.cornerShapes);
     let bottomRightShapeClass = classNames(styles.bottomRight, styles.cornerShapes);
 
     return (
+
         <ThemeRegistry options={{key: 'mui'}}>
-            <Box className={topLeftShapeClass} sx={{
-                background: (theme) => theme.palette.primary.light
-            }}
-            ></Box>
+            <Box className={topLeftShapeClass}
+                 sx={{background: (theme) => theme.palette.primary.light}}>
+            </Box>
             <Box className={bottomRightShapeClass}
-                 sx={{
-                     background: (theme) => theme.palette.primary.light
-                 }}
-            ></Box>
+                 sx={{background: (theme) => theme.palette.primary.light}}>
+            </Box>
+
+
             <Box className={styles.container}>
                 <Box className={styles.signupForm}>
                     <TextField
@@ -58,8 +92,9 @@ function Page() {
                         inputRef={usernameRef}
                         required
                         variant="filled"
-                        helperText="Username shall be 5 - 20 characters long"
-                        InputProps={{style: {background: "#FFF",},}}
+                        error = {!isUserValid.username}
+                        helperText = {(isUserValid.username)? "": errors.username}
+                        InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
 
@@ -70,6 +105,8 @@ function Page() {
                         inputRef={emailRef}
                         required
                         variant="filled"
+                        error = {!isUserValid.email}
+                        helperText = {(isUserValid.email)? "": errors.email}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
@@ -81,7 +118,8 @@ function Page() {
                         inputRef={passwordRef}
                         required
                         variant="filled"
-                        helperText="Make it strong"
+                        error = {!isUserValid.password}
+                        helperText = {(isUserValid.password)? "Make it strong": errors.password}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
@@ -98,7 +136,7 @@ function Page() {
 
                 <Box className={styles.panel}>
                     <Box className={styles.panelBanner}> GREY </Box>
-                    <text className={styles.panelText}> {signupPanelText} </text>
+                    <text className={styles.panelText}> {SIGNUP_PANEL_TEXT} </text>
                 </Box>
             
                 <Link href={signinRoute}>
@@ -110,6 +148,7 @@ function Page() {
 
             </Box>
         </ThemeRegistry>
+
     )
 }
 

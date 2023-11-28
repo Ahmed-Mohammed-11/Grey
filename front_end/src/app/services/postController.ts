@@ -6,14 +6,13 @@ class PostController {
         const url = baseUrl + endpoint;
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        fetch(url, {
+        headers.append('mode','cors')
+        return fetch(url, {
             method: 'POST',
             body: JSON.stringify(payload),
             headers: headers
         })
-            .then(response => response)
-            .then(data => console.log(data))
-            .catch(error => console.log(error.message));
+
     }
 }
 
