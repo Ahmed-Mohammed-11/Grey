@@ -25,4 +25,10 @@ public class UserDTO {
     public String password;
 
     public String externalID;
+
+    public UserDTO(String email, String username, String password) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
 }
