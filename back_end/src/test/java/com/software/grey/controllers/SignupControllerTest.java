@@ -54,6 +54,6 @@ class SignupControllerTest {
         signupController.signup(myUser);
         myUser.username = "notMockUser";
         ResponseEntity<String> responseEntity =  signupController.signup(myUser);
-        assertTrue(responseEntity.getStatusCode() == HttpStatus.BAD_REQUEST);
+        assertSame(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
     }
 }
