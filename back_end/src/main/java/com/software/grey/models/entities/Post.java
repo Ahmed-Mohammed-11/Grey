@@ -2,7 +2,10 @@ package com.software.grey.models.entities;
 
 import com.software.grey.models.enums.Feeling;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Set;

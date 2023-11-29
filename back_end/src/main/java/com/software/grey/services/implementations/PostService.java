@@ -8,8 +8,6 @@ import com.software.grey.repositories.PostRepository;
 import com.software.grey.services.IPostService;
 import com.software.grey.services.UserService;
 import com.software.grey.utils.SecurityUtils;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
