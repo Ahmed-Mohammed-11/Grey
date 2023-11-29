@@ -44,9 +44,9 @@ export default function SideBar(props:any) {
     );
   });
 
+  //TODO: change this name to be the user name 
   return (
     <Box className={styles.side_bar} width={props.width}>
-      //TODO: change this name to be the user name 
       <Profile name={"@hesham09"}></Profile>
       <Box className={styles.container_buttons}>{buttons}</Box>
     </Box>
