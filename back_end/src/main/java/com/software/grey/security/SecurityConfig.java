@@ -30,17 +30,16 @@ import static com.software.grey.utils.EndPoints.TEST;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private OAuth2LoginSuccessHandler oauth2LoginSuccessHandler;
+    private final OAuth2LoginSuccessHandler oauth2LoginSuccessHandler;
 
-    @Autowired
-    private AuthenticationConfiguration authenticationConfiguration;
+    private final basicLoginSuccessHandler basicLoginSuccessHandler;
 
     @Value("${front.url}")
     private String frontUrl;
 
-    public SecurityConfig(OAuth2LoginSuccessHandler oauth2LoginSuccessHandler) {
+    public SecurityConfig(OAuth2LoginSuccessHandler oauth2LoginSuccessHandler, basicLoginSuccessHandler basicLoginSuccessHandler) {
         this.oauth2LoginSuccessHandler = oauth2LoginSuccessHandler;
+        this.basicLoginSuccessHandler = basicLoginSuccessHandler;
     }
 
     @Bean
@@ -67,15 +66,13 @@ public class SecurityConfig {
                         auth
                                 .requestMatchers(HttpMethod.POST, SIGNUP).permitAll()
                                 .requestMatchers(HttpMethod.GET, TEST).hasRole("ADMIN")
-                                .anyRequest().authenticated()
+                                .anyRequest()
+                                .authenticated()
                 )
                 .oauth2Login(oauth2 ->
                         oauth2.successHandler(oauth2LoginSuccessHandler))
-                .formLogin(Customizer.withDefaults())
-                .formLogin(f ->
-                        f.defaultSuccessUrl(frontUrl, true)
-                ).addFilter(new JsonUsernamePasswordAuthenticationFilter
-                        (authenticationConfiguration.getAuthenticationManager()))
+                .formLogin(success ->
+                        success.successHandler(basicLoginSuccessHandler))
                 .logout(LogoutConfigurer::permitAll)
                 .httpBasic(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)

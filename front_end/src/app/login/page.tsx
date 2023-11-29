@@ -8,10 +8,11 @@ import {FaArrowLeft} from "react-icons/fa";
 import ThemeRegistry from "@/app/themes/themeRegistry";
 import classNames from "classnames";
 import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
-import postController from "@/app/services/postController";
+import signinController from "@/app/services/signinController";
 import {SIGN_IN_BACKEND_ENDPOINT, SIGN_UP_ROUTE} from "@/app/constants/apiConstants";
 import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
-import serverValidateMapper from "@/app/security/userValidation/serverFormValidationMapper";
+import {LOGIN_PANEL_TEXT} from "@/app/constants/displayTextMessages";
+import signinServerFormValidationMapper from "@/app/security/userValidation/signinServerFormValidationMapper";
 
 
 function Page() {
@@ -51,13 +52,13 @@ function Page() {
     }
 
     const fetchResponse = async (userDTO: UserDTO) => {
-        let response = await postController.sendPostRequest(userDTO, SIGN_IN_BACKEND_ENDPOINT);
+        let response = await signinController.sendPostRequest(userDTO, SIGN_IN_BACKEND_ENDPOINT);
         // toJSON util to convert ReadableStream to JSON
         let jsonResponse = await toJSON(response.body!);
         console.log(jsonResponse);
-        console.log("ofah");
         let responseStat = response.status;
-        let {isUserValid, errors} = serverValidateMapper(responseStat, jsonResponse)
+        console.log(responseStat);
+        let {isUserValid, errors} = signinServerFormValidationMapper(responseStat, jsonResponse)
         setIsUserValid(isUserValid);
         setErrors(errors);
     }
@@ -119,7 +120,7 @@ function Page() {
 
                 <Box className={styles.panel}>
                     <Box className={styles.panelBanner}> GREY </Box>
-                    <Box typography="body1" color="text.primary" fontSize="2rem" className={styles.panelText}> Welcome Back! </Box>
+                    <Box typography="body1" color="text.primary" fontSize="2rem" className={styles.panelText}> {LOGIN_PANEL_TEXT} </Box>
                 </Box>
                 <Link href={SIGN_UP_ROUTE}>
                     <Button className={styles.iconButton} variant="contained" size="large">

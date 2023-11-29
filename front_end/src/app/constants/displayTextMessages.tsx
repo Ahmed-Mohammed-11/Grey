@@ -3,4 +3,4 @@ export const SIGNUP_PANEL_TEXT = 'A social media platform that provides anonymou
     '                        much more.'
 
 
-export const SIGNIN_PANEL_TEXT = 'Welcome Back!'
+export const LOGIN_PANEL_TEXT = 'Welcome Back!'

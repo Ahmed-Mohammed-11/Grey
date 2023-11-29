@@ -26,24 +26,25 @@ function handleTakenCredentials()
 
 function handleInvalidCredentials(responseBody: UserValidationResponse)
 {
-    if (responseBody.username)
+    if (responseBody.username !== undefined)
     {
-        errors.username = responseBody.username;
         isUserValid.username = false;
+        errors.username = responseBody.username;
     }
-    if (responseBody.email)
+    if (responseBody.email !== undefined)
     {
-        errors.email = responseBody.email;
         isUserValid.email = false;
+        errors.email = responseBody.email;
     }
-    if (responseBody.password)
+    if (responseBody.password !== undefined)
     {
-        errors.password = responseBody.password;
         isUserValid.password = false;
+        errors.password = responseBody.password;
     }
+    return;
 }
 
-function serverValidateMapper(responseStatus: number, responseBody: UserValidationResponse) {
+function signupServerFormValidationMapper(responseStatus: number, responseBody: UserValidationResponse) {
 
     isUserValid = {
         username: true,
@@ -76,4 +77,4 @@ function serverValidateMapper(responseStatus: number, responseBody: UserValidati
 }
 
 
-export default serverValidateMapper;
+export default signupServerFormValidationMapper;

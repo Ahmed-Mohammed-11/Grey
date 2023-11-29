@@ -1,8 +1,7 @@
 import {BASE_BACKEND_URL} from "@/app/constants/apiConstants";
 
-
-class PostController {
-    sendPostRequest(payload: Object, endpoint: string) {
+class SignupController implements IPostRequestController {
+    sendPostRequest(payload: Object, endpoint: string):Promise<Response> {
         const url = BASE_BACKEND_URL + endpoint;
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -11,9 +10,9 @@ class PostController {
             method: 'POST',
             body: JSON.stringify(payload),
             headers: headers
-        })
-
+        });
     }
 }
 
-export default new PostController();
+const signupController = new SignupController();
+export default signupController;

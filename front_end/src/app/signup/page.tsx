@@ -6,12 +6,12 @@ import ThemeRegistry from "@/app/themes/themeRegistry";
 import GoogleAuthn from "@/app/googleAuthentication/GoogleAuthn";
 import {FaArrowRight} from "react-icons/fa";
 import {useRef, useState} from "react";
-import postController from "@/app/services/postController";
+import signupController from "@/app/services/signupController";
 import {SIGNUP_PANEL_TEXT} from "@/app/constants/displayTextMessages";
 import {SIGN_IN_ROUTE, SIGN_UP_BACKEND_ENDPOINT} from "@/app/constants/apiConstants";
 import classNames from "classnames";
 import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
-import serverValidateMapper from "@/app/security/userValidation/serverFormValidationMapper";
+import signupServerFormValidationMapper from "@/app/security/userValidation/signupServerFormValidationMapper";
 import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
 
 function Page() {
@@ -58,11 +58,11 @@ function Page() {
     }
 
     const fetchResponse = async (userDTO: UserDTO) => {
-        let response = await postController.sendPostRequest(userDTO, SIGN_UP_BACKEND_ENDPOINT);
+        let response = await signupController.sendPostRequest(userDTO, SIGN_UP_BACKEND_ENDPOINT);
         // toJSON util to convert ReadableStream to JSON
         let jsonResponse = await toJSON(response.body!);
         let responseStat = response.status;
-        let {isUserValid, errors} = serverValidateMapper(responseStat, jsonResponse)
+        let {isUserValid, errors} = signupServerFormValidationMapper(responseStat, jsonResponse)
         setIsUserValid(isUserValid);
         setErrors(errors);
     }
