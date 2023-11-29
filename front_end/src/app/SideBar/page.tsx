@@ -26,7 +26,6 @@ export default function SideBar(props:any) {
 
   const handleButtonClick = (index:number) => {
     setActiveTab(index);
-    // Call the onChange function passed from the parent
     if (props.onChange) {
       props.onChange(index);
     }
@@ -47,6 +46,7 @@ export default function SideBar(props:any) {
 
   return (
     <Box className={styles.side_bar} width={props.width}>
+      //TODO: change this name to be the user name 
       <Profile name={"@hesham09"}></Profile>
       <Box className={styles.container_buttons}>{buttons}</Box>
     </Box>
