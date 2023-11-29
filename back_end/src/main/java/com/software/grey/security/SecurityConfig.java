@@ -1,15 +1,11 @@
 package com.software.grey.security;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 import javax.sql.DataSource;
@@ -32,13 +27,15 @@ public class SecurityConfig {
     private final OAuth2LoginSuccessHandler oauth2LoginSuccessHandler;
 
     private final basicLoginSuccessHandler basicLoginSuccessHandler;
+    private final BasicLoginFailureHandler basicLoginFailureHandler;
 
     @Value("${front.url}")
     private String frontUrl;
 
-    public SecurityConfig(OAuth2LoginSuccessHandler oauth2LoginSuccessHandler, basicLoginSuccessHandler basicLoginSuccessHandler) {
+    public SecurityConfig(OAuth2LoginSuccessHandler oauth2LoginSuccessHandler, basicLoginSuccessHandler basicLoginSuccessHandler, BasicLoginFailureHandler basicLoginFailureHandler) {
         this.oauth2LoginSuccessHandler = oauth2LoginSuccessHandler;
         this.basicLoginSuccessHandler = basicLoginSuccessHandler;
+        this.basicLoginFailureHandler = basicLoginFailureHandler;
     }
 
     @Bean
@@ -65,6 +62,7 @@ public class SecurityConfig {
                         auth
                                 .requestMatchers(HttpMethod.POST, SIGNUP).permitAll()
                                 .requestMatchers(HttpMethod.GET, LOGIN_SUCCESS).permitAll()
+                                .requestMatchers(HttpMethod.GET, LOGIN_FAIL).permitAll()
                                 .requestMatchers(HttpMethod.GET, TEST).permitAll()
                                 .anyRequest()
                                 .authenticated()
@@ -72,7 +70,8 @@ public class SecurityConfig {
                 .oauth2Login(oauth2 ->
                         oauth2.successHandler(oauth2LoginSuccessHandler))
                 .formLogin(success ->
-                        success.successHandler(basicLoginSuccessHandler))
+                        success.successHandler(basicLoginSuccessHandler)
+                                .failureHandler(basicLoginFailureHandler))
                 .logout(LogoutConfigurer::permitAll)
                 .httpBasic(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)

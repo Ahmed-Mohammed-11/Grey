@@ -25,7 +25,6 @@ public class basicLoginSuccessHandler extends SavedRequestAwareAuthenticationSuc
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
-//        redirectStrategy.sendRedirect(request, response, "/grey");
         this.setAlwaysUseDefaultTargetUrl(true);
         this.setDefaultTargetUrl(LOGIN_SUCCESS);
         super.onAuthenticationSuccess(request, response, authentication);

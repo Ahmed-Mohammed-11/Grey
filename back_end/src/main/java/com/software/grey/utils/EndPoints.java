@@ -7,5 +7,6 @@ public class EndPoints {
     public static final String LOGIN = "/login";
     public static final String ROOT = "http://localhost:3000";
     public static final String LOGIN_SUCCESS = "/login/success";
+    public static final String LOGIN_FAIL = "/login/fail";
 
 }
