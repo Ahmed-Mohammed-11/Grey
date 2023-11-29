@@ -1,6 +1,0 @@
-CREATE TABLE grey_user (
-    id BINARY(16) PRIMARY KEY,
-    username VARCHAR(20) NOT NULL UNIQUE,
-    email VARCHAR(70) NOT NULL UNIQUE,
-    password VARCHAR(70) NOT NULL
-);

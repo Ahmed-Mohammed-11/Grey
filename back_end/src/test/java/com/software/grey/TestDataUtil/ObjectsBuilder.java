@@ -10,7 +10,6 @@ public class ObjectsBuilder {
     public User createUserA() {
         return User.builder()
                 .email("abdulrahman@gmail.com")
-                .password("sha256jj")
                 .username("abdulrahman")
                 .build();
     }
@@ -18,7 +17,6 @@ public class ObjectsBuilder {
     public User createUserB() {
         return User.builder()
                 .email("h@gmail.com")
-                .password("xxxxxx")
                 .username("7a7a")
                 .build();
     }

@@ -7,8 +7,8 @@ import com.software.grey.models.entities.SavedPostId;
 import com.software.grey.models.entities.User;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.SavedPostRepository;
-import com.software.grey.repositories.UserRepository;
 import com.software.grey.services.SavedPostService;
+import com.software.grey.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +21,12 @@ import java.util.UUID;
 public class SavedPostServiceImpl implements SavedPostService {
 
     private SavedPostRepository savedPostRepository;
-    private UserRepository userRepository;
     private PostRepository postRepository;
+    private SecurityUtils securityUtils;
 
     @Override
     public SavedPostEnum toggleSavedPost(UUID postId) {
-        User user = getUser();
+        User user = securityUtils.getCurrentUser();
         if (postId == null || user == null) {
             return SavedPostEnum.NOT_FOUND;
         }
@@ -44,19 +44,10 @@ public class SavedPostServiceImpl implements SavedPostService {
                 return SavedPostEnum.SAVED;
             }
         }
-
         return SavedPostEnum.NOT_FOUND;
     }
 
     private boolean userIsNotThePostAuthor(User user, Post post) {
         return user.getId() != post.getUser().getId();
-    }
-
-    private User getUser() {
-        Iterable<User> users = userRepository.findAll();
-        if (users.iterator().hasNext()) {
-            return users.iterator().next();
-        }
-        return null;
     }
 }
