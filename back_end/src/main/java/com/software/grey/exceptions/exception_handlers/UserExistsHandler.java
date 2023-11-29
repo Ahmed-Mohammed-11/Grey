@@ -16,7 +16,6 @@ public class UserExistsHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(UserExistsException.class)
     public Map<String, String> handleUserExistsException(MethodArgumentNotValidException ex) {
-
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();

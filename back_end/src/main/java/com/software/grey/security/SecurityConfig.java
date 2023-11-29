@@ -20,8 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
 
-import static com.software.grey.utils.EndPoints.SIGNUP;
-import static com.software.grey.utils.EndPoints.TEST;
+import static com.software.grey.utils.EndPoints.*;
 
 @Configuration
 @EnableWebSecurity
@@ -60,6 +59,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth ->
                     auth
                             .requestMatchers(HttpMethod.POST, SIGNUP).permitAll()
+                            .requestMatchers(HttpMethod.PUT, VERIFY_REGISTERATION).permitAll()
                             .requestMatchers(HttpMethod.GET, TEST).hasRole("ADMIN")
                             .anyRequest().authenticated()
             )
@@ -72,7 +72,7 @@ public class SecurityConfig {
             )
             .httpBasic(Customizer.withDefaults())
             .csrf(AbstractHttpConfigurer::disable)
-                .cors(Customizer.withDefaults());
+            .cors(Customizer.withDefaults());
 
         return http.build();
     }
