@@ -4,10 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="Google button enhanced &amp; side button added">
+    <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="SG-103 APIs added but not working">
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/BasicUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/GoogleUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/repositories/GoogleUserRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/security/OAuth2LoginSuccessHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/resources/db/migration/V3__User.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/controllers/OAuth2LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/controllers/OAuth2LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/mappers/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/mappers/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/resources/db/migration/V2__User.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/resources/db/migration/V2__User.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_12_22_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_12_22_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/signup/GoogleButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/GoogleAuthn.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/signup/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/page.module.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/signup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,13 +39,14 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="SG-42-Front-Sign-up-form-design-using-HTML-and-CSS" />
+        <entry key="$PROJECT_DIR$/.." value="SG-44-Front-Sign-up-Google-OAuth-Integration" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -73,14 +89,14 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;SG-44-Front-Sign-up-Google-OAuth-Integration&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;SG-103-Integration-integrate-google-auth-sign-up-with-backend&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Belal\\Desktop\\First Semester\\Software Engineering\\Project\\SWE-Project\\front_end\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -112,7 +128,10 @@
       <updated>1699940167339</updated>
       <workItem from="1699940168122" duration="2147000" />
       <workItem from="1699942357958" duration="1819000" />
-      <workItem from="1699957661065" duration="4924000" />
+      <workItem from="1699957661065" duration="5284000" />
+      <workItem from="1699967597966" duration="19307000" />
+      <workItem from="1700058387702" duration="18182000" />
+      <workItem from="1700120692601" duration="1188000" />
     </task>
     <task id="LOCAL-00001" summary="Google button enhanced &amp; side button added">
       <option name="closed" value="true" />
@@ -122,15 +141,80 @@
       <option name="project" value="LOCAL" />
       <updated>1699959647319</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Edited text fields UI according to figma">
+      <option name="closed" value="true" />
+      <created>1699962863563</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1699962863563</updated>
+    </task>
+    <task id="LOCAL-00003" summary="SG-44 Sign in button for traverse added">
+      <option name="closed" value="true" />
+      <created>1699971739313</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1699971739313</updated>
+    </task>
+    <task id="LOCAL-00004" summary="SG-44 Prepare data for Back-end integration">
+      <option name="closed" value="true" />
+      <created>1699981933635</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1699981933635</updated>
+    </task>
+    <task id="LOCAL-00005" summary="SG-103 Controller created but not tested">
+      <option name="closed" value="true" />
+      <created>1699982863176</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1699982863176</updated>
+    </task>
+    <task id="LOCAL-00006" summary="SG-103 APIs added but not working">
+      <option name="closed" value="true" />
+      <created>1699993990923</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1699993990923</updated>
+    </task>
+    <task id="LOCAL-00007" summary="SG-103 APIs added but not working">
+      <option name="closed" value="true" />
+      <created>1699996161352</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1699996161352</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Google button enhanced &amp; side button added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Google button enhanced &amp; side button added" />
+    <MESSAGE value="Edited text fields UI according to figma" />
+    <MESSAGE value="Sign in button for traverse added" />
+    <MESSAGE value="SG-44 Sign in button for traverse added" />
+    <MESSAGE value="SG-44 Prepare data for Back-end integration" />
+    <MESSAGE value="SG-103 Controller created but not tested" />
+    <MESSAGE value="SG-103 APIs added but not working" />
+    <option name="LAST_COMMIT_MESSAGE" value="SG-103 APIs added but not working" />
   </component>
 </project>

@@ -4,22 +4,31 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import static com.software.grey.utils.RegularExpressions.EMAIL_REGEX;
+import static com.software.grey.utils.RegularExpressions.USERNAME_REGEX;
+import static com.software.grey.utils.RegularExpressions.PASSWORD_REGEX;
+
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
 
-    private static final String  myRegexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:" +
-            "[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")" +
-            "@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])" +
-            "|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:" +
-            "[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
-
     @NotBlank(message = "Email is mandatory")
-    @Pattern(regexp = myRegexp, message = "Email form not valid")
+    @Pattern(regexp = EMAIL_REGEX, message = "Email Format isn't valid")
     public String email;
 
     @NotBlank(message = "Username is mandatory")
+    @Pattern(regexp = USERNAME_REGEX, message = "Username Format isn't valid")
     public String username;
 
+    @NotBlank(message = "Password is mandatory")
+    @Pattern(regexp = PASSWORD_REGEX, message = "Password Format isn't valid")
     public String password;
+
+    public String externalID;
+
+    public UserDTO(String email, String username, String password) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
 }
