@@ -17,8 +17,6 @@ import com.software.grey.utils.emailsender.EmailSender;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -34,8 +32,10 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final EmailSender emailSender;
     private SecurityUtils securityUtils;
-    @Value("${grey.from}") private String fromAddress;
-    @Value("${back.url}") private String backendURL;
+    @Value("${grey.from}")
+    private String fromAddress;
+    @Value("${back.url}")
+    private String backendURL;
 
     public UserService(UserRepo userRepo, BasicUserRepo basicUserRepo, GoogleUserRepo googleUserRepo,
                        UserVerificationRepo userVerificationRepo, UserMapper userMapper,
@@ -52,7 +52,7 @@ public class UserService {
     }
 
     public void save(UserDTO userDTO) {
-        if(userExists(userDTO))
+        if (userExists(userDTO))
             throw new UserExistsException("User already exists");
 
         userDTO.password = bCryptPasswordEncoder.encode(userDTO.password);
@@ -86,7 +86,7 @@ public class UserService {
     }
 
     public void saveGoogleUser(UserDTO userDTO) {
-        if(userExists(userDTO)) {
+        if (userExists(userDTO)) {
             return;
         }
 
@@ -104,17 +104,17 @@ public class UserService {
     }
 
     @Transactional
-    public void verifyUser(String userID, String confirmationCode){
+    public void verifyUser(String userID, String confirmationCode) {
         // get user id and register code from db and check if they match
         String currentUserConfirmationCode = getConfirmationCode(userID);
-        if(currentUserConfirmationCode.equals(confirmationCode)){
+        if (currentUserConfirmationCode.equals(confirmationCode)) {
             userRepo.setEnableById(userID);
-        }else{
+        } else {
             throw new EntityNotFoundException("Invalid URL");
         }
     }
 
-    private String getConfirmationCode(String userID){
+    private String getConfirmationCode(String userID) {
         return userVerificationRepo.findById(userID)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + userID))
                 .getRegistrationConfirmationCode();

@@ -8,8 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.util.UUID;
-
 @Entity
 @Table(name = "user")
 @Data
@@ -25,7 +23,7 @@ public class User {
     @Column(unique = true)
     private String username;
 
-    @Column(name="registration_type")
+    @Column(name = "registration_type")
     private String registrationType;
 
     @Column(unique = true)

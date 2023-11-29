@@ -1,12 +1,11 @@
 package com.software.grey.models.dtos;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-import static com.software.grey.utils.RegularExpressions.EMAIL_REGEX;
-import static com.software.grey.utils.RegularExpressions.USERNAME_REGEX;
-import static com.software.grey.utils.RegularExpressions.PASSWORD_REGEX;
+import static com.software.grey.utils.RegularExpressions.*;
 
 @AllArgsConstructor
 @NoArgsConstructor

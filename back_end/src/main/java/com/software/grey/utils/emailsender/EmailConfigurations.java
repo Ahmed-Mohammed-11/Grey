@@ -17,6 +17,7 @@ public class EmailConfigurations {
     private int emailPort;
     @Value("${grey.email.host}")
     private String host;
+
     @Bean
     public Mailer mailer() {
         return MailerBuilder

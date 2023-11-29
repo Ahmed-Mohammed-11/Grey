@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class SimpleJavaMailProvider implements EmailProvider{
+public class SimpleJavaMailProvider implements EmailProvider {
 
     private Mailer mailer;
 

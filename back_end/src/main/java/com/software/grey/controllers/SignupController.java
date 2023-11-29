@@ -1,6 +1,5 @@
 package com.software.grey.controllers;
 
-import com.software.grey.exceptions.UserExistsException;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.services.UserService;
 import jakarta.validation.Valid;
@@ -17,7 +16,7 @@ public class SignupController {
 
     private final UserService userService;
 
-    public SignupController(UserService userService){
+    public SignupController(UserService userService) {
         this.userService = userService;
     }
 
@@ -28,7 +27,7 @@ public class SignupController {
     }
 
     @PutMapping(VERIFY_REGISTERATION)
-    public ResponseEntity<String> verify(@RequestParam String userID, @RequestParam String registrationCode){
+    public ResponseEntity<String> verify(@RequestParam String userID, @RequestParam String registrationCode) {
         userService.verifyUser(userID, registrationCode);
         return ResponseEntity.status(HttpStatus.OK).body("User verified");
     }

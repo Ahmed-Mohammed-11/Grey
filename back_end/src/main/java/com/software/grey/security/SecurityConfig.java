@@ -1,8 +1,6 @@
 package com.software.grey.security;
 
 
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -42,7 +40,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsManager userDetailsManager(DataSource dataSource){
+    public UserDetailsManager userDetailsManager(DataSource dataSource) {
         JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
         userDetailsManager.setUsersByUsernameQuery("""
                 SELECT username, password, enabled
@@ -56,23 +54,23 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(auth ->
-                    auth
-                            .requestMatchers(HttpMethod.POST, SIGNUP).permitAll()
-                            .requestMatchers(HttpMethod.PUT, VERIFY_REGISTERATION).permitAll()
-                            .requestMatchers(HttpMethod.GET, TEST).hasRole("ADMIN")
-                            .anyRequest().authenticated()
-            )
-            .oauth2Login(oauth2 ->
-                    oauth2.successHandler(oauth2LoginSuccessHandler))
-            .formLogin(Customizer.withDefaults())
-            .logout(LogoutConfigurer::permitAll)
-            .formLogin(f ->
-                    f.defaultSuccessUrl(frontUrl, true)
-            )
-            .httpBasic(Customizer.withDefaults())
-            .csrf(AbstractHttpConfigurer::disable)
-            .cors(Customizer.withDefaults());
+                .authorizeHttpRequests(auth ->
+                        auth
+                                .requestMatchers(HttpMethod.POST, SIGNUP).permitAll()
+                                .requestMatchers(HttpMethod.PUT, VERIFY_REGISTERATION).permitAll()
+                                .requestMatchers(HttpMethod.GET, TEST).hasRole("ADMIN")
+                                .anyRequest().authenticated()
+                )
+                .oauth2Login(oauth2 ->
+                        oauth2.successHandler(oauth2LoginSuccessHandler))
+                .formLogin(Customizer.withDefaults())
+                .logout(LogoutConfigurer::permitAll)
+                .formLogin(f ->
+                        f.defaultSuccessUrl(frontUrl, true)
+                )
+                .httpBasic(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults());
 
         return http.build();
     }
