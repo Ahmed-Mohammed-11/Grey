@@ -13,6 +13,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    align-content: space-between;
     width: 50%;
     height: 80%;
     position: relative;
@@ -46,6 +47,15 @@
     box-sizing: border-box;
 }
 
+.modal > .feelings {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
 .button{
     display: flex;
     gap: 0 10px;
@@ -64,6 +74,13 @@
     background: #526D82;
     color: #DDE6ED;
     box-shadow: 2px 3px 10px #5b5b5b;
+}
+
+.disabled{
+    background: #cfe9ff;
+    color: #333;
+    box-shadow: none;
+    opacity: 0.5;
 }
 
 .create_button{
@@ -102,6 +119,7 @@
 
 .modal > .profile {
     transform: scale(0.7);
+    height: 20%;
     margin-top: -10%;
 }
 
