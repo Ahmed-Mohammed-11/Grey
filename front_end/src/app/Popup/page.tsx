@@ -12,7 +12,6 @@ import Feeling from "@/app/DTO/Feeling";
 import PostDTO from "@/app/DTO/PostDTO";
 import postController from "@/app/services/postController";
 import {createPostEndPoint} from "@/app/constants/apiConstants";
-import Button from "@mui/material/Button";
 
 const allFeelings = new Set<Feeling>([Feeling.HAPPY, Feeling.SAD,
     Feeling.ANGER, Feeling.DISGUST,
@@ -65,7 +64,6 @@ export default function PopupScreen() {
             postText: isPostTextValid,
             postFeelings: selectedFeelings
         }
-        console.log(post);
         isFeelingsValid && isPostTextValid && sendInfoToServer(post)
     }
 
@@ -84,11 +82,6 @@ export default function PopupScreen() {
 
         let jsonResponse = await toJSON(response.body!);
         let responseStat = response.status;
-        if (responseStat === 200) {
-            console.log("success");
-        } else {
-            console.log("failed");
-        }
     }
 
 

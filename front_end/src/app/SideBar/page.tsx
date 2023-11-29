@@ -6,7 +6,7 @@ import {MdExplore} from "react-icons/md";
 import {AiFillHome} from "react-icons/ai";
 import {FaUserLarge} from "react-icons/fa6";
 import {RiSettings4Fill} from "react-icons/ri";
-import {BsBookmark, BsFillBookmarkFill} from "react-icons/bs";
+import {BsFillBookmarkFill} from "react-icons/bs";
 import Profile from "@/app/SideBar/profile";
 import PopupScreen from "@/app/Popup/page";
 

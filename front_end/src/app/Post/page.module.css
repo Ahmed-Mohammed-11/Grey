@@ -16,6 +16,19 @@
     color: #FFF;
 }
 
-.postText{
+.post > .post_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px 0 0;
+}
+
+.icon{
+    color: #FFF;
+    padding: 0 0 0 2%;
+    font-size: 23px;
+}
+
+.post > .post_text{
     padding: 0 16px;
 }
