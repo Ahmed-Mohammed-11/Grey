@@ -1,5 +1,6 @@
 import {baseUrl} from "@/app/constants/apiConstants";
 
+
 class PostController {
     sendPostRequest(payload: Object, endpoint: string) {
         const url = baseUrl + endpoint;

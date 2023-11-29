@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="SG-29 Handled changing requests">
+      <change afterPath="$PROJECT_DIR$/../.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/SWE-Project.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/issuestore/0/6/068ba17691943f3218a6d8ba9a9ab86f5ec513dc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/issuestore/2/9/29655abbf494323fac435dc78d83e57db434cd7b" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/issuestore/4/4/44dba6df9a8901ab5828f4a9a75f0e2abe8999bb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/issuestore/4/e/4e7bcc47a753ad6b9706ab466b466adc31c6f676" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/issuestore/7/e/7e5654890322e635518f5f287402d3e0ac877ceb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/issuestore/8/d/8dc8eea39d9b61cf469dc9e5811ec5e09bdc4856" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/issuestore/8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/issuestore/f/c/fc640f1d02f01e46feeddf65c2f22fb6b18f01db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/securityhotspotstore/0/6/068ba17691943f3218a6d8ba9a9ab86f5ec513dc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/securityhotspotstore/2/9/29655abbf494323fac435dc78d83e57db434cd7b" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/securityhotspotstore/4/4/44dba6df9a8901ab5828f4a9a75f0e2abe8999bb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/securityhotspotstore/4/e/4e7bcc47a753ad6b9706ab466b466adc31c6f676" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/securityhotspotstore/7/e/7e5654890322e635518f5f287402d3e0ac877ceb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/securityhotspotstore/8/d/8dc8eea39d9b61cf469dc9e5811ec5e09bdc4856" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/securityhotspotstore/8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/securityhotspotstore/f/c/fc640f1d02f01e46feeddf65c2f22fb6b18f01db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/HelloWorld.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/exceptions/UserExistsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/exceptions/exception_handlers/EntityNotFoundHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/exceptions/exception_handlers/UserExistsHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/exceptions/exception_handlers/ValidationExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/BasicUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/GoogleUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/UserVerification.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/repositories/BasicUserRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/repositories/GoogleUserRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/repositories/UserVerificationRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/security/CorsConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/security/OAuth2LoginSuccessHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/JsonUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/RegularExpressions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/emailsender/EmailConfigurations.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/emailsender/EmailDetails.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/emailsender/EmailProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/emailsender/EmailSender.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/emailsender/SimpleJavaMailProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/main/resources/db/migration/V3__User.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/models/dtos/UserDTOTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/security/OAuth2LoginSuccessHandlerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_12_22_PM__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/googleAuthentication/GoogleAuthn.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/googleAuthentication/Providers.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/models/dtos/UserDTO.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/models/objects/User.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/models/objects/UserValidationResponse.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/security/userValidation/clientFormValidation.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/security/userValidation/serverFormValidationMapper.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/signup/page.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/signup/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/themes/darkTheme.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/themes/lightTheme.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/themes/themeRegistry.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/utils/readableStreamResponseBodytoJSON.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/GreyApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/GreyApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/controllers/SignupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/controllers/SignupController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/controllers/TestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/controllers/TestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/dtos/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/dtos/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/mappers/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/mappers/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/repositories/UserRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/repositories/UserRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/SecurityUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/SecurityUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/resources/db/migration/V2__User.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/resources/db/migration/V2__User.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/AuthorizationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/AuthorizationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/GreyApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/GreyApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/LoginTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/LoginTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/controllers/SignupControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/controllers/SignupControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/services/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/services/UserServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/test/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/test/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/front_end.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/front_end.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/services/postController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/postController.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints>
+      <file url="file://$PROJECT_DIR$/src/app/signup/page.tsx" />
+    </disable_hints>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="SG-44-Front-Sign-up-Google-OAuth-Integration" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/app/signup/page.tsx" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <hideBySeverity>
+      <option value="11" />
+      <option value="12" />
+      <option value="13" />
+      <option value="14" />
+      <option value="15" />
+      <option value="16" />
+      <option value="100" />
+      <option value="200" />
+    </hideBySeverity>
+    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="sortBySeverity" value="false" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2Y9aHTjHe9A24X1QS3X4VZHrB5L" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "Merging SG-37-Front-represent-the-status-code-to-user-for-writing-posts",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Omar/Projects/Grey/SWE-Project/back_end",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "terminal",
+    "ts.external.directory.path": "C:\\Users\\Belal\\Desktop\\First Semester\\Software Engineering\\Project\\SWE-Project\\front_end\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projects\SWE-Grey\SWE-Project\front_end\src\app" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="grey" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="" />
+      <created>1699940167339</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1699940167339</updated>
+      <workItem from="1699940168122" duration="2147000" />
+      <workItem from="1699942357958" duration="1819000" />
+      <workItem from="1699957661065" duration="5284000" />
+      <workItem from="1699967597966" duration="19307000" />
+      <workItem from="1700058387702" duration="18182000" />
+      <workItem from="1700120692601" duration="1188000" />
+      <workItem from="1701168511715" duration="630000" />
+    </task>
+    <task id="LOCAL-00001" summary="Google button enhanced &amp; side button added">
+      <option name="closed" value="true" />
+      <created>1699959647319</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1699959647319</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Edited text fields UI according to figma">
+      <option name="closed" value="true" />
+      <created>1699962863563</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1699962863563</updated>
+    </task>
+    <task id="LOCAL-00003" summary="SG-44 Sign in button for traverse added">
+      <option name="closed" value="true" />
+      <created>1699971739313</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1699971739313</updated>
+    </task>
+    <task id="LOCAL-00004" summary="SG-44 Prepare data for Back-end integration">
+      <option name="closed" value="true" />
+      <created>1699981933635</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1699981933635</updated>
+    </task>
+    <task id="LOCAL-00005" summary="SG-103 Controller created but not tested">
+      <option name="closed" value="true" />
+      <created>1699982863176</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1699982863176</updated>
+    </task>
+    <task id="LOCAL-00006" summary="SG-103 APIs added but not working">
+      <option name="closed" value="true" />
+      <created>1699993990923</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1699993990923</updated>
+    </task>
+    <task id="LOCAL-00007" summary="SG-103 APIs added but not working">
+      <option name="closed" value="true" />
+      <created>1699996161352</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1699996161352</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Google button enhanced &amp; side button added" />
+    <MESSAGE value="Edited text fields UI according to figma" />
+    <MESSAGE value="Sign in button for traverse added" />
+    <MESSAGE value="SG-44 Sign in button for traverse added" />
+    <MESSAGE value="SG-44 Prepare data for Back-end integration" />
+    <MESSAGE value="SG-103 Controller created but not tested" />
+    <MESSAGE value="SG-103 APIs added but not working" />
+    <option name="LAST_COMMIT_MESSAGE" value="SG-103 APIs added but not working" />
+  </component>
+</project>

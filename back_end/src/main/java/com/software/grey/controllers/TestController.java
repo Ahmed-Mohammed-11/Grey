@@ -8,17 +8,17 @@ import static com.software.grey.utils.EndPoints.*;
 @RestController
 public class TestController {
     @GetMapping(TEST)
-    public String testEndpoint(){
+    public String testEndpoint() {
         return "Test success";
     }
 
     @GetMapping(LOGIN)
-    public String loginEndpoint(){
+    public String loginEndpoint() {
         return "login";
     }
 
     @GetMapping(ROOT)
-    public String welcomeGrey(){
+    public String welcomeGrey() {
         return "Welcome to grey!";
     }
 }
