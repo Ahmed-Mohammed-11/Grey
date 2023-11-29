@@ -4,15 +4,29 @@ import {Box} from "@mui/system";
 import {BsBookmark, BsFillBookmarkFill} from "react-icons/bs";
 import {SlOptions} from "react-icons/sl";
 import {Chip, IconButton, ListItem} from "@mui/material";
+import { toast } from "react-toastify";
 import React from "react";
+import savePostService from "@/app/services/savePostService";
 
 
 export default function Post(props: any) {
-    const [postSaved, setPostSaved] = React.useState(false);
-    const handleSavePost = (postId: number) => {
-        setPostSaved(!postSaved);
+    const handleSavePost = (postId: any) => {
+        const data = savePostService.sendPostRequest(postId);
+        notify(data)
     };
 
+    async function notify (response: any) {
+        try {
+            const message = await response;
+            toast(`${message}`, {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 1000,
+            });
+            console.log(message)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const posts = props.posts
     const postsD = posts.map((post: any, index: number) => {
@@ -25,7 +39,7 @@ export default function Post(props: any) {
                         ))}
                     </ListItem>
                     <IconButton onClick={() => handleSavePost(post.id)}>
-                        {postSaved ?
+                        {post.saved ?
                           <BsFillBookmarkFill
                             className={styles.icon}></BsFillBookmarkFill>
                         : <BsBookmark
