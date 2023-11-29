@@ -2,7 +2,7 @@
 import React from 'react';
 import Popup from 'reactjs-popup';
 import styles from "./page.module.css"
-import Profile from "@/app/sidebar/profile";
+import Profile from "@/app/components/sidebar/profile";
 import {Box} from "@mui/system";
 import {FaPen} from "react-icons/fa";
 import {IoSend} from "react-icons/io5";
@@ -20,11 +20,6 @@ const allFeelings = new Set<Feeling>([Feeling.HAPPY, Feeling.SAD,
     Feeling.INSPIRE, Feeling.LOVE]);
 
 export default function PopupScreen() {
-    // Handling popup
-    const [popupOpen, setPopupOpen] = React.useState(false);
-    const closePopup = () => setPopupOpen(false);
-
-
     // Feelings drop down menu
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);

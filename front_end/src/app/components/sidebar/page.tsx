@@ -7,8 +7,8 @@ import {AiFillHome} from "react-icons/ai";
 import {FaUserLarge} from "react-icons/fa6";
 import {RiSettings4Fill} from "react-icons/ri";
 import {BsFillBookmarkFill} from "react-icons/bs";
-import Profile from "@/app/sidebar/profile";
-import PopupScreen from "@/app/Popup/page";
+import Profile from "@/app/components/sidebar/profile";
+import PopupScreen from "@/app/components/popup/page";
 
 
 export default function SideBar(props: any) {

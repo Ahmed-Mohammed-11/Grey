@@ -1,9 +1,9 @@
 import styles from "./page.module.css"
 import {Box} from "@mui/system";
-import Post from "@/app/Post/page";
-import Feeling from '../models/dtos/Feeling';
+import Post from "@/app/components/post/page";
+import Feeling from '../../models/dtos/Feeling';
 
-export default function Feed(props: any) {
+export default function Posts(props: any) {
     const dd = {
         postText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et" +
             " dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip" +
