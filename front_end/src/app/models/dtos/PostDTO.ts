@@ -1,9 +1,9 @@
 import Feeling from "@/app/models/dtos/Feeling";
 
 class PostDTO {
-    id!: string;
+    id?: string;
     postText!: string;
-    postFeelings!: Set<Feeling>;
+    postFeelings!: Array<Feeling>;
 }
 
 export default PostDTO;

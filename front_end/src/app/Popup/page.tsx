@@ -7,11 +7,11 @@ import {Box} from "@mui/system";
 import {FaPen} from "react-icons/fa";
 import {IoSend} from "react-icons/io5";
 import {IoMdAdd} from "react-icons/io";
-import {Chip, IconButton, ListItem, Menu, MenuItem, TextareaAutosize, Tooltip} from "@mui/material";
+import {Alert, Chip, IconButton, ListItem, Menu, MenuItem, Snackbar, TextareaAutosize, Tooltip} from "@mui/material";
 import Feeling from "@/app/models/dtos/Feeling";
 import PostDTO from "@/app/models/dtos/PostDTO";
-import postController from "@/app/services/postController";
-import {createPostEndPoint} from "@/app/constants/apiConstants";
+import {CREATE_POST_ENDPOINT} from "@/app/constants/apiConstants";
+import createPostController from "@/app/services/createPostController";
 import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
 
 const allFeelings = new Set<Feeling>([Feeling.HAPPY, Feeling.SAD,
@@ -20,11 +20,15 @@ const allFeelings = new Set<Feeling>([Feeling.HAPPY, Feeling.SAD,
     Feeling.INSPIRE, Feeling.LOVE]);
 
 export default function PopupScreen() {
+    // Handling popup
+    const [popupOpen, setPopupOpen] = React.useState(false);
+    const closePopup = () => setPopupOpen(false);
+
 
     // Feelings drop down menu
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const handleClose = () => {setAnchorEl(null);};
+    const handleClosePopup = () => {setAnchorEl(null);};
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {setAnchorEl(event.currentTarget);};
 
 
@@ -57,33 +61,46 @@ export default function PopupScreen() {
     };
 
 
-    // Handling post text
+    // Handling post text and send to server
     const [isPostTextValid, setIsPostTextValid] = React.useState("");
     const handlePostText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {setIsPostTextValid(event.target.value);}
     const handleCreatePost = () => {
         let post: PostDTO = {
             postText: isPostTextValid,
-            postFeelings: selectedFeelings
+            postFeelings: Array.from(selectedFeelings)
         }
         isFeelingsValid && isPostTextValid && sendInfoToServer(post)
     }
 
-
-    // send post to server
     async function sendInfoToServer(post: PostDTO) {
+        // prepare user data to send to server
         let postDTO: PostDTO = {
             postText: post.postText,
-            postFeelings: post.postFeelings
+            postFeelings: Array.from(post.postFeelings)
         }
+        console.log(postDTO);
         fetchResponse(postDTO);
     }
 
-    const fetchResponse = async (postDTO: PostDTO) => {
-        let response = await postController.sendPostRequest(postDTO, createPostEndPoint);
-
+    const fetchResponse = async (postDTO : PostDTO) => {
+        let response = await createPostController.sendPostRequest(postDTO, CREATE_POST_ENDPOINT);
         let jsonResponse = await toJSON(response.body!);
         let responseStat = response.status;
+        if (responseStat === 201) {
+            handleOpenSnackbar();
+            console.log(jsonResponse);
+        }
     }
+
+
+    // Handling server response
+    const [openSnackbar, setOpenSnackbar] = React.useState(false);
+    const handleOpenSnackbar = () => {setOpenSnackbar(true);};
+    const handleCloseSnackbar = (event: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') return;
+        setOpenSnackbar(false);
+    };
+
 
 
     return (
@@ -122,7 +139,7 @@ export default function PopupScreen() {
                                     id="basic-menu"
                                     anchorEl={anchorEl}
                                     open={open}
-                                    onClose={handleClose}
+                                    onClose={handleClosePopup}
                                     MenuListProps={{'aria-labelledby': 'basic-button',}}>
                                     {Array.from(allFeelings).filter((feeling) =>
                                         !selectedFeelings.has(feeling)).map((feeling: any, feelingIndex: any) => (
@@ -157,6 +174,12 @@ export default function PopupScreen() {
                             <button className={styles.close} onClick={close}>
                                 &times;
                             </button>
+
+                            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                                <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+                                    Post created successfully
+                                </Alert>
+                            </Snackbar>
                         </div>
                     </section>
                 );

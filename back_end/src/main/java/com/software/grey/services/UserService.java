@@ -39,6 +39,7 @@ public class UserService {
     private String fromAddress;
     @Value("${back.url}")
     private String backendURL;
+    private final boolean ENABLEMAIL = false;
 
     public UserService(UserRepo userRepo, BasicUserRepo basicUserRepo, GoogleUserRepo googleUserRepo,
                        UserVerificationRepo userVerificationRepo, UserMapper userMapper,
@@ -63,7 +64,7 @@ public class UserService {
                 .role(Role.ROLE_USER)
                 .tier(Tier.STANDARD)
                 .registrationType("basic")
-                .enabled(false)
+                .enabled(true)
                 .build();
 
         user = userMapper.toUser(userDTO, user);
@@ -75,7 +76,8 @@ public class UserService {
                 .build();
         userVerificationRepo.save(userVerification);
 
-        emailSender.send(userDTO, confirmationCode);
+        if(ENABLEMAIL)
+            emailSender.send(userDTO, confirmationCode);
     }
 
     public void saveGoogleUser(OAuth2User principal) {

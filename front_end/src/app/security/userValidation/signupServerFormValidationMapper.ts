@@ -2,6 +2,8 @@ import
 {
     USER_EMAIL_TAKEN_MSG
 } from "@/app/constants/displayErrorMessages";
+import buildAuthToken from "@/app/utils/authTokenBuilder";
+
 
 let isUserValid = {
     username: true,
@@ -26,24 +28,33 @@ function handleTakenCredentials()
 
 function handleInvalidCredentials(responseBody: UserValidationResponse)
 {
-    if (responseBody.username)
+    if (responseBody.username !== undefined)
     {
-        errors.username = responseBody.username;
         isUserValid.username = false;
+        errors.username = responseBody.username;
     }
-    if (responseBody.email)
+    if (responseBody.email !== undefined)
     {
-        errors.email = responseBody.email;
         isUserValid.email = false;
+        errors.email = responseBody.email;
     }
-    if (responseBody.password)
+    if (responseBody.password !== undefined)
     {
-        errors.password = responseBody.password;
         isUserValid.password = false;
+        errors.password = responseBody.password;
     }
+    return;
 }
 
-function serverValidateMapper(responseStatus: number, responseBody: UserValidationResponse) {
+
+function handleAuth(userDTO: UserDTO)
+{
+    const authToken = buildAuthToken(userDTO);
+    localStorage.setItem("Authorization", authToken);
+}
+
+
+function signupServerFormValidationMapper(responseStatus: number, responseBody: UserValidationResponse, userDTO: UserDTO){
 
     isUserValid = {
         username: true,
@@ -59,6 +70,7 @@ function serverValidateMapper(responseStatus: number, responseBody: UserValidati
 
     switch (responseStatus) {
         case 200:
+            handleAuth(userDTO);
             break;
         case 400:
             handleInvalidCredentials(responseBody);
@@ -76,4 +88,4 @@ function serverValidateMapper(responseStatus: number, responseBody: UserValidati
 }
 
 
-export default serverValidateMapper;
+export default signupServerFormValidationMapper;
