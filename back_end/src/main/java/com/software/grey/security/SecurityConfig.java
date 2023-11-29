@@ -24,7 +24,6 @@ import static com.software.grey.utils.EndPoints.*;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
     private OAuth2LoginSuccessHandler oauth2LoginSuccessHandler;
 
     @Value("${front.url}")
