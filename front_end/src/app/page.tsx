@@ -13,12 +13,12 @@ export default function Home() {
   const urlBase = 'http://localhost:8080'
 
   const endpointMapping = {
-    0: '/posts/feed',
-    1: '/posts/explore',
+    0: '/posts/feed', // this is still mocked
+    1: '/posts/explore',// this is still mocked
     2: '/posts/diary',
-    3: '/posts/saved',
-    4: '/posts/profile',
-    5: '/posts/settings',
+    3: '/posts/test',// this is still mocked
+    4: '/posts/profile',// this is still mocked
+    5: '/posts/settings',// this is still mocked
   };
 
   const fetchData = async () => {
@@ -28,10 +28,22 @@ export default function Home() {
         console.error('Invalid selectedPageIndex:', selectedPageIndex);
         return;
       }
-
-      const response = await fetch(urlBase + endpoint);
+  
+      const response = await fetch(urlBase + endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({pageNumber:0, pageSize:10}),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
       const data = await response.json();
-      setFeedData(data);
+      console.log(data);
+      setFeedData(data.content);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
