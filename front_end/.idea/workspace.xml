@@ -5,48 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="SG-103 APIs added but not working">
-      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/exceptions/exception_handlers/EntityNotFoundHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/BasicUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/GoogleUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/UserVerification.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/repositories/BasicUserRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/repositories/GoogleUserRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/repositories/UserVerificationRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/security/OAuth2LoginSuccessHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/SecurityUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../back_end/src/main/resources/db/migration/V3__User.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/security/OAuth2LoginSuccessHandlerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/GreyApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/GreyApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/controllers/OAuth2LoginController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/controllers/SignupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/controllers/SignupController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/exceptions/exception_handlers/UserExistsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/exceptions/exception_handlers/UserExistsHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/dtos/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/dtos/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/mappers/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/mappers/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/repositories/UserRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/repositories/UserRepo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/resources/db/migration/V2__User.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/resources/db/migration/V2__User.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/resources/db/migration/V3__Users_withAuth.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/AuthorizationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/AuthorizationTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/GreyApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/GreyApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/LoginTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/LoginTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/controllers/SignupControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/controllers/SignupControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/services/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/services/UserServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/test/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/test/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/front_end.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/front_end.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM_[Changes]1/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_12_22_PM_[Changes]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_12_22_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_12_22_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/constants/apiConstants.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/constants/apiConstants.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/constants/displayTextMessages.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/constants/displayTextMessages.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/models/objects/UserVerification.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/models/objects/UserVerification.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/signup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/verify/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/verify/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,9 +80,9 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Merging SG-99-BL-Send-verification-email-to-user-when-they-sign-up",
+    "git-widget-placeholder": "SG-3-milestone1",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Omar/Projects/Grey/SWE-Project/back_end",
+    "last_opened_file_path": "C:/Omar/Projects/Grey/SWE-Project/front_end/src/app",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -126,6 +94,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Omar\Projects\Grey\SWE-Project\front_end\src\app" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Projects\SWE-Grey\SWE-Project\front_end\src\app" />
     </key>

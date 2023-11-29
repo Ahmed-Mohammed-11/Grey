@@ -9,15 +9,21 @@ import ThemeRegistry from "@/app/themes/themeRegistry";
 import classNames from "classnames";
 import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
 import signinController from "@/app/services/signinController";
-import {SIGN_IN_BACKEND_ENDPOINT, SIGN_UP_ROUTE, HOME_ROUTE} from "@/app/constants/apiConstants";
+import {
+    SIGN_IN_BACKEND_ENDPOINT,
+    SIGN_UP_ROUTE,
+    HOME_ROUTE,
+    SIGN_UP_VERIFICATION_ENDPOINT, SIGN_IN_ROUTE
+} from "@/app/constants/apiConstants";
 import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
-import {LOGIN_PANEL_TEXT} from "@/app/constants/displayTextMessages";
+import {LOGIN_PANEL_TEXT, VERIFY_PANEL_TEXT} from "@/app/constants/displayTextMessages";
 import signinServerFormValidationMapper from "@/app/security/userValidation/signinServerFormValidationMapper";
 import {useRouter} from "next/navigation";
+import signupController from "@/app/services/signupController";
 
-function Page() {
+function Verify() {
     const usernameRef = useRef<HTMLInputElement>(null);
-    const passwordRef = useRef<HTMLInputElement>(null);
+    const confirmationCodeRef = useRef<HTMLInputElement>(null);
     const [isUserValid, setIsUserValid] = useState({
         username: true,
         password: true
@@ -29,41 +35,30 @@ function Page() {
     const router = useRouter();
 
     const handleSubmit = () => {
-        let user: User = {
+        let user: UserVerification = {
             username: usernameRef.current!.value,
-            password: passwordRef.current!.value
+            confirmationCode: confirmationCodeRef.current!.value
         }
 
-        // validate user credentials on client side
-        let { isUserValid, errors} = clientValidateForm(user)
-        setIsUserValid(isUserValid)
-        setErrors(errors);
-
-        // if user credentials are valid, try send to server
-        isUserValid.username && isUserValid.password && sendInfoToServer(user)
+        sendInfoToServer(user)
     }
 
-    async function sendInfoToServer(user: UserDTO) {
-        // prepare user data to send to server
-        let userDTO: UserDTO = {
-            username: user.username,
-            password: user.password
-        }
-        fetchResponse(userDTO);
+    async function sendInfoToServer(user: UserVerification) {
+        fetchResponse(user);
     }
 
-    const fetchResponse = async (userDTO: UserDTO) => {
-        let response = await signinController.sendPostRequest(userDTO, SIGN_IN_BACKEND_ENDPOINT);
+    const fetchResponse = async (userVerification: UserVerification) => {
+        let response = await signupController.sendPostRequest(userVerification, SIGN_UP_VERIFICATION_ENDPOINT);
         // toJSON util to convert ReadableStream to JSON
         let jsonResponse = await toJSON(response.body!);
         let responseStat = response.status;
-        //if response status is 200, redirect to home page
-        (responseStat == 200) && router.push(HOME_ROUTE);
+        //if response status is 200, redirect to sing in page
+        (responseStat == 200) && router.push(SIGN_IN_ROUTE);
         //if response status is not 200, map response from server to display appropriate error messages
         //and if 200 get auth token and store it in local storage
-        let {isUserValid, errors} = signinServerFormValidationMapper(responseStat, jsonResponse, userDTO)
-        setIsUserValid(isUserValid);
-        setErrors(errors);
+        // let {isUserValid, errors} = signinServerFormValidationMapper(responseStat, jsonResponse, userDTO)
+        // setIsUserValid(isUserValid);
+        // setErrors(errors);
     }
 
     let topLeftShapeClass = classNames(styles.topLeft, styles.cornerShapes);
@@ -84,7 +79,7 @@ function Page() {
                     <TextField
                         className={styles.textArea}
                         label='Username'
-                        placeholder='Enter your username/email'
+                        placeholder='Enter your username'
                         inputRef={usernameRef}
                         required
                         variant="filled"
@@ -96,14 +91,13 @@ function Page() {
 
                     <TextField
                         className={styles.textArea}
-                        label='Password'
-                        type="password"
-                        placeholder='Enter your password'
-                        inputRef={passwordRef}
+                        label='Confirmation code'
+                        placeholder='Enter your confirmation code'
+                        inputRef={confirmationCodeRef}
                         required
                         variant="filled"
-                        error = {!isUserValid.password}
-                        helperText = {(isUserValid.password)? "": errors.password}
+                        // error = {!isUserValid.password}
+                        // helperText = {(isUserValid.password)? "": errors.password}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
@@ -113,26 +107,22 @@ function Page() {
                         variant="contained"
                         size="large"
                         onClick={handleSubmit}>
-                        Sign In
+                        Verify
                     </Button>
-
-                    <text>OR</text>
-
-                    <GoogleAuthn/>
                 </Box>
 
                 <Box className={styles.panel}>
                     <Box className={styles.panelBanner}> GREY </Box>
-                    <Box typography="body1" color="text.primary" fontSize="2rem" className={styles.panelText}> {LOGIN_PANEL_TEXT} </Box>
+                    <Box typography="body1" color="text.primary" fontSize="2rem" className={styles.panelText}> {VERIFY_PANEL_TEXT} </Box>
                 </Box>
-                <Link href={SIGN_UP_ROUTE}>
-                    <Button className={styles.iconButton} variant="contained" size="large">
-                        <FaArrowLeft size={40} style={{strokeWidth: '2', stroke: 'black'}}/>
-                    </Button>
-                </Link>
+                {/*<Link href={SIGN_UP_ROUTE}>*/}
+                {/*    <Button className={styles.iconButton} variant="contained" size="large">*/}
+                {/*        <FaArrowLeft size={40} style={{strokeWidth: '2', stroke: 'black'}}/>*/}
+                {/*    </Button>*/}
+                {/*</Link>*/}
             </Box>
         </ThemeRegistry>
     )
 }
 
-export default Page;
+export default Verify;

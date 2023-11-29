@@ -1,5 +1,6 @@
 'use client';
 import {useEffect, useState} from "react";
+import Verify from "@/app/verify/page";
 
 
 function Home() {
@@ -15,6 +16,7 @@ function Home() {
             <br/>
             <h2>  &nbsp;&nbsp; {Auth} </h2>
         </>
+
     )
 }
 

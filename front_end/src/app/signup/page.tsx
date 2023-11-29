@@ -8,7 +8,12 @@ import {FaArrowRight} from "react-icons/fa";
 import {useRef, useState} from "react";
 import signupController from "@/app/services/signupController";
 import {SIGNUP_PANEL_TEXT} from "@/app/constants/displayTextMessages";
-import {HOME_ROUTE, SIGN_IN_ROUTE, SIGN_UP_BACKEND_ENDPOINT} from "@/app/constants/apiConstants";
+import {
+    HOME_ROUTE,
+    SIGN_IN_ROUTE,
+    SIGN_UP_BACKEND_ENDPOINT,
+    SIGN_UP_VERIFICATION_ENDPOINT
+} from "@/app/constants/apiConstants";
 import classNames from "classnames";
 import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
 import signupServerFormValidationMapper from "@/app/security/userValidation/signupServerFormValidationMapper";
@@ -138,6 +143,7 @@ function Page() {
                     </Button>
                     <text> OR</text>
                     <GoogleAuthn/>
+
                 </Box>
 
                 <Box className={styles.panel}>
