@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.sql.Timestamp;
 import java.util.Set;
 import java.util.UUID;
 
@@ -36,4 +37,7 @@ public class Post {
     @CollectionTable(name = "post_feelings", joinColumns = @JoinColumn(name = "post_id"))
     @Column(name = "feeling")
     private Set<Feeling> postFeelings;
+
+    @Column(name = "post_time")
+    private Timestamp postTime;
 }
