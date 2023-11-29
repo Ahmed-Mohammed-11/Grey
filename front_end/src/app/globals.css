@@ -1,0 +1,47 @@
+.DISGUST{
+    margin: 0 1% 0 0;
+    background-color: #8B4513;
+    color: white;
+}
+
+.HAPPY {
+    margin: 0 1% 0 0;
+    background-color: #FFD700;
+    color: black;
+}
+
+.SAD{
+    margin: 0 1% 0 0;
+    background-color: #0000FF;
+    color: white;
+}
+
+.FEAR{
+    margin: 0 1% 0 0;
+    background-color: #f64e4e;
+    color: white;
+}
+
+.ANGER{
+    margin: 0 1% 0 0;
+    background-color: #FF0000;
+    color: white;
+}
+
+.ANXIOUS{
+    margin: 0 1% 0 0;
+    background-color: #00FFFF;
+    color: black;
+}
+
+.LOVE{
+    margin: 0 1% 0 0;
+    background-color: #FF1493;
+    color: white;
+}
+
+.INSPIRE{
+    margin: 0 1% 0 0;
+    background-color: #00FF00;
+    color: black;
+}
