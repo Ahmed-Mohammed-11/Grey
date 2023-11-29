@@ -2,6 +2,8 @@ import
 {
     USER_EMAIL_TAKEN_MSG
 } from "@/app/constants/displayErrorMessages";
+import buildAuthToken from "@/app/utils/authTokenBuilder";
+
 
 let isUserValid = {
     username: true,
@@ -44,7 +46,15 @@ function handleInvalidCredentials(responseBody: UserValidationResponse)
     return;
 }
 
-function signupServerFormValidationMapper(responseStatus: number, responseBody: UserValidationResponse) {
+
+function handleAuth(userDTO: UserDTO)
+{
+    const authToken = buildAuthToken(userDTO);
+    localStorage.setItem("Authorization", authToken);
+}
+
+
+function signupServerFormValidationMapper(responseStatus: number, responseBody: UserValidationResponse, userDTO: UserDTO){
 
     isUserValid = {
         username: true,
@@ -60,6 +70,7 @@ function signupServerFormValidationMapper(responseStatus: number, responseBody: 
 
     switch (responseStatus) {
         case 200:
+            handleAuth(userDTO);
             break;
         case 400:
             handleInvalidCredentials(responseBody);

@@ -9,11 +9,11 @@ import ThemeRegistry from "@/app/themes/themeRegistry";
 import classNames from "classnames";
 import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
 import signinController from "@/app/services/signinController";
-import {SIGN_IN_BACKEND_ENDPOINT, SIGN_UP_ROUTE} from "@/app/constants/apiConstants";
+import {SIGN_IN_BACKEND_ENDPOINT, SIGN_UP_ROUTE, HOME_ROUTE} from "@/app/constants/apiConstants";
 import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
 import {LOGIN_PANEL_TEXT} from "@/app/constants/displayTextMessages";
 import signinServerFormValidationMapper from "@/app/security/userValidation/signinServerFormValidationMapper";
-
+import {useRouter} from "next/navigation";
 
 function Page() {
     const usernameRef = useRef<HTMLInputElement>(null);
@@ -26,6 +26,7 @@ function Page() {
         username: "",
         password: ""
     });
+    const router = useRouter();
 
     const handleSubmit = () => {
         let user: User = {
@@ -55,10 +56,12 @@ function Page() {
         let response = await signinController.sendPostRequest(userDTO, SIGN_IN_BACKEND_ENDPOINT);
         // toJSON util to convert ReadableStream to JSON
         let jsonResponse = await toJSON(response.body!);
-        console.log(jsonResponse);
         let responseStat = response.status;
-        console.log(responseStat);
-        let {isUserValid, errors} = signinServerFormValidationMapper(responseStat, jsonResponse)
+        //if response status is 200, redirect to home page
+        (responseStat == 200) && router.push(HOME_ROUTE);
+        //if response status is not 200, map response from server to display appropriate error messages
+        //and if 200 get auth token and store it in local storage
+        let {isUserValid, errors} = signinServerFormValidationMapper(responseStat, jsonResponse, userDTO)
         setIsUserValid(isUserValid);
         setErrors(errors);
     }

@@ -8,12 +8,12 @@ import {FaArrowRight} from "react-icons/fa";
 import {useRef, useState} from "react";
 import signupController from "@/app/services/signupController";
 import {SIGNUP_PANEL_TEXT} from "@/app/constants/displayTextMessages";
-import {SIGN_IN_ROUTE, SIGN_UP_BACKEND_ENDPOINT} from "@/app/constants/apiConstants";
+import {HOME_ROUTE, SIGN_IN_ROUTE, SIGN_UP_BACKEND_ENDPOINT} from "@/app/constants/apiConstants";
 import classNames from "classnames";
 import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
 import signupServerFormValidationMapper from "@/app/security/userValidation/signupServerFormValidationMapper";
 import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
-
+import {useRouter} from "next/navigation";
 function Page() {
     const usernameRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
@@ -28,6 +28,8 @@ function Page() {
         email: "",
         password: ""
     });
+
+    const router = useRouter();
 
     const handleSubmit = () => {
         // user credentials
@@ -62,7 +64,11 @@ function Page() {
         // toJSON util to convert ReadableStream to JSON
         let jsonResponse = await toJSON(response.body!);
         let responseStat = response.status;
-        let {isUserValid, errors} = signupServerFormValidationMapper(responseStat, jsonResponse)
+        //if response status is 200, redirect to home page
+        (responseStat == 200) && router.push(HOME_ROUTE);
+        //if response status is not 200, map response from server to display appropriate error messages
+        //and if 200 get auth token and store it in local storage
+        let {isUserValid, errors} = signupServerFormValidationMapper(responseStat, jsonResponse, userDTO)
         setIsUserValid(isUserValid);
         setErrors(errors);
     }

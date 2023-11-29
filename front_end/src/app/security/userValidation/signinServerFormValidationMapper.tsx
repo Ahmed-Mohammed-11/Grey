@@ -1,5 +1,6 @@
 import {USER_WRONG_CREDENTIALS_MSG} from "@/app/constants/displayErrorMessages";
 
+import buildAuthToken from "@/app/utils/authTokenBuilder";
 let isUserValid = {
     username: true,
     email: true,
@@ -11,6 +12,8 @@ let errors = {
     email: "",
     password: ""
 };
+
+let router ;
 
 function handleInvalidCredentials(responseBody: UserValidationResponse)
 {
@@ -38,8 +41,12 @@ function handleWrongCredentials(responseBody: UserValidationResponse){
     errors.password = USER_WRONG_CREDENTIALS_MSG;
 }
 
+function handleAuth(userDTO: UserDTO){
+    const authToken = buildAuthToken(userDTO);
+    localStorage.setItem("Authorization", authToken);
+}
 
-function signinServerFormValidationMapper(responseStatus: number, responseBody: UserValidationResponse) {
+function signinServerFormValidationMapper(responseStatus: number, responseBody: UserValidationResponse, userDTO: UserDTO) {
 
     isUserValid = {
         username: true,
@@ -55,6 +62,7 @@ function signinServerFormValidationMapper(responseStatus: number, responseBody: 
 
     switch (responseStatus) {
         case 200:
+            handleAuth(userDTO)
             break;
         case 400:
             handleInvalidCredentials(responseBody);
