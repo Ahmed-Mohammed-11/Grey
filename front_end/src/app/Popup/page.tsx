@@ -2,16 +2,17 @@
 import React from 'react';
 import Popup from 'reactjs-popup';
 import styles from "./page.module.css"
-import Profile from "@/app/SideBar/profile";
+import Profile from "@/app/sidebar/profile";
 import {Box} from "@mui/system";
 import {FaPen} from "react-icons/fa";
 import {IoSend} from "react-icons/io5";
 import {IoMdAdd} from "react-icons/io";
 import {Chip, IconButton, ListItem, Menu, MenuItem, TextareaAutosize, Tooltip} from "@mui/material";
-import Feeling from "@/app/DTO/Feeling";
-import PostDTO from "@/app/DTO/PostDTO";
+import Feeling from "@/app/models/dtos/Feeling";
+import PostDTO from "@/app/models/dtos/PostDTO";
 import postController from "@/app/services/postController";
 import {createPostEndPoint} from "@/app/constants/apiConstants";
+import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
 
 const allFeelings = new Set<Feeling>([Feeling.HAPPY, Feeling.SAD,
     Feeling.ANGER, Feeling.DISGUST,

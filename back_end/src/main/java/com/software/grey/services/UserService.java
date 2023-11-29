@@ -4,6 +4,7 @@ import com.software.grey.exceptions.UserExistsException;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.BasicUser;
 import com.software.grey.models.entities.GoogleUser;
+import com.software.grey.models.entities.User;
 import com.software.grey.models.entities.UserVerification;
 import com.software.grey.models.enums.Role;
 import com.software.grey.models.enums.Tier;
@@ -16,6 +17,7 @@ import com.software.grey.utils.SecurityUtils;
 import com.software.grey.utils.emailsender.EmailSender;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -23,7 +25,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-@AllArgsConstructor
+//@AllArgsConstructor
 public class UserService {
     private final UserRepo userRepo;
     private BasicUserRepo basicUserRepo;

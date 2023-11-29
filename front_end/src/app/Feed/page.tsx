@@ -1,7 +1,7 @@
 import styles from "./page.module.css"
 import {Box} from "@mui/system";
 import Post from "@/app/Post/page";
-import Feeling from '../DTO/Feeling';
+import Feeling from '../models/dtos/Feeling';
 
 export default function Feed(props: any) {
     const dd = {

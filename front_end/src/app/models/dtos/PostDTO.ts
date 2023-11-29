@@ -1,4 +1,4 @@
-import Feeling from "@/app/DTO/Feeling";
+import Feeling from "@/app/models/dtos/Feeling";
 
 class PostDTO {
     id!: string;

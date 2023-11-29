@@ -7,7 +7,7 @@ import {AiFillHome} from "react-icons/ai";
 import {FaUserLarge} from "react-icons/fa6";
 import {RiSettings4Fill} from "react-icons/ri";
 import {BsFillBookmarkFill} from "react-icons/bs";
-import Profile from "@/app/SideBar/profile";
+import Profile from "@/app/sidebar/profile";
 import PopupScreen from "@/app/Popup/page";
 
 
