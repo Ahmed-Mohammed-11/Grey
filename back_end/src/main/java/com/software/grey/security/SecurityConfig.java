@@ -26,13 +26,13 @@ public class SecurityConfig {
 
     private final OAuth2LoginSuccessHandler oauth2LoginSuccessHandler;
 
-    private final basicLoginSuccessHandler basicLoginSuccessHandler;
+    private final BasicLoginSuccessHandler basicLoginSuccessHandler;
     private final BasicLoginFailureHandler basicLoginFailureHandler;
 
     @Value("${front.url}")
     private String frontUrl;
 
-    public SecurityConfig(OAuth2LoginSuccessHandler oauth2LoginSuccessHandler, basicLoginSuccessHandler basicLoginSuccessHandler, BasicLoginFailureHandler basicLoginFailureHandler) {
+    public SecurityConfig(OAuth2LoginSuccessHandler oauth2LoginSuccessHandler, BasicLoginSuccessHandler basicLoginSuccessHandler, BasicLoginFailureHandler basicLoginFailureHandler) {
         this.oauth2LoginSuccessHandler = oauth2LoginSuccessHandler;
         this.basicLoginSuccessHandler = basicLoginSuccessHandler;
         this.basicLoginFailureHandler = basicLoginFailureHandler;

@@ -15,7 +15,7 @@ import java.io.IOException;
 import static com.software.grey.utils.EndPoints.LOGIN_SUCCESS;
 
 @Component
-public class basicLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+public class BasicLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
     @Value("${front.url}")
     private String frontUrl;
 
