@@ -2,7 +2,9 @@ package com.software.grey.utils;
 
 public class EndPoints {
 
-    private EndPoints(){}
+    private EndPoints() {
+    }
+
     public static final String SIGNUP = "/signup";
     public static final String GOOGLEAPI = "/api/login/success";
     public static final String TEST = "/test";

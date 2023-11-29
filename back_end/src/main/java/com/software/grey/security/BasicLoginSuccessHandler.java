@@ -19,10 +19,6 @@ public class BasicLoginSuccessHandler extends SavedRequestAwareAuthenticationSuc
     @Value("${front.url}")
     private String frontUrl;
 
-
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-
-
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         this.setAlwaysUseDefaultTargetUrl(true);
