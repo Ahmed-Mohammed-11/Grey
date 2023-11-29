@@ -60,7 +60,7 @@ public class UserService {
                 .role(Role.ROLE_USER)
                 .tier(Tier.STANDARD)
                 .registrationType("basic")
-                .enabled(false)
+                .enabled(true)
                 .build();
 
         user = userMapper.toUser(userDTO, user);
@@ -72,7 +72,7 @@ public class UserService {
                 .build();
         userVerificationRepo.save(userVerification);
 
-        emailSender.send(userDTO, confirmationCode);
+//        emailSender.send(userDTO, confirmationCode);
     }
 
     public void saveGoogleUser(OAuth2User principal) {
