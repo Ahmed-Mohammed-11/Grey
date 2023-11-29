@@ -1,6 +1,6 @@
 CREATE TABLE user
 (
-    id            BINARY(16) PRIMARY KEY,
+    id            VARCHAR(70) PRIMARY KEY,
     username      VARCHAR(20) NOT NULL UNIQUE,
     email         VARCHAR(70) NOT NULL UNIQUE,
     registration_type VARCHAR(10) NOT NULL,
@@ -14,14 +14,21 @@ CREATE TABLE user
 
 CREATE TABLE user_google_oauth
 (
-    local_id    BINARY(16) PRIMARY KEY,
+    local_id    VARCHAR(70) PRIMARY KEY,
     external_id VARCHAR(70) NOT NULL,
     FOREIGN KEY (local_id) REFERENCES user (id)
 );
 
 CREATE TABLE user_basic_auth
 (
-    local_id BINARY(16) PRIMARY KEY,
+    local_id VARCHAR(70) PRIMARY KEY,
     password VARCHAR(70) NOT NULL,
     FOREIGN KEY (local_id) REFERENCES user (id)
+);
+
+CREATE TABLE user_verification
+(
+    id VARCHAR(70) PRIMARY KEY,
+    registration_confirmation_code VARCHAR(20),
+    FOREIGN KEY (id) REFERENCES user (id)
 );

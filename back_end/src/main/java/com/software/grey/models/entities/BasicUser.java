@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 @PrimaryKeyJoinColumn(name = "local_id")
-public class BasicUser extends User{
+public class BasicUser extends User {
     @Column(name = "password")
     private String password;
 }

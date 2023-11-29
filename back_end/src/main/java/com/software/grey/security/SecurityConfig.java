@@ -1,6 +1,8 @@
 package com.software.grey.security;
 
 
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,9 +27,9 @@ import static com.software.grey.utils.EndPoints.*;
 public class SecurityConfig {
 
     private final OAuth2LoginSuccessHandler oauth2LoginSuccessHandler;
-
     private final BasicLoginSuccessHandler basicLoginSuccessHandler;
     private final BasicLoginFailureHandler basicLoginFailureHandler;
+
 
     @Value("${front.url}")
     private String frontUrl;
@@ -44,7 +46,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsManager userDetailsManager(DataSource dataSource){
+    public UserDetailsManager userDetailsManager(DataSource dataSource) {
         JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
         userDetailsManager.setUsersByUsernameQuery("""
                 SELECT username, password, enabled
@@ -63,6 +65,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, SIGNUP).permitAll()
                                 .requestMatchers(HttpMethod.GET, LOGIN_SUCCESS).permitAll()
                                 .requestMatchers(HttpMethod.GET, LOGIN_FAIL).permitAll()
+                                .requestMatchers(HttpMethod.PUT, VERIFY_REGISTERATION).permitAll()
                                 .requestMatchers(HttpMethod.GET, TEST).permitAll()
                                 .anyRequest()
                                 .authenticated()

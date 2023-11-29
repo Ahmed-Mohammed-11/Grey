@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @SuperBuilder
 @PrimaryKeyJoinColumn(name = "local_id")
-public class GoogleUser extends User{
+public class GoogleUser extends User {
 
     @Column(unique = true, name = "external_id")
     private String externalID;

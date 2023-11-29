@@ -8,9 +8,13 @@ import com.software.grey.models.entities.BasicUser;
 import com.software.grey.models.enums.Role;
 import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.services.UserService;
+import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
@@ -26,6 +30,7 @@ import java.util.Objects;
 import static com.software.grey.utils.EndPoints.SIGNUP;
 import static com.software.grey.utils.JsonUtil.asJsonString;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -110,4 +115,5 @@ class SignupControllerTest {
                 .andExpect(status().isBadRequest());
 //                .andExpect(MockMvcResultMatchers.jsonPath("$.username").value("Username is mandatory"));
     }
+
 }

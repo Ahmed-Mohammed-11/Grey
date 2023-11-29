@@ -8,8 +8,11 @@ import java.util.UUID;
 
 public interface GoogleUserRepo extends JpaRepository<GoogleUser, UUID> {
     GoogleUser findByUsername(String username);
+
     GoogleUser findByEmail(String email);
+
     Boolean existsByUsername(String username);
+
     Boolean existsByEmail(String email);
 }
 
