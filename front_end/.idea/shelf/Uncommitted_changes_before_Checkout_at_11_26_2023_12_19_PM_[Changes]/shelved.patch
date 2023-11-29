@@ -1,0 +1,28 @@
+Index: src/app/page.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import Image from 'next/image'\r\nimport styles from './page.module.css'\r\nimport Button from '@mui/material/Button';\r\n\r\nexport default function Home() {\r\n  return (\r\n    <div>\r\n        <p className={styles.paragraph}> Hello greys </p>\r\n        {/*testing mui\r\n        installation -> npm install @mui/material @emotion/react @emotion/styled\r\n        documentation -> https://mui.com/material-ui/getting-started/installation/*/  }\r\n        <Button className={styles.main_button} size=\"large\" variant=\"contained\">press me</Button>\r\n    </div>\r\n  )\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/page.tsx b/src/app/page.tsx
+--- a/src/app/page.tsx	
++++ b/src/app/page.tsx	
+@@ -1,15 +1,7 @@
+-import Image from 'next/image'
+-import styles from './page.module.css'
+-import Button from '@mui/material/Button';
++import SideBar from "@/app/SideBar/page";
+ 
+ export default function Home() {
+   return (
+-    <div>
+-        <p className={styles.paragraph}> Hello greys </p>
+-        {/*testing mui
+-        installation -> npm install @mui/material @emotion/react @emotion/styled
+-        documentation -> https://mui.com/material-ui/getting-started/installation/*/  }
+-        <Button className={styles.main_button} size="large" variant="contained">press me</Button>
+-    </div>
++    <SideBar></SideBar>
+   )
+ }
