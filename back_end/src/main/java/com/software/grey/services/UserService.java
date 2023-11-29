@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     private final UserRepo userRepo;
+    private BasicUserRepo basicUserRepo;
     private GoogleUserRepo googleUserRepo;
     private UserVerificationRepo userVerificationRepo;
     private final UserMapper userMapper;
