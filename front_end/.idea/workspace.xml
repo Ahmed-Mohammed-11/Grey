@@ -4,17 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="SG-103 APIs added but not working">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_12_22_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_12_22_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/constants/apiConstants.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/constants/apiConstants.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/constants/displayTextMessages.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/constants/displayTextMessages.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/models/objects/UserVerification.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/models/objects/UserVerification.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/signup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/verify/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/verify/page.tsx" afterDir="false" />
+    <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="SG-103 Merging complete">
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/DTO/Feeling.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/models/dtos/Feeling.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/DTO/PostDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/models/dtos/PostDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Feed/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Feed/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Popup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Popup/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +26,7 @@
       <list>
         <option value="JavaScript File" />
         <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -80,24 +76,22 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "SG-3-milestone1",
+    "git-widget-placeholder": "SG-37-Front-represent-the-status-code-to-user-for-writing-posts",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Omar/Projects/Grey/SWE-Project/front_end/src/app",
+    "last_opened_file_path": "C:/Omar/Projects/Grey/SWE-Project/back_end",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "terminal",
-    "ts.external.directory.path": "C:\\Omar\\Projects\\Grey\\SWE-Project\\front_end\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "C:\\Users\\Belal\\Desktop\\First Semester\\Software Engineering\\Project\\SWE-Project\\front_end\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Omar\Projects\Grey\SWE-Project\front_end\src\app" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Belal\Desktop\First Semester\Software Engineering\Project\SWE-Project\front_end\src\app\models\dtos" />
       <recent name="D:\Projects\SWE-Grey\SWE-Project\front_end\src\app" />
     </key>
   </component>
@@ -185,7 +179,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699996161352</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="SG-103 Merging complete">
+      <option name="closed" value="true" />
+      <created>1701277688638</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1701277688638</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,6 +213,7 @@
     <MESSAGE value="SG-44 Prepare data for Back-end integration" />
     <MESSAGE value="SG-103 Controller created but not tested" />
     <MESSAGE value="SG-103 APIs added but not working" />
-    <option name="LAST_COMMIT_MESSAGE" value="SG-103 APIs added but not working" />
+    <MESSAGE value="SG-103 Merging complete" />
+    <option name="LAST_COMMIT_MESSAGE" value="SG-103 Merging complete" />
   </component>
 </project>

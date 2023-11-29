@@ -5,4 +5,7 @@ export const SIGN_IN_BACKEND_ENDPOINT = '/login';
 export const SIGN_UP_VERIFICATION_ENDPOINT = '/verify';
 export const SIGN_UP_ROUTE = '/signup';
 export const SIGN_IN_ROUTE = '/login';
-export const HOME_ROUTE = '/';
+export const HOME_ROUTE = '/feed';
+
+export const CREATE_POST_ENDPOINT = '/posts';
+export const SAVE_POST_ENDPOINT = '/post/toggle/save';

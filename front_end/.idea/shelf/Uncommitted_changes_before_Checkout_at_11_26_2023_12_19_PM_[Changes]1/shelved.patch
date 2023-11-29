@@ -1,0 +1,76 @@
+Index: src/app/SideBar/page.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/SideBar/page.tsx b/src/app/SideBar/page.tsx
+new file mode 100644
+--- /dev/null	
++++ b/src/app/SideBar/page.tsx	
+@@ -0,0 +1,33 @@
++import Button from '@mui/material/Button';
++import styles from "../SideBar/page.module.css"
++import {Box} from "@mui/system";
++import {MdExplore} from "react-icons/md";
++import {AiFillHome} from "react-icons/ai";
++import {FaUserLarge} from "react-icons/fa6";
++import {RiSettings4Fill} from "react-icons/ri";
++import {BsBookmark, BsFillBookmarkFill} from "react-icons/bs";
++
++
++export default function SideBar() {
++    const buttonsText = ["feed", "explore", "profile", "settings", "saved"]
++    const buttonsIcons = [
++        <AiFillHome/>,
++        <MdExplore/>,
++        <FaUserLarge/>,
++        <RiSettings4Fill/>,
++        <BsFillBookmarkFill/>]
++    const buttons = buttonsText.map((text, index) => {
++        return (
++            <Button className={styles.button} key={index}>
++                {buttonsIcons[index]}
++                {text}
++            </Button>
++        )
++    })
++
++    return (
++        <Box className={styles.container}>
++            {buttons}
++        </Box>
++    )
++}
+Index: src/app/SideBar/page.module.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/SideBar/page.module.css b/src/app/SideBar/page.module.css
+new file mode 100644
+--- /dev/null	
++++ b/src/app/SideBar/page.module.css	
+@@ -0,0 +1,22 @@
++.container{
++    display: flex;
++    flex-direction: column;
++    justify-content: center;
++    align-items: center;
++    width: 100%;
++    height: 100%;
++    background: #4CAF50;
++}
++.button{
++    background-color: #4CAF50;
++    width: 100%;
++    height: 10vh;
++    border: none;
++    color: white;
++    padding: 15px 32px;
++    margin: 4px 2px;
++    text-align: center;
++    text-decoration: none;
++    display: inline-block;
++    font-size: 16px;
++}
+\ No newline at end of file
