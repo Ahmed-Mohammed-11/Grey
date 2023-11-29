@@ -23,8 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.sql.DataSource;
 
-import static com.software.grey.utils.EndPoints.SIGNUP;
-import static com.software.grey.utils.EndPoints.TEST;
+import static com.software.grey.utils.EndPoints.*;
 
 @Configuration
 @EnableWebSecurity
@@ -65,7 +64,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers(HttpMethod.POST, SIGNUP).permitAll()
-                                .requestMatchers(HttpMethod.GET, TEST).hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, LOGIN_SUCCESS).permitAll()
+                                .requestMatchers(HttpMethod.GET, TEST).permitAll()
                                 .anyRequest()
                                 .authenticated()
                 )

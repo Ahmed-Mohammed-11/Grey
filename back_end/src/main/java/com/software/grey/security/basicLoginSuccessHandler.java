@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+import static com.software.grey.utils.EndPoints.LOGIN_SUCCESS;
+
 @Component
 public class basicLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
     @Value("${front.url}")
@@ -23,7 +25,9 @@ public class basicLoginSuccessHandler extends SavedRequestAwareAuthenticationSuc
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
-        redirectStrategy.sendRedirect(request, response, "/grey");
+//        redirectStrategy.sendRedirect(request, response, "/grey");
+        this.setAlwaysUseDefaultTargetUrl(true);
+        this.setDefaultTargetUrl(LOGIN_SUCCESS);
         super.onAuthenticationSuccess(request, response, authentication);
     }
 
