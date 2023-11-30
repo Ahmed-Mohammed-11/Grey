@@ -1,6 +1,7 @@
 import styles from "./page.module.css"
 import {Box} from "@mui/system";
-import Post from "@/app/Post/page";
+import Post from "@/app/components/post/page";
+import Feeling from '../../models/dtos/Feeling';
 
 export default function Feed(props:any) {
     const posts = props.data || []

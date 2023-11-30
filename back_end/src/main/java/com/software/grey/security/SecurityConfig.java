@@ -23,13 +23,18 @@ import static com.software.grey.utils.EndPoints.*;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private OAuth2LoginSuccessHandler oauth2LoginSuccessHandler;
+    private final OAuth2LoginSuccessHandler oauth2LoginSuccessHandler;
+    private final BasicLoginSuccessHandler basicLoginSuccessHandler;
+    private final BasicLoginFailureHandler basicLoginFailureHandler;
+
 
     @Value("${front.url}")
     private String frontUrl;
 
-    public SecurityConfig(OAuth2LoginSuccessHandler oauth2LoginSuccessHandler) {
+    public SecurityConfig(OAuth2LoginSuccessHandler oauth2LoginSuccessHandler, BasicLoginSuccessHandler basicLoginSuccessHandler, BasicLoginFailureHandler basicLoginFailureHandler) {
         this.oauth2LoginSuccessHandler = oauth2LoginSuccessHandler;
+        this.basicLoginSuccessHandler = basicLoginSuccessHandler;
+        this.basicLoginFailureHandler = basicLoginFailureHandler;
     }
 
     @Bean
@@ -55,21 +60,22 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers(HttpMethod.POST, SIGNUP).permitAll()
+                                .requestMatchers(HttpMethod.GET, LOGIN_SUCCESS).permitAll()
+                                .requestMatchers(HttpMethod.GET, LOGIN_FAIL).permitAll()
                                 .requestMatchers(HttpMethod.PUT, VERIFY_REGISTERATION).permitAll()
-                                .requestMatchers(HttpMethod.GET, TEST).hasRole("ADMIN")
-                                .anyRequest().authenticated()
+                                .requestMatchers(HttpMethod.GET, TEST).permitAll()
+                                .anyRequest()
+                                .authenticated()
                 )
                 .oauth2Login(oauth2 ->
                         oauth2.successHandler(oauth2LoginSuccessHandler))
-                .formLogin(Customizer.withDefaults())
+                .formLogin(success ->
+                        success.successHandler(basicLoginSuccessHandler)
+                                .failureHandler(basicLoginFailureHandler))
                 .logout(LogoutConfigurer::permitAll)
-                .formLogin(f ->
-                        f.defaultSuccessUrl(frontUrl, true)
-                )
                 .httpBasic(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults());
-
         return http.build();
     }
 }

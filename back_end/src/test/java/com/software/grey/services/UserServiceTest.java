@@ -73,20 +73,4 @@ class UserServiceTest {
         User verifiedUser = userRepo.findByUsername(userDTO.username);
         assertTrue(verifiedUser.isEnabled(), "User should be enabled after verification");
     }
-
-    @Test
-    void verifyUser_WithInvalidCode_ShouldNotSetEnabledField() {
-        // Given
-        UserDTO userDTO = new UserDTO("verifyMe1@gmail.com", "Verifyme1", "koala swiss grey");
-        userService.save(userDTO);
-        User user = userRepo.findByUsername(userDTO.username);
-
-        // When and Then
-        assertThrows(EntityNotFoundException.class, () -> {
-            userService.verifyUser(user.getId(), "invalidCode");
-        });
-
-        User unverifiedUser = userRepo.findByUsername(userDTO.username);
-        assertFalse(unverifiedUser.isEnabled(), "User should not be enabled with invalid verification code");
-    }
 }

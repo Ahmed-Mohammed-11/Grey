@@ -1,0 +1,130 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0,0.7);
+}
+
+.modal {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: space-between;
+    width: 50%;
+    height: 80%;
+    position: relative;
+    border-radius: 16px;
+    background: #EEE;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.modal > .input {
+    width: 95%;
+    padding: 10px 15px;
+    border: none;
+    font-size: 20px;
+    font-family: "Montserrat SemiBold", sans-serif;
+    border-bottom: 2px solid #526D82;
+    outline: none;
+    resize: vertical;
+    max-height: 95%;
+    min-height: 40%;
+    box-sizing: border-box;
+}
+
+.modal > .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.modal > .feelings {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.button{
+    display: flex;
+    gap: 0 10px;
+    border: none;
+    align-items: center;
+    padding: 12px;
+    outline: none;
+    color: #526D82;
+    text-transform: capitalize;
+    font-family: "Montserrat SemiBold", sans-serif;
+    border-radius: 16px;
+    box-sizing: border-box;
+}
+
+.filled{
+    background: #526D82;
+    color: #DDE6ED;
+    box-shadow: 2px 3px 10px #5b5b5b;
+}
+
+.disabled{
+    background: #cfe9ff;
+    color: #333;
+    box-shadow: none;
+    opacity: 0.5;
+}
+
+.create_button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0 10px;
+    padding: 12px;
+    outline: none;
+    text-transform: capitalize;
+    font-size: calc(3*calc(min(1vh, 1vw)));
+    font-family: "Montserrat SemiBold", sans-serif;
+    background: #DDE6ED;
+    color: #333;
+    box-shadow: 2px 3px 10px #4177a1;
+    border-radius: 16px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+.modal > .close {
+    cursor: pointer;
+    position: absolute;
+    display: block;
+    padding: 0 6px;
+    right: 2%;
+    top: 2%;
+    font-size: 24px;
+    background: #526D82;
+    color: #FFF;
+    border-radius: 18px;
+    box-sizing: border-box;
+    border: 1px solid #9DB2BF;
+}
+
+.modal > .profile {
+    transform: scale(0.7);
+    height: 20%;
+    margin-top: -10%;
+}
+
+
+
+
+
+
+

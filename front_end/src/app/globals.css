@@ -2,46 +2,70 @@
     margin: 0 1% 0 0;
     background-color: #8B4513;
     color: white;
+    letter-spacing: 2px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
 }
 
 .HAPPY {
     margin: 0 1% 0 0;
     background-color: #FFD700;
     color: black;
+    letter-spacing: 2px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
 }
 
 .SAD{
     margin: 0 1% 0 0;
-    background-color: #0000FF;
+    background-color: #1976d2;
     color: white;
+    letter-spacing: 2px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
 }
 
 .FEAR{
     margin: 0 1% 0 0;
     background-color: #f64e4e;
     color: white;
+    letter-spacing: 2px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
 }
 
 .ANGER{
     margin: 0 1% 0 0;
     background-color: #FF0000;
     color: white;
+    letter-spacing: 2px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
 }
 
 .ANXIOUS{
     margin: 0 1% 0 0;
     background-color: #00FFFF;
     color: black;
+    letter-spacing: 2px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
 }
 
 .LOVE{
     margin: 0 1% 0 0;
-    background-color: #FF1493;
+    background-color: #dd4296;
     color: white;
+    letter-spacing: 2px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
 }
 
 .INSPIRE{
     margin: 0 1% 0 0;
     background-color: #00FF00;
     color: black;
+    letter-spacing: 2px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
 }

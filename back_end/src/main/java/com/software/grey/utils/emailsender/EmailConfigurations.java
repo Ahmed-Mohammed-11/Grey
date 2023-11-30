@@ -22,6 +22,7 @@ public class EmailConfigurations {
     public Mailer mailer() {
         return MailerBuilder
                 .withSMTPServer(host, emailPort, username, password)
+                .withSessionTimeout(120000)
                 .async()
                 .buildMailer();
     }
