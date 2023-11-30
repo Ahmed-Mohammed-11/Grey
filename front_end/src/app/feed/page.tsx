@@ -1,28 +1,28 @@
 'use client'
-
 import styles from './page.module.css'
-import { Box } from "@mui/system";
-import Posts from "@/app/components/posts/page";
-import SideBar from "@/app/components/sidebar/page";
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Box } from '@mui/system';
+import Posts from '@/app/components/posts/page';
+import SideBar from '@/app/components/sidebar/page';
 
 export default function Feed() {
   const [selectedPageIndex, setSelectedPageIndex] = useState(0);
   const [feedData, setFeedData] = useState(null);
   const [Auth, setAuth] = useState<string | null>("")
   useEffect(() => {
-      console.log("hello");
-      setAuth(localStorage.getItem("Authorization"));
-  })
-  const urlBase = 'http://localhost:8080'
+    const auth = localStorage.getItem('Authorization');
+    setAuth(auth);
+  }, []); // Empty dependency array to run the effect only once during mount
 
-  const endpointMapping = {
-    0: '/posts/feed', // this is still mocked
-    1: '/posts/explore',// this is still mocked
+  const urlBase = 'http://localhost:8080';
+
+  const endpointMapping: { [key: number]: string } = {
+    0: '/posts/feed',
+    1: '/posts/explore',
     2: '/posts/diary',
-    3: '/posts/test',// this is still mocked
-    4: '/posts/profile',// this is still mocked
-    5: '/posts/settings',// this is still mocked
+    3: '/posts/test',
+    4: '/posts/profile',
+    5: '/posts/settings',
   };
 
   const fetchData = async () => {
@@ -33,15 +33,22 @@ export default function Feed() {
         return;
       }
 
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('Authorization')!,
+        mode: 'cors',
+      };
+      
+      // this is mocked will be replaced and filled from the user
+      const postFilterDTO = {
+        "pageNumber": 0,
+        "pageSize": 3
+      }
 
-      let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', localStorage.getItem("Authorization")!);
-        headers.append('mode','cors')
       const response = await fetch(urlBase + endpoint, {
         method: 'POST',
-        body: JSON.stringify({pageNumber:0, pageSize:2}),
-        headers: headers
+        body: JSON.stringify(postFilterDTO),
+        headers,
       });
 
       if (!response.ok) {
@@ -60,14 +67,14 @@ export default function Feed() {
     fetchData();
   }, [selectedPageIndex]);
 
-  const handleChange = (newSelectedPageIndex:number) => {
+  const handleChange = (newSelectedPageIndex: number) => {
     setSelectedPageIndex(newSelectedPageIndex);
   };
 
   return (
     <Box className={styles.container}>
-      <SideBar width={"25%"} onChange={handleChange} />
-      <Posts width={"75%"} data={feedData} />
+      <SideBar width={'25%'} onChange={handleChange} />
+      <Posts width={'75%'} data={feedData} />
     </Box>
   );
 }

@@ -45,7 +45,6 @@ public class PostController {
     })
     @PostMapping(EndPoints.GET_DIARY)
     public ResponseEntity<Page<PostDTO>> getDiary(@Valid @RequestBody PostFilterDTO postFilterDTO){
-        System.out.println("hiiiiiiiiiiiiiiiii");
         return ResponseEntity.status(HttpStatus.OK).body(postService.getAll(postFilterDTO));
     }
 }
