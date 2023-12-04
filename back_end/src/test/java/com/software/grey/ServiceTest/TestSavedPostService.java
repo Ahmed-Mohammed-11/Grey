@@ -5,10 +5,7 @@ import com.software.grey.SavedPostEnum;
 import com.software.grey.TestDataUtil.ObjectsBuilder;
 import com.software.grey.controllers.SignupController;
 import com.software.grey.models.dtos.UserDTO;
-import com.software.grey.models.entities.Post;
-import com.software.grey.models.entities.SavedPost;
-import com.software.grey.models.entities.SavedPostId;
-import com.software.grey.models.entities.User;
+import com.software.grey.models.entities.*;
 import com.software.grey.models.mappers.UserMapper;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.SavedPostRepository;
@@ -58,12 +55,14 @@ class TestSavedPostService {
     void testSavePostWithValidData() {
 
         // create user that will save the post
-        User a = objectsBuilder.createUserA();
-        userRepository.save(a);
+        UserDTO myUser = new UserDTO("mockEmail12@gmail.com", "testUser", "mock Password test");
+        signupController.signup(myUser);
+        User a = userRepository.findByUsername("testUser");
 
         // create user to be the post author
-        User b = objectsBuilder.createUserB();
-        userRepository.save(b);
+        UserDTO myUser2 = new UserDTO("b.mail@gmail.com", "userB", "Omar Tammam");
+        signupController.signup(myUser2);
+        User b = userRepository.findByUsername("userB");
 
         // Mock the securityUtils method
         when(securityUtils.getCurrentUser()).thenReturn(a);
@@ -98,11 +97,15 @@ class TestSavedPostService {
 
     @Test
     void testUnSavePostWithValidData() {
-        // create users and save them
-        User a = objectsBuilder.createUserA();
-        User b = objectsBuilder.createUserB();
-        userRepository.save(a);
-        userRepository.save(b);
+        // create user that will save the post
+        UserDTO myUser = new UserDTO("mockEmail12@gmail.com", "testUser", "mock Password test");
+        signupController.signup(myUser);
+        User a = userRepository.findByUsername("testUser");
+
+        // create user to be the post author
+        UserDTO myUser2 = new UserDTO("b.mail@gmail.com", "userB", "Omar Tammam");
+        signupController.signup(myUser2);
+        User b = userRepository.findByUsername("userB");
 
         // Mock the securityUtils method
         when(securityUtils.getCurrentUser()).thenReturn(a);
@@ -140,10 +143,15 @@ class TestSavedPostService {
 
     @Test
     void testSavedPostServiceWithInvalidPost() {
-        User a = objectsBuilder.createUserA();
-        userRepository.save(a);
-        User b = objectsBuilder.createUserB();
-        userRepository.save(b);
+        // create user that will save the post
+        UserDTO myUser = new UserDTO("mockEmail12@gmail.com", "testUser", "mock Password test");
+        signupController.signup(myUser);
+        User a = userRepository.findByUsername("testUser");
+
+        // create user to be the post author
+        UserDTO myUser2 = new UserDTO("b.mail@gmail.com", "userB", "Omar Tammam");
+        signupController.signup(myUser2);
+        User b = userRepository.findByUsername("userB");
 
         // Mock the securityUtils method
         when(securityUtils.getCurrentUser()).thenReturn(a);
