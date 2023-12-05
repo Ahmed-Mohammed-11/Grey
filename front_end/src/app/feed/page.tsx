@@ -9,13 +9,18 @@ import PostDTO from '../models/dtos/PostDTO';
 
 const Feed = () => {
   const [selectedFeedIndex, setSelectedFeedIndex] = useState(0);
-  const [pageIndex, setPageIndex] = useState(100);
+  const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(5);
   const [feedData, setFeedData] = useState<null | PostDTO[]>(null);
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(10);
   const [auth, setAuth] = useState<string | null>(null);
   const {ref, inView } = useInView();
-  
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+
+  const handleDateChange = (newDate:Date) => {
+    setSelectedDate(newDate);
+  };
 
   useEffect(() => {
     setAuth(localStorage.getItem('Authorization'));
@@ -40,7 +45,7 @@ const Feed = () => {
     setPageIndex(0)
     setFeedData(null)
     loadMore()
-  }, [selectedFeedIndex]);
+  }, [selectedFeedIndex, selectedDate]);
 
   useEffect(() =>{
     if(inView){
@@ -66,10 +71,18 @@ const Feed = () => {
         Authorization: auth!,
         mode: 'cors',
       };
-  
+      // TODO set this variables by a date picker 
+      // if attributes is null it means no date filter is applied
+      const day = null;
+      const month = null; 
+      const year = null;
+
       const postFilterDTO = {
         pageNumber: pageIndex,
         pageSize: pageSize,
+        day: day,
+        month: month,
+        year: year
       };
   
       const response = await fetch(urlBase + endpoint, {
