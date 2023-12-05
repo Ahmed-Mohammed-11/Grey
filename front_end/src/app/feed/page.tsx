@@ -1,22 +1,26 @@
 'use client'
 import styles from './page.module.css'
 import React, { useState, useEffect } from 'react';
+import { useInView } from "react-intersection-observer"
 import { Box } from '@mui/system';
 import Posts from '@/app/components/posts/page';
 import SideBar from '@/app/components/sidebar/page';
 
-export default function Feed() {
-  const [selectedPageIndex, setSelectedPageIndex] = useState(0);
+const Feed = () => {
+  const [selectedFeedIndex, setSelectedFeedIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(100);
+  const [pageSize, setPageSize] = useState(5);
   const [feedData, setFeedData] = useState(null);
-  const [Auth, setAuth] = useState<string | null>("")
+  const [auth, setAuth] = useState<string | null>(null);
+  const {ref, inView } = useInView();
+
   useEffect(() => {
-    const auth = localStorage.getItem('Authorization');
-    setAuth(auth);
+    setAuth(localStorage.getItem('Authorization'));
   }, []); // Empty dependency array to run the effect only once during mount
 
   const urlBase = 'http://localhost:8080';
 
-  const endpointMapping: { [key: number]: string } = {
+  const endpointMapping = {
     0: '/posts/feed',
     1: '/posts/explore',
     2: '/posts/diary',
@@ -25,25 +29,50 @@ export default function Feed() {
     5: '/posts/settings',
   };
 
-  const fetchData = async () => {
+  const handleChange = (newSelectedPageIndex: number) => {
+    setSelectedFeedIndex(newSelectedPageIndex);
+  };
+
+  useEffect(() => {
+    console.log("diary")
+    setPageIndex(0)
+    setFeedData(null)
+    loadMore()
+  }, [selectedFeedIndex]);
+
+  useEffect(() =>{
+    if(inView){
+      console.log("scrolled to the end")
+      setPageIndex(prevPageIndex => prevPageIndex + 1);
+    }
+  }, [inView])
+
+  useEffect(() => {
+    console.log("change the page index")
+    loadMore();
+  }, [pageIndex]);
+
+  const loadMore = async () => {
     try {
-      const endpoint = endpointMapping[selectedPageIndex];
+      console.log(pageIndex)
+      console.log(pageIndex + 1)
+      console.log(pageIndex)
+      const endpoint = endpointMapping[selectedFeedIndex];
       if (!endpoint) {
-        console.error('Invalid selectedPageIndex:', selectedPageIndex);
+        console.error('Invalid selectedFeedIndex:', selectedFeedIndex);
         return;
       }
 
       const headers = {
         'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('Authorization')!,
+        Authorization: auth!,
         mode: 'cors',
       };
-      
-      // this is mocked will be replaced and filled from the user
+      console.log(pageIndex)
       const postFilterDTO = {
-        "pageNumber": 0,
-        "pageSize": 3
-      }
+        pageNumber: pageIndex,
+        pageSize: pageSize,
+      };
 
       const response = await fetch(urlBase + endpoint, {
         method: 'POST',
@@ -56,25 +85,26 @@ export default function Feed() {
       }
 
       const data = await response.json();
-      console.log(data.content);
-      setFeedData(data.content);
+      console.log(data);
+      setFeedData((prevData) => [...(prevData ?? []), ...data.content]);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [selectedPageIndex]);
-
-  const handleChange = (newSelectedPageIndex: number) => {
-    setSelectedPageIndex(newSelectedPageIndex);
-  };
-
   return (
-    <Box className={styles.container}>
-      <SideBar width={'25%'} onChange={handleChange} />
-      <Posts width={'75%'} data={feedData} />
-    </Box>
+    <div>
+      <Box className={styles.container}>
+        <SideBar width={'25%'} onChange={handleChange} />
+        <Posts width={'75%'} data={feedData} />
+      </Box>
+      <Box>
+        <div className={styles.load}/>
+        <div ref = {ref}/>
+      </Box>
+    </div>
   );
-}
+};
+
+export default Feed;
+// TODO: restrict not sending post request if there is no more pages
