@@ -5,14 +5,17 @@ import { useInView } from "react-intersection-observer"
 import { Box } from '@mui/system';
 import Posts from '@/app/components/posts/page';
 import SideBar from '@/app/components/sidebar/page';
+import PostDTO from '../models/dtos/PostDTO';
 
 const Feed = () => {
   const [selectedFeedIndex, setSelectedFeedIndex] = useState(0);
   const [pageIndex, setPageIndex] = useState(100);
   const [pageSize, setPageSize] = useState(5);
-  const [feedData, setFeedData] = useState(null);
+  const [feedData, setFeedData] = useState<null | PostDTO[]>(null);
+  const [totalNumberOfPages, setTotalNumberOfPages] = useState(10);
   const [auth, setAuth] = useState<string | null>(null);
   const {ref, inView } = useInView();
+  
 
   useEffect(() => {
     setAuth(localStorage.getItem('Authorization'));
@@ -20,7 +23,7 @@ const Feed = () => {
 
   const urlBase = 'http://localhost:8080';
 
-  const endpointMapping = {
+  const endpointMapping: Record<number, string> = {
     0: '/posts/feed',
     1: '/posts/explore',
     2: '/posts/diary',
@@ -34,7 +37,6 @@ const Feed = () => {
   };
 
   useEffect(() => {
-    console.log("diary")
     setPageIndex(0)
     setFeedData(null)
     loadMore()
@@ -43,54 +45,52 @@ const Feed = () => {
   useEffect(() =>{
     if(inView){
       console.log("scrolled to the end")
-      setPageIndex(prevPageIndex => prevPageIndex + 1);
+      setPageIndex(prevPageIndex => Math.min(prevPageIndex + 1, totalNumberOfPages - 1));
     }
   }, [inView])
 
   useEffect(() => {
-    console.log("change the page index")
     loadMore();
   }, [pageIndex]);
 
   const loadMore = async () => {
     try {
-      console.log(pageIndex)
-      console.log(pageIndex + 1)
-      console.log(pageIndex)
       const endpoint = endpointMapping[selectedFeedIndex];
       if (!endpoint) {
         console.error('Invalid selectedFeedIndex:', selectedFeedIndex);
         return;
       }
-
+  
       const headers = {
         'Content-Type': 'application/json',
         Authorization: auth!,
         mode: 'cors',
       };
-      console.log(pageIndex)
+  
       const postFilterDTO = {
         pageNumber: pageIndex,
         pageSize: pageSize,
       };
-
+  
       const response = await fetch(urlBase + endpoint, {
         method: 'POST',
         body: JSON.stringify(postFilterDTO),
         headers,
       });
-
+  
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
-      const data = await response.json();
-      console.log(data);
-      setFeedData((prevData) => [...(prevData ?? []), ...data.content]);
+  
+      const newData = await response.json();
+      console.log(newData);
+      setTotalNumberOfPages(newData.totalPages);
+      setFeedData((prevData) => [...(prevData ?? []), ...newData.content]);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
+  
 
   return (
     <div>
@@ -107,4 +107,4 @@ const Feed = () => {
 };
 
 export default Feed;
-// TODO: restrict not sending post request if there is no more pages
+// TODO: what if you reached the end of all the pages and a user posted a new post
