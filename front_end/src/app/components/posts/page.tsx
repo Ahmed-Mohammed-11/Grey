@@ -8,7 +8,10 @@ export default function Feed(props:any) {
 
     return (
         <Box className={styles.feed} width={props.width}>
-            <Post posts={posts}/>
+            {posts.map((post: any) => (
+                <Post key={post.id} post={post} />
+            ))}
+            
         </Box>
     )
 }
