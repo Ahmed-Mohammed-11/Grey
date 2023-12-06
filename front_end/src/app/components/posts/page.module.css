@@ -10,3 +10,21 @@
     height: 30px;
     background-color: red;
 }
+
+.postSkeleton {
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #abb2b8;
+    color: #fff;
+}
+
+.postContent {
+    display: flex;
+    align-items: center;
+}
+
+.additionalContent {
+    margin-left: 10px;
+    flex-grow: 1;
+}

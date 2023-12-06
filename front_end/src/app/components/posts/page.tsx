@@ -5,6 +5,7 @@ import Feeling from '../../models/dtos/Feeling';
 import React, { useState, useEffect } from 'react';
 import { useInView } from "react-intersection-observer"
 import { BASE_BACKEND_URL, DIARY_ENDPOINT } from "@/app/constants/apiConstants";
+import { Skeleton } from '@mui/material';
 
 export default function Feed(props:any) {
     const {ref, inView } = useInView();
@@ -27,7 +28,6 @@ export default function Feed(props:any) {
         if(inView)
           setPageIndex(prevPageIndex => Math.min(prevPageIndex + 1, totalNumberOfPages - 1));
     }, [inView])
-
 
     useEffect(() => {
         loadMore();
@@ -72,15 +72,22 @@ export default function Feed(props:any) {
         }
       };
 
+    const renderPosts = () => {
+        return posts.map((post: any) => <Post key={post.id} post={post} />);
+    };
+
     return (
         <Box className={styles.feed} width={props.width}>
-            {posts.map((post: any) => (
-                <Post key={post.id} post={post} />
-            ))}
-            <Box>
-                <div className={styles.load}/>
-                <div ref = {ref}/>
-            </Box>
+            {renderPosts()}
+            <div className={styles.postSkeleton} ref = {ref} >
+                <div className={styles.postContent}>
+                    <Skeleton variant="circular" width={70} height={70} />
+                    <div className={styles.additionalContent}>
+                        <Skeleton height={20} width="60%" />
+                        <Skeleton height={20} width="80%" />
+                    </div>
+                </div>
+            </div>
         </Box>
     )
 }

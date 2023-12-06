@@ -10,6 +10,8 @@ import savePostService from "@/app/services/savePostService";
 
 
 export default function Post(props: any) {
+    let post = props.post;
+
     const handleSavePost = (postId: any) => {
         const data = savePostService.sendPostRequest(postId);
         notify(data)
@@ -27,8 +29,6 @@ export default function Post(props: any) {
             console.log(error)
         }
     }
-    
-    let post = props.post;
 
     return (
         <Box width={props.width}>
