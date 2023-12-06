@@ -6,6 +6,7 @@ import { Box } from '@mui/system';
 import Posts from '@/app/components/posts/page';
 import SideBar from '@/app/components/sidebar/page';
 import PostDTO from '../models/dtos/PostDTO';
+import { BASE_BACKEND_URL, DIARY_ENDPOINT, EXPLORE_ENDPOINT, FEED_ENDPOINT } from '../constants/apiConstants';
 
 const Feed = () => {
   const [selectedFeedIndex, setSelectedFeedIndex] = useState(0);
@@ -26,15 +27,13 @@ const Feed = () => {
     setAuth(localStorage.getItem('Authorization'));
   }, []); // Empty dependency array to run the effect only once during mount
 
-  const urlBase = 'http://localhost:8080';
-
   const endpointMapping: Record<number, string> = {
-    0: '/posts/feed',
-    1: '/posts/explore',
-    2: '/posts/diary',
-    3: '/posts/test',
-    4: '/posts/profile',
-    5: '/posts/settings',
+    0: FEED_ENDPOINT,
+    1: EXPLORE_ENDPOINT,
+    2: DIARY_ENDPOINT,
+    3: '/posts/test', // this is mocked will be changed
+    4: '/posts/profile', // this is mocked will be changed
+    5: '/posts/settings', // this is mocked will be changed
   };
 
   const handleChange = (newSelectedPageIndex: number) => {
@@ -85,7 +84,7 @@ const Feed = () => {
         year: year
       };
   
-      const response = await fetch(urlBase + endpoint, {
+      const response = await fetch(BASE_BACKEND_URL + endpoint, {
         method: 'POST',
         body: JSON.stringify(postFilterDTO),
         headers,
