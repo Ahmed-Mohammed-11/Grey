@@ -1,15 +1,23 @@
-import Image from 'next/image'
-import styles from './page.module.css'
-import Button from '@mui/material/Button';
+'use client';
+import React, {useEffect, useState} from "react";
+import { ToastContainer } from "react-toastify";
 
-export default function Home() {
-  return (
-    <div>
-        <p className={styles.paragraph}> Hello greys </p>
-        {/*testing mui
-        installation -> npm install @mui/material @emotion/react @emotion/styled
-        documentation -> https://mui.com/material-ui/getting-started/installation/*/  }
-        <Button className={styles.main_button} size="large" variant="contained">press me</Button>
-    </div>
-  )
+
+function Home() {
+
+    const [Auth, setAuth] = useState<string | null>("")
+    useEffect(() => {
+        console.log("hello");
+        setAuth(localStorage.getItem("Authorization"));
+    })
+    return (
+        <>
+            <h2> &nbsp;&nbsp;   hello </h2>
+            <br/>
+            <h2>  &nbsp;&nbsp; {Auth} </h2>
+        </>
+    )
 }
+
+export default Home
+
