@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.UUID;
 
-public interface UserRepo extends JpaRepository<User, UUID> {
+public interface UserRepo extends JpaRepository<User, String> {
     User findByUsername(String username);
 
     User findByEmail(String email);

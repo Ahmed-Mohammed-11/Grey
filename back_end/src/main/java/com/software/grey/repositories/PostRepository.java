@@ -1,6 +1,8 @@
 package com.software.grey.repositories;
 
 import com.software.grey.models.entities.Post;
+
+import com.software.grey.models.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +14,9 @@ import java.util.UUID;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, UUID> {
+
+
+    Post findByUser(User user);
 
     @Query("""
         SELECT p FROM Post p

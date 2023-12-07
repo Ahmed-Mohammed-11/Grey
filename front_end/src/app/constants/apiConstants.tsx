@@ -6,9 +6,8 @@ export const SIGN_UP_VERIFICATION_ENDPOINT = '/verify';
 export const SIGN_UP_ROUTE = '/signup';
 export const SIGN_IN_ROUTE = '/login';
 export const HOME_ROUTE = '/feed';
-
 export const CREATE_POST_ENDPOINT = '/posts';
-export const SAVE_POST_ENDPOINT = '/post/toggle/save';
+export const SAVE_POST_ENDPOINT = CREATE_POST_ENDPOINT + '/toggle/save/';
 export const FEED_ENDPOINT = CREATE_POST_ENDPOINT + '/feed';
 export const EXPLORE_ENDPOINT = CREATE_POST_ENDPOINT + '/explore';
 export const DIARY_ENDPOINT = CREATE_POST_ENDPOINT + '/diary';

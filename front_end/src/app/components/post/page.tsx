@@ -4,27 +4,29 @@ import {Box} from "@mui/system";
 import {BsBookmark, BsFillBookmarkFill} from "react-icons/bs";
 import {SlOptions} from "react-icons/sl";
 import {Chip, IconButton, ListItem} from "@mui/material";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import React from "react";
-import savePostService from "@/app/services/savePostService";
+import SavePostController from "@/app/services/SavePostController";
+import { SAVE_POST_ENDPOINT } from "@/app/constants/apiConstants";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function Post(props: any) {
-    let post = props.post;
 
-    const handleSavePost = (postId: any) => {
-        const data = savePostService.sendPostRequest(postId);
+    const handleSavePost = (postId: string) => {
+        const data = SavePostController.sendPostRequest({postId: postId}, SAVE_POST_ENDPOINT);
         notify(data)
     };
 
-    async function notify (response: any) {
+    async function notify (response: Promise<Response>) {
         try {
-            const message = await response;
-            toast(`${message}`, {
+            const res = await response;
+            const message = await res.text();
+            console.log('message:' + message)
+            toast.success(`${message}`, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 1000,
             });
-            console.log(message)
         } catch (error) {
             console.log(error)
         }

@@ -1,6 +1,8 @@
 import styles from "./page.module.css"
 import {Box} from "@mui/system";
 import Post from "@/app/components/post/page";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import React, { useState, useEffect } from 'react';
 import { useInView } from "react-intersection-observer"
 import { BASE_BACKEND_URL, DIARY_ENDPOINT } from "@/app/constants/apiConstants";
@@ -104,6 +106,7 @@ export default function Feed(props:any) {
               </div>
             </div>
           )}
+          <ToastContainer />
         </Box>
     )
 }

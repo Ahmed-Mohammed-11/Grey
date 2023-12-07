@@ -25,7 +25,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "post_Text")
+    @Column(name = "text")
     private String postText;
 
     @ManyToOne

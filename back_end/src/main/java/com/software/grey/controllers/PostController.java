@@ -1,6 +1,9 @@
 package com.software.grey.controllers;
 
+import com.software.grey.SavedPostEnum;
 import com.software.grey.models.dtos.PostDTO;
+
+import com.software.grey.services.SavedPostService;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.EndPoints;
@@ -23,6 +26,7 @@ import java.util.UUID;
 public class PostController {
 
     private PostService postService;
+    private SavedPostService savedPostService;
 
     @Operation(
             summary = "Create a new post",
@@ -37,6 +41,16 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(postService.add(postDTO));
     }
 
+    @PostMapping(path = EndPoints.SAVE_POST + "/{id}")
+    public ResponseEntity<String> savePost(@PathVariable("id") String postId) {
+        SavedPostEnum saved = savedPostService.toggleSavedPost(postId);
+        if (saved == SavedPostEnum.SAVED) {
+            return new ResponseEntity<>("Saved successfully", HttpStatus.OK);
+        } else if (saved == SavedPostEnum.REMOVED) {
+            return new ResponseEntity<>("Removed successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
+    }
     @Operation(
             summary = "Get the Diary",
             description = "Get all the posts of a user with pagination")
