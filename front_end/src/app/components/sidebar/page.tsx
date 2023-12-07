@@ -48,8 +48,8 @@ export default function SideBar(props:any) {
     return (
         <Box className={styles.side_bar} width={props.width}>
             <Profile name={"@hesham09"}></Profile>
+            <PopupScreen/>
             <Box className={styles.container_buttons}>{buttons}</Box>
-            {/* <PopupScreen/> */}
         </Box>
     )
 }

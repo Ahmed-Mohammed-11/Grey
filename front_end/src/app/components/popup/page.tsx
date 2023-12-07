@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-// import Popup from 'reactjs-popup';
+import Popup from 'reactjs-popup';
 import styles from "./page.module.css"
 import Profile from "@/app/components/sidebar/profile";
 import {Box} from "@mui/system";
@@ -77,7 +77,7 @@ export default function PopupScreen() {
         fetchResponse(postDTO);
     }
 
-    const fetchResponse = async (postDTO : PostDTO) =>`` {
+    const fetchResponse = async (postDTO : PostDTO) => {
         let response = await createPostController.sendPostRequest(postDTO, CREATE_POST_ENDPOINT);
         let jsonResponse = await toJSON(response.body!);
         let responseStat = response.status;
@@ -99,6 +99,9 @@ export default function PopupScreen() {
 
 
     return (
+        <Popup trigger={<button className={styles.create_button}><FaPen/>create post </button>} modal nested>
+            {close => {
+                return (
                     <section className={styles.container}>
                         <div className={styles.modal}>
                             <div className={styles.profile}>
@@ -175,4 +178,6 @@ export default function PopupScreen() {
                         </div>
                     </section>
                 );
+            }}
+        </Popup>)
 }

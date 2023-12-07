@@ -11,8 +11,6 @@ import PostFilterDTO from '../../models/dtos/PostFilterDTO';
 export default function Feed(props:any) {
     const {ref, inView } = useInView();
     const [auth, setAuth] = useState<string | null>(null);
-    const [pageIndex, setPageIndex] = useState(0);
-    const [pageSize, setPageSize] = useState(5);
     const [totalNumberOfPages, setTotalNumberOfPages] = useState(10);
     const [posts, setPosts] = useState<any[]>([]);
     const [filterData, setFilterData] = useState<PostFilterDTO>({} as PostFilterDTO);
@@ -41,17 +39,18 @@ export default function Feed(props:any) {
     }, [inView])
 
     useEffect(() => {
+      console.log("from use effect")
         loadMore();
     }, [filterData]);
 
     const loadMore = async () => {
-        if(totalNumberOfPages == filterData.pageNumber)return;
         try {
           const headers = {
             'Content-Type': 'application/json',
             Authorization: auth!,
             mode: 'cors',
           };
+          console.log(filterData)
           const response = await fetch(BASE_BACKEND_URL + props.feedType, {
             method: 'POST',
             body: JSON.stringify(filterData),
