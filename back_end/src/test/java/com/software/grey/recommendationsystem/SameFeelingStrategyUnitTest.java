@@ -24,12 +24,12 @@ import org.springframework.data.domain.Pageable;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
-class SameFeelingStratUnitTest {
+class SameFeelingStrategyUnitTest {
 //    @Inject
 //    private ApplicationContext ctx;
 
@@ -172,6 +172,12 @@ class SameFeelingStratUnitTest {
 
         // Assertions
         assertEquals(50, returnedData.size(), "The result should contain 50 posts");
+    }
+    @Test
+    void recommendPostsWithNullCount() {
+        // Mock the behavior of getCount returning null
+        when(postService.getCountOfPostedFeelings(user1)).thenReturn(null);
+        assertThrows(NullPointerException.class, () -> sameFeelingStrat.recommend(user1, 0, 10));
     }
 
     private FeelingCountProjection createFeelingCountProjection() {

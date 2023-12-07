@@ -3,6 +3,8 @@ package com.software.grey.controllers;
 import com.software.grey.SavedPostEnum;
 import com.software.grey.models.dtos.PostDTO;
 
+import com.software.grey.models.entities.Post;
+import com.software.grey.recommendationsystem.Recommender;
 import com.software.grey.services.SavedPostService;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.services.implementations.PostService;
@@ -17,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -27,6 +30,7 @@ public class PostController {
 
     private PostService postService;
     private SavedPostService savedPostService;
+    private Recommender recommender;
 
     @Operation(
             summary = "Create a new post",
@@ -60,5 +64,19 @@ public class PostController {
     @PostMapping(EndPoints.GET_DIARY)
     public ResponseEntity<Page<PostDTO>> getDiary(@Valid @RequestBody PostFilterDTO postFilterDTO){
         return ResponseEntity.status(HttpStatus.OK).body(postService.getAll(postFilterDTO));
+    }
+
+    @Operation(
+            summary = "Query recommendation system for posts",
+            description = "Gets posts based on the recommendation system's heuristics")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Posts retrieved correctly")
+    })
+    @GetMapping(EndPoints.EXPLORE)
+    public ResponseEntity<List<Post>> explore(@RequestParam int pageNumber, @RequestParam int pageSize){
+        PostFilterDTO postFilterDTO = new PostFilterDTO();
+        postFilterDTO.setPageNumber(pageNumber);
+        postFilterDTO.setPageSize(pageSize);
+        return ResponseEntity.status(HttpStatus.OK).body(recommender.recommend(postFilterDTO));
     }
 }
