@@ -41,7 +41,6 @@ export default function Feed(props:any) {
     }, [inView])
 
     useEffect(() => {
-        console.log(filterData)
         loadMore();
     }, [filterData]);
 

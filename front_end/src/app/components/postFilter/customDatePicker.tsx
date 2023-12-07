@@ -4,11 +4,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Box from '@mui/material/Box';
-import Alert from '@mui/material/Alert';
 import React, { useState, useEffect } from 'react';
 
 interface CustomDatePickerProps {
-  onDateChange: (newDate: Date | null) => void;
+  onDateChange: (newDate: Date) => void;
 }
 
 export default function CustomDatePicker(props: CustomDatePickerProps) {
@@ -62,15 +61,6 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
             }}
           />
         </DemoItem>
-
-        {cleared && (
-          <Alert
-            sx={{ position: 'absolute', bottom: 0, right: 0 }}
-            severity="success"
-          >
-            Field cleared!
-          </Alert>
-        )}
       </Box>
     </LocalizationProvider>
   );
