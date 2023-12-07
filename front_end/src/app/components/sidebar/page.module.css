@@ -1,0 +1,108 @@
+.side_bar {
+    display: flex;
+    font-family: "Montserrat ExtraBold", sans-serif !important;
+    flex-direction: column;
+    gap: calc(min(5vh, 5vw)) 0;
+    box-sizing: border-box;
+    padding: 1% 2%;
+}
+
+.container_buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.container_profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile_image {
+    width: calc(min(17vh, 17vw));
+    height: calc(min(17vh, 17vw));
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 10vh;
+    overflow: visible !important;
+    color: #DDE6ED;
+    background: #9DB2BF;
+    box-sizing: border-box;
+}
+
+.profile_image > * {
+    margin: -9px 0 0 -9px;
+}
+
+.profile_image:after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: -9px;
+    left: -8px;
+    border-radius: 50%;
+    border: 2px solid #333;
+    box-sizing: border-box;
+}
+
+.container_profile h3 {
+    margin: 15px 0;
+    font-size: calc(2.5 * calc(min(1vh, 1vw)));
+    color: #526D82;
+}
+
+
+.button {
+    width: 100%;
+    height: calc(min(10vh, 10vw));
+    display: flex;
+    font-weight: bold;
+    text-transform: uppercase;
+    justify-content: flex-start !important;
+    letter-spacing: calc(calc(min(1vh, 1vw))) !important;
+    align-items: center;
+    font-size: calc(3 * calc(min(1vh, 1vw)));
+    color: #526D82;
+    border-radius: 16px;
+    box-sizing: border-box;
+}
+
+.button:hover{
+    background: #DDE6ED;
+    color: #526D82;
+}
+
+
+.active {
+    position: relative;
+    background: #526D82;
+    color: #FFF;
+    border-radius: 16px;
+}
+
+.active:hover{
+    background: #526D82;
+    color: #DDE6ED;
+}
+
+.active:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: -8px;
+    left: -9px;
+    border-radius: 16px;
+    border: 2px solid #333;
+    box-sizing: border-box;
+}
+
+/* for any direct child in .button */
+.button > * {
+    width: 30%;
+}

@@ -6,14 +6,19 @@ import ThemeRegistry from "@/app/themes/themeRegistry";
 import GoogleAuthn from "@/app/googleAuthentication/GoogleAuthn";
 import {FaArrowRight} from "react-icons/fa";
 import {useRef, useState} from "react";
-import postController from "@/app/services/postController";
+import signupController from "@/app/services/signupController";
 import {SIGNUP_PANEL_TEXT} from "@/app/constants/displayTextMessages";
-import {signinRoute, signupEndPoint} from "@/app/constants/apiConstants";
+import {
+    HOME_ROUTE,
+    SIGN_IN_ROUTE,
+    SIGN_UP_BACKEND_ENDPOINT,
+    SIGN_UP_VERIFICATION_ENDPOINT
+} from "@/app/constants/apiConstants";
 import classNames from "classnames";
 import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
-import serverValidateMapper from "@/app/security/userValidation/serverFormValidationMapper";
+import signupServerFormValidationMapper from "@/app/security/userValidation/signupServerFormValidationMapper";
 import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
-
+import {useRouter} from "next/navigation";
 function Page() {
     const usernameRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
@@ -28,6 +33,8 @@ function Page() {
         email: "",
         password: ""
     });
+
+    const router = useRouter();
 
     const handleSubmit = () => {
         // user credentials
@@ -58,11 +65,15 @@ function Page() {
     }
 
     const fetchResponse = async (userDTO: UserDTO) => {
-        let response = await postController.sendPostRequest(userDTO, signupEndPoint);
+        let response = await signupController.sendPostRequest(userDTO, SIGN_UP_BACKEND_ENDPOINT);
         // toJSON util to convert ReadableStream to JSON
         let jsonResponse = await toJSON(response.body!);
         let responseStat = response.status;
-        let {isUserValid, errors} = serverValidateMapper(responseStat, jsonResponse)
+        //if response status is 200, redirect to home page
+        (responseStat == 200) && router.push(HOME_ROUTE);
+        //if response status is not 200, map response from server to display appropriate error messages
+        //and if 200 get auth token and store it in local storage
+        let {isUserValid, errors} = signupServerFormValidationMapper(responseStat, jsonResponse, userDTO)
         setIsUserValid(isUserValid);
         setErrors(errors);
     }
@@ -132,15 +143,15 @@ function Page() {
                     </Button>
                     <text> OR</text>
                     <GoogleAuthn/>
+
                 </Box>
 
                 <Box className={styles.panel}>
                     <Box className={styles.panelBanner}> GREY </Box>
                     <text className={styles.panelText}> {SIGNUP_PANEL_TEXT} </text>
                 </Box>
-            
-                <Link href={signinRoute}>
 
+                <Link href={SIGN_IN_ROUTE}>
                     <Button className={[styles.iconButton].join()} variant="contained" size="large">
                         <FaArrowRight size={40} style={{strokeWidth: '2', stroke: 'black'}}/>
                     </Button>

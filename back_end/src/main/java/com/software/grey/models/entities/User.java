@@ -8,8 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.util.UUID;
-
 @Entity
 @Table(name = "user")
 @Data
@@ -18,14 +16,15 @@ import java.util.UUID;
 @SuperBuilder
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
     @Column(unique = true)
     private String username;
 
-    @Column(name="registration_type")
+    @Column(name = "registration_type")
     private String registrationType;
 
     @Column(unique = true)
@@ -41,6 +40,7 @@ public class User {
     private Avatar avatar;
 
     private boolean enabled;
+
     private boolean authenticated;
 
 }

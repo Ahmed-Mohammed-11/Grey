@@ -1,17 +1,21 @@
-import Image from 'next/image'
-import styles from './page.module.css'
-import Button from '@mui/material/Button';
-import Post from './components/Post';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+'use client';
+import React, {useEffect, useState} from "react";
 
-export default function Home() {
-  return (
-    <div>
-        <Post />
-        <ToastContainer />
-    </div>
-  )
+
+function Home() {
+
+    const [Auth, setAuth] = useState<string | null>("")
+    useEffect(() => {
+        console.log("hello");
+        setAuth(localStorage.getItem("Authorization"));
+    })
+    return (
+        <>
+            <h2> &nbsp;&nbsp;   hello </h2>
+            <br/>
+            <h2>  &nbsp;&nbsp; {Auth} </h2>
+        </>
+    )
 }
 
 export default Home

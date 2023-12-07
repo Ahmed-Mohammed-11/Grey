@@ -55,9 +55,9 @@ class TestSavedPostService {
     void testSavePostWithValidData() {
 
         // create user that will save the post
-        UserDTO myUser = new UserDTO("mockEmail12@gmail.com", "testUser", "mock Password test");
+        UserDTO myUser = new UserDTO("mockEmailSave@gmail.com", "testUserSave", "mock Password test");
         signupController.signup(myUser);
-        User a = userRepository.findByUsername("testUser");
+        User a = userRepository.findByUsername("testUserSave");
 
         // create user to be the post author
         UserDTO myUser2 = new UserDTO("b.mail@gmail.com", "userB", "Omar Tammam");
@@ -86,7 +86,7 @@ class TestSavedPostService {
         Post retrievedPost = s.getPost();
         assertThat(retrievedPost.getId()).isEqualTo(postB.getId());
         assertThat(retrievedPost.getUser().getUsername()).isEqualTo(b.getUsername());
-        assertThat(retrievedPost.getText()).isEqualTo(postB.getText());
+        assertThat(retrievedPost.getPostText()).isEqualTo(postB.getPostText());
 
         // assert user data
         User retrievedUser = s.getUser();
@@ -138,7 +138,7 @@ class TestSavedPostService {
 
         Optional<Post> post = postRepository.findById(postB.getId());
         assertThat(post).isPresent();
-        assertThat(post.get().getText()).isEqualTo(postB.getText());
+        assertThat(post.get().getPostText()).isEqualTo(postB.getPostText());
     }
 
     @Test

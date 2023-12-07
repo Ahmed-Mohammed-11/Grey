@@ -23,14 +23,14 @@ public class ObjectsBuilder {
 
     public Post createPostA(User user) {
         return Post.builder()
-                .text("new post aa")
+                .postText("new post aa")
                 .user(user)
                 .build();
     }
 
     public Post createPostB(User user) {
         return Post.builder()
-                .text("new post bb")
+                .postText("new post bb")
                 .user(user)
                 .build();
     }
