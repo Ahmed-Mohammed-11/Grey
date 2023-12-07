@@ -48,6 +48,6 @@ public class SavedPostServiceImpl implements SavedPostService {
     }
 
     private boolean userIsNotThePostAuthor(User user, Post post) {
-        return user.getId() != post.getUser().getId();
+        return !user.getId().equals(post.getUser().getId());
     }
 }
