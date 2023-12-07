@@ -2,7 +2,6 @@
     display: flex;
     font-family: "Montserrat ExtraBold", sans-serif !important;
     flex-direction: column;
-    gap: calc(min(5vh, 5vw)) 0;
     box-sizing: border-box;
     padding: 1% 2%;
 }

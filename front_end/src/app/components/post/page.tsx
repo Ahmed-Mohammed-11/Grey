@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function Post(props: any) {
+
     const handleSavePost = (postId: string) => {
         const data = SavePostController.sendPostRequest({postId: postId}, SAVE_POST_ENDPOINT);
         notify(data)
@@ -31,10 +32,9 @@ export default function Post(props: any) {
         }
     }
 
-    const posts = props.posts
-    const postsD = posts.map((post: any, index: number) => {
-        return (
-            <Box className={styles.post} key={index}>
+    return (
+        <Box width={props.width}>
+            <Box className={styles.post} key={props.key}>
                 <Box className={styles.post_header}>
                     <ListItem>
                         {Array.from(post.postFeelings).map((feeling: any, feelingIndex: any) => (
@@ -52,13 +52,6 @@ export default function Post(props: any) {
                 </Box>
                 <p className={styles.post_text}>{post.postText}</p>
             </Box>
-        );
-    });
-
-
-    return (
-        <Box className={styles.feed} width={props.width}>
-            {postsD}
         </Box>
     )
 }

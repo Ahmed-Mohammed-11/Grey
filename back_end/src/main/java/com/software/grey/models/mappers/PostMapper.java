@@ -12,4 +12,7 @@ public interface PostMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Post toPost(PostDTO postDTO);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    PostDTO toPostDTO(Post post);
 }

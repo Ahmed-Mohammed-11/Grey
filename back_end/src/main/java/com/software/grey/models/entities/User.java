@@ -16,7 +16,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -40,7 +39,6 @@ public class User {
     private Avatar avatar;
 
     private boolean enabled;
-
     private boolean authenticated;
 
 }

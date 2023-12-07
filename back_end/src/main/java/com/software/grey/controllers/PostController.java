@@ -2,7 +2,9 @@ package com.software.grey.controllers;
 
 import com.software.grey.SavedPostEnum;
 import com.software.grey.models.dtos.PostDTO;
+
 import com.software.grey.services.SavedPostService;
+import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.EndPoints;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +22,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(EndPoints.POST)
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class PostController {
 
     private PostService postService;
@@ -46,5 +50,15 @@ public class PostController {
             return new ResponseEntity<>("Removed successfully", HttpStatus.OK);
         }
         return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
+    }
+    @Operation(
+            summary = "Get the Diary",
+            description = "Get all the posts of a user with pagination")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Posts retrieved correctly")
+    })
+    @PostMapping(EndPoints.GET_DIARY)
+    public ResponseEntity<Page<PostDTO>> getDiary(@Valid @RequestBody PostFilterDTO postFilterDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(postService.getAll(postFilterDTO));
     }
 }
