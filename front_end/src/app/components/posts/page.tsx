@@ -45,13 +45,13 @@ export default function Feed(props:any) {
     }, [filterData]);
 
     const loadMore = async () => {
+        if(totalNumberOfPages == filterData.pageNumber)return;
         try {
           const headers = {
             'Content-Type': 'application/json',
             Authorization: auth!,
             mode: 'cors',
           };
-      
           const response = await fetch(BASE_BACKEND_URL + props.feedType, {
             method: 'POST',
             body: JSON.stringify(filterData),
@@ -94,15 +94,17 @@ export default function Feed(props:any) {
         <Box className={styles.feed} width={props.width}>
           <PostFilters showDatePicker={true} filterDTO ={filterData} applyFilters={applyFilters}/>
           {renderPosts()}
-          <div className={styles.postSkeleton} ref = {ref} >
+          {totalNumberOfPages - 1 !== filterData.pageNumber && (
+            <div className={styles.postSkeleton} ref={ref}>
               <div className={styles.postContent}>
-                  <Skeleton variant="circular" width={70} height={70} />
-                  <div className={styles.additionalContent}>
-                      <Skeleton height={20} width="60%" />
-                      <Skeleton height={20} width="80%" />
-                  </div>
+                <Skeleton variant="circular" width={70} height={70} />
+                <div className={styles.additionalContent}>
+                  <Skeleton height={20} width="60%" />
+                  <Skeleton height={20} width="80%" />
+                </div>
               </div>
-          </div>
+            </div>
+          )}
         </Box>
     )
 }
