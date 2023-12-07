@@ -25,7 +25,16 @@ public class SavedPostServiceImpl implements SavedPostService {
     private SecurityUtils securityUtils;
 
     @Override
-    public SavedPostEnum toggleSavedPost(UUID postId) {
+    public SavedPostEnum toggleSavedPost(String postId) {
+        try {
+            return toggle(UUID.fromString(postId));
+        } catch (IllegalArgumentException e) {
+            return SavedPostEnum.NOT_FOUND;
+        }
+    }
+
+
+    private SavedPostEnum toggle(UUID postId) {
         User user = securityUtils.getCurrentUser();
         if (postId == null || user == null) {
             return SavedPostEnum.NOT_FOUND;

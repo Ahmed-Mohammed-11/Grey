@@ -1,3 +1,9 @@
+CREATE TABLE avatar(
+id BINARY(16) PRIMARY KEY,
+path VARCHAR(255)
+);
+
+
 CREATE TABLE user
 (
     id            VARCHAR(70) PRIMARY KEY,

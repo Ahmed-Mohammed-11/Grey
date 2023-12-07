@@ -2,6 +2,8 @@ import styles from "./page.module.css"
 import {Box} from "@mui/system";
 import Post from "@/app/components/post/page";
 import Feeling from '../../models/dtos/Feeling';
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Posts(props: any) {
     const dd = {
@@ -17,6 +19,7 @@ export default function Posts(props: any) {
     return (
         <Box className={styles.feed} width={props.width}>
             <Post posts={posts}/>
+            <ToastContainer />
         </Box>
     )
 }

@@ -38,7 +38,7 @@ public class PostController {
     }
 
     @PostMapping(path = EndPoints.SAVE_POST + "/{id}")
-    public ResponseEntity<String> savePost(@PathVariable("id") UUID postId) {
+    public ResponseEntity<String> savePost(@PathVariable("id") String postId) {
         SavedPostEnum saved = savedPostService.toggleSavedPost(postId);
         if (saved == SavedPostEnum.SAVED) {
             return new ResponseEntity<>("Saved successfully", HttpStatus.OK);

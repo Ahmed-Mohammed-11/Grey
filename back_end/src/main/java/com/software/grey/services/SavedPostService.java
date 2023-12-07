@@ -5,5 +5,5 @@ import com.software.grey.SavedPostEnum;
 import java.util.UUID;
 
 public interface SavedPostService {
-    SavedPostEnum toggleSavedPost(UUID postId);
+    SavedPostEnum toggleSavedPost(String postId);
 }

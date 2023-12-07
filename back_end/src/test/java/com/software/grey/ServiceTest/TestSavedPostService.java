@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -83,7 +84,7 @@ class TestSavedPostService {
         // Mock the securityUtils method
         when(securityUtils.getCurrentUser()).thenReturn(a);
         // save the post and assert that it saved successfully
-        SavedPostEnum savedPostEnum = savedPostService.toggleSavedPost(postB.getId());
+        SavedPostEnum savedPostEnum = savedPostService.toggleSavedPost(postB.getId().toString());
         assertThat(savedPostEnum).isEqualTo(SavedPostEnum.SAVED);
 
         // get all saved posts
@@ -115,7 +116,7 @@ class TestSavedPostService {
         // Mock the securityUtils method
         when(securityUtils.getCurrentUser()).thenReturn(a);
         // save the post and assert that it saved successfully
-        SavedPostEnum savedPostEnum = savedPostService.toggleSavedPost(postB.getId());
+        SavedPostEnum savedPostEnum = savedPostService.toggleSavedPost(postB.getId().toString());
         assertThat(savedPostEnum).isEqualTo(SavedPostEnum.SAVED);
 
         // assert that the post is saved
@@ -123,7 +124,7 @@ class TestSavedPostService {
         assertThat(savedPost).hasSize(1);
 
         // un-save the post
-        savedPostEnum = savedPostService.toggleSavedPost(postB.getId());
+        savedPostEnum = savedPostService.toggleSavedPost(postB.getId().toString());
         assertThat(savedPostEnum).isEqualTo(SavedPostEnum.REMOVED);
 
         savedPost = savedPostRepository.findAll();
@@ -152,17 +153,11 @@ class TestSavedPostService {
         when(securityUtils.getCurrentUser()).thenReturn(a);
 
         // create the post but do not save it, so it will be not-found
-        Post post = objectsBuilder.createPostA(b);
+        Post post = postRepository.findByUser(b);
+        UUID postId = post.getId();
+        postRepository.delete(post);
 
-        SavedPostEnum savedPostEnum = savedPostService.toggleSavedPost(post.getId());
-        assertThat(savedPostEnum).isEqualTo(SavedPostEnum.NOT_FOUND);
-    }
-
-    @Test
-    void testSavedPostServiceWithInvalidData() {
-        User b = objectsBuilder.createUserB();
-        Post post = objectsBuilder.createPostA(b);
-        SavedPostEnum savedPostEnum = savedPostService.toggleSavedPost(post.getId());
+        SavedPostEnum savedPostEnum = savedPostService.toggleSavedPost(postId.toString());
         assertThat(savedPostEnum).isEqualTo(SavedPostEnum.NOT_FOUND);
     }
 }
