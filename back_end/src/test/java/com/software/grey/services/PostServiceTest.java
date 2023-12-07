@@ -8,7 +8,10 @@ import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.SecurityUtils;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -33,7 +36,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PostServiceTest {
 
     @Autowired
@@ -51,12 +54,30 @@ class PostServiceTest {
     @Autowired
     private PostService postService;
 
+    @BeforeAll
+    void init() throws InterruptedException {
+        prepareDataUser1();
+        prepareDataUser2();
+    }
+    void prepareDataUser1() throws InterruptedException {
+        when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName1");
+        UserDTO userDTO1 = new UserDTO("mockEmail1@gmail.com", "mockedUserName1","mockPas1");
+        userService.save(userDTO1);
+        for(int i = 0;i<5;i++){
+            postService.add(PostDTO.builder().postText(i + " user1").postFeelings(Set.of(LOVE, HAPPY)).build());
+            Thread.sleep(30);
+        }
+    }
 
-//    @AfterEach
-//    void cleanUp() {
-//        userRepo.deleteAll();
-//        postRepository.deleteAll();
-//    }
+    void prepareDataUser2() throws InterruptedException {
+        when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName2");
+        UserDTO userDTO2 = new UserDTO("mockEmail2@gmail.com", "mockedUserName2","mockPas2");
+        userService.save(userDTO2);
+        for(int i = 0;i<3;i++){
+            postService.add(PostDTO.builder().postText(i + " user2").postFeelings(Set.of(LOVE, HAPPY)).build());
+            Thread.sleep(30);
+        }
+    }
 
     @Test
     void addPostCorrectly(){
@@ -82,34 +103,11 @@ class PostServiceTest {
         assertThat(difference).isLessThan(Duration.ofMinutes(1));
     }
 
-    void prepareDataUser1() throws InterruptedException {
-        when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName1");
-        UserDTO userDTO1 = new UserDTO("mockEmail1@gmail.com", "mockedUserName1","mockPas1");
-        userService.save(userDTO1);
-        for(int i = 0;i<5;i++){
-            postService.add(PostDTO.builder().postText(i + " user1").postFeelings(Set.of(LOVE, HAPPY)).build());
-            Thread.sleep(30);
-        }
-    }
-
-    void prepareDataUser2() throws InterruptedException {
-        when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName2");
-        UserDTO userDTO2 = new UserDTO("mockEmail2@gmail.com", "mockedUserName2","mockPas2");
-        userService.save(userDTO2);
-        for(int i = 0;i<3;i++){
-            postService.add(PostDTO.builder().postText(i + " user2").postFeelings(Set.of(LOVE, HAPPY)).build());
-            Thread.sleep(30);
-        }
-    }
-
-    //TODO: you should remove the population of the DB form the test function
     @ParameterizedTest
     @MethodSource("paginationOfDiaryPostsParameters")
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     void getDiaryOfUser1(String userName, Integer pageSize, Integer pageNumber, Integer day, Integer month,
                          Integer year, Integer contentSize) throws InterruptedException {
-        prepareDataUser1();
-        prepareDataUser2();
 
         Map<String, List<String>> userPosts = Map.of(
                 "mockedUserName1", List.of("4 user1", "3 user1", "2 user1", "1 user1", "0 user1"),

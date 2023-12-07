@@ -1,5 +1,3 @@
-import Feeling from "@/app/DTO/Feeling";
-
 class PostFilterDTO {
     pageSize!: number;
     pageNumber!: number;
@@ -9,4 +7,4 @@ class PostFilterDTO {
 
 }
 
-export default PostDTO;
+export default PostFilterDTO;
