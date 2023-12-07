@@ -25,16 +25,15 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
-class SameFeelingStrategyUnitTest {
+class InverseFeelingStratTest {
     @Mock
     private PostService postService;
     @Autowired
     @InjectMocks
-    private SameFeelingStrat sameFeelingStrat;
+    private InverseFeelingStrat inverseFeelingStrat;
 
     @SpyBean
     private PostRepository postRepository;
@@ -46,8 +45,8 @@ class SameFeelingStrategyUnitTest {
 
     @BeforeAll
     void init() {
-        user1 = User.builder().email("sameFeelingUnit@example.com").username("sameFeelingUnit").build();
-        user2 = User.builder().email("sameFeelingUnit2@example.com").username("sameFeelingUnit2").build();
+        user1 = User.builder().email("InverseFeelingUnit@example.com").username("InverseFeelingUnit").build();
+        user2 = User.builder().email("InverseFeelingUnit2@example.com").username("InverseFeelingUnit2").build();
         userRepo.save(user1);
         userRepo.save(user2);
         for(int i = 0; i < 30; i++) {
@@ -58,8 +57,14 @@ class SameFeelingStrategyUnitTest {
         }
         for(int i = 0; i < 30; i++) {
             Set<Feeling> set = new TreeSet<>();
-            set.add(Feeling.ANXIOUS);
+            set.add(Feeling.HAPPY);
             Post post = Post.builder().postText("Anxious").user(user2).postFeelings(set).build();
+            postRepository.save(post);
+        }
+        for(int i = 0; i < 30; i++) {
+            Set<Feeling> set = new TreeSet<>();
+            set.add(Feeling.HAPPY);
+            Post post = Post.builder().postText("Happy").user(user2).postFeelings(set).build();
             postRepository.save(post);
         }
     }
@@ -70,7 +75,7 @@ class SameFeelingStrategyUnitTest {
     }
     // post.setPostTime(Timestamp.from(Instant.now()));
     @Test
-    void recommend() {
+    void recommendBasedOnOneSadPost_ShouldReturnHappy() {
         List<FeelingCountProjection> myList = new ArrayList<>();
         FeelingCountProjection feelingCountProjection = new FeelingCountImpl();
         feelingCountProjection.setFeeling(Feeling.SAD);
@@ -80,14 +85,12 @@ class SameFeelingStrategyUnitTest {
         feelingPercentage.put(Feeling.SAD, 1.0);
         Pageable page = PageRequest.of(0, 10);
         when(postService.getCountOfPostedFeelings(user1)).thenReturn(myList);
-//        when(sameFeelingStratSpy.getFeelingPercentage(myList)).thenReturn(feelingPercentage);
-//        when(postRepository.findByPostFeelings(Feeling.SAD, page)).thenReturn()
 
-        List<Post> returnedData = sameFeelingStrat.recommend(user1, 0, 10);
+        List<Post> returnedData = inverseFeelingStrat.recommend(user1, 0, 10);
 
         assertEquals(10, returnedData.size());
         for(Post p : returnedData) {
-            assertTrue(p.getPostFeelings().contains(Feeling.SAD));
+            assertTrue(p.getPostFeelings().contains(Feeling.HAPPY));
         }
     }
 
@@ -99,7 +102,7 @@ class SameFeelingStrategyUnitTest {
         when(postService.getCountOfPostedFeelings(user1)).thenReturn(Collections.emptyList());
 
         // Call the method under test
-        List<Post> returnedData = sameFeelingStrat.recommend(user1, 0, 10);
+        List<Post> returnedData = inverseFeelingStrat.recommend(user1, 0, 10);
 
         // Assertions
         assertTrue(returnedData.isEmpty(), "The result should be an empty list");
@@ -115,30 +118,24 @@ class SameFeelingStrategyUnitTest {
         myList.add(feelingCountProjection);
         // Mock the behavior of dependencies
         when(postService.getCountOfPostedFeelings(user1)).thenReturn(myList);
-//        when(sameFeelingStratSpy.getFeelingPercentage(myList)).thenReturn(Collections.emptyMap());
 
-        assertTrue(sameFeelingStrat.recommend(user1, 0, 10).size() == 0);
+        assertTrue(inverseFeelingStrat.recommend(user1, 0, 10).size() == 0);
     }
 
     @Test
-    void recommendWithManyFeelings_ButNoPostsAvailable() {
+    void recommendWithNoSadness_ShouldReturnNothing() {
         // Test when there is more data in the database
         FeelingCountProjection feelingCountProjection = new FeelingCountImpl();
-        feelingCountProjection.setFeeling(Feeling.HAPPY);
+        feelingCountProjection.setFeeling(Feeling.ANXIOUS);
         feelingCountProjection.setFeelingCount(30);
         List<FeelingCountProjection> myList = new ArrayList<>();
         myList.add(feelingCountProjection);
-        feelingCountProjection.setFeeling(Feeling.INSPIRE);
-        feelingCountProjection.setFeelingCount(30);
-        myList.add(feelingCountProjection);
-
 
         // Mock the behavior of dependencies
         when(postService.getCountOfPostedFeelings(user2)).thenReturn(myList);
-//        when(sameFeelingStratSpy.getFeelingPercentage(myList).thenReturn(Collections.singletonMap(Feeling.HAPPY, 1.0));
 
         // Call the method under test
-        List<Post> returnedData = sameFeelingStrat.recommend(user2, 0, 50);
+        List<Post> returnedData = inverseFeelingStrat.recommend(user2, 0, 20);
 
         // Assertions
         assertEquals(0, returnedData.size(), "The result should contain 0 posts");
@@ -156,27 +153,14 @@ class SameFeelingStrategyUnitTest {
         feelingCountProjection2.setFeeling(Feeling.ANXIOUS);
         feelingCountProjection2.setFeelingCount(25);
         myList.add(feelingCountProjection2);
-        Map<Feeling, Double> map = new LinkedHashMap<>();
-        map.put(Feeling.SAD, 0.5);
-        map.put(Feeling.ANXIOUS, 0.5);
 
         // Mock the behavior of dependencies
         when(postService.getCountOfPostedFeelings(user2)).thenReturn(myList);
 
-//        when(sameFeelingStratSpy.getFeelingPercentage(myList)).thenReturn(map);
         // Call the method under test
-        List<Post> returnedData = sameFeelingStrat.recommend(user2, 0, 50);
+        List<Post> returnedData = inverseFeelingStrat.recommend(user2, 0, 20);
 
         // Assertions
-        assertEquals(50, returnedData.size(), "The result should contain 50 posts");
+        assertEquals(20, returnedData.size(), "The result should contain 50 posts");
     }
-
-    private FeelingCountProjection createFeelingCountProjection() {
-        FeelingCountProjection feelingCountProjection = new FeelingCountImpl();
-        feelingCountProjection.setFeeling(Feeling.SAD);
-        feelingCountProjection.setFeelingCount(1);
-        return feelingCountProjection;
-    }
-
-
 }
