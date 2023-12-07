@@ -5,14 +5,16 @@ import com.software.grey.utils.ErrorMessages;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.sql.Timestamp;
 import java.util.Set;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
@@ -26,4 +28,6 @@ public class PostDTO {
 
     @NotEmpty(message = "post feelings must be 1 at least")
     private Set<Feeling> postFeelings;
+
+    private Timestamp postTime;
 }

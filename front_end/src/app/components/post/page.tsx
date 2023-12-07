@@ -10,6 +10,8 @@ import savePostService from "@/app/services/savePostService";
 
 
 export default function Post(props: any) {
+    let post = props.post;
+
     const handleSavePost = (postId: any) => {
         const data = savePostService.sendPostRequest(postId);
         notify(data)
@@ -28,10 +30,9 @@ export default function Post(props: any) {
         }
     }
 
-    const posts = props.posts
-    const postsD = posts.map((post: any, index: number) => {
-        return (
-            <Box className={styles.post} key={index}>
+    return (
+        <Box width={props.width}>
+            <Box className={styles.post} key={props.key}>
                 <Box className={styles.post_header}>
                     <ListItem>
                         {Array.from(post.postFeelings).map((feeling: any, feelingIndex: any) => (
@@ -49,13 +50,6 @@ export default function Post(props: any) {
                 </Box>
                 <p className={styles.post_text}>{post.postText}</p>
             </Box>
-        );
-    });
-
-
-    return (
-        <Box className={styles.feed} width={props.width}>
-            {postsD}
         </Box>
     )
 }
