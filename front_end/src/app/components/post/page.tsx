@@ -13,6 +13,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Post(props: any) {
 
+    let post = props.post;
+
     const handleSavePost = (postId: string) => {
         const data = SavePostController.sendPostRequest({postId: postId}, SAVE_POST_ENDPOINT);
         notify(data)
@@ -31,7 +33,7 @@ export default function Post(props: any) {
             console.log(error)
         }
     }
-
+ 
     return (
         <Box width={props.width}>
             <Box className={styles.post} key={props.key}>
