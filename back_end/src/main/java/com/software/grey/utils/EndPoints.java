@@ -11,7 +11,6 @@ public class EndPoints {
     public static final String TEST = "/test";
     public static final String LOGIN = "/login";
     public static final String VERIFY_REGISTERATION = "user/verify";
-    public static final String ADD_POST = "";
     public static final String SAVE_POST = "/toggle/save";
     public static final String ROOT = "http://localhost:3000";
     public static final String LOGIN_SUCCESS = "/login/success";
