@@ -1,10 +1,10 @@
-// import * as React from 'react';
 import { DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Box from '@mui/material/Box';
 import React, { useState, useEffect } from 'react';
+import styles from './page.module.css'
 
 interface CustomDatePickerProps {
   onDateChange: (newDate: Date) => void;
@@ -43,18 +43,10 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Box
-        sx={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          position: 'relative',
-        }}
-      >
+      <Box className={styles.customDatePickerContainer}>
         <DemoItem label="DatePicker">
           <DatePicker
-            sx={{ width: 260 }}
+            className={styles.customDatePicker}
             onChange={handleSetDate}
             slotProps={{
               field: { clearable: true, onClear: handleClearDate },
@@ -65,3 +57,4 @@ export default function CustomDatePicker(props: CustomDatePickerProps) {
     </LocalizationProvider>
   );
 }
+

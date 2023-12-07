@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Box } from '@mui/system';
 import Posts from '@/app/components/posts/page';
 import SideBar from '@/app/components/sidebar/page';
-import { DIARY_ENDPOINT, EXPLORE_ENDPOINT, FEED_ENDPOINT } from '../constants/apiConstants';
+import { DIARY_ENDPOINT, EXPLORE_ENDPOINT, FEED_ENDPOINT, SAVED_ENDPOINT } from '../constants/apiConstants';
 
 const Feed = () => {
   const [selectedFeedIndex, setSelectedFeedIndex] = useState(0);
@@ -13,9 +13,7 @@ const Feed = () => {
     0: FEED_ENDPOINT,
     1: EXPLORE_ENDPOINT,
     2: DIARY_ENDPOINT,
-    3: '/posts/test', // this is mocked will be changed
-    4: '/posts/profile', // this is mocked will be changed
-    5: '/posts/settings', // this is mocked will be changed
+    3: SAVED_ENDPOINT,
   };
 
   const handleChange = (newSelectedPageIndex: number) => {
@@ -33,4 +31,3 @@ const Feed = () => {
 };
 
 export default Feed;
-// TODO: what if you reached the end of all the pages and a user posted a new post
