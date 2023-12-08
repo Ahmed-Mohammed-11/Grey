@@ -4,10 +4,10 @@ import {Box} from "@mui/system";
 import {BsBookmark, BsFillBookmarkFill} from "react-icons/bs";
 import {SlOptions} from "react-icons/sl";
 import {Chip, IconButton, ListItem} from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
+import {ToastContainer, toast} from "react-toastify";
 import React from "react";
 import SavePostController from "@/app/services/SavePostController";
-import { SAVE_POST_ENDPOINT } from "@/app/constants/apiConstants";
+import {REPORT_POST_ENDPOINT, SAVE_POST_ENDPOINT} from "@/app/constants/apiConstants";
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -20,20 +20,26 @@ export default function Post(props: any) {
         notify(data)
     };
 
-    async function notify (response: Promise<Response>) {
+    const handleReportPost = (postId: string) => {
+        const data = SavePostController.sendPostRequest({postId: postId}, REPORT_POST_ENDPOINT);
+        notify(data)
+    }
+
+    async function notify(response: Promise<Response>) {
         try {
-            const res = await response;
-            const message = await res.text();
-            console.log('message:' + message)
-            toast.success(`${message}`, {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 1000,
-            });
+            toast.promise(response.then(res => {}),
+                {
+                    pending: 'wait a moment with me ...',
+                    success: 'Post saved successfully',
+                    error: 'Something went wrong',
+                }
+            );
+
         } catch (error) {
             console.log(error)
         }
     }
- 
+
     return (
         <Box width={props.width}>
             <Box className={styles.post} key={props.key}>
@@ -45,12 +51,12 @@ export default function Post(props: any) {
                     </ListItem>
                     <IconButton onClick={() => handleSavePost(post.id)}>
                         {post.saved ?
-                          <BsFillBookmarkFill
-                            className={styles.icon}></BsFillBookmarkFill>
-                        : <BsBookmark
-                            className={styles.icon}></BsBookmark>}
+                            <BsFillBookmarkFill className={styles.icon}></BsFillBookmarkFill>
+                            : <BsBookmark className={styles.icon}></BsBookmark>}
                     </IconButton>
-                    <IconButton><SlOptions className={styles.icon}></SlOptions></IconButton>
+                    <IconButton onClick={() => handleReportPost(post.id)}>
+                        <SlOptions className={styles.icon}></SlOptions>
+                    </IconButton>
                 </Box>
                 <p className={styles.post_text}>{post.postText}</p>
             </Box>
