@@ -37,7 +37,7 @@ public class PostController {
             @ApiResponse(responseCode = "401", description = "User is not authenticated")
     })
     @PostMapping(EndPoints.ADD_POST)
-    public ResponseEntity<UUID> addPost(@Valid @RequestBody PostDTO postDTO){
+    public ResponseEntity<UUID> addPost(@Valid @RequestBody PostDTO postDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(postService.add(postDTO));
     }
 
@@ -59,7 +59,7 @@ public class PostController {
             @ApiResponse(responseCode = "200", description = "Posts retrieved correctly")
     })
     @PostMapping(EndPoints.GET_DIARY)
-    public ResponseEntity<Page<PostDTO>> getDiary(@Valid @RequestBody PostFilterDTO postFilterDTO){
+    public ResponseEntity<Page<PostDTO>> getDiary(@Valid @RequestBody PostFilterDTO postFilterDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(postService.getAll(postFilterDTO));
     }
 
@@ -67,14 +67,16 @@ public class PostController {
             summary = "Report a post",
             description = "Use this end point to enable the user to report a post")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Post reported successfully"),
-            @ApiResponse(responseCode = "400", description = "Post was not save due to invalid request body"),
+            @ApiResponse(responseCode = "200", description = "Post reported successfully"),
+            @ApiResponse(responseCode = "400", description = "Post was not reported due to invalid request body"),
             @ApiResponse(responseCode = "401", description = "User is not authenticated"),
             @ApiResponse(responseCode = "404", description = "Post not found")
     })
     @PostMapping(EndPoints.REPORT_POST + "/{id}")
-    public ResponseEntity<UUID> reportPost(@PathVariable("id") String postId){
-        return ResponseEntity.status(HttpStatus.CREATED).body(postService.report(postId));
+    public ResponseEntity<String> reportPost(@PathVariable("id") String postId) {
+        postService.report(postId);
+        return ResponseEntity.status(HttpStatus.OK).body("Post reported successfully!\n" +
+                "We will review your report and take the necessary actions.");
     }
 
 }

@@ -1,44 +1,79 @@
 "use client"
+import React from "react";
 import styles from "./page.module.css"
 import {Box} from "@mui/system";
 import {BsBookmark, BsFillBookmarkFill} from "react-icons/bs";
 import {SlOptions} from "react-icons/sl";
-import {Chip, IconButton, ListItem} from "@mui/material";
-import {ToastContainer, toast} from "react-toastify";
-import React from "react";
+import {MdReport} from "react-icons/md";
+import {Chip, IconButton, ListItem, Menu, MenuItem} from "@mui/material";
+import {toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import SavePostController from "@/app/services/SavePostController";
 import {REPORT_POST_ENDPOINT, SAVE_POST_ENDPOINT} from "@/app/constants/apiConstants";
-import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function Post(props: any) {
-
     let post = props.post;
+
+    const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(null);
+    const openMenu = Boolean(menuAnchorEl);
+    const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
+        setMenuAnchorEl(event.currentTarget);
+    };
+    const handleMenuClose = () => {
+        setMenuAnchorEl(null);
+    };
+
 
     const handleSavePost = (postId: string) => {
         const data = SavePostController.sendPostRequest({postId: postId}, SAVE_POST_ENDPOINT);
-        notify(data)
+        toastResponse(data)
     };
 
     const handleReportPost = (postId: string) => {
         const data = SavePostController.sendPostRequest({postId: postId}, REPORT_POST_ENDPOINT);
-        notify(data)
+        toastResponse(data)
     }
 
-    async function notify(response: Promise<Response>) {
+    async function toastResponse(response: Promise<Response>) {
         try {
-            toast.promise(response.then(res => {}),
+            await toast.promise(response.then(res => {
+                    if (res.status === 200) {
+                        res.text().then((data: any) => {
+                            toast.success(data, {
+                                position: "top-right",
+                                autoClose: 2000,
+                                theme: "colored",
+                                hideProgressBar: true
+                            });
+                        });
+                    } else {
+                        res.json().then((data: any) => {
+                            toast.error(data.message, {
+                                position: "top-right",
+                                autoClose: 2000,
+                                theme: "colored",
+                                hideProgressBar: true
+                            });
+                        });
+                    }
+                }, (err) => { console.log(err) }),
                 {
                     pending: 'wait a moment with me ...',
-                    success: 'Post saved successfully',
-                    error: 'Something went wrong',
+                    error: 'Server took too long to respond',
+                },
+                {
+                    position: "top-right",
+                    autoClose: 2000,
+                    theme: "colored",
+                    hideProgressBar: true
                 }
             );
-
         } catch (error) {
-            console.log(error)
+            console.error(error);
         }
     }
+
 
     return (
         <Box width={props.width}>
@@ -49,14 +84,34 @@ export default function Post(props: any) {
                             <Chip className={feeling} key={feelingIndex} label={feeling}></Chip>
                         ))}
                     </ListItem>
+
                     <IconButton onClick={() => handleSavePost(post.id)}>
                         {post.saved ?
                             <BsFillBookmarkFill className={styles.icon}></BsFillBookmarkFill>
                             : <BsBookmark className={styles.icon}></BsBookmark>}
                     </IconButton>
-                    <IconButton onClick={() => handleReportPost(post.id)}>
+
+                    <IconButton
+                        aria-controls={openMenu ? 'options-menu' : undefined}
+                        aria-expanded={openMenu ? 'true' : undefined}
+                        onClick={handleMenuClick}>
                         <SlOptions className={styles.icon}></SlOptions>
                     </IconButton>
+                    <Menu
+                        id="options-menu"
+                        anchorEl={menuAnchorEl}
+                        open={openMenu}
+                        onClose={handleMenuClose}>
+                        <MenuItem
+                            className={styles.menu_item}
+                            onClick={() => {
+                                handleMenuClose();
+                                handleReportPost(post.id)
+                            }}>
+                            <MdReport className={styles.icon}/>
+                            Report Post
+                        </MenuItem>
+                    </Menu>
                 </Box>
                 <p className={styles.post_text}>{post.postText}</p>
             </Box>

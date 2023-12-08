@@ -1,10 +1,12 @@
 package com.software.grey.services.implementations;
 
+import com.software.grey.exceptions.UserReportedPostBeforeException;
 import com.software.grey.exceptions.exceptions.DataNotFoundException;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.ReportedPost;
+import com.software.grey.models.entities.ReportedPostId;
 import com.software.grey.models.entities.User;
 import com.software.grey.models.mappers.PostMapper;
 import com.software.grey.repositories.PostRepository;
@@ -47,7 +49,7 @@ public class PostService implements IPostService {
         return post.getId();
     }
 
-    public UUID report(String postId) {
+    public void report(String postId) {
         Post post = findPostById(UUID.fromString(postId));
         String userName = securityUtils.getCurrentUserName();
         User reporter = userService.findByUserName(userName);
@@ -56,8 +58,14 @@ public class PostService implements IPostService {
         reportedPost.setPost(post);
         reportedPost.setReporter(reporter);
 
+        if(userReportedPostBefore(post, reporter)){
+            throw new UserReportedPostBeforeException("Post was already reported by you");
+        }
         reportedPostRepository.save(reportedPost);
-        return post.getId();
+    }
+
+    private boolean userReportedPostBefore(Post post, User reporter) {
+        return reportedPostRepository.existsById(new ReportedPostId(post, reporter));
     }
 
     public Post findPostById(UUID id){

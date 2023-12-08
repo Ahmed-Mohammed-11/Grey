@@ -91,6 +91,12 @@ export default function PopupScreen() {
                     pending: 'Creating post...',
                     success: 'Shared to the world successfully',
                     error: 'Something went wrong',
+                },
+                {
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    theme: "colored",
+                    hideProgressBar: true
                 }
             );
 
