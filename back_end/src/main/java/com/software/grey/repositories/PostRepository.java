@@ -52,5 +52,5 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
     public List<FeelingCountProjection> findCountOfFeelingsByUser(String id);
 
     // TODO make sure that user's own post is not returned
-    public List<Post> findByPostFeelings(Feeling feeling, Pageable pageable);
+    public List<Post> findByPostFeelingsAndUserIdNot(Feeling feeling, String userId, Pageable pageable);
 }
