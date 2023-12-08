@@ -51,6 +51,7 @@ public class PostController {
         }
         return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
     }
+
     @Operation(
             summary = "Get the Diary",
             description = "Get all the posts of a user with pagination")
@@ -61,4 +62,19 @@ public class PostController {
     public ResponseEntity<Page<PostDTO>> getDiary(@Valid @RequestBody PostFilterDTO postFilterDTO){
         return ResponseEntity.status(HttpStatus.OK).body(postService.getAll(postFilterDTO));
     }
+
+    @Operation(
+            summary = "Report a post",
+            description = "Use this end point to enable the user to report a post")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Post reported successfully"),
+            @ApiResponse(responseCode = "400", description = "Post was not save due to invalid request body"),
+            @ApiResponse(responseCode = "401", description = "User is not authenticated"),
+            @ApiResponse(responseCode = "404", description = "Post not found")
+    })
+    @PostMapping(EndPoints.REPORT_POST + "/{id}")
+    public ResponseEntity<UUID> reportPost(@PathVariable("id") String postId){
+        return ResponseEntity.status(HttpStatus.CREATED).body(postService.report(postId));
+    }
+
 }

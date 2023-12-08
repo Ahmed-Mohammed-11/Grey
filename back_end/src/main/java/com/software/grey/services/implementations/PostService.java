@@ -4,9 +4,11 @@ import com.software.grey.exceptions.exceptions.DataNotFoundException;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.entities.Post;
+import com.software.grey.models.entities.ReportedPost;
 import com.software.grey.models.entities.User;
 import com.software.grey.models.mappers.PostMapper;
 import com.software.grey.repositories.PostRepository;
+import com.software.grey.repositories.ReportedPostRepository;
 import com.software.grey.services.IPostService;
 import com.software.grey.services.UserService;
 import com.software.grey.utils.SecurityUtils;
@@ -27,6 +29,8 @@ public class PostService implements IPostService {
 
     private PostRepository postRepository;
 
+    private ReportedPostRepository reportedPostRepository;
+
     private PostMapper postMapper;
 
     private UserService userService;
@@ -40,6 +44,19 @@ public class PostService implements IPostService {
         post.setUser(user);
         post.setPostTime(Timestamp.from(Instant.now()));
         postRepository.save(post);
+        return post.getId();
+    }
+
+    public UUID report(String postId) {
+        Post post = findPostById(UUID.fromString(postId));
+        String userName = securityUtils.getCurrentUserName();
+        User reporter = userService.findByUserName(userName);
+
+        ReportedPost reportedPost = new ReportedPost();
+        reportedPost.setPost(post);
+        reportedPost.setReporter(reporter);
+
+        reportedPostRepository.save(reportedPost);
         return post.getId();
     }
 
@@ -57,4 +74,5 @@ public class PostService implements IPostService {
                 postFilterDTO.getYear(),
                 pageable).map(postMapper::toPostDTO);
     }
+
 }
