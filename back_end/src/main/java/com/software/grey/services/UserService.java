@@ -17,7 +17,6 @@ import com.software.grey.utils.SecurityUtils;
 import com.software.grey.utils.emailsender.EmailSender;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -27,17 +26,13 @@ import org.springframework.stereotype.Service;
 //@AllArgsConstructor
 public class UserService {
     private final UserRepo userRepo;
-    private BasicUserRepo basicUserRepo;
-    private GoogleUserRepo googleUserRepo;
-    private UserVerificationRepo userVerificationRepo;
+    private final BasicUserRepo basicUserRepo;
+    private final GoogleUserRepo googleUserRepo;
+    private final UserVerificationRepo userVerificationRepo;
     private final UserMapper userMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final EmailSender emailSender;
-    private SecurityUtils securityUtils;
-    @Value("${grey.from}")
-    private String fromAddress;
-    @Value("${back.url}")
-    private String backendURL;
+    private final SecurityUtils securityUtils;
     private final boolean ENABLEMAIL = false;
 
     public UserService(UserRepo userRepo, BasicUserRepo basicUserRepo, GoogleUserRepo googleUserRepo,
@@ -130,5 +125,30 @@ public class UserService {
 
     public User findByUserName(String userName){
         return userRepo.findByUsername(userName);
+    }
+
+    public boolean updateUser(UserDTO userDTO) {
+        User user = securityUtils.getCurrentUser();
+        if (user.getRegistrationType().equals("google")) {
+            return updateGoogleUser(userDTO, user);
+        } else {
+            return updateBasicUser(userDTO, user);
+        }
+    }
+
+    private boolean updateBasicUser(UserDTO userDTO, User user) {
+        BasicUser updatedUser = basicUserRepo.findByUsername(user.getUsername());
+        String oldPassword = updatedUser.getPassword();
+        updatedUser = userMapper.toUser(userDTO, updatedUser);
+        if (!updatedUser.getPassword().equals(oldPassword)) {
+            updatedUser.setPassword(bCryptPasswordEncoder.encode(updatedUser.getPassword()));
+        }
+        basicUserRepo.save(updatedUser);
+        userRepo.save(updatedUser);
+        return true;
+    }
+
+    private boolean updateGoogleUser(UserDTO userDTO, User user) {
+        return true;
     }
 }
