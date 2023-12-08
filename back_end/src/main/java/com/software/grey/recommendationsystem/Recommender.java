@@ -29,7 +29,7 @@ public class Recommender {
         aggreagtedPosts.add(inverseFeelingPosts);
 
         // sort by date, and remove duplicates
-        return combiner.combine(stratPercent, aggreagtedPosts);
+        return combiner.combine(aggreagtedPosts);
     }
 
     private StrategyPercentage buildStrategies() {

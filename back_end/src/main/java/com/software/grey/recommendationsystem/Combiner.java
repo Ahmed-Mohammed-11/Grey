@@ -6,5 +6,5 @@ import com.software.grey.models.entities.Post;
 import java.util.List;
 
 public interface Combiner {
-    public List<Post> combine(StrategyPercentage strategyPercentage, List<List<Post>> posts);
+    public List<Post> combine(List<List<Post>> posts);
 }
