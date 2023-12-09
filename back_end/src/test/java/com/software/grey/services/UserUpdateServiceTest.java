@@ -4,10 +4,7 @@ import com.software.grey.controllers.SignupController;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.BasicUser;
 import com.software.grey.models.entities.GoogleUser;
-import com.software.grey.repositories.BasicUserRepo;
-import com.software.grey.repositories.GoogleUserRepo;
-import com.software.grey.repositories.UserRepo;
-import com.software.grey.repositories.UserVerificationRepo;
+import com.software.grey.repositories.*;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,12 +31,14 @@ class UserUpdateServiceTest {
     private final GoogleUserRepo googleUserRepo;
     private final UserVerificationRepo userVerificationRepo;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PostRepository postRepository;
     private String userId;
 
     @Autowired
     public UserUpdateServiceTest(UserService userService, SignupController signupController,
                                  UserRepo userRepo, BasicUserRepo basicUserRepo, GoogleUserRepo googleUserRepo,
-                                 UserVerificationRepo userVerificationRepo, BCryptPasswordEncoder bCryptPasswordEncoder) {
+                                 UserVerificationRepo userVerificationRepo, BCryptPasswordEncoder bCryptPasswordEncoder,
+                                 PostRepository postRepository) {
         this.userService = userService;
         this.signupController = signupController;
         this.userRepo = userRepo;
@@ -47,10 +46,12 @@ class UserUpdateServiceTest {
         this.googleUserRepo = googleUserRepo;
         this.userVerificationRepo = userVerificationRepo;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.postRepository = postRepository;
     }
 
     @BeforeAll
     void init() {
+        postRepository.deleteAll();
         UserDTO myUser = new UserDTO("mockEmailSave@gmail.com", "old username",
                 "mock Password test");
         signupController.signup(myUser);
@@ -60,8 +61,8 @@ class UserUpdateServiceTest {
     @AfterAll
     void cleanUp() {
         userVerificationRepo.deleteAll();
-        basicUserRepo.deleteAll();
         googleUserRepo.deleteAll();
+        basicUserRepo.deleteAll();
         userRepo.deleteAll();
     }
 
