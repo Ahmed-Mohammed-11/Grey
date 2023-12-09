@@ -13,6 +13,7 @@ import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.repositories.GoogleUserRepo;
 import com.software.grey.repositories.UserRepo;
 import com.software.grey.repositories.UserVerificationRepo;
+import com.software.grey.utils.RegularExpressions;
 import com.software.grey.utils.SecurityUtils;
 import com.software.grey.utils.emailsender.EmailSender;
 import jakarta.persistence.EntityNotFoundException;
@@ -127,8 +128,17 @@ public class UserService {
         return userRepo.findByUsername(userName);
     }
 
+
+    /*
+     * @return true if user was updated successfully, false otherwise
+     */
     public boolean updateUser(UserDTO userDTO) {
+
         User user = securityUtils.getCurrentUser();
+        if (user == null || userDTO == null) {
+            return false;
+        }
+
         if (user.getRegistrationType().equals("google")) {
             return updateGoogleUser(userDTO, user);
         } else {
@@ -137,11 +147,20 @@ public class UserService {
     }
 
     private boolean updateBasicUser(UserDTO userDTO, User user) {
+        if (isNotValidUserNameUpdate(userDTO, user) || isNotValidEmailUpdate(userDTO, user)) {
+                return false;
+        }
+
         BasicUser updatedUser = basicUserRepo.findByUsername(user.getUsername());
         String oldPassword = updatedUser.getPassword();
         updatedUser = userMapper.toUser(userDTO, updatedUser);
-        if (!updatedUser.getPassword().equals(oldPassword)) {
-            updatedUser.setPassword(bCryptPasswordEncoder.encode(updatedUser.getPassword()));
+
+        if (!updatedUser.getPassword().equals(oldPassword)) {   // if password has changed
+            if (updatedUser.getPassword().matches(RegularExpressions.PASSWORD_REGEX)){  // if password is valid
+                updatedUser.setPassword(bCryptPasswordEncoder.encode(updatedUser.getPassword())); // encode password
+            } else {
+                return false;
+            }
         }
         basicUserRepo.save(updatedUser);
         userRepo.save(updatedUser);
@@ -149,6 +168,26 @@ public class UserService {
     }
 
     private boolean updateGoogleUser(UserDTO userDTO, User user) {
+        if (isNotValidUserNameUpdate(userDTO, user) || !userDTO.getEmail().equals(user.getEmail())) {
+            return false;
+        }
+
+        GoogleUser updatedUser = googleUserRepo.findByUsername(user.getUsername());
+        updatedUser = userMapper.toGoogleUser(userDTO, updatedUser);
+        googleUserRepo.save(updatedUser);
+        userRepo.save(updatedUser);
         return true;
+    }
+
+    private boolean isNotValidUserNameUpdate(UserDTO userDTO, User user) {
+        return !user.getUsername().equals(userDTO.getUsername()) &&
+                (Boolean.TRUE.equals(userRepo.existsByUsername(userDTO.getUsername())) ||
+                    !userDTO.getUsername().matches(RegularExpressions.USERNAME_REGEX));
+    }
+
+    private boolean isNotValidEmailUpdate(UserDTO userDTO, User user) {
+        return !user.getEmail().equals(userDTO.getEmail()) &&
+                (Boolean.TRUE.equals(userRepo.existsByEmail(userDTO.getEmail())) ||
+                    !userDTO.getEmail().matches(RegularExpressions.EMAIL_REGEX));
     }
 }
