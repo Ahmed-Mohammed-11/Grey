@@ -61,4 +61,9 @@ public class PostController {
     public ResponseEntity<Page<PostDTO>> getDiary(@Valid @RequestBody PostFilterDTO postFilterDTO){
         return ResponseEntity.status(HttpStatus.OK).body(postService.getAll(postFilterDTO));
     }
+
+    @PostMapping(EndPoints.GET_SAVED_POSTS)
+    public ResponseEntity<Page<PostDTO>> getSavedPosts(@Valid @RequestBody PostFilterDTO postFilterDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(postService.getSavedPosts(postFilterDTO));
+    }
 }

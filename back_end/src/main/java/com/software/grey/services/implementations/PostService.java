@@ -5,8 +5,10 @@ import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.User;
+import com.software.grey.models.enums.Feeling;
 import com.software.grey.models.mappers.PostMapper;
 import com.software.grey.repositories.PostRepository;
+import com.software.grey.repositories.SavedPostRepository;
 import com.software.grey.services.IPostService;
 import com.software.grey.services.UserService;
 import com.software.grey.utils.SecurityUtils;
@@ -19,6 +21,8 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -26,6 +30,8 @@ import java.util.UUID;
 public class PostService implements IPostService {
 
     private PostRepository postRepository;
+
+    private SavedPostRepository savedPostRepository;
 
     private PostMapper postMapper;
 
@@ -52,6 +58,18 @@ public class PostService implements IPostService {
         Pageable pageable = PageRequest.of(postFilterDTO.getPageNumber(), postFilterDTO.getPageSize(), Sort.by("postTime").descending());
         return postRepository.findAllByUsernameAndDayMonthYear(
                 userName,
+                postFilterDTO.getDay(),
+                postFilterDTO.getMonth(),
+                postFilterDTO.getYear(),
+                pageable).map(postMapper::toPostDTO);
+    }
+
+    public Page<PostDTO> getSavedPosts(PostFilterDTO postFilterDTO) {
+        String userId = securityUtils.getCurrentUserId();
+        Pageable pageable = PageRequest.of(postFilterDTO.getPageNumber(), postFilterDTO.getPageSize(), Sort.by("postTime").descending());
+        return savedPostRepository.findPostsByUserAndFeelingsAndDate(
+                userId,
+                postFilterDTO.getFeelings(),
                 postFilterDTO.getDay(),
                 postFilterDTO.getMonth(),
                 postFilterDTO.getYear(),
