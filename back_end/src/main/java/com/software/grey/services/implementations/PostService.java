@@ -47,14 +47,28 @@ public class PostService implements IPostService {
         return postRepository.findById(id).orElseThrow(() -> new DataNotFoundException("User not found"));
     }
 
-    public Page<PostDTO> getAll(PostFilterDTO postFilterDTO) {
+    public Page<PostDTO> getDiary(PostFilterDTO postFilterDTO) {
         String userName = securityUtils.getCurrentUserName();
-        Pageable pageable = PageRequest.of(postFilterDTO.getPageNumber(), postFilterDTO.getPageSize(), Sort.by("postTime").descending());
-        return postRepository.findAllByUsernameAndDayMonthYear(
+        Pageable pageable = PageRequest.of(
+                postFilterDTO.getPageNumber(),
+                postFilterDTO.getPageSize(),
+                Sort.by("postTime").descending());
+        return postRepository.findDiaryByUsernameAndDayMonthYear(
                 userName,
                 postFilterDTO.getDay(),
                 postFilterDTO.getMonth(),
                 postFilterDTO.getYear(),
                 pageable).map(postMapper::toPostDTO);
+    }
+
+    public Page<PostDTO> getFeed(PostFilterDTO postFilterDTO) {
+        String userName = securityUtils.getCurrentUserName();
+        Pageable pageable = PageRequest.of(
+                postFilterDTO.getPageNumber(),
+                postFilterDTO.getPageSize(),
+                Sort.by("postTime").descending());
+        Page<Post> out = postRepository.findByUserUsernameIsNot(userName, pageable);
+        Page<PostDTO> outt = out.map(postMapper::toPostDTO);
+        return outt;
     }
 }

@@ -159,7 +159,7 @@ class PostControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(postFilterDTO)))
                 .andExpect(status().isBadRequest());
-        verify(postService, never()).getAll(any(PostFilterDTO.class));
+        verify(postService, never()).getDiary(any(PostFilterDTO.class));
     }
 
     static Stream<Arguments> paginationOfDiaryPostsFailParameters() {
@@ -192,7 +192,7 @@ class PostControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(postFilterDTO)))
                 .andExpect(status().isOk());
-        verify(postService, times(1)).getAll(any(PostFilterDTO.class));
+        verify(postService, times(1)).getDiary(any(PostFilterDTO.class));
     }
 
     static Stream<Arguments> paginationOfDiaryPostsAcceptParameters() {

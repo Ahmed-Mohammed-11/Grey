@@ -2,6 +2,7 @@ package com.software.grey.utils;
 
 public class EndPoints {
 
+
     private EndPoints(){}
 
     public static final String POST = "/posts";
@@ -16,5 +17,6 @@ public class EndPoints {
     public static final String LOGIN_SUCCESS = "/login/success";
     public static final String LOGIN_FAIL = "/login/fail";
     public static final String GET_DIARY = "/diary";
+    public static final String GET_FEED = "/feed";
 
 }
