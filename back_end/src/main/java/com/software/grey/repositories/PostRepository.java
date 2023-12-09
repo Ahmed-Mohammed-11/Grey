@@ -25,11 +25,13 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
         AND (:month IS NULL OR MONTH(p.postTime) = :month)
         AND (:year IS NULL OR YEAR(p.postTime) = :year)
         """)
-    Page<Post> findAllByUsernameAndDayMonthYear(
+    Page<Post> findDiaryByUsernameAndDayMonthYear(
             @Param("userName") String userName,
             @Param("day") Integer day,
             @Param("month") Integer month,
             @Param("year") Integer year,
             Pageable pageable
     );
+
+    Page<Post> findByUserUsernameIsNot(String userName, Pageable pageable);
 }

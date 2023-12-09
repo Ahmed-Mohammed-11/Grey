@@ -59,6 +59,18 @@ public class PostController {
     })
     @PostMapping(EndPoints.GET_DIARY)
     public ResponseEntity<Page<PostDTO>> getDiary(@Valid @RequestBody PostFilterDTO postFilterDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(postService.getAll(postFilterDTO));
+        return ResponseEntity.status(HttpStatus.OK).body(postService.getDiary(postFilterDTO));
+    }
+
+    @Operation(
+            summary = "Get Feed",
+            description = "Get all the posts of that the other users wrote with pagination and filtering")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Posts retrieved correctly")
+    })
+    @PostMapping(EndPoints.GET_FEED)
+    public ResponseEntity<Page<PostDTO>> getFeed(@Valid @RequestBody PostFilterDTO postFilterDTO){
+        Page<PostDTO> out = postService.getFeed(postFilterDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(out);
     }
 }

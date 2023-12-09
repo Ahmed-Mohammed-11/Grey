@@ -9,7 +9,6 @@ import com.software.grey.repositories.UserRepo;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -118,7 +117,7 @@ class PostServiceTest {
 
         PostFilterDTO postFilterDTO = PostFilterDTO.builder()
                 .pageNumber(pageNumber).pageSize(pageSize).day(day).month(month).year(year).build();
-        Page<PostDTO> posts = postService.getAll(postFilterDTO);
+        Page<PostDTO> posts = postService.getDiary(postFilterDTO);
         assertThat(posts.getContent()).hasSize(contentSize);
         int start = pageNumber * pageSize;
         for (int i = 0; i < contentSize; i++) {
