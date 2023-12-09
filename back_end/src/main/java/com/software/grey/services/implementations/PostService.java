@@ -69,7 +69,6 @@ public class PostService implements IPostService {
         Pageable pageable = PageRequest.of(postFilterDTO.getPageNumber(), postFilterDTO.getPageSize(), Sort.by("postTime").descending());
         return savedPostRepository.findPostsByUserAndFeelingsAndDate(
                 userId,
-                postFilterDTO.getFeelings(),
                 postFilterDTO.getDay(),
                 postFilterDTO.getMonth(),
                 postFilterDTO.getYear(),

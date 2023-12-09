@@ -34,5 +34,4 @@ public class PostFilterDTO {
 
     private Integer year;
 
-    private Set<Feeling> feelings;
 }
