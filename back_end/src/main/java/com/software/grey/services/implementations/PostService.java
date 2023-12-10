@@ -69,7 +69,7 @@ public class PostService implements IPostService {
     }
 
     public Post findPostById(UUID id){
-        return postRepository.findById(id).orElseThrow(() -> new DataNotFoundException("User not found"));
+        return postRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Post not found"));
     }
 
     public Page<PostDTO> getAll(PostFilterDTO postFilterDTO) {
@@ -83,4 +83,12 @@ public class PostService implements IPostService {
                 pageable).map(postMapper::toPostDTO);
     }
 
+    public void delete(String postId) {
+        String currentUserId = securityUtils.getCurrentUserId();
+        Post post = findPostById(UUID.fromString(postId));
+        if(!post.getUser().getId().toString().equals(currentUserId)){
+            throw new DataNotFoundException("You are not authorized to delete this post");
+        }
+        postRepository.deleteById(post.getId());
+    }
 }

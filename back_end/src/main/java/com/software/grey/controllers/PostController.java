@@ -79,4 +79,21 @@ public class PostController {
                 "We will review your report and take the necessary actions.");
     }
 
+    @Operation(
+            summary = "Delete a post",
+            description = "This endpoint is used to delete a post from user's created posts")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Post deleted successfully"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "401", description = "Not Authorized"),
+            @ApiResponse(responseCode = "404", description = "Not Found")
+    })
+    @DeleteMapping(EndPoints.DELETE_POST + "/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable("id") String postId)
+    {
+        postService.delete(postId);
+        return ResponseEntity.status(HttpStatus.OK).body("Post was deleted successfully!");
+    }
+
+
 }
