@@ -133,9 +133,8 @@ public class UserService {
      * @return true if user was updated successfully, false otherwise
      */
     public boolean updateUser(UserDTO userDTO) {
-
         User user = securityUtils.getCurrentUser();
-        if (user == null || userDTO == null) {
+        if (user == null || userDTO == null || isNotValidDTO(userDTO)) {
             return false;
         }
 
@@ -155,7 +154,7 @@ public class UserService {
         String oldPassword = updatedUser.getPassword();
         updatedUser = userMapper.toUser(userDTO, updatedUser);
 
-        if (!updatedUser.getPassword().equals(oldPassword)) {   // if password has changed
+        if (updatedUser.getPassword() != null && !updatedUser.getPassword().equals(oldPassword)) {   // if password has changed
             if (updatedUser.getPassword().matches(RegularExpressions.PASSWORD_REGEX)){  // if password is valid
                 updatedUser.setPassword(bCryptPasswordEncoder.encode(updatedUser.getPassword())); // encode password
             } else {
@@ -189,5 +188,9 @@ public class UserService {
         return !user.getEmail().equals(userDTO.getEmail()) &&
                 (Boolean.TRUE.equals(userRepo.existsByEmail(userDTO.getEmail())) ||
                     !userDTO.getEmail().matches(RegularExpressions.EMAIL_REGEX));
+    }
+
+    private boolean isNotValidDTO(UserDTO userDTO) {
+        return userDTO.username == null || userDTO.getEmail() == null;
     }
 }

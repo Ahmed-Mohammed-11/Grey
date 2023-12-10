@@ -308,4 +308,20 @@ class UserUpdateServiceTest {
         assertThat(newUser.getUsername()).isEqualTo(oldUser.getUsername());
         assertThat(newUser.getEmail()).isEqualTo(oldUser.getEmail());
     }
+
+    @Test
+    void testUserDTOWithNullAttributes() {
+        BasicUser oldUser = basicUserRepo.findById(userId).get();
+
+        when(securityUtils.getCurrentUser()).thenReturn(oldUser);
+
+        UserDTO userDTO = new UserDTO(null, null, null);
+
+        boolean updated = userService.updateUser(userDTO);
+        BasicUser newUser = basicUserRepo.findById(userId).get();
+        assertThat(updated).isFalse();
+        assertThat(newUser.getUsername()).isEqualTo(oldUser.getUsername());
+        assertThat(newUser.getEmail()).isEqualTo(oldUser.getEmail());
+        assertThat(oldUser.getPassword()).isEqualTo(newUser.getPassword());
+    }
 }
