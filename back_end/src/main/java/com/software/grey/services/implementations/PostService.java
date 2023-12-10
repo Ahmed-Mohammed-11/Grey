@@ -1,6 +1,6 @@
 package com.software.grey.services.implementations;
 
-import com.software.grey.exceptions.UserReportedPostBeforeException;
+import com.software.grey.exceptions.exceptions.UserReportedPostBeforeException;
 import com.software.grey.exceptions.exceptions.DataNotFoundException;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
@@ -58,9 +58,9 @@ public class PostService implements IPostService {
         reportedPost.setPost(post);
         reportedPost.setReporter(reporter);
 
-        if(userReportedPostBefore(post, reporter)){
+        if(userReportedPostBefore(post, reporter))
             throw new UserReportedPostBeforeException("Post was already reported by you");
-        }
+
         reportedPostRepository.save(reportedPost);
     }
 
