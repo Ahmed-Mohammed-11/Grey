@@ -5,6 +5,8 @@ public class EndPoints {
     private EndPoints(){}
 
     public static final String POST = "/posts";
+    public static final String EXPLORE = "/explore";
+
     public static final String ADD_POST = "";
     public static final String SIGNUP = "/signup";
     public static final String GOOGLEAPI = "/api/login/success";
