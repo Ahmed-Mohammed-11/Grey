@@ -23,33 +23,28 @@ export default function Feed(props:any) {
     }, []);
     
     useEffect(() => {
-      console.log("change in filter data")
       setPosts([])
       if(pageIndex == 0) loadMore();
       else setPageIndex(0);
     }, [props.feedType, filterData]);
 
     useEffect(() =>{
-      console.log("inview")
       if(inView && posts.length != 0){
         setPageIndex(Math.max(Math.min(pageIndex + 1, totalNumberOfPages - 1), 0))
       }
     }, [inView])
 
     useEffect(() => {
-      console.log("from use effect")
       loadMore();
     }, [pageIndex]);
 
     const loadMore = async () => {
-      console.log("load more...")
         try {
           const headers = {
             'Content-Type': 'application/json',
             Authorization: auth!,
             mode: 'cors',
           };
-          console.log(filterData)
           const response = await fetch(BASE_BACKEND_URL + props.feedType, {
             method: 'POST',
             body: JSON.stringify({...(filterData),pageNumber: pageIndex, pageSize:5}),
@@ -61,7 +56,6 @@ export default function Feed(props:any) {
           }
       
           const newData = await response.json();
-          console.log(newData)
           setTotalNumberOfPages(newData.totalPages);
           setPosts((prevPosts) => {
             return [...(prevPosts ?? []), ...newData.content];
@@ -81,7 +75,6 @@ export default function Feed(props:any) {
       };
 
     const renderPosts = () => {
-      console.log(posts)
       return posts.map((post: any) => <Post key={post.id} post={post} />);
     };
 
