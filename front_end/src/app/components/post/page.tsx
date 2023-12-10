@@ -1,15 +1,21 @@
-"use client"
+"use client";
 import React from "react";
 import styles from "./page.module.css"
 import {Box} from "@mui/system";
 import {BsBookmark, BsFillBookmarkFill} from "react-icons/bs";
 import {SlOptions} from "react-icons/sl";
-import {MdReport} from "react-icons/md";
+import {MdDelete, MdReport} from "react-icons/md";
 import {Chip, IconButton, ListItem, Menu, MenuItem} from "@mui/material";
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import deletePostController from "@/app/services/deletePostController";
 import SavePostController from "@/app/services/SavePostController";
-import {REPORT_POST_ENDPOINT, SAVE_POST_ENDPOINT} from "@/app/constants/apiConstants";
+import {
+    REPORT_POST_ENDPOINT,
+    SAVE_POST_ENDPOINT,
+    DELETE_POST_ENDPOINT,
+    DIARY_ENDPOINT
+} from "@/app/constants/apiConstants";
 
 
 export default function Post(props: any) {
@@ -27,12 +33,17 @@ export default function Post(props: any) {
 
     const handleSavePost = (postId: string) => {
         const data = SavePostController.sendPostRequest({postId: postId}, SAVE_POST_ENDPOINT);
-        toastResponse(data)
+        toastResponse(data);
     };
 
     const handleReportPost = (postId: string) => {
         const data = SavePostController.sendPostRequest({postId: postId}, REPORT_POST_ENDPOINT);
-        toastResponse(data)
+        toastResponse(data);
+    }
+
+    const handleDeletePost = (postId: string) => {
+        const data = deletePostController.sendDeleteRequest({postId: postId}, DELETE_POST_ENDPOINT);
+        toastResponse(data);
     }
 
     async function toastResponse(response: Promise<Response>) {
@@ -111,6 +122,17 @@ export default function Post(props: any) {
                             <MdReport className={styles.icon}/>
                             Report Post
                         </MenuItem>
+                        {props.feedType === DIARY_ENDPOINT && (
+                            <MenuItem
+                            className={styles.menu_item}
+                            onClick={() => {
+                                handleMenuClose();
+                                handleDeletePost(post.id);
+                            }}>
+                            <MdDelete className={styles.icon}/>
+                            Delete Post
+                        </MenuItem>
+                        )}
                     </Menu>
                 </Box>
                 <p className={styles.post_text}>{post.postText}</p>

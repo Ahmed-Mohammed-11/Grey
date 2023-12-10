@@ -1,3 +1,4 @@
+'use client';
 import styles from "./page.module.css"
 import {Box} from "@mui/system";
 import Post from "@/app/components/post/page";
@@ -88,7 +89,7 @@ export default function Feed(props:any) {
       };
 
     const renderPosts = () => {
-        return posts.map((post: any) => <Post key={post.id} post={post} />);
+        return posts.map((post: any) => <Post key={post.id} post={post} feedType={props.feedType}/>);
     };
 
     return (
