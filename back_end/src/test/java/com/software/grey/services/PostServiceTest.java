@@ -4,6 +4,7 @@ import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.Post;
+import com.software.grey.models.enums.Feeling;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
 import com.software.grey.services.implementations.PostService;
@@ -18,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
-import org.springframework.test.annotation.DirtiesContext;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -29,8 +29,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import static com.software.grey.models.enums.Feeling.HAPPY;
-import static com.software.grey.models.enums.Feeling.LOVE;
+import static com.software.grey.models.enums.Feeling.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -62,8 +61,9 @@ class PostServiceTest {
         when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName1");
         UserDTO userDTO1 = new UserDTO("mockEmail1@gmail.com", "mockedUserName1","mockPas1");
         userService.save(userDTO1);
+        List<Set<Feeling>> feelings = List.of(Set.of(LOVE), Set.of(LOVE, HAPPY), Set.of(SAD), Set.of(LOVE, HAPPY, SAD));
         for(int i = 0;i<5;i++){
-            postService.add(PostDTO.builder().postText(i + " user1").postFeelings(Set.of(LOVE, HAPPY)).build());
+            postService.add(PostDTO.builder().postText(i + " user1").postFeelings(feelings.get(i% feelings.size())).build());
             Thread.sleep(30);
         }
     }
@@ -72,8 +72,9 @@ class PostServiceTest {
         when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName2");
         UserDTO userDTO2 = new UserDTO("mockEmail2@gmail.com", "mockedUserName2","mockPas2");
         userService.save(userDTO2);
+        List<Set<Feeling>> feelings = List.of(Set.of(LOVE), Set.of(SAD));
         for(int i = 0;i<3;i++){
-            postService.add(PostDTO.builder().postText(i + " user2").postFeelings(Set.of(LOVE, HAPPY)).build());
+            postService.add(PostDTO.builder().postText(i + " user2").postFeelings(feelings.get(i% feelings.size())).build());
             Thread.sleep(30);
         }
     }
@@ -104,7 +105,7 @@ class PostServiceTest {
 
     @ParameterizedTest
     @MethodSource("paginationOfDiaryPostsParameters")
-    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+//    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     void getDiaryOfUser1(String userName, Integer pageSize, Integer pageNumber, Integer day, Integer month,
                          Integer year, Integer contentSize) throws InterruptedException {
 
@@ -125,7 +126,6 @@ class PostServiceTest {
         }
     }
 
-
     static Stream<Arguments> paginationOfDiaryPostsParameters() {
         LocalDate currentDate = LocalDate.now();
 
@@ -142,6 +142,36 @@ class PostServiceTest {
                 Arguments.of("mockedUserName2", 2, 1, day, month, year, 1), // check posts of page 2 of user2
                 Arguments.of("mockedUserName1", 10, 0, (day + 5) % 30, month, year, 0), // check posts of user that created in other day
                 Arguments.of("mockedUserName2", 10, 0, (day + 5) % 30, month, year, 0)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("getFeedOfUserTestData")
+    void getFeedOfUser(String userName, Integer pageNumber, Integer pageSize, List<Feeling> feelings
+            , List<String> postsStrings) throws InterruptedException {
+
+        when(securityUtils.getCurrentUserName()).thenReturn(userName);
+
+        PostFilterDTO postFilterDTO = PostFilterDTO.builder()
+                .pageNumber(pageNumber).pageSize(pageSize).feelings(feelings).build();
+        Page<PostDTO> posts = postService.getFeed(postFilterDTO);
+        assertThat(posts.getContent()).hasSize(postsStrings.size());
+        int start = pageNumber * pageSize;
+        for (int i = 0; i < postsStrings.size(); i++) {
+            assertThat(posts.getContent().get(i).getPostText()).isEqualTo(postsStrings.get(i + start));
+        }
+    }
+
+    static Stream<Arguments> getFeedOfUserTestData() {
+        return Stream.of(
+                Arguments.of("mockedUserName1", 0, 10, null, List.of("2 user2", "1 user2", "0 user2")),
+                Arguments.of("mockedUserName2", 0, 10, null, List.of("4 user1", "3 user1", "2 user1", "1 user1", "0 user1")),
+                Arguments.of("mockedUserName1", 0, 10, List.of(LOVE), List.of("2 user2", "0 user2")),
+                Arguments.of("mockedUserName2", 0, 10, List.of(LOVE, HAPPY), List.of("4 user1", "3 user1", "1 user1", "0 user1")),
+                Arguments.of("mockedUserName1", 0, 10, List.of(LOVE, HAPPY, SAD),List.of("2 user2", "1 user2", "0 user2")),
+                Arguments.of("mockedUserName2", 0, 10, List.of(SAD),List.of("3 user1", "2 user1")),
+                Arguments.of("mockedUserName2", 0, 10, List.of(INSPIRE),List.of()),// return noting
+                Arguments.of("mockedUserName2", 0, 10, List.of(), List.of("4 user1", "3 user1", "2 user1", "1 user1", "0 user1"))// return all
         );
     }
 }
