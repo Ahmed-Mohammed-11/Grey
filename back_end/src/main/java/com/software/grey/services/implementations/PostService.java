@@ -19,7 +19,9 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -63,13 +65,30 @@ public class PostService implements IPostService {
                 pageable).map(postMapper::toPostDTO);
     }
 
+//    public Page<PostDTO> getFeed(PostFilterDTO postFilterDTO) {
+//        String userName = securityUtils.getCurrentUserName();
+//        List<String> feelings = List.of();
+//        if(postFilterDTO.getFeelings() != null)
+//            feelings = postFilterDTO.getFeelings().stream().map(Enum::name).collect(Collectors.toList());
+//        Pageable pageable = PageRequest.of(
+//                postFilterDTO.getPageNumber(),
+//                postFilterDTO.getPageSize());
+//        return postRepository.findFeed(userName, feelings,pageable).map(postMapper::toPostDTO);
+//    }
+
     public Page<PostDTO> getFeed(PostFilterDTO postFilterDTO) {
         String userName = securityUtils.getCurrentUserName();
-        List<String> feelings = null;
-        feelings = postFilterDTO.getFeelings().stream().map(Enum::name).collect(Collectors.toList());
+        List<String> feelings = Optional.ofNullable(postFilterDTO.getFeelings())
+                .orElse(Collections.emptyList())
+                .stream()
+                .map(Enum::name)
+                .collect(Collectors.toList());
+
         Pageable pageable = PageRequest.of(
                 postFilterDTO.getPageNumber(),
                 postFilterDTO.getPageSize());
-        return postRepository.findFeed(userName, feelings,pageable).map(postMapper::toPostDTO);
+
+        return postRepository.findFeed(userName, feelings, pageable)
+                .map(postMapper::toPostDTO);
     }
 }
