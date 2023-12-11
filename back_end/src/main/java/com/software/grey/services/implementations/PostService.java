@@ -19,7 +19,9 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -63,12 +65,11 @@ public class PostService implements IPostService {
 
     public Page<PostDTO> getFeed(PostFilterDTO postFilterDTO) {
         String userName = securityUtils.getCurrentUserName();
+        List<String> feelings = null;
+        feelings = postFilterDTO.getFeelings().stream().map(Enum::name).collect(Collectors.toList());
         Pageable pageable = PageRequest.of(
                 postFilterDTO.getPageNumber(),
-                postFilterDTO.getPageSize(),
-                Sort.by("postTime").descending());
-        Page<Post> out = postRepository.findByUserUsernameIsNot(userName, pageable);
-        Page<PostDTO> outt = out.map(postMapper::toPostDTO);
-        return outt;
+                postFilterDTO.getPageSize());
+        return postRepository.findFeed(userName, feelings,pageable).map(postMapper::toPostDTO);
     }
 }
