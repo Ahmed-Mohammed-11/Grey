@@ -1,5 +1,6 @@
 package com.software.grey.utils;
 
+import com.software.grey.exceptions.exceptions.DataNotFoundException;
 import com.software.grey.models.entities.User;
 import com.software.grey.repositories.UserRepo;
 import lombok.AllArgsConstructor;

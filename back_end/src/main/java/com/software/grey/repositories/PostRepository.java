@@ -1,7 +1,6 @@
 package com.software.grey.repositories;
 
 import com.software.grey.models.entities.Post;
-
 import com.software.grey.models.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

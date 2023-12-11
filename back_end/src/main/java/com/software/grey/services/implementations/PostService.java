@@ -51,8 +51,7 @@ public class PostService implements IPostService {
 
     public void report(String postId) {
         Post post = findPostById(UUID.fromString(postId));
-        String userName = securityUtils.getCurrentUserName();
-        User reporter = userService.findByUserName(userName);
+        User reporter = securityUtils.getCurrentUser();
 
         ReportedPost reportedPost = new ReportedPost();
         reportedPost.setPost(post);
@@ -69,7 +68,7 @@ public class PostService implements IPostService {
     }
 
     public Post findPostById(UUID id){
-        return postRepository.findById(id).orElseThrow(() -> new DataNotFoundException("User not found"));
+        return postRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Post not found"));
     }
 
     public Page<PostDTO> getAll(PostFilterDTO postFilterDTO) {
