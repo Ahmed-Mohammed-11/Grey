@@ -59,11 +59,14 @@ class ReportPostServiceTest {
     private PostService postService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private SignupController signup;
 
     private String user1;
     private String user2;
-    private ArrayList<UUID> posts;
+    private ArrayList<Post> posts;
 
 
     @BeforeAll
@@ -72,6 +75,12 @@ class ReportPostServiceTest {
         posts = new ArrayList<>();
         addUser1();
         addUser2();
+        addGoogleUser();
+    }
+
+    @AfterEach
+    void cleanUp() {
+        reportedPostRepository.deleteAll();
     }
 
     void addUser1() {
@@ -84,9 +93,9 @@ class ReportPostServiceTest {
 
     private void cretePostsForUser1() {
         for (int i = 0; i < 5; i++)
-            posts.add(postService
-                    .add(PostDTO.builder()
+            posts.add(postRepository.save(Post.builder()
                             .postText("Some bad text" + i)
+                            .user(userRepo.findByUsername(user1))
                             .postFeelings(Set.of(LOVE, HAPPY))
                             .build()));
     }
@@ -101,48 +110,101 @@ class ReportPostServiceTest {
 
     private void cretePostsForUser2() {
         for (int i = 0; i < 3; i++)
-            posts.add(postService.add(PostDTO.builder()
+            posts.add(postRepository.save(Post.builder()
                     .postText("Some bad text" + i)
+                    .user(userRepo.findByUsername(user2))
                     .postFeelings(Set.of(FEAR, ANGER))
                     .build()));
         for (int i = 0; i < 3; i++)
-            posts.add(postService.add(PostDTO.builder()
+            posts.add(postRepository.save(Post.builder()
                     .postText("Some bad text other than the first bad text" + i)
+                    .user(userRepo.findByUsername(user2))
                     .postFeelings(Set.of(ANXIOUS, SAD))
                     .build()));
     }
 
-    @AfterAll
-    void cleanUp() {
-        userRepo.deleteAll();
-        postRepository.deleteAll();
+    void addGoogleUser() {
+        when(securityUtils.getCurrentUserName()).thenReturn("mockGmail");
+        UserDTO userG = new UserDTO("mockGmail@gmail.com", "mockGmail", "mockPas2");
+        userG.externalID = "mockedGoogleID";
+        userService.saveGoogleUser(userG);
+        cretePostsForGUser();
+    }
+    private void cretePostsForGUser() {
+        for (int i = 0; i < 3; i++)
+            posts.add(postRepository.save(Post.builder()
+                    .postText("Some bad text from google user" + i)
+                    .user(userRepo.findByUsername("mockGmail"))
+                    .postFeelings(Set.of(FEAR, ANGER))
+                    .build()));
+        for (int i = 0; i < 3; i++)
+            posts.add(postRepository.save(Post.builder()
+                    .postText("Some bad text from google user other than the first bad text" + i)
+                    .user(userRepo.findByUsername("mockGmail"))
+                    .postFeelings(Set.of(ANXIOUS, SAD))
+                    .build()));
     }
 
     @Test
-    void reportExistingPost_shouldBeValid(){
+    void reportExistingPostUser1_shouldBeValid(){
         User user = userRepo.findByUsername("mockedUserName1");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
-
-        UUID postId = posts.get(0);
-        Optional<Post> post = postRepository.findById(postId);
-
-        postService.report(postId.toString());
-        assertThat(reportedPostRepository.existsById(new ReportedPostId(post.get(), user))).isTrue();
+        // loop over posts and report each one
+        for (Post post : posts) {
+            postService.report(post.getId().toString());
+            assertThat(reportedPostRepository.existsById(new ReportedPostId(post, user))).isTrue();
+        }
     }
 
     @Test
-    void duplicateReportExistingPost_shouldThrowException(){
+    void reportExistingPostUser2_shouldBeValid(){
+        User user = userRepo.findByUsername("mockedUserName2");
+        when(securityUtils.getCurrentUser()).thenReturn(user);
+
+        // loop over posts and report each one
+        for (Post post : posts) {
+            postService.report(post.getId().toString());
+            assertThat(reportedPostRepository.existsById(new ReportedPostId(post, user))).isTrue();
+        }
+    }
+
+    @Test
+    void reportExistingPostUserG_shouldBeValid(){
+        User user = userRepo.findByUsername("mockGmail");
+        when(securityUtils.getCurrentUser()).thenReturn(user);
+
+        // loop over posts and report each one
+        for (Post post : posts) {
+            postService.report(post.getId().toString());
+            assertThat(reportedPostRepository.existsById(new ReportedPostId(post, user))).isTrue();
+        }
+    }
+
+    @Test
+    void duplicateReportExistingPostBasicUser_shouldThrowException(){
         User user = userRepo.findByUsername("mockedUserName1");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
-        UUID postId = posts.get(3);
-        Optional<Post> post = postRepository.findById(postId);
+        // loop over posts and report each one
+        for (Post post : posts) {
+            postService.report(post.getId().toString());
+            Assertions.assertThrows(UserReportedPostBeforeException.class,
+                    () -> postService.report(post.getId().toString()));
+        }
+    }
 
-        postService.report(postId.toString());
-        assertThat(reportedPostRepository.existsById(new ReportedPostId(post.get(), user))).isTrue();
-        Assertions.assertThrows(UserReportedPostBeforeException.class,
-                () -> postService.report(postId.toString()));
+    @Test
+    void duplicateReportExistingPostGoogleUser_shouldThrowException(){
+        User user = userRepo.findByUsername("mockedUserName1");
+        when(securityUtils.getCurrentUser()).thenReturn(user);
+
+        // loop over posts and report each one
+        for (Post post : posts) {
+            postService.report(post.getId().toString());
+            Assertions.assertThrows(UserReportedPostBeforeException.class,
+                    () -> postService.report(post.getId().toString()));
+        }
     }
 
     @Test

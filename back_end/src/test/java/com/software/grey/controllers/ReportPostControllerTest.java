@@ -1,5 +1,6 @@
 package com.software.grey.controllers;
 
+import com.software.grey.exceptions.exceptions.DataNotFoundException;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.repositories.PostRepository;
@@ -23,13 +24,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 import static com.software.grey.models.enums.Feeling.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -113,12 +114,6 @@ class ReportPostControllerTest {
                     .build()));
     }
 
-    @AfterAll
-    void cleanUp() {
-        userRepo.deleteAll();
-        postRepository.deleteAll();
-    }
-
     @Test
     @WithMockUser(username = "greyUser", roles = "ROLES_USER")
     void reportPost_shouldBeValid() throws Exception {
@@ -141,17 +136,17 @@ class ReportPostControllerTest {
         while(posts.contains(randomNotInPosts))
             randomNotInPosts = UUID.randomUUID();
 
-        System.out.println("randomNotInPosts = " + randomNotInPosts);
-        System.out.println("posts = " + posts);
-
         when(securityUtils.getCurrentUser()).thenReturn(userRepo.findByUsername("mockedUserName1"));
-        mockMvc.perform(MockMvcRequestBuilders.post(EndPoints.POST +
-                                EndPoints.REPORT_POST + "/" + "randomNotInPosts")
+        doThrow(new DataNotFoundException("Post not found"))
+                .when(postService).report(randomNotInPosts.toString());
+
+        String expectedErrorMessage = "{\"errorMessage\":\"Post not found\"}";
+        mockMvc.perform(post(EndPoints.POST + EndPoints.REPORT_POST + "/" + randomNotInPosts)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers
                         .content()
-                        .string("Post Not Found"));
+                        .string(expectedErrorMessage));
         verify(postService, times(1)).report(anyString());
     }
 }
