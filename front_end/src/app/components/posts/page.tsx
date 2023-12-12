@@ -66,12 +66,14 @@ export default function Feed(props:any) {
       };
 
       const applyFilters = (newData:PostFilterDTO) => {
+        console.log("form outer", filterData)
         setFilterData((prevFilterData) => ({
           ...prevFilterData,
           ...Object.fromEntries(
             Object.entries(newData).filter(([key, value]) => value !== undefined)
           ),
         }));
+        console.log("from outer after ", filterData)
       };
 
     const renderPosts = () => {

@@ -36,7 +36,7 @@ export default function FeelingsFilter(props:any) {
             if (selectedFeelings.size < props.limit)
                 setSelectedFeelings((feelings) => {
                     feelings.add(feeling);
-                    props.onDateChange({...(props.data),feelings:feelings})
+                    props.onDataChange(feelings)
                     return new Set<Feeling>(feelings);
                 });
             handleFeelingsChange();
@@ -44,7 +44,7 @@ export default function FeelingsFilter(props:any) {
         const handleDelete = (chipToDelete: Feeling) => () => {
             setSelectedFeelings((feelings) => {
                 feelings.delete(chipToDelete);
-                props.onDateChange({...(props.data),feelings:feelings})
+                props.onDataChange(feelings)
                 return new Set<Feeling>(feelings);
             });
             handleFeelingsChange();
