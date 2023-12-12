@@ -65,17 +65,6 @@ public class PostService implements IPostService {
                 pageable).map(postMapper::toPostDTO);
     }
 
-//    public Page<PostDTO> getFeed(PostFilterDTO postFilterDTO) {
-//        String userName = securityUtils.getCurrentUserName();
-//        List<String> feelings = List.of();
-//        if(postFilterDTO.getFeelings() != null)
-//            feelings = postFilterDTO.getFeelings().stream().map(Enum::name).collect(Collectors.toList());
-//        Pageable pageable = PageRequest.of(
-//                postFilterDTO.getPageNumber(),
-//                postFilterDTO.getPageSize());
-//        return postRepository.findFeed(userName, feelings,pageable).map(postMapper::toPostDTO);
-//    }
-
     public Page<PostDTO> getFeed(PostFilterDTO postFilterDTO) {
         String userName = securityUtils.getCurrentUserName();
         List<String> feelings = Optional.ofNullable(postFilterDTO.getFeelings())

@@ -34,7 +34,6 @@ public class PostFilterDTO {
 
     private Integer year;
 
-    @Size(min = 0, max = 3, message = "number of feeling to filter with must be in range 0 to 3 feeling")
     private List<Feeling> feelings;
 
 }
