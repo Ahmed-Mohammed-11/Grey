@@ -45,6 +45,7 @@ export default function Feed(props:any) {
             Authorization: auth!,
             mode: 'cors',
           };
+          console.log("this is the filter data",filterData)
           const response = await fetch(BASE_BACKEND_URL + props.feedType, {
             method: 'POST',
             body: JSON.stringify({...(filterData),pageNumber: pageIndex, pageSize:5}),
@@ -56,6 +57,7 @@ export default function Feed(props:any) {
           }
       
           const newData = await response.json();
+          console.log("the response", newData);
           setTotalNumberOfPages(newData.totalPages);
           setPosts((prevPosts) => {
             return [...(prevPosts ?? []), ...newData.content];
@@ -66,14 +68,12 @@ export default function Feed(props:any) {
       };
 
       const applyFilters = (newData:PostFilterDTO) => {
-        console.log("form outer", filterData)
         setFilterData((prevFilterData) => ({
           ...prevFilterData,
           ...Object.fromEntries(
             Object.entries(newData).filter(([key, value]) => value !== undefined)
           ),
         }));
-        console.log("from outer after ", filterData)
       };
 
     const renderPosts = () => {

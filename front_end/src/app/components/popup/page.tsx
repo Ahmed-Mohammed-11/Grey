@@ -39,7 +39,6 @@ export default function PopupScreen() {
             postText: post.postText,
             postFeelings: Array.from(post.postFeelings)
         }
-        console.log(postDTO);
         fetchResponse(postDTO);
     }
 

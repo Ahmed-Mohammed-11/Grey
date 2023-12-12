@@ -24,10 +24,8 @@ export default function FeelingsFilter(props:any) {
         Feeling.INSPIRE, Feeling.LOVE]);
 
         const handleFeelingsChange = () => {
-            console.log("handle feeling")
             if(selectedFeelings.size === 0) setIsFeelingsValid(false)
             else setIsFeelingsValid(true)
-            console.log("limit is", props.limit)
             if (selectedFeelings.size < props.limit) setFullFeelings(false)
             else setFullFeelings(true)
         }
@@ -36,7 +34,7 @@ export default function FeelingsFilter(props:any) {
             if (selectedFeelings.size < props.limit)
                 setSelectedFeelings((feelings) => {
                     feelings.add(feeling);
-                    props.onDataChange(feelings)
+                    props.onDataChange(Array.from(feelings))
                     return new Set<Feeling>(feelings);
                 });
             handleFeelingsChange();
@@ -44,10 +42,11 @@ export default function FeelingsFilter(props:any) {
         const handleDelete = (chipToDelete: Feeling) => () => {
             setSelectedFeelings((feelings) => {
                 feelings.delete(chipToDelete);
-                props.onDataChange(feelings)
+                props.onDataChange(Array.from(feelings));
                 return new Set<Feeling>(feelings);
             });
             handleFeelingsChange();
+            
         };
 
 
