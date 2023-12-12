@@ -1,6 +1,7 @@
 package com.software.grey.services;
 
 import com.software.grey.exceptions.UserExistsException;
+import com.software.grey.exceptions.exceptions.FailedToUpdateException;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.BasicUser;
 import com.software.grey.models.entities.GoogleUser;
@@ -13,12 +14,12 @@ import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.repositories.GoogleUserRepo;
 import com.software.grey.repositories.UserRepo;
 import com.software.grey.repositories.UserVerificationRepo;
+import com.software.grey.utils.ErrorMessages;
 import com.software.grey.utils.RegularExpressions;
 import com.software.grey.utils.SecurityUtils;
 import com.software.grey.utils.emailsender.EmailSender;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -132,22 +133,28 @@ public class UserService {
     /*
      * @return true if user was updated successfully, false otherwise
      */
-    public boolean updateUser(UserDTO userDTO) {
+    public void updateUser(UserDTO userDTO) {
         User user = securityUtils.getCurrentUser();
         if (user == null || userDTO == null || isNotValidDTO(userDTO)) {
-            return false;
+            throw new FailedToUpdateException(ErrorMessages.INVALID_REQUEST_BODY);
         }
 
         if (user.getRegistrationType().equals("google")) {
-            return updateGoogleUser(userDTO, user);
+            updateGoogleUser(userDTO, user);
         } else {
-            return updateBasicUser(userDTO, user);
+            updateBasicUser(userDTO, user);
         }
     }
 
-    private boolean updateBasicUser(UserDTO userDTO, User user) {
-        if (isNotValidUserNameUpdate(userDTO, user) || isNotValidEmailUpdate(userDTO, user)) {
-                return false;
+    private void updateBasicUser(UserDTO userDTO, User user) {
+        // if username has changed, check if it is valid and not already taken
+        if (!user.getUsername().equals(userDTO.getUsername())) {
+            isNotValidUserNameUpdate(userDTO);
+        }
+
+        // if email has changed, check if it is valid and not already taken
+        if (!user.getEmail().equals(userDTO.getEmail())) {
+            isNotValidEmailUpdate(userDTO);
         }
 
         BasicUser updatedUser = basicUserRepo.findByUsername(user.getUsername());
@@ -158,36 +165,52 @@ public class UserService {
             if (updatedUser.getPassword().matches(RegularExpressions.PASSWORD_REGEX)){  // if password is valid
                 updatedUser.setPassword(bCryptPasswordEncoder.encode(updatedUser.getPassword())); // encode password
             } else {
-                return false;
+                throw new FailedToUpdateException(ErrorMessages.INVALID_PASSWORD);
             }
         }
         basicUserRepo.save(updatedUser);
         userRepo.save(updatedUser);
-        return true;
     }
 
-    private boolean updateGoogleUser(UserDTO userDTO, User user) {
-        if (isNotValidUserNameUpdate(userDTO, user) || !userDTO.getEmail().equals(user.getEmail())) {
-            return false;
+    private void updateGoogleUser(UserDTO userDTO, User user) {
+        // if username has changed, check if it is valid and not already taken
+        if (!user.getUsername().equals(userDTO.getUsername())) {
+            isNotValidUserNameUpdate(userDTO);
+        }
+
+        // if email has changed, check if it is valid and not already taken
+        if (!user.getEmail().equals(userDTO.getEmail())) {
+            throw new FailedToUpdateException("Cannot change email");
+        }
+
+        if (userDTO.getPassword() != null) {
+            throw new FailedToUpdateException("Cannot change password");
         }
 
         GoogleUser updatedUser = googleUserRepo.findByUsername(user.getUsername());
         updatedUser = userMapper.toGoogleUser(userDTO, updatedUser);
         googleUserRepo.save(updatedUser);
         userRepo.save(updatedUser);
-        return true;
     }
 
-    private boolean isNotValidUserNameUpdate(UserDTO userDTO, User user) {
-        return !user.getUsername().equals(userDTO.getUsername()) &&
-                (Boolean.TRUE.equals(userRepo.existsByUsername(userDTO.getUsername())) ||
-                    !userDTO.getUsername().matches(RegularExpressions.USERNAME_REGEX));
+    private void isNotValidUserNameUpdate(UserDTO userDTO) {
+        if (Boolean.TRUE.equals(userRepo.existsByUsername(userDTO.getUsername()))) {
+            throw new FailedToUpdateException(ErrorMessages.USERNAME_EXISTS);
+        }
+
+        if (!userDTO.getUsername().matches(RegularExpressions.USERNAME_REGEX)) {
+            throw new FailedToUpdateException(ErrorMessages.INVALID_USERNAME);
+        }
     }
 
-    private boolean isNotValidEmailUpdate(UserDTO userDTO, User user) {
-        return !user.getEmail().equals(userDTO.getEmail()) &&
-                (Boolean.TRUE.equals(userRepo.existsByEmail(userDTO.getEmail())) ||
-                    !userDTO.getEmail().matches(RegularExpressions.EMAIL_REGEX));
+    private void isNotValidEmailUpdate(UserDTO userDTO) {
+        if (Boolean.TRUE.equals(userRepo.existsByEmail(userDTO.getEmail()))) {
+            throw new FailedToUpdateException(ErrorMessages.EMAIL_EXISTS);
+        }
+
+        if (!userDTO.getEmail().matches(RegularExpressions.EMAIL_REGEX)) {
+            throw new FailedToUpdateException(ErrorMessages.INVALID_EMAIL);
+        }
     }
 
     private boolean isNotValidDTO(UserDTO userDTO) {

@@ -29,9 +29,7 @@ public class UserController {
     })
     @PutMapping(EndPoints.UPDATE_USER)
     public ResponseEntity<String> updateUser(@Valid @RequestBody UserDTO userDTO) {
-        if (userService.updateUser(userDTO)) {
-            return ResponseEntity.ok("Updated successfully");
-        }
-        return ResponseEntity.badRequest().body("Something went wrong");
+        userService.save(userDTO);
+        return ResponseEntity.ok().body("Updated successfully");
     }
 }

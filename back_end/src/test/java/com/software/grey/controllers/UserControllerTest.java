@@ -59,6 +59,10 @@ class UserControllerTest {
 
     @BeforeAll
     void init() {
+        userVerificationRepo.deleteAll();
+        googleUserRepo.deleteAll();
+        basicUserRepo.deleteAll();
+        userRepo.deleteAll();
         postRepository.deleteAll();
         UserDTO myUser = new UserDTO("mockemail@gmail.com", "old_username",
                 "abc def ghi");
@@ -106,7 +110,7 @@ class UserControllerTest {
 
         when(securityUtils.getCurrentUser()).thenReturn(oldUser);
 
-        String newEmail = "newemail@gmail.com";
+        String newEmail = "newcontrolleremail@gmail.com";
 
         UserDTO userDTO = new UserDTO(newEmail, oldUser.getUsername(), "abc def ghi");
 

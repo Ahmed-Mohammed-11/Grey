@@ -1,10 +1,12 @@
 package com.software.grey.services;
 
 import com.software.grey.controllers.SignupController;
+import com.software.grey.exceptions.exceptions.FailedToUpdateException;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.BasicUser;
 import com.software.grey.models.entities.GoogleUser;
 import com.software.grey.repositories.*;
+import com.software.grey.utils.ErrorMessages;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -76,10 +79,9 @@ class UserUpdateServiceTest {
 
         UserDTO userDTO = new UserDTO(oldUser.getEmail(), newUsername, oldUser.getPassword());
 
-        boolean updated = userService.updateUser(userDTO);
+        userService.updateUser(userDTO);
 
         BasicUser newUser = basicUserRepo.findById(userId).get();
-        assertThat(updated).isTrue();
         assertThat(newUser.getUsername()).isEqualTo(newUsername);
         assertThat(newUser.getEmail()).isEqualTo(oldUser.getEmail());
         assertThat(newUser.getPassword()).isEqualTo(oldUser.getPassword());
@@ -94,10 +96,9 @@ class UserUpdateServiceTest {
         when(securityUtils.getCurrentUser()).thenReturn(oldUser);
 
         UserDTO userDTO = new UserDTO(oldUser.getEmail(), oldUser.getUsername(), newPassword);
-        Boolean updated = userService.updateUser(userDTO);
+        userService.updateUser(userDTO);
 
         BasicUser newUser = basicUserRepo.findById(userId).get();
-        assertThat(updated).isTrue();
         assertThat(newUser.getUsername()).isEqualTo(oldUser.getUsername());
         assertThat(newUser.getEmail()).isEqualTo(oldUser.getEmail());
         assertThat(bCryptPasswordEncoder.matches(newPassword, newUser.getPassword())).isTrue();
@@ -113,10 +114,10 @@ class UserUpdateServiceTest {
         when(securityUtils.getCurrentUser()).thenReturn(oldUser);
 
         UserDTO userDTO = new UserDTO(newEmail, oldUser.getUsername(), oldUser.getPassword());
-        Boolean updated = userService.updateUser(userDTO);
+
+        userService.updateUser(userDTO);
 
         BasicUser newUser = basicUserRepo.findById(userId).get();
-        assertThat(updated).isTrue();
         assertThat(newUser.getUsername()).isEqualTo(oldUser.getUsername());
         assertThat(newUser.getEmail()).isEqualTo(newEmail);
         assertThat(newUser.getPassword()).isEqualTo(oldUser.getPassword());
@@ -132,10 +133,9 @@ class UserUpdateServiceTest {
         when(securityUtils.getCurrentUser()).thenReturn(oldUser);
 
         UserDTO userDTO = new UserDTO(newEmail, newUsername, newPassword);
-        Boolean updated = userService.updateUser(userDTO);
+        userService.updateUser(userDTO);
 
         BasicUser newUser = basicUserRepo.findById(userId).get();
-        assertThat(updated).isTrue();
         assertThat(newUser.getUsername()).isEqualTo(newUsername);
         assertThat(newUser.getEmail()).isEqualTo(newEmail);
         assertThat(bCryptPasswordEncoder.matches(newPassword, newUser.getPassword())).isTrue();
@@ -154,10 +154,13 @@ class UserUpdateServiceTest {
         when(securityUtils.getCurrentUser()).thenReturn(oldUser);
 
         UserDTO userDTO2 = new UserDTO(oldUser.getEmail(), newUsername, oldUser.getPassword());
-        Boolean updated = userService.updateUser(userDTO2);
+
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
+            userService.updateUser(userDTO2);
+        });
+        assertThat(ex.getMessage()).isEqualTo(ErrorMessages.USERNAME_EXISTS);
 
         BasicUser newUser = basicUserRepo.findById(userId).get();
-        assertThat(updated).isFalse();
         assertThat(newUser.getUsername()).isEqualTo(oldUser.getUsername());
         assertThat(newUser.getEmail()).isEqualTo(oldUser.getEmail());
         assertThat(oldUser.getPassword()).isEqualTo(newUser.getPassword());
@@ -176,10 +179,11 @@ class UserUpdateServiceTest {
         when(securityUtils.getCurrentUser()).thenReturn(oldUser);
 
         UserDTO userDTO2 = new UserDTO(newEmail, oldUser.getUsername(), oldUser.getPassword());
-        Boolean updated = userService.updateUser(userDTO2);
-
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
+            userService.updateUser(userDTO2);
+        });
+        assertThat(ex.getMessage()).isEqualTo(ErrorMessages.EMAIL_EXISTS);
         BasicUser newUser = basicUserRepo.findById(userId).get();
-        assertThat(updated).isFalse();
         assertThat(newUser.getUsername()).isEqualTo(oldUser.getUsername());
         assertThat(newUser.getEmail()).isEqualTo(oldUser.getEmail());
         assertThat(oldUser.getPassword()).isEqualTo(newUser.getPassword());
@@ -195,9 +199,11 @@ class UserUpdateServiceTest {
 
         UserDTO userDTO = new UserDTO(oldUser.getEmail(), oldUser.getUsername(), newPassword);
 
-        boolean updated = userService.updateUser(userDTO);
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
+            userService.updateUser(userDTO);
+        });
+        assertThat(ex.getMessage()).isEqualTo(ErrorMessages.INVALID_PASSWORD);
         BasicUser newUser = basicUserRepo.findById(userId).get();
-        assertThat(updated).isFalse();
         assertThat(newUser.getUsername()).isEqualTo(oldUser.getUsername());
         assertThat(newUser.getEmail()).isEqualTo(oldUser.getEmail());
         assertThat(oldUser.getPassword()).isEqualTo(newUser.getPassword());
@@ -213,9 +219,11 @@ class UserUpdateServiceTest {
 
         UserDTO userDTO = new UserDTO(oldUser.getEmail(), newUsername, oldUser.getPassword());
 
-        boolean updated = userService.updateUser(userDTO);
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
+            userService.updateUser(userDTO);
+        });
+        assertThat(ex.getMessage()).isEqualTo(ErrorMessages.INVALID_USERNAME);
         BasicUser newUser = basicUserRepo.findById(userId).get();
-        assertThat(updated).isFalse();
         assertThat(newUser.getUsername()).isEqualTo(oldUser.getUsername());
         assertThat(newUser.getEmail()).isEqualTo(oldUser.getEmail());
         assertThat(oldUser.getPassword()).isEqualTo(newUser.getPassword());
@@ -231,9 +239,14 @@ class UserUpdateServiceTest {
 
         UserDTO userDTO = new UserDTO(newEmail, oldUser.getUsername(), oldUser.getPassword());
 
-        boolean updated = userService.updateUser(userDTO);
+        // userService.updateUser(userDTO);
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
+            userService.updateUser(userDTO);
+        });
+
+        assertThat(ex.getMessage()).isEqualTo(ErrorMessages.INVALID_EMAIL);
+
         BasicUser newUser = basicUserRepo.findById(userId).get();
-        assertThat(updated).isFalse();
         assertThat(newUser.getUsername()).isEqualTo(oldUser.getUsername());
         assertThat(newUser.getEmail()).isEqualTo(oldUser.getEmail());
         assertThat(oldUser.getPassword()).isEqualTo(newUser.getPassword());
@@ -245,8 +258,11 @@ class UserUpdateServiceTest {
 
         when(securityUtils.getCurrentUser()).thenReturn(oldUser);
 
-        boolean updated = userService.updateUser(null);
-        assertThat(updated).isFalse();
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
+            userService.updateUser(null);
+        });
+
+        assertThat(ex.getMessage()).isEqualTo(ErrorMessages.INVALID_REQUEST_BODY);
     }
 
     @Test
@@ -261,10 +277,9 @@ class UserUpdateServiceTest {
         String newUsername = "google_user";
 
         UserDTO userDTO = new UserDTO(oldUser.getEmail(), newUsername, null);
-        boolean updated = userService.updateUser(userDTO);
+        userService.updateUser(userDTO);
 
         GoogleUser newUser = googleUserRepo.findByUsername(newUsername);
-        assertThat(updated).isTrue();
         assertThat(newUser.getUsername()).isEqualTo(newUsername);
         assertThat(newUser.getEmail()).isEqualTo(oldUser.getEmail());
     }
@@ -281,10 +296,12 @@ class UserUpdateServiceTest {
         String newEmail = "yoyo@gmail.com";
 
         UserDTO userDTO = new UserDTO(newEmail, oldUser.getUsername(), null);
-        boolean updated = userService.updateUser(userDTO);
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
+            userService.updateUser(userDTO);
+        });
+        assertThat(ex.getMessage()).isEqualTo("Cannot change email");
 
         GoogleUser newUser = googleUserRepo.findByUsername(oldUser.getUsername());
-        assertThat(updated).isFalse();
         assertThat(newUser.getUsername()).isEqualTo(oldUser.getUsername());
         assertThat(newUser.getEmail()).isEqualTo(oldUser.getEmail());
     }
@@ -301,10 +318,13 @@ class UserUpdateServiceTest {
         String newUsername = "google username";
 
         UserDTO userDTO = new UserDTO(oldUser.getEmail(), newUsername, null);
-        boolean updated = userService.updateUser(userDTO);
+
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
+            userService.updateUser(userDTO);
+        });
+        assertThat(ex.getMessage()).isEqualTo(ErrorMessages.INVALID_USERNAME);
 
         GoogleUser newUser = googleUserRepo.findByUsername(oldUser.getUsername());
-        assertThat(updated).isFalse();
         assertThat(newUser.getUsername()).isEqualTo(oldUser.getUsername());
         assertThat(newUser.getEmail()).isEqualTo(oldUser.getEmail());
     }
@@ -317,9 +337,11 @@ class UserUpdateServiceTest {
 
         UserDTO userDTO = new UserDTO(null, null, null);
 
-        boolean updated = userService.updateUser(userDTO);
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
+            userService.updateUser(userDTO);
+        });
+        assertThat(ex.getMessage()).isEqualTo(ErrorMessages.INVALID_REQUEST_BODY);
         BasicUser newUser = basicUserRepo.findById(userId).get();
-        assertThat(updated).isFalse();
         assertThat(newUser.getUsername()).isEqualTo(oldUser.getUsername());
         assertThat(newUser.getEmail()).isEqualTo(oldUser.getEmail());
         assertThat(oldUser.getPassword()).isEqualTo(newUser.getPassword());
