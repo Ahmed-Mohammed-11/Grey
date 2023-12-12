@@ -66,17 +66,4 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(postService.getAll(postFilterDTO));
     }
 
-    @Operation(
-            summary = "Query recommendation system for posts",
-            description = "Gets posts based on the recommendation system's heuristics")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Posts retrieved correctly")
-    })
-    @GetMapping(EndPoints.EXPLORE)
-    public ResponseEntity<List<Post>> explore(@RequestParam int pageNumber, @RequestParam int pageSize){
-        PostFilterDTO postFilterDTO = new PostFilterDTO();
-        postFilterDTO.setPageNumber(pageNumber);
-        postFilterDTO.setPageSize(pageSize);
-        return ResponseEntity.status(HttpStatus.OK).body(recommender.recommend(postFilterDTO));
-    }
 }
