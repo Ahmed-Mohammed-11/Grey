@@ -52,7 +52,7 @@ class UserUpdateServiceTest {
     @BeforeAll
     void init() {
         postRepository.deleteAll();
-        UserDTO myUser = new UserDTO("mockEmailSave@gmail.com", "old username",
+        UserDTO myUser = new UserDTO("mockEmailSave@gmail.com", "old_username",
                 "mock Password test");
         signupController.signup(myUser);
         userId = userRepo.findByUsername(myUser.username).getId();

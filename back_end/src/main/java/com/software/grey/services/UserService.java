@@ -18,6 +18,7 @@ import com.software.grey.utils.SecurityUtils;
 import com.software.grey.utils.emailsender.EmailSender;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -127,7 +128,6 @@ public class UserService {
     public User findByUserName(String userName){
         return userRepo.findByUsername(userName);
     }
-
 
     /*
      * @return true if user was updated successfully, false otherwise
