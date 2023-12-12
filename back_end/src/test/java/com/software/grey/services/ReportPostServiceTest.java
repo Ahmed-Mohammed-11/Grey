@@ -98,7 +98,7 @@ class ReportPostServiceTest {
 
     void addUser1() {
         when(securityUtils.getCurrentUserName()).thenReturn("mocked User1");
-        UserDTO userDTO1 = new UserDTO("mockEmail1@gmail.com", "mocked User1", "mock Pass 1");
+        UserDTO userDTO1 = new UserDTO("greyEmail1@gmail.com", "mocked User1", "mock Pass 1");
         signup.signup(userDTO1);
         user1 = "mocked User1";
         createPostsForUser1();
@@ -115,7 +115,7 @@ class ReportPostServiceTest {
 
     void addUser2() {
         when(securityUtils.getCurrentUserName()).thenReturn("mocked User2");
-        UserDTO userDTO2 = new UserDTO("mockEmail2@gmail.com", "mocked User2", "mock Pass 2");
+        UserDTO userDTO2 = new UserDTO("greyEmail2@gmail.com", "mocked User2", "mock Pass 2");
         signup.signup(userDTO2);
         user2 = "mocked User2";
         createPostsForUser2();
