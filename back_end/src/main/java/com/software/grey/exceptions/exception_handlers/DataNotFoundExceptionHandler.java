@@ -20,7 +20,7 @@ public class DataNotFoundExceptionHandler {
     private MessageSource messageSource;
 
     @ExceptionHandler(DataNotFoundException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     Map<String, String> onDataNotFoundException(DataNotFoundException exception) {
         Map<String, String> error = new HashMap<>();

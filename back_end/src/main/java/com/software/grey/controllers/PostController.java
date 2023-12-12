@@ -37,7 +37,7 @@ public class PostController {
             @ApiResponse(responseCode = "401", description = "User is not authenticated")
     })
     @PostMapping(EndPoints.ADD_POST)
-    public ResponseEntity<UUID> addPost(@Valid @RequestBody PostDTO postDTO){
+    public ResponseEntity<UUID> addPost(@Valid @RequestBody PostDTO postDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(postService.add(postDTO));
     }
 
@@ -51,6 +51,7 @@ public class PostController {
         }
         return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
     }
+
     @Operation(
             summary = "Get the Diary",
             description = "Get all the posts of a user with pagination")
@@ -58,7 +59,24 @@ public class PostController {
             @ApiResponse(responseCode = "200", description = "Posts retrieved correctly")
     })
     @PostMapping(EndPoints.GET_DIARY)
-    public ResponseEntity<Page<PostDTO>> getDiary(@Valid @RequestBody PostFilterDTO postFilterDTO){
+    public ResponseEntity<Page<PostDTO>> getDiary(@Valid @RequestBody PostFilterDTO postFilterDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(postService.getAll(postFilterDTO));
     }
+
+    @Operation(
+            summary = "Report a post",
+            description = "Use this end point to enable the user to report a post")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Post reported successfully"),
+            @ApiResponse(responseCode = "400", description = "Post already reported"),
+            @ApiResponse(responseCode = "401", description = "User is not authenticated"),
+            @ApiResponse(responseCode = "404", description = "Post not found")
+    })
+    @PostMapping(EndPoints.REPORT_POST + "/{id}")
+    public ResponseEntity<String> reportPost(@PathVariable("id") String postId) {
+        postService.report(postId);
+        return ResponseEntity.status(HttpStatus.OK).body("Post reported successfully!\n" +
+                "We will review your report and take the necessary actions.");
+    }
+
 }

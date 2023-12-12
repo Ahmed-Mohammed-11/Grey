@@ -88,7 +88,7 @@ export default function Feed(props:any) {
       };
 
     const renderPosts = () => {
-        return posts.map((post: any) => <Post key={post.id} post={post} />);
+        return posts.map((post: any) => <Post post={post} />);
     };
 
     return (
