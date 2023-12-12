@@ -67,8 +67,9 @@ class SameFeelingStrategyUnitTest {
     @AfterAll
     void del(){
         postRepository.deleteAll();
+        userRepo.deleteAll();
     }
-    // post.setPostTime(Timestamp.from(Instant.now()));
+
     @Test
     void recommend() {
         List<FeelingCountProjection> myList = new ArrayList<>();

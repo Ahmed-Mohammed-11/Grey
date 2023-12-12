@@ -72,8 +72,8 @@ class InverseFeelingStratTest {
     @AfterAll
     void del(){
         postRepository.deleteAll();
+        userRepo.deleteAll();
     }
-    // post.setPostTime(Timestamp.from(Instant.now()));
     @Test
     void recommendBasedOnOneSadPost_ShouldReturnHappy() {
         List<FeelingCountProjection> myList = new ArrayList<>();

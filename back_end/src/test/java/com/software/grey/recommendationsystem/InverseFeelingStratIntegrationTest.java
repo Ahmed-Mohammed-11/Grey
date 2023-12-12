@@ -52,6 +52,7 @@ class InverseFeelingStratIntegrationTest {
     @AfterAll
     void del(){
         postRepository.deleteAll();
+        userRepo.deleteAll();
     }
 
     @Test
