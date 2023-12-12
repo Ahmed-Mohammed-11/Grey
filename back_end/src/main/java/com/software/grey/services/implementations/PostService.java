@@ -6,6 +6,7 @@ import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.User;
 import com.software.grey.models.mappers.PostMapper;
+import com.software.grey.models.projections.FeelingCountProjection;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.services.IPostService;
 import com.software.grey.services.UserService;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -56,5 +58,9 @@ public class PostService implements IPostService {
                 postFilterDTO.getMonth(),
                 postFilterDTO.getYear(),
                 pageable).map(postMapper::toPostDTO);
+    }
+
+    public List<FeelingCountProjection> getCountOfPostedFeelings(User user) {
+        return postRepository.findCountOfFeelingsByUser(user.getId());
     }
 }
