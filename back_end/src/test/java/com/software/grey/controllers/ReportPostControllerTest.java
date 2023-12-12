@@ -3,8 +3,10 @@ package com.software.grey.controllers;
 import com.software.grey.exceptions.exceptions.DataNotFoundException;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.UserDTO;
+import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
+import com.software.grey.repositories.UserVerificationRepo;
 import com.software.grey.services.UserService;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.EndPoints;
@@ -53,8 +55,9 @@ class ReportPostControllerTest {
     private final SignupController signup;
     private final UserRepo userRepo;
     private final PostRepository postRepository;
-    private String user1;
-    private String user2;
+    private BasicUserRepo basicUserRepo;
+    private UserVerificationRepo userVerificationRepo;
+
     private ArrayList<UUID> posts;
 
     @Autowired
@@ -69,22 +72,20 @@ class ReportPostControllerTest {
     }
 
     @BeforeAll
-    void init() throws InterruptedException {
+    void init() {
         postRepository.deleteAll();
         posts = new ArrayList<>();
         addUser1();
-        addUser2();
     }
 
     void addUser1() {
-        when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName1");
-        UserDTO userDTO1 = new UserDTO("mockEmail1@gmail.com", "mockedUserName1", "mockPas1");
+        when(securityUtils.getCurrentUserName()).thenReturn("mocked User1");
+        UserDTO userDTO1 = new UserDTO("mockEmail1@gmail.com", "mocked User1", "mockPas1");
         signup.signup(userDTO1);
-        user1 = "mockedUserName1";
-        cretePostsForUser1();
+        createPostsForUser1();
     }
 
-    private void cretePostsForUser1() {
+    private void createPostsForUser1() {
         for (int i = 0; i < 5; i++)
             posts.add(postService
                     .add(PostDTO.builder()
@@ -93,31 +94,16 @@ class ReportPostControllerTest {
                             .build()));
     }
 
-    void addUser2() {
-        when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName2");
-        UserDTO userDTO2 = new UserDTO("mockEmail2@gmail.com", "mockedUserName2", "mockPas2");
-        signup.signup(userDTO2);
-        user2 = user1 = "mockedUserName2";
-        cretePostsForUser2();
-    }
-
-    private void cretePostsForUser2() {
-        for (int i = 0; i < 3; i++)
-            posts.add(postService.add(PostDTO.builder()
-                            .postText(i + " user2")
-                            .postFeelings(Set.of(FEAR, ANGER))
-                            .build()));
-        for (int i = 0; i < 3; i++)
-            posts.add(postService.add(PostDTO.builder()
-                    .postText(i + " user2")
-                    .postFeelings(Set.of(ANXIOUS, SAD))
-                    .build()));
+    @AfterAll
+    void cleanUpAll() {
+        postRepository.deleteAll();
+        userRepo.deleteAll();
     }
 
     @Test
     @WithMockUser(username = "greyUser", roles = "ROLES_USER")
     void reportPost_shouldBeValid() throws Exception {
-        when(securityUtils.getCurrentUser()).thenReturn(userRepo.findByUsername("mockedUserName1"));
+        when(securityUtils.getCurrentUser()).thenReturn(userRepo.findByUsername("mocked User1"));
         mockMvc.perform(MockMvcRequestBuilders.post(EndPoints.POST +
                                 EndPoints.REPORT_POST + "/" + posts.get(0))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -136,7 +122,7 @@ class ReportPostControllerTest {
         while(posts.contains(randomNotInPosts))
             randomNotInPosts = UUID.randomUUID();
 
-        when(securityUtils.getCurrentUser()).thenReturn(userRepo.findByUsername("mockedUserName1"));
+        when(securityUtils.getCurrentUser()).thenReturn(userRepo.findByUsername("mocked User1"));
         doThrow(new DataNotFoundException("Post not found"))
                 .when(postService).report(randomNotInPosts.toString());
 

@@ -9,9 +9,7 @@ import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.ReportedPostId;
 import com.software.grey.models.entities.User;
-import com.software.grey.repositories.PostRepository;
-import com.software.grey.repositories.ReportedPostRepository;
-import com.software.grey.repositories.UserRepo;
+import com.software.grey.repositories.*;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.*;
@@ -67,6 +65,12 @@ class ReportPostServiceTest {
     private String user1;
     private String user2;
     private ArrayList<Post> posts;
+    @Autowired
+    private BasicUserRepo basicUserRepo;
+    @Autowired
+    private GoogleUserRepo googleUserRepo;
+    @Autowired
+    private UserVerificationRepo userVerificationRepo;
 
 
     @BeforeAll
@@ -79,19 +83,28 @@ class ReportPostServiceTest {
     }
 
     @AfterEach
-    void cleanUp() {
+    void cleanUpEach() {
         reportedPostRepository.deleteAll();
     }
 
-    void addUser1() {
-        when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName1");
-        UserDTO userDTO1 = new UserDTO("mockEmail1@gmail.com", "mockedUserName1", "mockPas1");
-        signup.signup(userDTO1);
-        user1 = "mockedUserName1";
-        cretePostsForUser1();
+    @AfterAll
+    void cleanUpAll() {
+        postRepository.deleteAll();
+        userVerificationRepo.deleteAll();
+        basicUserRepo.deleteAll();
+        googleUserRepo.deleteAll();
+        userRepo.deleteAll();
     }
 
-    private void cretePostsForUser1() {
+    void addUser1() {
+        when(securityUtils.getCurrentUserName()).thenReturn("mocked User1");
+        UserDTO userDTO1 = new UserDTO("mockEmail1@gmail.com", "mocked User1", "mock Pass 1");
+        signup.signup(userDTO1);
+        user1 = "mocked User1";
+        createPostsForUser1();
+    }
+
+    private void createPostsForUser1() {
         for (int i = 0; i < 5; i++)
             posts.add(postRepository.save(Post.builder()
                             .postText("Some bad text" + i)
@@ -101,14 +114,14 @@ class ReportPostServiceTest {
     }
 
     void addUser2() {
-        when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName2");
-        UserDTO userDTO2 = new UserDTO("mockEmail2@gmail.com", "mockedUserName2", "mockPas2");
+        when(securityUtils.getCurrentUserName()).thenReturn("mocked User2");
+        UserDTO userDTO2 = new UserDTO("mockEmail2@gmail.com", "mocked User2", "mock Pass 2");
         signup.signup(userDTO2);
-        user2 = user1 = "mockedUserName2";
-        cretePostsForUser2();
+        user2 = "mocked User2";
+        createPostsForUser2();
     }
 
-    private void cretePostsForUser2() {
+    private void createPostsForUser2() {
         for (int i = 0; i < 3; i++)
             posts.add(postRepository.save(Post.builder()
                     .postText("Some bad text" + i)
@@ -128,9 +141,9 @@ class ReportPostServiceTest {
         UserDTO userG = new UserDTO("mockGmail@gmail.com", "mockGmail", "mockPas2");
         userG.externalID = "mockedGoogleID";
         userService.saveGoogleUser(userG);
-        cretePostsForGUser();
+        createPostsForGUser();
     }
-    private void cretePostsForGUser() {
+    private void createPostsForGUser() {
         for (int i = 0; i < 3; i++)
             posts.add(postRepository.save(Post.builder()
                     .postText("Some bad text from google user" + i)
@@ -147,7 +160,7 @@ class ReportPostServiceTest {
 
     @Test
     void reportExistingPostUser1_shouldBeValid(){
-        User user = userRepo.findByUsername("mockedUserName1");
+        User user = userRepo.findByUsername("mocked User1");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
         // loop over posts and report each one
@@ -159,7 +172,7 @@ class ReportPostServiceTest {
 
     @Test
     void reportExistingPostUser2_shouldBeValid(){
-        User user = userRepo.findByUsername("mockedUserName2");
+        User user = userRepo.findByUsername("mocked User2");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
         // loop over posts and report each one
@@ -183,7 +196,7 @@ class ReportPostServiceTest {
 
     @Test
     void duplicateReportExistingPostBasicUser_shouldThrowException(){
-        User user = userRepo.findByUsername("mockedUserName1");
+        User user = userRepo.findByUsername("mocked User1");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
         // loop over posts and report each one
@@ -196,7 +209,7 @@ class ReportPostServiceTest {
 
     @Test
     void duplicateReportExistingPostGoogleUser_shouldThrowException(){
-        User user = userRepo.findByUsername("mockedUserName1");
+        User user = userRepo.findByUsername("mockGmail");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
         // loop over posts and report each one
@@ -214,7 +227,7 @@ class ReportPostServiceTest {
             randomUUID = UUID.randomUUID();
         UUID finalRandomUUID = randomUUID;
 
-        User user = userRepo.findByUsername("mockedUserName1");
+        User user = userRepo.findByUsername("mocked User1");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
         DataNotFoundException exception = Assertions.assertThrows(DataNotFoundException.class,
