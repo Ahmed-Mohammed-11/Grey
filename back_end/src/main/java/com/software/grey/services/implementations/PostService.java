@@ -5,6 +5,7 @@ import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.User;
+import com.software.grey.models.enums.Feeling;
 import com.software.grey.models.mappers.PostMapper;
 import com.software.grey.models.projections.FeelingCountProjection;
 import com.software.grey.repositories.PostRepository;
@@ -62,5 +63,9 @@ public class PostService implements IPostService {
 
     public List<FeelingCountProjection> getCountOfPostedFeelings(User user) {
         return postRepository.findCountOfFeelingsByUser(user.getId());
+    }
+
+    public List<Post> getByFeelings(Feeling feeling, String userId, Pageable page){
+        return postRepository.findByPostFeelingsAndUserIdNot(feeling, userId, page);
     }
 }
