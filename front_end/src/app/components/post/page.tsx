@@ -6,7 +6,7 @@ import {BsBookmark, BsFillBookmarkFill} from "react-icons/bs";
 import {SlOptions} from "react-icons/sl";
 import {MdReport} from "react-icons/md";
 import {Chip, IconButton, ListItem, Menu, MenuItem} from "@mui/material";
-import {toast} from "react-toastify";
+import {toast, ToastOptions} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import SavePostController from "@/app/services/SavePostController";
 import {REPORT_POST_ENDPOINT, SAVE_POST_ENDPOINT} from "@/app/constants/apiConstants";
@@ -14,6 +14,12 @@ import {REPORT_POST_ENDPOINT, SAVE_POST_ENDPOINT} from "@/app/constants/apiConst
 
 export default function Post(props: any) {
     let post = props.post;
+    const toastStyleTopRight: ToastOptions = {
+        position: "top-right",
+        autoClose: 2000,
+        theme: "colored",
+        hideProgressBar: true
+    }
 
     const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(null);
     const openMenu = Boolean(menuAnchorEl);
@@ -40,34 +46,18 @@ export default function Post(props: any) {
             await toast.promise(response.then(res => {
                     if (res.status === 200 || res.status === 201) {
                         res.text().then((data: any) => {
-                            toast.success(data, {
-                                position: "top-right",
-                                autoClose: 2000,
-                                theme: "colored",
-                                hideProgressBar: true
-                            });
+                            toast.success(data, toastStyleTopRight);
                         });
                     } else {
                         res.text().then((data: any) => {
-                            toast.error(data, {
-                                position: "top-right",
-                                autoClose: 2000,
-                                theme: "colored",
-                                hideProgressBar: true
-                            });
+                            toast.error(data, toastStyleTopRight);
                         });
                     }
                 }, (err) => { console.log(err) }),
                 {
                     pending: 'Wait a moment with me ...',
                     error: 'Server took too long to respond',
-                },
-                {
-                    position: "top-right",
-                    autoClose: 2000,
-                    theme: "colored",
-                    hideProgressBar: true
-                }
+                }, toastStyleTopRight
             );
         } catch (error) {
             console.error(error);

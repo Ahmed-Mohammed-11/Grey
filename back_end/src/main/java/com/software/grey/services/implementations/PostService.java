@@ -25,6 +25,8 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.UUID;
 
+import static com.software.grey.utils.ErrorMessages.POST_REPORTED_BEFORE;
+
 @Service
 @AllArgsConstructor
 public class PostService implements IPostService {
@@ -50,15 +52,23 @@ public class PostService implements IPostService {
     }
 
     public void report(String postId) {
-        Post post = findPostById(UUID.fromString(postId));
+        UUID postUUID;
+        try {
+            postUUID = UUID.fromString(postId);
+        } catch (IllegalArgumentException e) {
+            throw new DataNotFoundException("Invalid post id");
+        }
+
+        Post post = findPostById(postUUID);
         User reporter = securityUtils.getCurrentUser();
 
-        ReportedPost reportedPost = new ReportedPost();
-        reportedPost.setPost(post);
-        reportedPost.setReporter(reporter);
+        ReportedPost reportedPost = ReportedPost.builder()
+                .post(post)
+                .reporter(reporter)
+                .build();
 
         if(userReportedPostBefore(post, reporter))
-            throw new UserReportedPostBeforeException("Post was already reported by you");
+            throw new UserReportedPostBeforeException(POST_REPORTED_BEFORE);
 
         reportedPostRepository.save(reportedPost);
     }
