@@ -16,5 +16,6 @@ public class EndPoints {
     public static final String LOGIN_SUCCESS = "/login/success";
     public static final String LOGIN_FAIL = "/login/fail";
     public static final String GET_DIARY = "/diary";
+    public static final String GET_FEED = "/feed";
 
 }

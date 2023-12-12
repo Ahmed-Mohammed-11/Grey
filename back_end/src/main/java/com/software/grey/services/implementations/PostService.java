@@ -19,7 +19,11 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -47,14 +51,33 @@ public class PostService implements IPostService {
         return postRepository.findById(id).orElseThrow(() -> new DataNotFoundException("User not found"));
     }
 
-    public Page<PostDTO> getAll(PostFilterDTO postFilterDTO) {
+    public Page<PostDTO> getDiary(PostFilterDTO postFilterDTO) {
         String userName = securityUtils.getCurrentUserName();
-        Pageable pageable = PageRequest.of(postFilterDTO.getPageNumber(), postFilterDTO.getPageSize(), Sort.by("postTime").descending());
-        return postRepository.findAllByUsernameAndDayMonthYear(
+        Pageable pageable = PageRequest.of(
+                postFilterDTO.getPageNumber(),
+                postFilterDTO.getPageSize(),
+                Sort.by("postTime").descending());
+        return postRepository.findDiaryByUsernameAndDayMonthYear(
                 userName,
                 postFilterDTO.getDay(),
                 postFilterDTO.getMonth(),
                 postFilterDTO.getYear(),
                 pageable).map(postMapper::toPostDTO);
+    }
+
+    public Page<PostDTO> getFeed(PostFilterDTO postFilterDTO) {
+        String userName = securityUtils.getCurrentUserName();
+        List<String> feelings = Optional.ofNullable(postFilterDTO.getFeelings())
+                .orElse(Collections.emptyList())
+                .stream()
+                .map(Enum::name)
+                .collect(Collectors.toList());
+
+        Pageable pageable = PageRequest.of(
+                postFilterDTO.getPageNumber(),
+                postFilterDTO.getPageSize());
+
+        return postRepository.findFeed(userName, feelings, pageable)
+                .map(postMapper::toPostDTO);
     }
 }
