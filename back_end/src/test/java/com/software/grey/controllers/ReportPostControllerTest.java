@@ -75,21 +75,21 @@ class ReportPostControllerTest {
     void init() {
         postRepository.deleteAll();
         posts = new ArrayList<>();
-        addUser1();
+        addUser();
     }
 
-    void addUser1() {
-        when(securityUtils.getCurrentUserName()).thenReturn("mocked User1");
-        UserDTO userDTO1 = new UserDTO("mockEmail1@gmail.com", "mocked User1", "mockPas1");
+    void addUser() {
+        when(securityUtils.getCurrentUserName()).thenReturn("grey User");
+        UserDTO userDTO1 = new UserDTO("greyEmail@gmail.com", "grey User", "mock grey Pass");
         signup.signup(userDTO1);
-        createPostsForUser1();
+        createPostsForUser();
     }
 
-    private void createPostsForUser1() {
+    private void createPostsForUser() {
         for (int i = 0; i < 5; i++)
             posts.add(postService
                     .add(PostDTO.builder()
-                            .postText(i + " user1")
+                            .postText(i + " grey post")
                             .postFeelings(Set.of(LOVE, HAPPY))
                             .build()));
     }
@@ -103,7 +103,7 @@ class ReportPostControllerTest {
     @Test
     @WithMockUser(username = "greyUser", roles = "ROLES_USER")
     void reportPost_shouldBeValid() throws Exception {
-        when(securityUtils.getCurrentUser()).thenReturn(userRepo.findByUsername("mocked User1"));
+        when(securityUtils.getCurrentUser()).thenReturn(userRepo.findByUsername("grey User"));
         mockMvc.perform(MockMvcRequestBuilders.post(EndPoints.POST +
                                 EndPoints.REPORT_POST + "/" + posts.get(0))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -122,7 +122,7 @@ class ReportPostControllerTest {
         while(posts.contains(randomNotInPosts))
             randomNotInPosts = UUID.randomUUID();
 
-        when(securityUtils.getCurrentUser()).thenReturn(userRepo.findByUsername("mocked User1"));
+        when(securityUtils.getCurrentUser()).thenReturn(userRepo.findByUsername("grey User"));
         doThrow(new DataNotFoundException("Post not found"))
                 .when(postService).report(randomNotInPosts.toString());
 
