@@ -233,7 +233,8 @@ class PostControllerTest {
                 Arguments.of(0, 1, List.of(HAPPY,SAD),HttpStatus.OK.value()),
                 Arguments.of(0, 1, List.of(HAPPY,SAD,LOVE),HttpStatus.OK.value()),
                 Arguments.of(5, 10, List.of(HAPPY,SAD,LOVE),HttpStatus.OK.value()),
-                Arguments.of(0, 1, List.of(HAPPY,SAD,LOVE,INSPIRE),HttpStatus.BAD_REQUEST.value()),
+                Arguments.of(0, 5, List.of(HAPPY,SAD,LOVE,INSPIRE),HttpStatus.OK.value()),
+                Arguments.of(0, 5, List.of(HAPPY,SAD,LOVE,INSPIRE,ANXIOUS,FEAR),HttpStatus.OK.value()),
                 Arguments.of(-1, 5, List.of(HAPPY,SAD,LOVE),HttpStatus.BAD_REQUEST.value()),
                 Arguments.of(0, 0, List.of(HAPPY,SAD,LOVE),HttpStatus.BAD_REQUEST.value())
         );
