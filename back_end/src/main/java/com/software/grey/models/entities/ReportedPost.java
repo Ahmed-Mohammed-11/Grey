@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "reported_posts", schema = "grey")
+@Table(name = "reported_posts")
 @IdClass(ReportedPostId.class)
 public class ReportedPost {
 
