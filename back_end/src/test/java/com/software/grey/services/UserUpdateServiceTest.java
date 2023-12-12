@@ -27,30 +27,23 @@ class UserUpdateServiceTest {
 
     @MockBean
     private SecurityUtils securityUtils;
-    private final UserService userService;
-    private final SignupController signupController;
-    private final UserRepo userRepo;
-    private final BasicUserRepo basicUserRepo;
-    private final GoogleUserRepo googleUserRepo;
-    private final UserVerificationRepo userVerificationRepo;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final PostRepository postRepository;
-    private String userId;
-
     @Autowired
-    public UserUpdateServiceTest(UserService userService, SignupController signupController,
-                                 UserRepo userRepo, BasicUserRepo basicUserRepo, GoogleUserRepo googleUserRepo,
-                                 UserVerificationRepo userVerificationRepo, BCryptPasswordEncoder bCryptPasswordEncoder,
-                                 PostRepository postRepository) {
-        this.userService = userService;
-        this.signupController = signupController;
-        this.userRepo = userRepo;
-        this.basicUserRepo = basicUserRepo;
-        this.googleUserRepo = googleUserRepo;
-        this.userVerificationRepo = userVerificationRepo;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.postRepository = postRepository;
-    }
+    private UserService userService;
+    @Autowired
+    private SignupController signupController;
+    @Autowired
+    private UserRepo userRepo;
+    @Autowired
+    private BasicUserRepo basicUserRepo;
+    @Autowired
+    private GoogleUserRepo googleUserRepo;
+    @Autowired
+    private UserVerificationRepo userVerificationRepo;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private PostRepository postRepository;
+    private String userId;
 
     @BeforeAll
     void init() {
@@ -155,9 +148,7 @@ class UserUpdateServiceTest {
 
         UserDTO userDTO2 = new UserDTO(oldUser.getEmail(), newUsername, oldUser.getPassword());
 
-        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
-            userService.updateUser(userDTO2);
-        });
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> userService.updateUser(userDTO2));
         assertThat(ex.getMessage()).isEqualTo(ErrorMessages.USERNAME_EXISTS);
 
         BasicUser newUser = basicUserRepo.findById(userId).get();
@@ -179,9 +170,7 @@ class UserUpdateServiceTest {
         when(securityUtils.getCurrentUser()).thenReturn(oldUser);
 
         UserDTO userDTO2 = new UserDTO(newEmail, oldUser.getUsername(), oldUser.getPassword());
-        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
-            userService.updateUser(userDTO2);
-        });
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> userService.updateUser(userDTO2));
         assertThat(ex.getMessage()).isEqualTo(ErrorMessages.EMAIL_EXISTS);
         BasicUser newUser = basicUserRepo.findById(userId).get();
         assertThat(newUser.getUsername()).isEqualTo(oldUser.getUsername());
@@ -199,9 +188,7 @@ class UserUpdateServiceTest {
 
         UserDTO userDTO = new UserDTO(oldUser.getEmail(), oldUser.getUsername(), newPassword);
 
-        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
-            userService.updateUser(userDTO);
-        });
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> userService.updateUser(userDTO));
         assertThat(ex.getMessage()).isEqualTo(ErrorMessages.INVALID_PASSWORD);
         BasicUser newUser = basicUserRepo.findById(userId).get();
         assertThat(newUser.getUsername()).isEqualTo(oldUser.getUsername());
@@ -219,9 +206,7 @@ class UserUpdateServiceTest {
 
         UserDTO userDTO = new UserDTO(oldUser.getEmail(), newUsername, oldUser.getPassword());
 
-        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
-            userService.updateUser(userDTO);
-        });
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> userService.updateUser(userDTO));
         assertThat(ex.getMessage()).isEqualTo(ErrorMessages.INVALID_USERNAME);
         BasicUser newUser = basicUserRepo.findById(userId).get();
         assertThat(newUser.getUsername()).isEqualTo(oldUser.getUsername());
@@ -240,9 +225,7 @@ class UserUpdateServiceTest {
         UserDTO userDTO = new UserDTO(newEmail, oldUser.getUsername(), oldUser.getPassword());
 
         // userService.updateUser(userDTO);
-        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
-            userService.updateUser(userDTO);
-        });
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> userService.updateUser(userDTO));
 
         assertThat(ex.getMessage()).isEqualTo(ErrorMessages.INVALID_EMAIL);
 
@@ -258,16 +241,14 @@ class UserUpdateServiceTest {
 
         when(securityUtils.getCurrentUser()).thenReturn(oldUser);
 
-        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
-            userService.updateUser(null);
-        });
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> userService.updateUser(null));
 
         assertThat(ex.getMessage()).isEqualTo(ErrorMessages.INVALID_REQUEST_BODY);
     }
 
     @Test
     void testUpdateGoogleUser_shouldUpdateUsername() {
-        UserDTO oldDTO = new UserDTO("ily@gmail.com", "ily_504", null);
+        UserDTO oldDTO = new UserDTO("ily@gmail.com", "ily_504", "google user cannot change password");
         userService.saveGoogleUser(oldDTO);
 
         GoogleUser oldUser = googleUserRepo.findByUsername(oldDTO.username);
@@ -276,7 +257,7 @@ class UserUpdateServiceTest {
 
         String newUsername = "google_user";
 
-        UserDTO userDTO = new UserDTO(oldUser.getEmail(), newUsername, null);
+        UserDTO userDTO = new UserDTO(oldUser.getEmail(), newUsername, "google user cannot change password");
         userService.updateUser(userDTO);
 
         GoogleUser newUser = googleUserRepo.findByUsername(newUsername);
@@ -296,9 +277,7 @@ class UserUpdateServiceTest {
         String newEmail = "yoyo@gmail.com";
 
         UserDTO userDTO = new UserDTO(newEmail, oldUser.getUsername(), null);
-        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
-            userService.updateUser(userDTO);
-        });
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> userService.updateUser(userDTO));
         assertThat(ex.getMessage()).isEqualTo("Cannot change email");
 
         GoogleUser newUser = googleUserRepo.findByUsername(oldUser.getUsername());
@@ -319,9 +298,7 @@ class UserUpdateServiceTest {
 
         UserDTO userDTO = new UserDTO(oldUser.getEmail(), newUsername, null);
 
-        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
-            userService.updateUser(userDTO);
-        });
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> userService.updateUser(userDTO));
         assertThat(ex.getMessage()).isEqualTo(ErrorMessages.INVALID_USERNAME);
 
         GoogleUser newUser = googleUserRepo.findByUsername(oldUser.getUsername());
@@ -337,9 +314,7 @@ class UserUpdateServiceTest {
 
         UserDTO userDTO = new UserDTO(null, null, null);
 
-        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> {
-            userService.updateUser(userDTO);
-        });
+        FailedToUpdateException ex = assertThrows(FailedToUpdateException.class, () -> userService.updateUser(userDTO));
         assertThat(ex.getMessage()).isEqualTo(ErrorMessages.INVALID_REQUEST_BODY);
         BasicUser newUser = basicUserRepo.findById(userId).get();
         assertThat(newUser.getUsername()).isEqualTo(oldUser.getUsername());

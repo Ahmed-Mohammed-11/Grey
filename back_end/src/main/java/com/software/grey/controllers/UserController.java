@@ -29,7 +29,7 @@ public class UserController {
     })
     @PutMapping(EndPoints.UPDATE_USER)
     public ResponseEntity<String> updateUser(@Valid @RequestBody UserDTO userDTO) {
-        userService.save(userDTO);
+        userService.updateUser(userDTO);
         return ResponseEntity.ok().body("Updated successfully");
     }
 }

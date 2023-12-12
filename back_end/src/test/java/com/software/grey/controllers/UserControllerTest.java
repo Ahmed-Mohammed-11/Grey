@@ -4,6 +4,7 @@ import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.BasicUser;
 import com.software.grey.repositories.*;
 import com.software.grey.utils.EndPoints;
+import com.software.grey.utils.ErrorMessages;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -32,38 +33,24 @@ class UserControllerTest {
 
     @Autowired
     MockMvc mockMvc;
-
     @MockBean
     private SecurityUtils securityUtils;
-    private final SignupController signupController;
-    private final PostRepository postRepository;
-    private final UserRepo userRepo;
-    private final UserVerificationRepo userVerificationRepo;
-    private final GoogleUserRepo googleUserRepo;
-    private final BasicUserRepo basicUserRepo;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private String userId;
-
     @Autowired
-    public UserControllerTest(SignupController signupController, PostRepository postRepository, UserRepo userRepo,
-                              UserVerificationRepo userVerificationRepo, GoogleUserRepo googleUserRepo,
-                              BasicUserRepo basicUserRepo, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.signupController = signupController;
-        this.postRepository = postRepository;
-        this.userRepo = userRepo;
-        this.userVerificationRepo = userVerificationRepo;
-        this.googleUserRepo = googleUserRepo;
-        this.basicUserRepo = basicUserRepo;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
+    private SignupController signupController;
+    @Autowired
+    private UserRepo userRepo;
+    @Autowired
+    private UserVerificationRepo userVerificationRepo;
+    @Autowired
+    private GoogleUserRepo googleUserRepo;
+    @Autowired
+    private BasicUserRepo basicUserRepo;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private String userId;
 
     @BeforeAll
     void init() {
-        userVerificationRepo.deleteAll();
-        googleUserRepo.deleteAll();
-        basicUserRepo.deleteAll();
-        userRepo.deleteAll();
-        postRepository.deleteAll();
         UserDTO myUser = new UserDTO("mockemail@gmail.com", "old_username",
                 "abc def ghi");
         signupController.signup(myUser);
@@ -284,7 +271,7 @@ class UserControllerTest {
         ).andExpect(
                 status().isBadRequest()
         ).andExpect(
-                MockMvcResultMatchers.content().string("Something went wrong")
+                MockMvcResultMatchers.content().string(ErrorMessages.USERNAME_EXISTS)
         );
 
         BasicUser newUser = basicUserRepo.findById(userId).get();

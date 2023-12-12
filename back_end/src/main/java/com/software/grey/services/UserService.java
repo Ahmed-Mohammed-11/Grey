@@ -24,6 +24,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 
 @Service
 //@AllArgsConstructor
@@ -146,6 +149,8 @@ public class UserService {
         }
     }
 
+
+    @Transactional
     private void updateBasicUser(UserDTO userDTO, User user) {
         // if username has changed, check if it is valid and not already taken
         if (!user.getUsername().equals(userDTO.getUsername())) {
@@ -157,7 +162,12 @@ public class UserService {
             isNotValidEmailUpdate(userDTO);
         }
 
-        BasicUser updatedUser = basicUserRepo.findByUsername(user.getUsername());
+        Optional<BasicUser> optionalUser = basicUserRepo.findById(user.getId());
+        if (optionalUser.isEmpty()) {
+            throw new FailedToUpdateException("User not found");
+        }
+
+        BasicUser updatedUser = optionalUser.get();
         String oldPassword = updatedUser.getPassword();
         updatedUser = userMapper.toUser(userDTO, updatedUser);
 
@@ -168,10 +178,10 @@ public class UserService {
                 throw new FailedToUpdateException(ErrorMessages.INVALID_PASSWORD);
             }
         }
-        basicUserRepo.save(updatedUser);
         userRepo.save(updatedUser);
     }
 
+    @Transactional
     private void updateGoogleUser(UserDTO userDTO, User user) {
         // if username has changed, check if it is valid and not already taken
         if (!user.getUsername().equals(userDTO.getUsername())) {
@@ -183,13 +193,17 @@ public class UserService {
             throw new FailedToUpdateException("Cannot change email");
         }
 
-        if (userDTO.getPassword() != null) {
+        if (!userDTO.getPassword().equals("google user cannot change password")) {
             throw new FailedToUpdateException("Cannot change password");
         }
 
-        GoogleUser updatedUser = googleUserRepo.findByUsername(user.getUsername());
+        Optional<GoogleUser> optionalUser = googleUserRepo.findById(user.getId());
+        if (optionalUser.isEmpty()) {
+            throw new FailedToUpdateException("User not found");
+        }
+
+        GoogleUser updatedUser = optionalUser.get();
         updatedUser = userMapper.toGoogleUser(userDTO, updatedUser);
-        googleUserRepo.save(updatedUser);
         userRepo.save(updatedUser);
     }
 
