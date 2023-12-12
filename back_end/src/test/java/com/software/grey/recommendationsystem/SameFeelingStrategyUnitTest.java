@@ -164,11 +164,11 @@ class SameFeelingStrategyUnitTest {
         map.put(Feeling.ANXIOUS, 0.5);
 
         // Mock the behavior of dependencies
-        when(postService.getCountOfPostedFeelings(user2)).thenReturn(myList);
+        when(postService.getCountOfPostedFeelings(user1)).thenReturn(myList);
 
 //        when(sameFeelingStratSpy.getFeelingPercentage(myList)).thenReturn(map);
         // Call the method under test
-        List<Post> returnedData = sameFeelingStrat.recommend(user2, 0, 50);
+        List<Post> returnedData = sameFeelingStrat.recommend(user1, 0, 50);
 
         // Assertions
         assertEquals(50, returnedData.size(), "The result should contain 50 posts");

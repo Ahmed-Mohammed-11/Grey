@@ -33,7 +33,7 @@ public class SameFeelingStrat extends RecommendationStrategy{
         for (Map.Entry<Feeling, Double> entry : percentageMap.entrySet()) {
             int numOfPosts = (int)(entry.getValue() * count);
             Pageable page = PageRequest.of(pageNumber, numOfPosts);
-            postsRecommended.addAll(postRepository.findByPostFeelings(entry.getKey(), page));
+            postsRecommended.addAll(postRepository.findByPostFeelingsAndUserIdNot(entry.getKey(), user.getId() ,page));
         }
 
         return postsRecommended;
