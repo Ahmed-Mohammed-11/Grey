@@ -2,7 +2,6 @@ package com.software.grey.utils;
 
 public class EndPoints {
 
-
     private EndPoints(){}
 
     public static final String POST = "/posts";
