@@ -28,10 +28,12 @@ public class Recommender {
     public Recommender(Combiner combiner,
                        SameFeelingStrat sameFeelingStrat,
                        InverseFeelingStrat inverseFeelingStrat,
+                       CollaborativeFeelingStrat collaborativeFeelingStrat,
                        SecurityUtils securityUtils) {
         this.combiner = combiner;
         this.sameFeelingStrat = sameFeelingStrat;
         this.inverseFeelingStrat = inverseFeelingStrat;
+        this.collaborativeFeelingStrat = collaborativeFeelingStrat;
         this.securityUtils = securityUtils;
     }
 
@@ -39,12 +41,12 @@ public class Recommender {
         StrategyPercentage stratPercent = buildStrategies();
 
         // request posts here and pass it to combiner
-        List<Post> SameFeelingPosts = getSameFeelingRecommendation(postFilterDTO, stratPercent);
+        List<Post> sameFeelingPosts = getSameFeelingRecommendation(postFilterDTO, stratPercent);
         List<Post> inverseFeelingPosts = getInverseFeelingRecommendation(postFilterDTO, stratPercent);
         List<Post> collaborativeFeelingPosts = getCollaborativeFeelingRecommendation(postFilterDTO, stratPercent);
 
         List<List<Post>> aggreagtedPosts = new ArrayList<>();
-        aggreagtedPosts.add(SameFeelingPosts);
+        aggreagtedPosts.add(sameFeelingPosts);
         aggreagtedPosts.add(inverseFeelingPosts);
         aggreagtedPosts.add(collaborativeFeelingPosts);
 
@@ -56,7 +58,7 @@ public class Recommender {
         StrategyPercentage strategyPercentage = new StrategyPercentage();
         strategyPercentage.addNewStrategyPercentage(sameFeelingStrat, sameFeelingPercentage);
         strategyPercentage.addNewStrategyPercentage(inverseFeelingStrat, inverseFeelingPercentage);
-        strategyPercentage.addNewStrategyPercentage(inverseFeelingStrat, collaborativeFeelingPercentage);
+        strategyPercentage.addNewStrategyPercentage(collaborativeFeelingStrat, collaborativeFeelingPercentage);
         return strategyPercentage;
     }
 
@@ -66,7 +68,7 @@ public class Recommender {
                 postFilterDTO.getPageNumber(),
                 calculateNumberOfPostsFromPercentage(
                         postFilterDTO.getPageSize(),
-                        stratPercent.getStrategyPercentage(sameFeelingStrat)
+                        stratPercent.getStrategyPercentage(sameFeelingStrat) / 100.0
                 )
         );
     }
@@ -77,7 +79,7 @@ public class Recommender {
                 postFilterDTO.getPageNumber(),
                 calculateNumberOfPostsFromPercentage(
                         postFilterDTO.getPageSize(),
-                        stratPercent.getStrategyPercentage(inverseFeelingStrat)
+                        stratPercent.getStrategyPercentage(inverseFeelingStrat) / 100.0
                 )
         );
     }
@@ -88,7 +90,7 @@ public class Recommender {
                 postFilterDTO.getPageNumber(),
                 calculateNumberOfPostsFromPercentage(
                         postFilterDTO.getPageSize(),
-                        stratPercent.getStrategyPercentage(inverseFeelingStrat)
+                        stratPercent.getStrategyPercentage(collaborativeFeelingStrat) / 100.0
                 )
         );
     }
