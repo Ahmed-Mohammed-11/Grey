@@ -37,6 +37,9 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
             Pageable pageable
     );
 
+    // This query returns the feelings the user wrote about in their last 5 posts, and their frequency
+    // the inner query returns the feelings in the user's last 5 posts
+    // the outer query sums those feelings and returns their frequency
     @Query(value = """ 
             SELECT feeling, COUNT(feeling) AS feelingCount
                FROM (
@@ -52,8 +55,7 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
             """, nativeQuery = true)
     public List<FeelingCountProjection> findCountOfFeelingsByUser(String id);
 
-    // TODO make sure that user's own post is not returned
-    public List<Post> findByPostFeelings(Feeling feeling, Pageable pageable);
+    public List<Post> findByPostFeelingsAndUserIdNot(Feeling feeling, String userId, Pageable pageable);
 
     @Query(value = """
             WITH FeelingPosts AS (

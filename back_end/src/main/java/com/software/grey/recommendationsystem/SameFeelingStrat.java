@@ -14,12 +14,12 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Component
 public class SameFeelingStrat extends RecommendationStrategy{
     private PostService postService;
-    private PostRepository postRepository;
 
     @Override
     public List<Post> recommend(User user, Integer pageNumber, Integer count) {
@@ -29,13 +29,12 @@ public class SameFeelingStrat extends RecommendationStrategy{
         Map<Feeling, Double> percentageMap = getFeelingPercentage(feelingsCount);
 
         // retrieve posts from database
-        List<Post> postsRecommended = new ArrayList<>();
-        for (Map.Entry<Feeling, Double> entry : percentageMap.entrySet()) {
-            int numOfPosts = (int)(entry.getValue() * count);
-            Pageable page = PageRequest.of(pageNumber, numOfPosts);
-            postsRecommended.addAll(postRepository.findByPostFeelings(entry.getKey(), page));
-        }
-
-        return postsRecommended;
+        return percentageMap.entrySet().stream()
+                .flatMap(entry -> {
+                    int numOfPosts = (int) (entry.getValue() * count);
+                    Pageable page = PageRequest.of(pageNumber, numOfPosts);
+                    return postService.getByFeelings(entry.getKey(), user.getId(), page).stream();
+                })
+                .collect(Collectors.toList());
     }
 }

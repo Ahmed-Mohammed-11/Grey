@@ -4,19 +4,36 @@ import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@AllArgsConstructor
 public class Recommender {
     private Combiner combiner;
     private SameFeelingStrat sameFeelingStrat;
     private InverseFeelingStrat inverseFeelingStrat;
     private CollaborativeFeelingStrat collaborativeFeelingStrat;
     private SecurityUtils securityUtils;
+
+    @Value("${grey.same.feeling}")
+    private int sameFeelingPercentage;
+    @Value("${grey.inverse.feeling}")
+    private int inverseFeelingPercentage;
+    @Value("${grey.collaborative.feeling}")
+    private int collaborativeFeelingPercentage;
+
+    public Recommender(Combiner combiner,
+                       SameFeelingStrat sameFeelingStrat,
+                       InverseFeelingStrat inverseFeelingStrat,
+                       SecurityUtils securityUtils) {
+        this.combiner = combiner;
+        this.sameFeelingStrat = sameFeelingStrat;
+        this.inverseFeelingStrat = inverseFeelingStrat;
+        this.securityUtils = securityUtils;
+    }
 
     public List<Post> recommend(PostFilterDTO postFilterDTO) {
         StrategyPercentage stratPercent = buildStrategies();
@@ -31,16 +48,15 @@ public class Recommender {
         aggreagtedPosts.add(inverseFeelingPosts);
         aggreagtedPosts.add(collaborativeFeelingPosts);
 
-
         // sort by date, and remove duplicates
-        return combiner.combine(stratPercent, aggreagtedPosts);
+        return combiner.combine(aggreagtedPosts);
     }
 
     private StrategyPercentage buildStrategies() {
         StrategyPercentage strategyPercentage = new StrategyPercentage();
-        strategyPercentage.addNewStrategyPercentage(sameFeelingStrat, 50);
-        strategyPercentage.addNewStrategyPercentage(collaborativeFeelingStrat, 30);
-        strategyPercentage.addNewStrategyPercentage(inverseFeelingStrat, 20);
+        strategyPercentage.addNewStrategyPercentage(sameFeelingStrat, sameFeelingPercentage);
+        strategyPercentage.addNewStrategyPercentage(inverseFeelingStrat, inverseFeelingPercentage);
+        strategyPercentage.addNewStrategyPercentage(inverseFeelingStrat, collaborativeFeelingPercentage);
         return strategyPercentage;
     }
 

@@ -2,9 +2,12 @@ package com.software.grey.recommendationsystem;
 
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.User;
+import com.software.grey.models.entities.UserVerification;
 import com.software.grey.models.enums.Feeling;
+import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
+import com.software.grey.repositories.UserVerificationRepo;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -23,6 +26,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class SameFeelingStrategyIntegrationTest {
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private UserVerificationRepo userVerificationRepo;
+    @Autowired
+    private BasicUserRepo basicUserRepo;
     @Autowired
     private UserRepo userRepo;
     @Autowired
@@ -52,19 +59,22 @@ class SameFeelingStrategyIntegrationTest {
     @AfterAll
     void del(){
         postRepository.deleteAll();
+        userVerificationRepo.deleteAll();
+        basicUserRepo.deleteAll();
+        userRepo.deleteAll();
     }
 
     @Test
     void smokeTestRecommend() {
         Set<Feeling> set = new TreeSet<>();
-        set.add(Feeling.SAD);
+        set.add(Feeling.ANXIOUS);
         Post post = Post.builder().postText("Ta3ban").user(user1).postFeelings(set).build();
         postRepository.save(post);
 
         List<Post> posts = sameFeelingStrat.recommend(user1, 0, 10);
         assertEquals(10, posts.size());
         for(Post p: posts) {
-            assertTrue(p.getPostFeelings().contains(Feeling.SAD));
+            assertTrue(p.getPostFeelings().contains(Feeling.ANXIOUS));
         }
     }
 }

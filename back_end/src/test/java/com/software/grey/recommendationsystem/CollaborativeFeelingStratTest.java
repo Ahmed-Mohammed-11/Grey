@@ -30,7 +30,6 @@ import static org.mockito.Mockito.when;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
 class CollaborativeFeelingStratTest {
-
     @Mock
     private PostService postService;
     @Autowired

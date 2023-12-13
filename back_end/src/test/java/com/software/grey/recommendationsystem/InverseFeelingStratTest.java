@@ -2,10 +2,13 @@ package com.software.grey.recommendationsystem;
 
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.User;
+import com.software.grey.models.entities.UserVerification;
 import com.software.grey.models.enums.Feeling;
 import com.software.grey.models.projections.FeelingCountProjection;
+import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
+import com.software.grey.repositories.UserVerificationRepo;
 import com.software.grey.services.implementations.PostService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -29,7 +32,7 @@ import static org.mockito.Mockito.when;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
 class InverseFeelingStratTest {
-    @Mock
+    @SpyBean
     private PostService postService;
     @Autowired
     @InjectMocks
@@ -40,6 +43,10 @@ class InverseFeelingStratTest {
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private UserVerificationRepo userVerificationRepo;
+    @Autowired
+    private BasicUserRepo basicUserRepo;
     private User user1;
     private User user2;
 
@@ -72,8 +79,10 @@ class InverseFeelingStratTest {
     @AfterAll
     void del(){
         postRepository.deleteAll();
+        userVerificationRepo.deleteAll();
+        basicUserRepo.deleteAll();
+        userRepo.deleteAll();
     }
-    // post.setPostTime(Timestamp.from(Instant.now()));
     @Test
     void recommendBasedOnOneSadPost_ShouldReturnHappy() {
         List<FeelingCountProjection> myList = new ArrayList<>();
@@ -132,10 +141,10 @@ class InverseFeelingStratTest {
         myList.add(feelingCountProjection);
 
         // Mock the behavior of dependencies
-        when(postService.getCountOfPostedFeelings(user2)).thenReturn(myList);
+        when(postService.getCountOfPostedFeelings(user1)).thenReturn(myList);
 
         // Call the method under test
-        List<Post> returnedData = inverseFeelingStrat.recommend(user2, 0, 20);
+        List<Post> returnedData = inverseFeelingStrat.recommend(user1, 0, 20);
 
         // Assertions
         assertEquals(0, returnedData.size(), "The result should contain 0 posts");
@@ -155,10 +164,10 @@ class InverseFeelingStratTest {
         myList.add(feelingCountProjection2);
 
         // Mock the behavior of dependencies
-        when(postService.getCountOfPostedFeelings(user2)).thenReturn(myList);
+        when(postService.getCountOfPostedFeelings(user1)).thenReturn(myList);
 
         // Call the method under test
-        List<Post> returnedData = inverseFeelingStrat.recommend(user2, 0, 20);
+        List<Post> returnedData = inverseFeelingStrat.recommend(user1, 0, 20);
 
         // Assertions
         assertEquals(20, returnedData.size(), "The result should contain 50 posts");

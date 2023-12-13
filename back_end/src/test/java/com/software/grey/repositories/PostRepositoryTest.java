@@ -40,7 +40,6 @@ class PostRepositoryTest {
     void del(){
         postRepository.deleteAll();
     }
-    // post.setPostTime(Timestamp.from(Instant.now()));
 
     @Test
     void findCountOf1FeelingsByUser() {
