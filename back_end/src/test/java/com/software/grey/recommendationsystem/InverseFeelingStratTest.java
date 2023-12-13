@@ -2,10 +2,13 @@ package com.software.grey.recommendationsystem;
 
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.User;
+import com.software.grey.models.entities.UserVerification;
 import com.software.grey.models.enums.Feeling;
 import com.software.grey.models.projections.FeelingCountProjection;
+import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
+import com.software.grey.repositories.UserVerificationRepo;
 import com.software.grey.services.implementations.PostService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -40,6 +43,10 @@ class InverseFeelingStratTest {
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private UserVerificationRepo userVerificationRepo;
+    @Autowired
+    private BasicUserRepo basicUserRepo;
     private User user1;
     private User user2;
 
@@ -72,8 +79,10 @@ class InverseFeelingStratTest {
     @AfterAll
     void del(){
         postRepository.deleteAll();
+        userVerificationRepo.deleteAll();
+        basicUserRepo.deleteAll();
+        userRepo.deleteAll();
     }
-    // post.setPostTime(Timestamp.from(Instant.now()));
     @Test
     void recommendBasedOnOneSadPost_ShouldReturnHappy() {
         List<FeelingCountProjection> myList = new ArrayList<>();
