@@ -14,14 +14,14 @@ export default function CustomDatePicker(props:any) {
   const [cleared, setCleared] = React.useState<boolean>(false);
 
   const handleSetDate = (newDate: any) => {
-    let day = newDate?.date();
-    let month = newDate?.month() + 1;
-    let year = newDate?.year();
-    props.onDateChange({day:day, month:month, year:year});
+    let day: number | null = newDate ? newDate.date() : null;
+    let month: number | null = newDate ? newDate.month() + 1 : null;
+    let year: number | null = newDate ? newDate.year() : null;
+    props.onDateChange({ day, month, year });
   };
 
   const handleClearDate = () => {
-    let day = null;
+        let day = null;
     let month = null;
     let year = null;
     props.onDateChange({day:day, month:month, year:year});
