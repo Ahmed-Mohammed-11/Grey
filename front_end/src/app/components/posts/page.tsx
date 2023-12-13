@@ -113,7 +113,9 @@ export default function Feed(props: any) {
                 <div className={styles.additionalContent}>
                   <Skeleton height={20} width="60%" />
                   <Skeleton height={20} width="80%" />
-                </div>
+                  </div>
+              </div>
+            </div>
             )}
             <ToastContainer/>
         </Box>

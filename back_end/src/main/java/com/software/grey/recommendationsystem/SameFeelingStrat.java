@@ -31,7 +31,7 @@ public class SameFeelingStrat extends RecommendationStrategy{
         // retrieve posts from database
         return percentageMap.entrySet().stream()
                 .flatMap(entry -> {
-                    int numOfPosts = (int) (entry.getValue() * count);
+                    int numOfPosts = (int) Math.ceil(entry.getValue() * count);
                     Pageable page = PageRequest.of(pageNumber, numOfPosts);
                     return postService.getByFeelings(entry.getKey(), user.getId(), page).stream();
                 })

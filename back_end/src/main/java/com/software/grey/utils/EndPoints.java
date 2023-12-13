@@ -13,8 +13,6 @@ public class EndPoints {
     public static final String LOGIN = "/login";
     public static final String LOGIN_SUCCESS = "/login/success";
     public static final String LOGIN_FAIL = "/login/fail";
-    public static final String POST = "/posts";
-    public static final String ADD_POST = "";
     public static final String SAVE_POST = "/toggle/save";
     public static final String REPORT_POST = "/report";
     public static final String DELETE_POST = "/delete";
