@@ -3,8 +3,10 @@ package com.software.grey.recommendationsystem;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.User;
 import com.software.grey.models.enums.Feeling;
+import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
+import com.software.grey.repositories.UserVerificationRepo;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -27,6 +29,10 @@ class InverseFeelingStratIntegrationTest {
     private UserRepo userRepo;
     @Autowired
     InverseFeelingStrat inverseFeelingStrat;
+    @Autowired
+    private UserVerificationRepo userVerificationRepo;
+    @Autowired
+    private BasicUserRepo basicUserRepo;
     private User user1;
     private User user2;
     @BeforeAll
@@ -52,6 +58,8 @@ class InverseFeelingStratIntegrationTest {
     @AfterAll
     void del(){
         postRepository.deleteAll();
+        userVerificationRepo.deleteAll();
+        basicUserRepo.deleteAll();
         userRepo.deleteAll();
     }
 
