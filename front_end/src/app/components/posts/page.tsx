@@ -6,7 +6,7 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import React, { useState, useEffect } from 'react';
 import { useInView } from "react-intersection-observer"
-import { BASE_BACKEND_URL, DIARY_ENDPOINT } from "@/app/constants/apiConstants";
+import { BASE_BACKEND_URL } from "@/app/constants/apiConstants";
 import { Skeleton } from '@mui/material';
 import PostFilters from "../postFilter/page";
 import PostFilterDTO from '../../models/dtos/PostFilterDTO';
@@ -14,37 +14,30 @@ import PostFilterDTO from '../../models/dtos/PostFilterDTO';
 export default function Feed(props:any) {
     const {ref, inView } = useInView();
     const [auth, setAuth] = useState<string | null>(null);
-    const [totalNumberOfPages, setTotalNumberOfPages] = useState(10);
+    const [totalNumberOfPages, setTotalNumberOfPages] = useState(1);
     const [posts, setPosts] = useState<any[]>([]);
     const [filterData, setFilterData] = useState<PostFilterDTO>({} as PostFilterDTO);
+    const [pageIndex, setPageIndex] = useState<number>(0);
 
     useEffect(() => {
-        setAuth(localStorage.getItem('Authorization'));
+      setAuth(localStorage.getItem('Authorization'));
     }, []);
     
     useEffect(() => {
-        setFilterData((prevFilterData) => ({
-          ...prevFilterData,
-          pageNumber: 0,
-          pageSize: 5,
-        }));
-        setPosts([])
-    }, [props.feedType]);
+      setPosts([])
+      if(pageIndex == 0) loadMore();
+      else setPageIndex(0);
+    }, [props.feedType, filterData]);
 
     useEffect(() =>{
-        if(inView){
-          setFilterData((prevFilterData) => ({
-            ...prevFilterData,
-            pageNumber: Math.max(Math.min(prevFilterData.pageNumber + 1, totalNumberOfPages - 1), 0),
-            pageSize: 5,
-          }));
-        }
+      if(inView && posts.length != 0){
+        setPageIndex(Math.max(Math.min(pageIndex + 1, totalNumberOfPages - 1), 0))
+      }
     }, [inView])
 
     useEffect(() => {
-      console.log("from use effect")
-        loadMore();
-    }, [filterData]);
+      loadMore();
+    }, [pageIndex]);
 
     const loadMore = async () => {
         try {
@@ -53,10 +46,9 @@ export default function Feed(props:any) {
             Authorization: auth!,
             mode: 'cors',
           };
-          console.log(filterData)
           const response = await fetch(BASE_BACKEND_URL + props.feedType, {
             method: 'POST',
-            body: JSON.stringify(filterData),
+            body: JSON.stringify({...(filterData),pageNumber: pageIndex, pageSize:5}),
             headers,
           });
       
@@ -67,12 +59,7 @@ export default function Feed(props:any) {
           const newData = await response.json();
           setTotalNumberOfPages(newData.totalPages);
           setPosts((prevPosts) => {
-            if (newData.content && newData.content.length > 0) {
-              return [...(prevPosts ?? []), ...newData.content];
-            } else {
-              setTotalNumberOfPages(0)
-              return [];
-            }
+            return [...(prevPosts ?? []), ...newData.content];
           });
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -96,7 +83,7 @@ export default function Feed(props:any) {
         <Box className={styles.feed} width={props.width}>
           <PostFilters showDatePicker={true} filterDTO ={filterData} applyFilters={applyFilters}/>
           {renderPosts()}
-          {totalNumberOfPages - 1 !== filterData.pageNumber && (
+          {totalNumberOfPages - 1 !== pageIndex && (
             <div className={styles.postSkeleton} ref={ref}>
               <div className={styles.postContent}>
                 <Skeleton variant="circular" width={70} height={70} />

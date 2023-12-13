@@ -88,7 +88,7 @@ export default function Post(props: any) {
 
     return (
         <Box width={props.width}>
-            <Box className={styles.post} key={props.key}>
+            <Box className={styles.post} key={post.id}>
                 <Box className={styles.post_header}>
                     <ListItem>
                         {Array.from(post.postFeelings).map((feeling: any, feelingIndex: any) => (
