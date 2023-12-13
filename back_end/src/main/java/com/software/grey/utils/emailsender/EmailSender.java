@@ -37,7 +37,7 @@ public class EmailSender {
     }
 
     private String populateEmailContentMessage(String userID, String confirmationCode) {
-        String verificationURL = backendURL + EndPoints.VERIFY_REGISTERATION + "?userID=" + userID +
+        String verificationURL = backendURL + EndPoints.VERIFY_REGISTRATION + "?userID=" + userID +
                 "&registrationCode=" + confirmationCode;
 
         return "Please click the following link to verify email: " + verificationURL;

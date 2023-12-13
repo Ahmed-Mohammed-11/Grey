@@ -62,7 +62,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, SIGNUP).permitAll()
                                 .requestMatchers(HttpMethod.GET, LOGIN_SUCCESS).permitAll()
                                 .requestMatchers(HttpMethod.GET, LOGIN_FAIL).permitAll()
-                                .requestMatchers(HttpMethod.PUT, VERIFY_REGISTERATION).permitAll()
+                                .requestMatchers(HttpMethod.PUT, VERIFY_REGISTRATION).permitAll()
                                 .requestMatchers(HttpMethod.GET, TEST).permitAll()
                                 .anyRequest()
                                 .authenticated()

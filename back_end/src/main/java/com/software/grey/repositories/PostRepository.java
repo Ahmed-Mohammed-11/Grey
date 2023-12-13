@@ -9,6 +9,7 @@ import com.software.grey.models.projections.PostFilteringProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -36,7 +37,7 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
             @Param("year") Integer year,
             Pageable pageable
     );
-
+           
     // This query returns the feelings the user wrote about in their last 5 posts, and their frequency
     // the inner query returns the feelings in the user's last 5 posts
     // the outer query sums those feelings and returns their frequency
