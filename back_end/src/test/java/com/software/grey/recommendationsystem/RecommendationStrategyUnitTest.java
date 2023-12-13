@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class RecommendationStrategyUnitTest {
     @Autowired
-    RecommendationStrategy recommendationStrategy;
+    SameFeelingStrat recommendationStrategy;
 
     @Test
     public void testGetFeelingPercentage() {

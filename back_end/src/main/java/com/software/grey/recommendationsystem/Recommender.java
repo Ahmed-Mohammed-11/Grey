@@ -14,6 +14,7 @@ import java.util.List;
 public class Recommender {
     private Combiner combiner;
     private SameFeelingStrat sameFeelingStrat;
+    private InverseFeelingStrat inverseFeelingStrat;
     private SecurityUtils securityUtils;
 
     public List<Post> recommend(PostFilterDTO postFilterDTO) {
@@ -21,17 +22,20 @@ public class Recommender {
 
         // request posts here and pass it to combiner
         List<Post> SameFeelingPosts = getSameFeelingRecommendation(postFilterDTO, stratPercent);
+        List<Post> inverseFeelingPosts = getInverseFeelingRecommendation(postFilterDTO, stratPercent);
 
-        List<List<Post>> aggregatedPosts = new ArrayList<>();
-        aggregatedPosts.add(SameFeelingPosts);
+        List<List<Post>> aggreagtedPosts = new ArrayList<>();
+        aggreagtedPosts.add(SameFeelingPosts);
+        aggreagtedPosts.add(inverseFeelingPosts);
 
         // sort by date, and remove duplicates
-        return combiner.combine(stratPercent, aggregatedPosts);
+        return combiner.combine(stratPercent, aggreagtedPosts);
     }
 
     private StrategyPercentage buildStrategies() {
         StrategyPercentage strategyPercentage = new StrategyPercentage();
-        strategyPercentage.addNewStrategyPercentage(sameFeelingStrat, 100);
+        strategyPercentage.addNewStrategyPercentage(sameFeelingStrat, 80);
+        strategyPercentage.addNewStrategyPercentage(inverseFeelingStrat, 20);
         return strategyPercentage;
     }
 
@@ -46,6 +50,16 @@ public class Recommender {
         );
     }
 
+    private List<Post> getInverseFeelingRecommendation(PostFilterDTO postFilterDTO, StrategyPercentage stratPercent) {
+        return inverseFeelingStrat.recommend(
+                securityUtils.getCurrentUser(),
+                postFilterDTO.getPageNumber(),
+                calculateNumberOfPostsFromPercentage(
+                        postFilterDTO.getPageSize(),
+                        stratPercent.getStrategyPercentage(inverseFeelingStrat)
+                )
+        );
+    }
 
     private int calculateNumberOfPostsFromPercentage(int totalSize, double percentage) {
         return (int)(percentage * totalSize);
