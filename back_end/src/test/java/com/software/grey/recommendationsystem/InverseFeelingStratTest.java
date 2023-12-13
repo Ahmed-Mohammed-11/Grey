@@ -32,7 +32,7 @@ import static org.mockito.Mockito.when;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
 class InverseFeelingStratTest {
-    @Mock
+    @SpyBean
     private PostService postService;
     @Autowired
     @InjectMocks
@@ -141,10 +141,10 @@ class InverseFeelingStratTest {
         myList.add(feelingCountProjection);
 
         // Mock the behavior of dependencies
-        when(postService.getCountOfPostedFeelings(user2)).thenReturn(myList);
+        when(postService.getCountOfPostedFeelings(user1)).thenReturn(myList);
 
         // Call the method under test
-        List<Post> returnedData = inverseFeelingStrat.recommend(user2, 0, 20);
+        List<Post> returnedData = inverseFeelingStrat.recommend(user1, 0, 20);
 
         // Assertions
         assertEquals(0, returnedData.size(), "The result should contain 0 posts");
@@ -164,10 +164,10 @@ class InverseFeelingStratTest {
         myList.add(feelingCountProjection2);
 
         // Mock the behavior of dependencies
-        when(postService.getCountOfPostedFeelings(user2)).thenReturn(myList);
+        when(postService.getCountOfPostedFeelings(user1)).thenReturn(myList);
 
         // Call the method under test
-        List<Post> returnedData = inverseFeelingStrat.recommend(user2, 0, 20);
+        List<Post> returnedData = inverseFeelingStrat.recommend(user1, 0, 20);
 
         // Assertions
         assertEquals(20, returnedData.size(), "The result should contain 50 posts");

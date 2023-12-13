@@ -44,7 +44,7 @@ class InverseFeelingStratIntegrationTest {
         for(int i = 0; i < 30; i++) {
             Set<Feeling> set = new TreeSet<>();
             set.add(Feeling.HAPPY);
-            Post post = Post.builder().postText("Sad").user(user2).postFeelings(set).build();
+            Post post = Post.builder().postText("Osama is happy awy awy awy").user(user2).postFeelings(set).build();
             postRepository.save(post);
         }
         for(int i = 0; i < 30; i++) {
