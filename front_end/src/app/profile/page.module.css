@@ -1,3 +1,24 @@
+.cornerShapes{
+    width:700px;
+    height:700px;
+    position:fixed;
+    border-radius: 150px;
+}
+
+.topLeft
+{
+    top:0;
+    left:0;
+    transform: rotate(45deg)  translate(-70%, 0%);
+}
+
+.bottomRight
+{
+    right:0;
+    bottom:0;
+    transform: rotate(45deg) translate(70%, 0%);
+}
+
 .container {
   display: flex;
   flex-direction: row;
@@ -33,4 +54,11 @@
   max-height: 480px;
   min-width: 150px;
   min-height: 500px;
+}
+
+.button {
+  width: 30%;
+  height: 100%;
+  margin: 2.2% !important;
+  box-shadow: none !important;
 }
