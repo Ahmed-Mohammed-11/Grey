@@ -11,18 +11,21 @@ export default function PostFilters(props: any) {
   const { showDatePicker } = props;
   const [filterData, setFilterData] = useState<PostFilterDTO>({} as PostFilterDTO);
 
+  useEffect(() => {
+    props.applyFilters(filterData);
+  }, [filterData]);
+
   const handleDateFilter = (date:any) => {
+    console.log("date filter change")
     setFilterData({...(filterData), 
       day:date.day,
       month:date.month,
       year:date.year})
-    props.applyFilters(filterData)
   };
 
   const handleFeelingsFilter = (selectedFeelings:Set<Feeling>) => {
-    console.log("this is the selected feelings", selectedFeelings)
+    console.log("feelign filter change")
     setFilterData({...(filterData), feelings:selectedFeelings})
-    props.applyFilters(filterData)
   };
 
   return (

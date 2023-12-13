@@ -21,14 +21,22 @@ export default function Feed(props:any) {
     useEffect(() => {
       setAuth(localStorage.getItem('Authorization'));
     }, []);
+
+    useEffect(() => {
+      setFilterData({} as PostFilterDTO);
+    }, [props.feedType]);
     
     useEffect(() => {
       setPosts([])
-      if(pageIndex == 0) loadMore();
+      if(pageIndex == 0) {
+        console.log("in index == 0")
+        loadMore();
+      }
       else setPageIndex(0);
-    }, [props.feedType, filterData]);
+    }, [filterData]);
 
     useEffect(() =>{
+      console.log("from view")
       if(inView && posts.length != 0){
         setPageIndex(Math.max(Math.min(pageIndex + 1, totalNumberOfPages - 1), 0))
       }
@@ -45,7 +53,7 @@ export default function Feed(props:any) {
             Authorization: auth!,
             mode: 'cors',
           };
-          console.log("this is the filter data",filterData)
+          console.log("this is filter data", filterData)
           const response = await fetch(BASE_BACKEND_URL + props.feedType, {
             method: 'POST',
             body: JSON.stringify({...(filterData),pageNumber: pageIndex, pageSize:5}),
@@ -57,8 +65,8 @@ export default function Feed(props:any) {
           }
       
           const newData = await response.json();
-          console.log("the response", newData);
           setTotalNumberOfPages(newData.totalPages);
+          console.log("this is the response ", newData)
           setPosts((prevPosts) => {
             return [...(prevPosts ?? []), ...newData.content];
           });
@@ -82,7 +90,7 @@ export default function Feed(props:any) {
 
     return (
         <Box className={styles.feed} width={props.width}>
-          <PostFilters showDatePicker={true} filterDTO ={filterData} applyFilters={applyFilters}/>
+          <PostFilters showDatePicker={true} applyFilters={applyFilters}/>
           {renderPosts()}
           {totalNumberOfPages - 1 !== pageIndex && (
             <div className={styles.postSkeleton} ref={ref}>
@@ -99,3 +107,9 @@ export default function Feed(props:any) {
         </Box>
     )
 }
+
+/* current bugs
+  - the filters when change feed type not reset as view just reset as vars
+  - in the initial reload too much request and doublicate posts retrieve
+  - can't filter with more than one feeling back end bug
+*/

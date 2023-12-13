@@ -5,6 +5,7 @@ import {Box} from "@mui/system";
 import {IoMdAdd} from "react-icons/io";
 import {Chip, IconButton, ListItem, Menu, MenuItem, Tooltip} from "@mui/material";
 import Feeling from "@/app/models/dtos/Feeling";
+import { useState, useEffect } from 'react';
 
 export default function FeelingsFilter(props:any) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -29,12 +30,14 @@ export default function FeelingsFilter(props:any) {
             if (selectedFeelings.size < props.limit) setFullFeelings(false)
             else setFullFeelings(true)
         }
+        useEffect(() => {
+            props.onDataChange(Array.from(selectedFeelings))
+        }, [selectedFeelings]);
 
         const handleAdd = (feeling: Feeling) => () => {
             if (selectedFeelings.size < props.limit)
                 setSelectedFeelings((feelings) => {
                     feelings.add(feeling);
-                    props.onDataChange(Array.from(feelings))
                     return new Set<Feeling>(feelings);
                 });
             handleFeelingsChange();
@@ -42,13 +45,10 @@ export default function FeelingsFilter(props:any) {
         const handleDelete = (chipToDelete: Feeling) => () => {
             setSelectedFeelings((feelings) => {
                 feelings.delete(chipToDelete);
-                props.onDataChange(Array.from(feelings));
                 return new Set<Feeling>(feelings);
             });
             handleFeelingsChange();
-            
         };
-
 
   return (
     <Box className={styles.feelings}>
