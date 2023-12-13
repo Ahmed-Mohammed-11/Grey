@@ -4,7 +4,7 @@ import {Box} from "@mui/system";
 import {BsBookmark, BsFillBookmarkFill} from "react-icons/bs";
 import {SlOptions} from "react-icons/sl";
 import {Chip, IconButton, ListItem} from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import React from "react";
 import SavePostController from "@/app/services/SavePostController";
 import { SAVE_POST_ENDPOINT } from "@/app/constants/apiConstants";

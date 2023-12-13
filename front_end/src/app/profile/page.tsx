@@ -5,6 +5,10 @@ import {useRef, useState} from 'react';
 import clientValidateForm from "../security/userValidation/clientFormValidation";
 import updateUserController from "../services/updateUserController";
 import { UPDATE_USER_ENDPOINT } from "../constants/apiConstants";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 function Profile() {
 
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -37,8 +41,28 @@ function Profile() {
 
   const fetchServerResponse = async (userDto: UserDTO) => {
     const response = await updateUserController.sendPutRequest(userDto, UPDATE_USER_ENDPOINT)
+    console.log(response)
     const message = await response.text()
     console.log(message)
+    if (!response.ok) {
+      notify(message, true)
+    } else {
+      notify(message, false)
+    }
+  }
+
+  const notify = (message: string, isError: boolean) => {
+    if (isError) {
+      toast.error(message, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      })
+    } else {
+      toast.success(message, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      })
+    }
   }
 
   const sendRequest = (user: User) => {
@@ -72,6 +96,7 @@ function Profile() {
 
     if (noChange(user)) {
       console.log('no change')
+      notify('No change', false)
       return
     }
 
@@ -122,6 +147,7 @@ function Profile() {
           onClick={handleUpdate}
         >save changes</Button>
       </Box>
+      <ToastContainer />
     </Box>
   )
 }
