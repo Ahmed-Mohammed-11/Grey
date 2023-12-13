@@ -84,11 +84,20 @@ public class PostService implements IPostService {
     }
 
     public void delete(String postId) {
+
         String currentUserId = securityUtils.getCurrentUserId();
+        UUID uuid;
+        try {
+            uuid = UUID.fromString(postId);
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Invalid post id");
+        }
+
         Post post = findPostById(UUID.fromString(postId));
         if(!post.getUser().getId().toString().equals(currentUserId)){
             throw new DataNotFoundException("You are not authorized to delete this post");
         }
+
         postRepository.deleteById(post.getId());
     }
 }

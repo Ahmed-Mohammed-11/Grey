@@ -10,6 +10,7 @@ import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.SecurityUtils;
+import jakarta.validation.constraints.Null;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -20,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
-import org.springframework.test.annotation.DirtiesContext;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -107,7 +107,6 @@ class PostServiceTest {
 
     @ParameterizedTest
     @MethodSource("paginationOfDiaryPostsParameters")
-    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     void getDiaryOfUser1(String userName, Integer pageSize, Integer pageNumber, Integer day, Integer month,
                          Integer year, Integer contentSize) throws InterruptedException {
 
@@ -121,11 +120,11 @@ class PostServiceTest {
         PostFilterDTO postFilterDTO = PostFilterDTO.builder()
                 .pageNumber(pageNumber).pageSize(pageSize).day(day).month(month).year(year).build();
         Page<PostDTO> posts = postService.getAll(postFilterDTO);
-//        assertThat(posts.getContent()).hasSize(contentSize);
+        assertThat(posts.getContent()).hasSize(contentSize);
         int start = pageNumber * pageSize;
-//        for (int i = 0; i < contentSize; i++) {
-//            assertThat(posts.getContent().get(i).getPostText()).isEqualTo(userPosts.get(userName).get(i + start));
-//        }
+        for (int i = 0; i < contentSize; i++) {
+            assertThat(posts.getContent().get(i).getPostText()).isEqualTo(userPosts.get(userName).get(i + start));
+        }
     }
 
 
@@ -157,16 +156,16 @@ class PostServiceTest {
                 .postFeelings(Set.of(LOVE, HAPPY)).build();
 
         //prepare mock user and save it
-        UserDTO userDTO = new UserDTO("test@gmail.com", "testUser", "mock Pass 111");
+        UserDTO userDTO = new UserDTO("test2@gmail.com", "testUser2", "mock Pass 111");
         userService.save(userDTO);
 
-        when(securityUtils.getCurrentUserName()).thenReturn("testUser");
+        when(securityUtils.getCurrentUserName()).thenReturn("testUser2");
         //save the post created by the user testUser
         UUID postId = postService.add(postDTO);
         assertThat(postId).isNotNull();
 
         //find the user
-        User user = userService.findByUserName("testUser");
+        User user = userService.findByUserName("testUser2");
         assertThat(user).isNotNull();
 
         //delete the post
@@ -226,5 +225,41 @@ class PostServiceTest {
         Exception exception = assertThrows(DataNotFoundException.class, () -> postService.delete(postId.toString()));
         System.out.println(exception.getMessage());
         assertThat(exception.getMessage()).isEqualTo("Post not found");
+    }
+
+
+    @Test
+    void deletePostInvalidId() {
+        //prepare mock user and save it
+        UserDTO userDTO = new UserDTO("test@gmail.com", "testUser", "mock Pass 111");
+        userService.save(userDTO);
+
+        when(securityUtils.getCurrentUserName()).thenReturn("testUser");
+
+        //find the user
+        User user = userService.findByUserName("testUser");
+        assertThat(user).isNotNull();
+
+        //delete the post
+        when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> postService.delete("invalidUUID"));
+        assertThat(exception.getMessage()).isEqualTo("Invalid post id");
+    }
+
+    @Test
+    void deletePostWithNullId() {
+        //prepare mock user and save it
+        UserDTO userDTO = new UserDTO("test@gmail.com", "testUser", "mock Pass 111");
+        userService.save(userDTO);
+
+        when(securityUtils.getCurrentUserName()).thenReturn("testUser");
+
+        //find the user
+        User user = userService.findByUserName("testUser");
+        assertThat(user).isNotNull();
+
+        //delete the post
+        when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
+        Exception exception = assertThrows(NullPointerException.class, () -> postService.delete(null));
     }
 }

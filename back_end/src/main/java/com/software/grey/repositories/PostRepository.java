@@ -34,7 +34,4 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
             Pageable pageable
     );
 
-    @Modifying
-    @Query("DELETE FROM Post p WHERE p.id = :uuid")
-    void deletePost(UUID uuid);
 }
