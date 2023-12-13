@@ -45,7 +45,7 @@ function Profile() {
     const message = await response.text()
     console.log(message)
     if (!response.ok) {
-      notify(message, true)
+      notify(message || "Server error", true)
     } else {
       notify(message, false)
     }
