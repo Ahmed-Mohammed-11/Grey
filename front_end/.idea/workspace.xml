@@ -5,11 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="SG-103 Merging complete">
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/DTO/Feeling.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/models/dtos/Feeling.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/DTO/PostDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/models/dtos/PostDTO.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Feed/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Feed/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Popup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Popup/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_12_22_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_21_2023_4_02_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_21_2023_4_02_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_20_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_20_AM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_20_AM__Changes_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_32_AM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_12_19_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_12_19_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_12_19_PM__Changes_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_12_21_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_7_50_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_7_50_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_28_2023_7_38_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_28_2023_7_38_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_28_2023_7_38_PM__Changes_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_21_2023_1_13_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_21_2023_1_13_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +49,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/package.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/app/signup/page.tsx" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -76,16 +87,16 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "SG-37-Front-represent-the-status-code-to-user-for-writing-posts",
+    "git-widget-placeholder": "SG-125-BL-Implement-same-feeling-strategy",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Omar/Projects/Grey/SWE-Project/back_end",
+    "last_opened_file_path": "C:/Omar/Projects/Grey/Grey milestone temp/SWE-Project/front_end",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "terminal",
-    "ts.external.directory.path": "C:\\Users\\Belal\\Desktop\\First Semester\\Software Engineering\\Project\\SWE-Project\\front_end\\node_modules\\typescript\\lib",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "ts.external.directory.path": "C:\\Omar\\Projects\\Grey\\Grey milestone temp\\SWE-Project\\front_end\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -122,6 +133,10 @@
       <workItem from="1700058387702" duration="18182000" />
       <workItem from="1700120692601" duration="1188000" />
       <workItem from="1701168511715" duration="630000" />
+      <workItem from="1702153206945" duration="87000" />
+      <workItem from="1702153450901" duration="2853000" />
+      <workItem from="1702226815689" duration="4564000" />
+      <workItem from="1702387395959" duration="643000" />
     </task>
     <task id="LOCAL-00001" summary="Google button enhanced &amp; side button added">
       <option name="closed" value="true" />
