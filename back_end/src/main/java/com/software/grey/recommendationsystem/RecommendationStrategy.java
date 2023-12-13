@@ -25,10 +25,6 @@ public abstract class RecommendationStrategy {
     }
 
     protected Integer getSumOfFeelings(List<FeelingCountProjection> feelingsCount) {
-        int sum = 0;
-        for(FeelingCountProjection f : feelingsCount) {
-            sum += f.getFeelingCount();
-        }
-        return sum;
+        return feelingsCount.stream().mapToInt(FeelingCountProjection::getFeelingCount).sum();
     }
 }

@@ -57,14 +57,14 @@ class SameFeelingStrategyIntegrationTest {
     @Test
     void smokeTestRecommend() {
         Set<Feeling> set = new TreeSet<>();
-        set.add(Feeling.SAD);
+        set.add(Feeling.ANXIOUS);
         Post post = Post.builder().postText("Ta3ban").user(user1).postFeelings(set).build();
         postRepository.save(post);
 
         List<Post> posts = sameFeelingStrat.recommend(user1, 0, 10);
         assertEquals(10, posts.size());
         for(Post p: posts) {
-            assertTrue(p.getPostFeelings().contains(Feeling.SAD));
+            assertTrue(p.getPostFeelings().contains(Feeling.ANXIOUS));
         }
     }
 }
