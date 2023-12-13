@@ -19,7 +19,6 @@ import java.util.Map;
 @Component
 public class InverseFeelingStrat extends RecommendationStrategy{
     private PostService postService;
-    private PostRepository postRepository;
 
     @Override
     public List<Post> recommend(User user, Integer pageNumber, Integer count) {
@@ -28,11 +27,10 @@ public class InverseFeelingStrat extends RecommendationStrategy{
         // convert to <feeling, percentage> key-pair map
         Map<Feeling, Double> percentageMap = getFeelingPercentage(feelingsCount);
 
-        if(percentageMap.get(Feeling.SAD) == null)
+        if (percentageMap.get(Feeling.SAD) == null)
             return Collections.emptyList();
 
         Pageable page = PageRequest.of(pageNumber, count);
-        return postRepository.findByPostFeelings(Feeling.HAPPY, page);
+        return postService.getByFeelings(Feeling.HAPPY, user.getId(), page);
     }
-
 }

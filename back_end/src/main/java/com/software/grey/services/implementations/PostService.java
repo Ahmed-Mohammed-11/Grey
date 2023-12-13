@@ -68,4 +68,5 @@ public class PostService implements IPostService {
     public List<Post> getByFeelings(Feeling feeling, String userId, Pageable page){
         return postRepository.findByPostFeelingsAndUserIdNot(feeling, userId, page);
     }
+
 }

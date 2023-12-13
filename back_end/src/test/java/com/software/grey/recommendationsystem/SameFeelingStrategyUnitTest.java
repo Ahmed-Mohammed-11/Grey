@@ -142,10 +142,10 @@ class SameFeelingStrategyUnitTest {
         myList.add(feelingCountProjection);
 
         // Mock the behavior of dependencies
-        when(postService.getCountOfPostedFeelings(user2)).thenReturn(myList);
+        when(postService.getCountOfPostedFeelings(user1)).thenReturn(myList);
 
         // Call the method under test
-        List<Post> returnedData = sameFeelingStrat.recommend(user2, 0, 50);
+        List<Post> returnedData = sameFeelingStrat.recommend(user1, 0, 50);
 
         // Assertions
         assertEquals(0, returnedData.size(), "The result should contain 0 posts");
