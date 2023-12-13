@@ -3,6 +3,8 @@ package com.software.grey.controllers;
 import com.software.grey.SavedPostEnum;
 import com.software.grey.models.dtos.PostDTO;
 
+import com.software.grey.models.entities.Post;
+import com.software.grey.recommendationsystem.Recommender;
 import com.software.grey.services.SavedPostService;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.services.implementations.PostService;
@@ -28,6 +30,7 @@ public class PostController {
 
     private PostService postService;
     private SavedPostService savedPostService;
+    private Recommender recommender;
 
     @Operation(
             summary = "Create a new post",
@@ -62,4 +65,5 @@ public class PostController {
     public ResponseEntity<Page<PostDTO>> getDiary(@Valid @RequestBody PostFilterDTO postFilterDTO){
         return ResponseEntity.status(HttpStatus.OK).body(postService.getAll(postFilterDTO));
     }
+
 }
