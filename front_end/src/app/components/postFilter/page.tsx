@@ -25,7 +25,7 @@ export default function PostFilters(props: any) {
 
   const handleFeelingsFilter = (selectedFeelings:Set<Feeling>) => {
     console.log("feelign filter change")
-    setFilterData({...(filterData), feelings:selectedFeelings})
+    setFilterData({...(filterData), feelings:Array.from(selectedFeelings)})
   };
 
   return (

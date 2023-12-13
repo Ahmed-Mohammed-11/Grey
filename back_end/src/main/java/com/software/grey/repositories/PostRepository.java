@@ -47,17 +47,13 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
             JOIN user u ON u.id = p.user_id
             JOIN post_feelings pf ON pf.post_id = p.id
             WHERE u.username != :userName
-              AND (:feelings is null OR :feelings is not null AND pf.feeling IN :feelings)
+              AND (pf.feeling IN (:feelings) OR COALESCE(:feelings) IS null)
             ORDER BY p.post_time DESC
             """,
             countQuery = """
     SELECT count(p.id) FROM post p JOIN user u ON u.id = p.user_id
     JOIN post_feelings pf ON pf.post_id = p.id
-    WHERE u.username != :userName AND (:feelings is null OR :feelings is not null AND pf.feeling IN :feelings)
+    WHERE u.username != :userName AND (pf.feeling IN (:feelings) OR COALESCE(:feelings) IS null)
     """, nativeQuery = true)
     Page<Post> findFeed(@Param("userName") String userName, @Param("feelings") List<String> feelings, Pageable pageable);
 }
-/*
-              AND (:feelings is () OR pf.feeling IN :feelings)
-              AND (:feelings is () OR pf.feeling IN :feelings)
- */
