@@ -231,13 +231,13 @@ class PostServiceTest {
     @Test
     void deletePostInvalidId() {
         //prepare mock user and save it
-        UserDTO userDTO = new UserDTO("test@gmail.com", "testUser", "mock Pass 111");
+        UserDTO userDTO = new UserDTO("test3@gmail.com", "testUser3", "mock Pass 111");
         userService.save(userDTO);
 
-        when(securityUtils.getCurrentUserName()).thenReturn("testUser");
+        when(securityUtils.getCurrentUserName()).thenReturn("testUser3");
 
         //find the user
-        User user = userService.findByUserName("testUser");
+        User user = userService.findByUserName("testUser3");
         assertThat(user).isNotNull();
 
         //delete the post
@@ -249,13 +249,13 @@ class PostServiceTest {
     @Test
     void deletePostWithNullId() {
         //prepare mock user and save it
-        UserDTO userDTO = new UserDTO("test@gmail.com", "testUser", "mock Pass 111");
+        UserDTO userDTO = new UserDTO("test4@gmail.com", "testUser4", "mock Pass 111");
         userService.save(userDTO);
 
-        when(securityUtils.getCurrentUserName()).thenReturn("testUser");
+        when(securityUtils.getCurrentUserName()).thenReturn("testUser4");
 
         //find the user
-        User user = userService.findByUserName("testUser");
+        User user = userService.findByUserName("testUser4");
         assertThat(user).isNotNull();
 
         //delete the post
