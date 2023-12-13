@@ -15,12 +15,15 @@ public class Recommender {
     private Combiner combiner;
     private SameFeelingStrat sameFeelingStrat;
     private InverseFeelingStrat inverseFeelingStrat;
+    private CollaborativeFeelingStrat collaborativeFeelingStrat;
     private SecurityUtils securityUtils;
 
     @Value("${grey.same.feeling}")
     private int sameFeelingPercentage;
     @Value("${grey.inverse.feeling}")
     private int inverseFeelingPercentage;
+    @Value("${grey.collaborative.feeling}")
+    private int collaborativeFeelingPercentage;
 
     public Recommender(Combiner combiner,
                        SameFeelingStrat sameFeelingStrat,
@@ -38,10 +41,12 @@ public class Recommender {
         // request posts here and pass it to combiner
         List<Post> SameFeelingPosts = getSameFeelingRecommendation(postFilterDTO, stratPercent);
         List<Post> inverseFeelingPosts = getInverseFeelingRecommendation(postFilterDTO, stratPercent);
+        List<Post> collaborativeFeelingPosts = getCollaborativeFeelingRecommendation(postFilterDTO, stratPercent);
 
         List<List<Post>> aggreagtedPosts = new ArrayList<>();
         aggreagtedPosts.add(SameFeelingPosts);
         aggreagtedPosts.add(inverseFeelingPosts);
+        aggreagtedPosts.add(collaborativeFeelingPosts);
 
         // sort by date, and remove duplicates
         return combiner.combine(aggreagtedPosts);
@@ -51,6 +56,7 @@ public class Recommender {
         StrategyPercentage strategyPercentage = new StrategyPercentage();
         strategyPercentage.addNewStrategyPercentage(sameFeelingStrat, sameFeelingPercentage);
         strategyPercentage.addNewStrategyPercentage(inverseFeelingStrat, inverseFeelingPercentage);
+        strategyPercentage.addNewStrategyPercentage(inverseFeelingStrat, collaborativeFeelingPercentage);
         return strategyPercentage;
     }
 
@@ -67,6 +73,17 @@ public class Recommender {
 
     private List<Post> getInverseFeelingRecommendation(PostFilterDTO postFilterDTO, StrategyPercentage stratPercent) {
         return inverseFeelingStrat.recommend(
+                securityUtils.getCurrentUser(),
+                postFilterDTO.getPageNumber(),
+                calculateNumberOfPostsFromPercentage(
+                        postFilterDTO.getPageSize(),
+                        stratPercent.getStrategyPercentage(inverseFeelingStrat)
+                )
+        );
+    }
+
+    private List<Post> getCollaborativeFeelingRecommendation(PostFilterDTO postFilterDTO, StrategyPercentage stratPercent) {
+        return collaborativeFeelingStrat.recommend(
                 securityUtils.getCurrentUser(),
                 postFilterDTO.getPageNumber(),
                 calculateNumberOfPostsFromPercentage(

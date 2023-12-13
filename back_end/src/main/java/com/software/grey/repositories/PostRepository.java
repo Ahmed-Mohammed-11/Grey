@@ -5,6 +5,7 @@ import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.User;
 import com.software.grey.models.enums.Feeling;
 import com.software.grey.models.projections.FeelingCountProjection;
+import com.software.grey.models.projections.PostFilteringProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -55,4 +56,41 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
     public List<FeelingCountProjection> findCountOfFeelingsByUser(String id);
 
     public List<Post> findByPostFeelingsAndUserIdNot(Feeling feeling, String userId, Pageable pageable);
+
+    @Query(value = """
+            WITH FeelingPosts AS (
+                SELECT
+                    p.id AS post_id,
+                    p.user_id,
+                    pf.feeling,
+                    p.post_time
+                FROM
+                    post p
+                    JOIN post_feelings pf ON p.id = pf.post_id
+                WHERE
+                    pf.feeling = ?1
+            ),
+            UserPosts AS (
+                SELECT
+                    p.id,
+                    p.user_id,
+                    pf.feeling,
+                    p.post_time,
+                    p.text
+                FROM
+                    post p
+                    JOIN post_feelings pf ON p.id = pf.post_id
+            )
+            SELECT DISTINCT
+                up.id,
+                up.text,
+                up.user_id,
+                up.post_time,
+                up.feeling
+            FROM
+                UserPosts up
+                WHERE up.user_id in (SELECT DISTINCT user_id FROM FeelingPosts) AND up.feeling != ?1
+            ORDER BY up.post_time DESC;
+            """, nativeQuery = true)
+    public List<Post> findByCollaborativeFiltering(String feeling, Pageable pageable);
 }
