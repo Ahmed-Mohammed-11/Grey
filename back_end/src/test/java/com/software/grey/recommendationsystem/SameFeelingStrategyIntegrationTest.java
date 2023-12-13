@@ -59,8 +59,8 @@ class SameFeelingStrategyIntegrationTest {
     @AfterAll
     void del(){
         postRepository.deleteAll();
-//        userVerificationRepo.deleteAll();
-//        basicUserRepo.deleteAll();
+        userVerificationRepo.deleteAll();
+        basicUserRepo.deleteAll();
         userRepo.deleteAll();
     }
 

@@ -13,8 +13,8 @@ import java.util.TreeSet;
 public class CombinerImp implements Combiner{
 
     /**
-     * @param posts A list of recommneded posts, retrieved by any recommendation heuristic
-     * @return A list of posts sorted by decreasing order of post time
+     * @param posts A list of recommended posts, retrieved by any recommendation heuristic
+     * @return A list of posts, sorted by decreasing order of post time
      */
     @Override
     public List<Post> combine(List<List<Post>> posts) {
