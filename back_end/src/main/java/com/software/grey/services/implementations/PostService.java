@@ -8,7 +8,9 @@ import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.ReportedPost;
 import com.software.grey.models.entities.ReportedPostId;
 import com.software.grey.models.entities.User;
+import com.software.grey.models.enums.Feeling;
 import com.software.grey.models.mappers.PostMapper;
+import com.software.grey.models.projections.FeelingCountProjection;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.ReportedPostRepository;
 import com.software.grey.services.IPostService;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -99,5 +102,13 @@ public class PostService implements IPostService {
         }
 
         postRepository.deleteById(post.getId());
+    }
+  
+    public List<FeelingCountProjection> getCountOfPostedFeelings(User user) {
+        return postRepository.findCountOfFeelingsByUser(user.getId());
+    }
+
+    public List<Post> getByFeelings(Feeling feeling, String userId, Pageable page){
+        return postRepository.findByPostFeelingsAndUserIdNot(feeling, userId, page);
     }
 }

@@ -3,6 +3,8 @@ package com.software.grey.controllers;
 import com.software.grey.SavedPostEnum;
 import com.software.grey.models.dtos.PostDTO;
 
+import com.software.grey.models.entities.Post;
+import com.software.grey.recommendationsystem.Recommender;
 import com.software.grey.services.SavedPostService;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.services.implementations.PostService;
@@ -17,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
