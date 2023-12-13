@@ -32,7 +32,7 @@ export default function PostFilters(props: any) {
   return (
     <Box>
       {showDatePicker && <CustomDatePicker onDateChange={handleDateFilter}/>}
-      {/* <FeelingsFilter limit={8} onDataChange={handleFeelingsFilter}/> */}
+      <FeelingsFilter limit={8} onDataChange={handleFeelingsFilter}/>
       {/* Other content in the filter component */}
     </Box>
   );
