@@ -7,12 +7,13 @@ import {Box} from "@mui/system";
 import {FaPen} from "react-icons/fa";
 import {IoSend} from "react-icons/io5";
 import {IoMdAdd} from "react-icons/io";
-import {Alert, Chip, IconButton, ListItem, Menu, MenuItem, Snackbar, TextareaAutosize, Tooltip} from "@mui/material";
+import {Chip, IconButton, ListItem, Menu, MenuItem, TextareaAutosize, Tooltip} from "@mui/material";
 import Feeling from "@/app/models/dtos/Feeling";
 import PostDTO from "@/app/models/dtos/PostDTO";
 import {CREATE_POST_ENDPOINT} from "@/app/constants/apiConstants";
 import createPostController from "@/app/services/createPostController";
-import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
+import {toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const allFeelings = new Set<Feeling>([Feeling.HAPPY, Feeling.SAD,
     Feeling.ANGER, Feeling.DISGUST,
@@ -77,24 +78,32 @@ export default function PopupScreen() {
         fetchResponse(postDTO);
     }
 
-    const fetchResponse = async (postDTO : PostDTO) => {
-        let response = await createPostController.sendPostRequest(postDTO, CREATE_POST_ENDPOINT);
-        let jsonResponse = await toJSON(response.body!);
-        let responseStat = response.status;
-        if (responseStat === 201) {
-            handleOpenSnackbar();
-            console.log(jsonResponse);
-        }
-    }
-
 
     // Handling server response
-    const [openSnackbar, setOpenSnackbar] = React.useState(false);
-    const handleOpenSnackbar = () => {setOpenSnackbar(true);};
-    const handleCloseSnackbar = (event: React.SyntheticEvent | Event, reason?: string) => {
-        if (reason === 'clickaway') return;
-        setOpenSnackbar(false);
-    };
+    const fetchResponse = async (postDTO : PostDTO) => {
+        const response = createPostController.sendPostRequest(postDTO, CREATE_POST_ENDPOINT);
+        notify(response);
+    }
+    async function notify(response: Promise<Response>) {
+        try {
+            toast.promise(response.then(res => {}),
+                {
+                    pending: 'Creating post...',
+                    success: 'Shared to the world successfully',
+                    error: 'Something went wrong',
+                },
+                {
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    theme: "colored",
+                    hideProgressBar: true
+                }
+            );
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
 
 
@@ -137,7 +146,7 @@ export default function PopupScreen() {
                                     onClose={handleClosePopup}
                                     MenuListProps={{'aria-labelledby': 'basic-button',}}>
                                     {Array.from(allFeelings).filter((feeling) =>
-                                        !selectedFeelings.has(feeling)).map((feeling: any, feelingIndex: any) => (
+                                        !selectedFeelings.has(feeling)).map((feeling: any) => (
                                         <MenuItem className={feeling} onClick={handleAdd(feeling)}>
                                             {feeling}
                                         </MenuItem>
@@ -161,7 +170,7 @@ export default function PopupScreen() {
                                         className={`${styles.button} ${styles.filled}
                                         ${!isFeelingsValid || !isPostTextValid ? styles.disabled : ""}`}
                                         disabled={!isFeelingsValid || !isPostTextValid}
-                                        onClick={handleCreatePost}>
+                                        onClick={() => {handleCreatePost(); close()}}>
                                     create post <IoSend/>
                                 </button>
                             </div>
@@ -169,12 +178,6 @@ export default function PopupScreen() {
                             <button className={styles.close} onClick={close}>
                                 &times;
                             </button>
-
-                            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-                                <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
-                                    Post created successfully
-                                </Alert>
-                            </Snackbar>
                         </div>
                     </section>
                 );

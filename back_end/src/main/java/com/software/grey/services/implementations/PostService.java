@@ -1,12 +1,16 @@
 package com.software.grey.services.implementations;
 
+import com.software.grey.exceptions.UserReportedPostBeforeException;
 import com.software.grey.exceptions.exceptions.DataNotFoundException;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.entities.Post;
+import com.software.grey.models.entities.ReportedPost;
+import com.software.grey.models.entities.ReportedPostId;
 import com.software.grey.models.entities.User;
 import com.software.grey.models.mappers.PostMapper;
 import com.software.grey.repositories.PostRepository;
+import com.software.grey.repositories.ReportedPostRepository;
 import com.software.grey.services.IPostService;
 import com.software.grey.services.UserService;
 import com.software.grey.utils.SecurityUtils;
@@ -27,6 +31,8 @@ public class PostService implements IPostService {
 
     private PostRepository postRepository;
 
+    private ReportedPostRepository reportedPostRepository;
+
     private PostMapper postMapper;
 
     private UserService userService;
@@ -43,8 +49,27 @@ public class PostService implements IPostService {
         return post.getId();
     }
 
+    public void report(String postId) {
+        Post post = findPostById(UUID.fromString(postId));
+        String userName = securityUtils.getCurrentUserName();
+        User reporter = userService.findByUserName(userName);
+
+        ReportedPost reportedPost = new ReportedPost();
+        reportedPost.setPost(post);
+        reportedPost.setReporter(reporter);
+
+        if(userReportedPostBefore(post, reporter)){
+            throw new UserReportedPostBeforeException("Post was already reported by you");
+        }
+        reportedPostRepository.save(reportedPost);
+    }
+
+    private boolean userReportedPostBefore(Post post, User reporter) {
+        return reportedPostRepository.existsById(new ReportedPostId(post, reporter));
+    }
+
     public Post findPostById(UUID id){
-        return postRepository.findById(id).orElseThrow(() -> new DataNotFoundException("User not found"));
+        return postRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Post not found"));
     }
 
     public Page<PostDTO> getAll(PostFilterDTO postFilterDTO) {
@@ -56,5 +81,23 @@ public class PostService implements IPostService {
                 postFilterDTO.getMonth(),
                 postFilterDTO.getYear(),
                 pageable).map(postMapper::toPostDTO);
+    }
+
+    public void delete(String postId) {
+
+        String currentUserId = securityUtils.getCurrentUserId();
+        UUID uuid;
+        try {
+            uuid = UUID.fromString(postId);
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Invalid post id");
+        }
+
+        Post post = findPostById(UUID.fromString(postId));
+        if(!post.getUser().getId().toString().equals(currentUserId)){
+            throw new DataNotFoundException("You are not authorized to delete this post");
+        }
+
+        postRepository.deleteById(post.getId());
     }
 }

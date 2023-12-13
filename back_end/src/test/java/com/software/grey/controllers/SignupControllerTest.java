@@ -42,11 +42,11 @@ class SignupControllerTest {
 
     @Test
     void signupCorrectUser() {
-        UserDTO myUser = new UserDTO("mockEmail12@gmail.com", "testUser", "mock Password test");
+        UserDTO myUser = new UserDTO("mockEmail123@gmail.com", "testUserGrey", "mock Password test");
         signupController.signup(myUser);
-        BasicUser user = basicUserRepo.findByUsername("testUser");
-        assert(Objects.equals(user.getUsername(), "testUser"));
-        assert(Objects.equals(user.getEmail(), "mockEmail12@gmail.com"));
+        BasicUser user = basicUserRepo.findByUsername("testUserGrey");
+        assert(Objects.equals(user.getUsername(), "testUserGrey"));
+        assert(Objects.equals(user.getEmail(), "mockEmail123@gmail.com"));
         assertTrue(bCryptPasswordEncoder.matches("mock Password test", user.getPassword()));
         assert(user.getRole() == Role.ROLE_USER);
     }
