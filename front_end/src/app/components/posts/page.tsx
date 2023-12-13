@@ -54,38 +54,57 @@ export default function Feed(props: any) {
             };
             console.log(filterData)
 
-            let responses: Response
+            let response: Response
 
             // TODO change all the requests to get requests
             // TODO handle the case where backend sends a list not a page
             if (props.feedType == EXPLORE_ENDPOINT) {
-                responses = await fetch(BASE_BACKEND_URL + props.feedType
+                response = await fetch(BASE_BACKEND_URL + props.feedType
                     + "?pageNumber=" + filterData.pageNumber + "&pageSize=" + filterData.pageSize, {
                     method: 'GET',
                     headers,
                 });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+        
+                const explorePosts = await response.json();
+        
+                setPosts((prevPosts) => {
+                    if (explorePosts && explorePosts.length > 0) {
+                        return [...(prevPosts ?? []), ...explorePosts];
+                    } else {
+                        return prevPosts ?? [];
+                    }
+                });
+
+
             } else {
-                responses = await fetch(BASE_BACKEND_URL + props.feedType, {
+                response = await fetch(BASE_BACKEND_URL + props.feedType, {
                     method: 'POST',
                     body: JSON.stringify(filterData),
                     headers,
                 });
-            }
 
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const newData = await response.json();
-            setTotalNumberOfPages(newData.totalPages);
-            setPosts((prevPosts) => {
-                if (newData.content && newData.content.length > 0) {
-                    return [...(prevPosts ?? []), ...newData.content];
-                } else {
-                    setTotalNumberOfPages(0)
-                    return [];
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
-            });
+    
+                const newData = await response.json();
+
+                setTotalNumberOfPages(newData.totalPages);
+                setPosts((prevPosts) => {
+                    if (newData.content && newData.content.length > 0) {
+                        return [...(prevPosts ?? []), ...newData.content];
+                    } else {
+                        setTotalNumberOfPages(0)
+                        return [];
+                    }
+                });
+            }
+
+
         } catch (error) {
             console.error('Error fetching data:', error);
         }
