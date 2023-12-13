@@ -4,7 +4,8 @@ import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.mappers.PostMapper;
-import com.software.grey.recomendationsystem.Recommender;
+
+import com.software.grey.recommendationsystem.Recommender;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ExploreService {
 
-    Recommender recommender;
-    PostMapper postMapper;
+    private Recommender recommender;
+    private PostMapper postMapper;
 
     public List<PostDTO> getRecommendedPosts(int pageNumber, int pageSize) {
         PostFilterDTO postFilterDTO = PostFilterDTO.builder().pageNumber(pageNumber).pageSize(pageSize).build();

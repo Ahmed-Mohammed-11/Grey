@@ -30,7 +30,6 @@ public class PostController {
 
     private PostService postService;
     private SavedPostService savedPostService;
-    private Recommender recommender;
 
     @Operation(
             summary = "Create a new post",
