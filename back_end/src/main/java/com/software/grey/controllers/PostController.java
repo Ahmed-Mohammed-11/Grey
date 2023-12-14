@@ -2,6 +2,9 @@ package com.software.grey.controllers;
 
 import com.software.grey.SavedPostEnum;
 import com.software.grey.models.dtos.PostDTO;
+import com.software.grey.models.entities.Post;
+import com.software.grey.recommendationsystem.Recommender;
+import com.software.grey.services.SavedPostService;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.services.SavedPostService;
 import com.software.grey.services.implementations.PostService;
@@ -16,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -36,7 +40,7 @@ public class PostController {
             @ApiResponse(responseCode = "401", description = "User is not authenticated")
     })
     @PostMapping(EndPoints.ADD_POST)
-    public ResponseEntity<UUID> addPost(@Valid @RequestBody PostDTO postDTO){
+    public ResponseEntity<UUID> addPost(@Valid @RequestBody PostDTO postDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(postService.add(postDTO));
     }
 
@@ -50,6 +54,7 @@ public class PostController {
         }
         return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
     }
+
     @Operation(
             summary = "Get the Diary",
             description = "Get all the posts of a user with pagination")
@@ -70,5 +75,37 @@ public class PostController {
     @PostMapping(EndPoints.GET_FEED)
     public ResponseEntity<Page<PostDTO>> getFeed(@Valid @RequestBody PostFilterDTO postFilterDTO){
         return ResponseEntity.status(HttpStatus.OK).body(postService.getFeed(postFilterDTO));
+    }
+
+    @Operation(
+            summary = "Report a post",
+            description = "Use this end point to enable the user to report a post")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Post reported successfully"),
+            @ApiResponse(responseCode = "400", description = "Post already reported"),
+            @ApiResponse(responseCode = "401", description = "User is not authenticated"),
+            @ApiResponse(responseCode = "404", description = "Post not found")
+    })
+    @PostMapping(EndPoints.REPORT_POST + "/{id}")
+    public ResponseEntity<String> reportPost(@PathVariable("id") String postId) {
+        postService.report(postId);
+        return ResponseEntity.status(HttpStatus.OK).body("Post reported successfully!\n" +
+                "We will review your report and take the necessary actions.");
+    }
+
+
+    @Operation(
+            summary = "Delete a post",
+            description = "This endpoint is used to delete a post from user's created posts")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Post deleted successfully"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "401", description = "Not Authorized"),
+            @ApiResponse(responseCode = "404", description = "Not Found")
+    })
+    @DeleteMapping(EndPoints.DELETE_POST + "/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable("id") String postId) {
+        postService.delete(postId);
+        return ResponseEntity.status(HttpStatus.OK).body("Post was deleted successfully!");
     }
 }

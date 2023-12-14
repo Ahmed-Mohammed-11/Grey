@@ -1,14 +1,17 @@
 package com.software.grey.services;
 
+import com.software.grey.exceptions.exceptions.DataNotFoundException;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.enums.Feeling;
+import com.software.grey.models.entities.User;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.SecurityUtils;
+import jakarta.validation.constraints.Null;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -19,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -31,10 +35,12 @@ import java.util.stream.Stream;
 
 import static com.software.grey.models.enums.Feeling.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
 class PostServiceTest {
 
     @Autowired
@@ -105,7 +111,6 @@ class PostServiceTest {
 
     @ParameterizedTest
     @MethodSource("paginationOfDiaryPostsParameters")
-//    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     void getDiaryOfUser1(String userName, Integer pageSize, Integer pageNumber, Integer day, Integer month,
                          Integer year, Integer contentSize) throws InterruptedException {
 
@@ -125,6 +130,7 @@ class PostServiceTest {
             assertThat(posts.getContent().get(i).getPostText()).isEqualTo(userPosts.get(userName).get(i + start));
         }
     }
+
 
     static Stream<Arguments> paginationOfDiaryPostsParameters() {
         LocalDate currentDate = LocalDate.now();
@@ -174,5 +180,121 @@ class PostServiceTest {
                 Arguments.of("mockedUserName2", 0, 10, List.of(INSPIRE),List.of()),// return noting
                 Arguments.of("mockedUserName2", 0, 10, List.of(), List.of("4 user1", "3 user1", "2 user1", "1 user1", "0 user1"))// return all
         );
+    }
+
+    @Test
+    //delete post correctly
+    void deletePostCorrectly() {
+        //prepare mock post
+        PostDTO postDTO = PostDTO.builder()
+                .postText("this is a mocked text")
+                .postFeelings(Set.of(LOVE, HAPPY)).build();
+
+        //prepare mock user and save it
+        UserDTO userDTO = new UserDTO("test2@gmail.com", "testUser2", "mock Pass 111");
+        userService.save(userDTO);
+
+        when(securityUtils.getCurrentUserName()).thenReturn("testUser2");
+        //save the post created by the user testUser
+        UUID postId = postService.add(postDTO);
+        assertThat(postId).isNotNull();
+
+        //find the user
+        User user = userService.findByUserName("testUser2");
+        assertThat(user).isNotNull();
+
+        //delete the post
+        when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
+        postService.delete(postId.toString());
+        assertThat(postRepository.existsById(postId)).isFalse();
+    }
+
+    @Test
+    //delete post when the user is not the owner
+    void deletePostWhenUserIsNotTheOwner() {
+        //prepare mock post
+        PostDTO postDTO = PostDTO.builder()
+                .postText("this is a mocked text")
+                .postFeelings(Set.of(LOVE, HAPPY)).build();
+
+        //prepare mock user and save it
+        UserDTO userDTO = new UserDTO("theowner@gmail.com", "theOwner", "mock Pass 111");
+        userService.save(userDTO);
+
+        when(securityUtils.getCurrentUserName()).thenReturn("theOwner");
+        //save the post created by the user testUser
+        UUID postId = postService.add(postDTO);
+        assertThat(postId).isNotNull();
+
+
+        UserDTO userDTO2 = new UserDTO("hecker@gmail.com", "heckerUser", "mock Pass 111");
+        userService.save(userDTO2);
+        User user = userService.findByUserName("heckerUser");
+        assertThat(user).isNotNull();
+
+        //find the user id
+        when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
+        //assert throwing the exception
+        Exception exception = assertThrows(DataNotFoundException.class, () -> postService.delete(postId.toString()));
+        assertThat(exception.getMessage()).isEqualTo("You are not authorized to delete this post");
+    }
+
+    @Test
+    //delete non existing post
+    void deleteNonExistingPost() {
+        //prepare mock user and save it
+        UserDTO userDTO = new UserDTO("test@gmail.com" , "testUser", "mock Pass 111");
+        userService.save(userDTO);
+
+        when(securityUtils.getCurrentUserName()).thenReturn("testUser");
+        //save the post created by the user testUser
+        UUID postId = UUID.fromString("00000000-0000-0000-0000-000000000000");
+        assertThat(postRepository.existsById(postId)).isFalse();
+
+        //find the user
+        User user = userService.findByUserName("testUser");
+        assertThat(user).isNotNull();
+
+        //delete the post
+        when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
+        Exception exception = assertThrows(DataNotFoundException.class, () -> postService.delete(postId.toString()));
+        System.out.println(exception.getMessage());
+        assertThat(exception.getMessage()).isEqualTo("Post not found");
+    }
+
+
+    @Test
+    void deletePostInvalidId() {
+        //prepare mock user and save it
+        UserDTO userDTO = new UserDTO("test3@gmail.com", "testUser3", "mock Pass 111");
+        userService.save(userDTO);
+
+        when(securityUtils.getCurrentUserName()).thenReturn("testUser3");
+
+        //find the user
+        User user = userService.findByUserName("testUser3");
+        assertThat(user).isNotNull();
+
+        //delete the post
+        when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> postService.delete("invalidUUID"));
+        assertThat(exception.getMessage()).isEqualTo("Invalid post id");
+    }
+
+    @Test
+    void deletePostWithNullId() {
+        //prepare mock user and save it
+        UserDTO userDTO = new UserDTO("test4@gmail.com", "testUser4", "mock Pass 111");
+        userService.save(userDTO);
+
+        when(securityUtils.getCurrentUserName()).thenReturn("testUser4");
+
+        //find the user
+        User user = userService.findByUserName("testUser4");
+        assertThat(user).isNotNull();
+
+        //delete the post
+        when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
+        Exception exception = assertThrows(NullPointerException.class, () -> postService.delete(null));
     }
 }

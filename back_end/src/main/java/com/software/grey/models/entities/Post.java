@@ -9,6 +9,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.sql.Timestamp;
+import java.util.Comparator;
 import java.util.Set;
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ import java.util.UUID;
 @SuperBuilder
 @Getter
 @Setter
-public class Post {
+public class Post implements Comparable<Post> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -40,4 +41,12 @@ public class Post {
 
     @Column(name = "post_time")
     private Timestamp postTime;
+
+    @Override
+    public int compareTo(Post o) {
+        if(this.postTime.compareTo(o.postTime) == 0){
+            return this.id.compareTo(o.id);
+        }
+        return o.postTime.compareTo(this.postTime);
+    }
 }

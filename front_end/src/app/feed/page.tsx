@@ -5,9 +5,9 @@ import { Box } from '@mui/system';
 import Posts from '@/app/components/posts/page';
 import SideBar from '@/app/components/sidebar/page';
 import { DIARY_ENDPOINT, EXPLORE_ENDPOINT, FEED_ENDPOINT, SAVED_ENDPOINT } from '../constants/apiConstants';
+import Profile from '../profile/page';
 
 const Feed = () => {
-  const [selectedFeedIndex, setSelectedFeedIndex] = useState(0);
 
   const endpointMapping: Record<number, string> = {
     0: FEED_ENDPOINT,
@@ -16,15 +16,25 @@ const Feed = () => {
     3: SAVED_ENDPOINT,
   };
 
+  const [selectedFeedIndex, setSelectedFeedIndex] = useState(0);
+  const posts = <Posts width={'75%'} feedType={endpointMapping[selectedFeedIndex]}  />
+  const profile = <Profile />
+  const [display, setDisplay] = useState(posts)
+
   const handleChange = (newSelectedPageIndex: number) => {
-    setSelectedFeedIndex(newSelectedPageIndex);
+    if (newSelectedPageIndex == 4) {
+      setDisplay(profile)
+    } else {
+      setDisplay(posts)
+      setSelectedFeedIndex(newSelectedPageIndex);
+    }
   };
   
   return (
     <div>
       <Box className={styles.container}>
         <SideBar width={'25%'} onChange={handleChange} />
-        <Posts width={'75%'} feedType={selectedFeedIndex} feedTypeEndPoint={endpointMapping[selectedFeedIndex]}  />
+        {display}
       </Box>
     </div>
   );

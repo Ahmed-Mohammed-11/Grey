@@ -1,5 +1,6 @@
 package com.software.grey.utils;
 
+import com.software.grey.exceptions.exceptions.DataNotFoundException;
 import com.software.grey.models.entities.User;
 import com.software.grey.repositories.UserRepo;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,10 @@ public class SecurityUtils {
     public User getCurrentUser() {
         String username = getCurrentUserName();
         return userRepo.findByUsername(username);
+    }
+
+    public String getCurrentUserId() {
+        return getCurrentUser().getId();
     }
 
     public String generateConfirmationCode() {
