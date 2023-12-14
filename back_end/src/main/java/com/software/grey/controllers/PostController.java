@@ -2,11 +2,11 @@ package com.software.grey.controllers;
 
 import com.software.grey.SavedPostEnum;
 import com.software.grey.models.dtos.PostDTO;
-
 import com.software.grey.models.entities.Post;
 import com.software.grey.recommendationsystem.Recommender;
 import com.software.grey.services.SavedPostService;
 import com.software.grey.models.dtos.PostFilterDTO;
+import com.software.grey.services.SavedPostService;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.EndPoints;
 import io.swagger.v3.oas.annotations.Operation;
@@ -62,8 +62,19 @@ public class PostController {
             @ApiResponse(responseCode = "200", description = "Posts retrieved correctly")
     })
     @PostMapping(EndPoints.GET_DIARY)
-    public ResponseEntity<Page<PostDTO>> getDiary(@Valid @RequestBody PostFilterDTO postFilterDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(postService.getAll(postFilterDTO));
+    public ResponseEntity<Page<PostDTO>> getDiary(@Valid @RequestBody PostFilterDTO postFilterDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(postService.getDiary(postFilterDTO));
+    }
+
+    @Operation(
+            summary = "Get Feed",
+            description = "Get all the posts of that the other users wrote with pagination and filtering")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Posts retrieved correctly")
+    })
+    @PostMapping(EndPoints.GET_FEED)
+    public ResponseEntity<Page<PostDTO>> getFeed(@Valid @RequestBody PostFilterDTO postFilterDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(postService.getFeed(postFilterDTO));
     }
 
     @Operation(

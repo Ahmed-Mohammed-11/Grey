@@ -6,27 +6,21 @@ import Box from '@mui/material/Box';
 import React, { useState, useEffect } from 'react';
 import styles from './page.module.css'
 
-interface CustomDatePickerProps {
-  onDateChange: (newDate: Date) => void;
-}
-
-export default function CustomDatePicker(props: CustomDatePickerProps) {
+export default function CustomDatePicker(props:any) {
   const [cleared, setCleared] = React.useState<boolean>(false);
 
   const handleSetDate = (newDate: any) => {
-    let filterDTO = { ...props.data };
-    filterDTO.day = newDate?.date();
-    filterDTO.month = newDate?.month() + 1;
-    filterDTO.year = newDate?.year();
-    props.onDateChange(filterDTO);
+    let day: number | null = newDate ? newDate.date() : null;
+    let month: number | null = newDate ? newDate.month() + 1 : null;
+    let year: number | null = newDate ? newDate.year() : null;
+    props.onDateChange({ day, month, year });
   };
 
   const handleClearDate = () => {
-    let filterDTO = { ...props.data };
-    filterDTO.day = null;
-    filterDTO.month = null;
-    filterDTO.year = null;
-    props.onDateChange(filterDTO);
+    let day = null;
+    let month = null;
+    let year = null;
+    props.onDateChange({day:day, month:month, year:year});
     setCleared(true);
   };
 

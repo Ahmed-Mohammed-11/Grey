@@ -2,6 +2,7 @@ package com.software.grey.controllers;
 
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
+import com.software.grey.models.enums.Feeling;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.EndPoints;
 import com.software.grey.utils.SecurityUtils;
@@ -20,12 +21,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import static com.software.grey.models.enums.Feeling.HAPPY;
-import static com.software.grey.models.enums.Feeling.LOVE;
+import static com.software.grey.models.enums.Feeling.*;
 import static com.software.grey.utils.JsonUtil.asJsonString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -164,7 +165,7 @@ class PostControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(postFilterDTO)))
                 .andExpect(status().isBadRequest());
-        verify(postService, never()).getAll(any(PostFilterDTO.class));
+        verify(postService, never()).getDiary(any(PostFilterDTO.class));
     }
 
     static Stream<Arguments> paginationOfDiaryPostsFailParameters() {
@@ -197,7 +198,7 @@ class PostControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(postFilterDTO)))
                 .andExpect(status().isOk());
-        verify(postService, times(1)).getAll(any(PostFilterDTO.class));
+        verify(postService, times(1)).getDiary(any(PostFilterDTO.class));
     }
 
     static Stream<Arguments> paginationOfDiaryPostsAcceptParameters() {
@@ -209,6 +210,37 @@ class PostControllerTest {
                 Arguments.of(10, 10, 10, 11, 2020),
                 Arguments.of(10, 10, null, 11, 2020),
                 Arguments.of(10, 10, null, null, 2020)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("feedWithFiltersTestParameter")
+    @WithMockUser(username = "greyUser", roles = "ROLES_USER")
+    void getFeedOfUserWithFeelingFilter(Integer pageNumber,
+                                            Integer pageSize,
+                                            List<Feeling> feelings,
+                                            Integer expectedStatus) throws Exception {
+        int numberOfMethodCall = expectedStatus==200?1:0;
+        PostFilterDTO postFilterDTO = PostFilterDTO.builder()
+                .pageNumber(pageNumber).pageSize(pageSize).feelings(feelings).build();
+        mockMvc.perform(post(EndPoints.POST + EndPoints.GET_FEED)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(postFilterDTO)))
+                .andExpect(status().is(expectedStatus));
+        verify(postService, times(numberOfMethodCall)).getFeed(any(PostFilterDTO.class));
+    }
+
+    static Stream<Arguments> feedWithFiltersTestParameter() {
+        return Stream.of(
+                Arguments.of(0, 1, null,HttpStatus.OK.value()),
+                Arguments.of(0, 1, List.of(HAPPY),HttpStatus.OK.value()),
+                Arguments.of(0, 1, List.of(HAPPY,SAD),HttpStatus.OK.value()),
+                Arguments.of(0, 1, List.of(HAPPY,SAD,LOVE),HttpStatus.OK.value()),
+                Arguments.of(5, 10, List.of(HAPPY,SAD,LOVE),HttpStatus.OK.value()),
+                Arguments.of(0, 5, List.of(HAPPY,SAD,LOVE,INSPIRE),HttpStatus.OK.value()),
+                Arguments.of(0, 5, List.of(HAPPY,SAD,LOVE,INSPIRE,ANXIOUS,FEAR),HttpStatus.OK.value()),
+                Arguments.of(-1, 5, List.of(HAPPY,SAD,LOVE),HttpStatus.BAD_REQUEST.value()),
+                Arguments.of(0, 0, List.of(HAPPY,SAD,LOVE),HttpStatus.BAD_REQUEST.value())
         );
     }
 }

@@ -17,7 +17,7 @@ const Feed = () => {
   };
 
   const [selectedFeedIndex, setSelectedFeedIndex] = useState(0);
-  const posts = <Posts width={'75%'} feedType={endpointMapping[selectedFeedIndex]}  />
+  const posts = <Posts width={'75%'} feedTypeEndPoint={endpointMapping[selectedFeedIndex]} feedType={selectedFeedIndex} />
   const profile = <Profile />
   const [display, setDisplay] = useState(posts)
 

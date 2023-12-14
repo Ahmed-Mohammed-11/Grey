@@ -18,18 +18,27 @@ export default function Feed(props: any) {
     const [posts, setPosts] = useState<any[]>([]);
     const [filterData, setFilterData] = useState<PostFilterDTO>({} as PostFilterDTO);
     const [pageIndex, setPageIndex] = useState<number>(0);
+    const [lastPage, setLastPage] = useState<boolean>(false);
 
     useEffect(() => {
       setAuth(localStorage.getItem('Authorization'));
     }, []);
 
     useEffect(() => {
+      setFilterData({} as PostFilterDTO);
+    }, [props.feedType]);
+
+    useEffect(() => {
       setPosts([])
-      if(pageIndex == 0) loadMore();
+      if(pageIndex == 0) {
+        console.log("in index == 0")
+        loadMore();
+      }
       else setPageIndex(0);
-    }, [props.feedType, filterData]);
+    }, [filterData]);
 
     useEffect(() =>{
+      console.log("from view")
       if(inView && posts.length != 0){
         setPageIndex(Math.max(Math.min(pageIndex + 1, totalNumberOfPages - 1), 0))
       }
@@ -46,13 +55,13 @@ export default function Feed(props: any) {
             Authorization: auth!,
             mode: 'cors',
           };
-          
+
             let response: Response
 
             // TODO change all the requests to get requests
             // TODO handle the case where backend sends a list not a page
-            if (props.feedType == EXPLORE_ENDPOINT) {
-                response = await fetch(BASE_BACKEND_URL + props.feedType
+            if (props.feedType == 1) {
+                response = await fetch(BASE_BACKEND_URL + props.feedTypeEndPoint
                     + "?pageNumber=" + pageIndex + "&pageSize=" + '5', {
                     method: 'GET',
                     headers,
@@ -61,14 +70,14 @@ export default function Feed(props: any) {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-        
+
                 const explorePosts = await response.json();
-        
+
                 setPosts((prevPosts) => {
                   return [...(prevPosts ?? []), ...explorePosts];
                 });
            } else {
-              response = await fetch(BASE_BACKEND_URL + props.feedType, {
+              response = await fetch(BASE_BACKEND_URL + props.feedTypeEndPoint, {
                 method: 'POST',
                 body: JSON.stringify({...(filterData),pageNumber: pageIndex, pageSize:5}),
                 headers,
@@ -80,6 +89,7 @@ export default function Feed(props: any) {
 
               const newData = await response.json();
               setTotalNumberOfPages(newData.totalPages);
+              setLastPage(newData.last)
               setPosts((prevPosts) => {
                 return [...(prevPosts ?? []), ...newData.content];
               });
@@ -104,9 +114,9 @@ export default function Feed(props: any) {
 
     return (
         <Box className={styles.feed} width={props.width}>
-          <PostFilters showDatePicker={true} filterDTO ={filterData} applyFilters={applyFilters}/>
+          <PostFilters showDatePicker={props.feedType == 2} showFeelingSelection={props.feedType === 0} applyFilters={applyFilters}/>
           {renderPosts()}
-          {totalNumberOfPages - 1 !== pageIndex && (
+          {!lastPage && (
             <div className={styles.postSkeleton} ref={ref}>
               <div className={styles.postContent}>
                 <Skeleton variant="circular" width={70} height={70} />

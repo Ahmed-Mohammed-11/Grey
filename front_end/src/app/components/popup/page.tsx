@@ -6,12 +6,15 @@ import Profile from "@/app/components/sidebar/profile";
 import {Box} from "@mui/system";
 import {FaPen} from "react-icons/fa";
 import {IoSend} from "react-icons/io5";
+// import {Alert, Snackbar, TextareaAutosize, Tooltip} from "@mui/material";
 import {IoMdAdd} from "react-icons/io";
-import {Chip, IconButton, ListItem, Menu, MenuItem, TextareaAutosize, Tooltip} from "@mui/material";
+import {Alert, Snackbar, Chip, IconButton, ListItem, Menu, MenuItem, TextareaAutosize, Tooltip} from "@mui/material";
 import Feeling from "@/app/models/dtos/Feeling";
 import PostDTO from "@/app/models/dtos/PostDTO";
 import {CREATE_POST_ENDPOINT} from "@/app/constants/apiConstants";
 import createPostController from "@/app/services/createPostController";
+import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
+import FeelingsFilter from '../feelingsFilter/page';
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -21,15 +24,9 @@ const allFeelings = new Set<Feeling>([Feeling.HAPPY, Feeling.SAD,
     Feeling.INSPIRE, Feeling.LOVE]);
 
 export default function PopupScreen() {
-    // Feelings drop down menu
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-    const handleClosePopup = () => {setAnchorEl(null);};
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {setAnchorEl(event.currentTarget);};
-
-
     // Feelings chips
     const [selectedFeelings, setSelectedFeelings] = React.useState(new Set<Feeling>());
+    /*
     const [isFeelingsValid, setIsFeelingsValid] = React.useState(false);
     const [fullFeelings, setFullFeelings] = React.useState(false);
 
@@ -55,6 +52,7 @@ export default function PopupScreen() {
         }
     };
 
+*/
 
     // Handling post text and send to server
     const [isPostTextValid, setIsPostTextValid] = React.useState("");
@@ -63,8 +61,8 @@ export default function PopupScreen() {
         let post: PostDTO = {
             postText: isPostTextValid,
             postFeelings: Array.from(selectedFeelings)
-        }
-        isFeelingsValid && isPostTextValid && sendInfoToServer(post)
+        };
+        (selectedFeelings.size > 0) && isPostTextValid && sendInfoToServer(post)
     }
 
     async function sendInfoToServer(post: PostDTO) {
@@ -73,7 +71,6 @@ export default function PopupScreen() {
             postText: post.postText,
             postFeelings: Array.from(post.postFeelings)
         }
-        console.log(postDTO);
         fetchResponse(postDTO);
     }
 
@@ -120,45 +117,7 @@ export default function PopupScreen() {
                             <div className={styles.profile}>
                                 <Profile name={"@hesham09"}/>
                             </div>
-
-                            <Box className={styles.feelings}>
-                                <ListItem>
-                                    {Array.from(selectedFeelings).map((feeling: any, feelingIndex: any) => (
-                                        <Chip
-                                            label={feeling}
-                                            className={feeling}
-                                            onDelete={handleDelete(feeling)}
-                                            key={feelingIndex}/>
-                                    ))}
-                                </ListItem>
-                                <Tooltip title="Add Feeling">
-                                    <IconButton
-                                        id="basic-button"
-                                        disabled={fullFeelings}
-                                        className={styles.feeling_button}
-                                        aria-controls={open ? 'basic-menu' : undefined}
-                                        aria-haspopup="true"
-                                        aria-expanded={open ? 'true' : undefined}
-                                        onClick={handleClick}>
-                                        <IoMdAdd/>
-                                    </IconButton>
-                                </Tooltip>
-                                <Menu
-                                    id="basic-menu"
-                                    anchorEl={anchorEl}
-                                    open={open}
-                                    onClose={handleClosePopup}
-                                    MenuListProps={{'aria-labelledby': 'basic-button',}}>
-                                    {Array.from(allFeelings).filter((feeling) =>
-                                        !selectedFeelings.has(feeling)).map((feeling: any) => (
-                                        <MenuItem className={feeling} onClick={handleAdd(feeling)}>
-                                            {feeling}
-                                        </MenuItem>
-                                    ))}
-                                </Menu>
-
-                            </Box>
-
+                            <FeelingsFilter limit={3} onDataChange={setSelectedFeelings}/>
                             <TextareaAutosize
                                 className={styles.input}
                                 maxLength={5000}
@@ -172,8 +131,8 @@ export default function PopupScreen() {
                                 </button>
                                 <button
                                         className={`${styles.button} ${styles.filled}
-                                        ${!isFeelingsValid || !isPostTextValid ? styles.disabled : ""}`}
-                                        disabled={!isFeelingsValid || (isPostTextValid == "")}
+                                        ${!(selectedFeelings.size > 0) || !isPostTextValid ? styles.disabled : ""}`}
+                                        disabled={!(selectedFeelings.size > 0) || (isPostTextValid == "")}
                                         onClick={() => {handleCreatePost(); close()}}>
                                     create post <IoSend/>
                                 </button>
@@ -186,5 +145,6 @@ export default function PopupScreen() {
                     </section>
                 );
             }}
-        </Popup>)
+        </Popup>
+    )
 }

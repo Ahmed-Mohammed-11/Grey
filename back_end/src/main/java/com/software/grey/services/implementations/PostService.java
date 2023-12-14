@@ -25,6 +25,8 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.List;
 import java.util.UUID;
 
@@ -84,15 +86,35 @@ public class PostService implements IPostService {
         return postRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Post not found"));
     }
 
-    public Page<PostDTO> getAll(PostFilterDTO postFilterDTO) {
+    public Page<PostDTO> getDiary(PostFilterDTO postFilterDTO) {
         String userName = securityUtils.getCurrentUserName();
-        Pageable pageable = PageRequest.of(postFilterDTO.getPageNumber(), postFilterDTO.getPageSize(), Sort.by("postTime").descending());
-        return postRepository.findAllByUsernameAndDayMonthYear(
+        Pageable pageable = PageRequest.of(
+                postFilterDTO.getPageNumber(),
+                postFilterDTO.getPageSize(),
+                Sort.by("postTime").descending());
+        return postRepository.findDiaryByUsernameAndDayMonthYear(
                 userName,
                 postFilterDTO.getDay(),
                 postFilterDTO.getMonth(),
                 postFilterDTO.getYear(),
                 pageable).map(postMapper::toPostDTO);
+    }
+
+    public Page<PostDTO> getFeed(PostFilterDTO postFilterDTO) {
+        String userName = securityUtils.getCurrentUserName();
+        List<String> feelings = Optional.ofNullable(postFilterDTO.getFeelings())
+                .filter(list -> !list.isEmpty())
+                .map(list -> list.stream().map(Enum::name).collect(Collectors.toList()))
+                .orElseGet(() -> Arrays.stream(Feeling.values())
+                        .map(Enum::name)
+                        .collect(Collectors.toList()));
+
+        Pageable pageable = PageRequest.of(
+                postFilterDTO.getPageNumber(),
+                postFilterDTO.getPageSize());
+
+        return postRepository.findFeed(userName, feelings, pageable)
+                .map(postMapper::toPostDTO);
     }
 
     public void delete(String postId) {
@@ -112,7 +134,7 @@ public class PostService implements IPostService {
 
         postRepository.deleteById(post.getId());
     }
-  
+
     public List<FeelingCountProjection> getCountOfPostedFeelings(User user) {
         return postRepository.findCountOfFeelingsByUser(user.getId());
     }
