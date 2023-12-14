@@ -42,18 +42,18 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
         and sort them by wrote time descendingly.
      */
     @Query(value = """
-    SELECT DISTINCT p.id, p.text, p.post_time, u.id as user_id
-    FROM post p
-    JOIN user u ON u.id = p.user_id
-    JOIN post_feelings pf ON pf.post_id = p.id
-    WHERE u.username != :userName
-      AND (:feelings is null OR pf.feeling IN :feelings)
-    ORDER BY p.post_time DESC
-    """,
+            SELECT DISTINCT p.id, p.text, p.post_time, u.id as user_id
+            FROM post p
+            JOIN user u ON u.id = p.user_id
+            JOIN post_feelings pf ON pf.post_id = p.id
+            WHERE u.username != :userName
+              AND (pf.feeling IN (:feelings))
+            ORDER BY p.post_time DESC
+            """,
             countQuery = """
     SELECT count(p.id) FROM post p JOIN user u ON u.id = p.user_id
     JOIN post_feelings pf ON pf.post_id = p.id
-    WHERE u.username != :userName AND (:feelings is () OR pf.feeling IN :feelings)
+    WHERE u.username != :userName AND (pf.feeling IN (:feelings))
     """, nativeQuery = true)
     Page<Post> findFeed(@Param("userName") String userName, @Param("feelings") List<String> feelings, Pageable pageable);
 }

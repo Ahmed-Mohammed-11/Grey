@@ -169,6 +169,7 @@ class PostServiceTest {
                 Arguments.of("mockedUserName1", 0, 10, List.of(LOVE), List.of("2 user2", "0 user2")),
                 Arguments.of("mockedUserName2", 0, 10, List.of(LOVE, HAPPY), List.of("4 user1", "3 user1", "1 user1", "0 user1")),
                 Arguments.of("mockedUserName1", 0, 10, List.of(LOVE, HAPPY, SAD),List.of("2 user2", "1 user2", "0 user2")),
+                Arguments.of("mockedUserName1", 0, 10, List.of(LOVE, HAPPY, SAD, INSPIRE),List.of("2 user2", "1 user2", "0 user2")),
                 Arguments.of("mockedUserName2", 0, 10, List.of(SAD),List.of("3 user1", "2 user1")),
                 Arguments.of("mockedUserName2", 0, 10, List.of(INSPIRE),List.of()),// return noting
                 Arguments.of("mockedUserName2", 0, 10, List.of(), List.of("4 user1", "3 user1", "2 user1", "1 user1", "0 user1"))// return all

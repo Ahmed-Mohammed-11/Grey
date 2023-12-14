@@ -5,6 +5,7 @@ import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.User;
+import com.software.grey.models.enums.Feeling;
 import com.software.grey.models.mappers.PostMapper;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.services.IPostService;
@@ -19,10 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,10 +66,11 @@ public class PostService implements IPostService {
     public Page<PostDTO> getFeed(PostFilterDTO postFilterDTO) {
         String userName = securityUtils.getCurrentUserName();
         List<String> feelings = Optional.ofNullable(postFilterDTO.getFeelings())
-                .orElse(Collections.emptyList())
-                .stream()
-                .map(Enum::name)
-                .collect(Collectors.toList());
+                .filter(list -> !list.isEmpty())
+                .map(list -> list.stream().map(Enum::name).collect(Collectors.toList()))
+                .orElseGet(() -> Arrays.stream(Feeling.values())
+                        .map(Enum::name)
+                        .collect(Collectors.toList()));
 
         Pageable pageable = PageRequest.of(
                 postFilterDTO.getPageNumber(),
