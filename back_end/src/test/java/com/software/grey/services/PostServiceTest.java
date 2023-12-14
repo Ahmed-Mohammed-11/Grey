@@ -81,8 +81,8 @@ class PostServiceTest {
     }
 
     void prepareDataUser1() throws InterruptedException {
-        when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName1");
-        UserDTO userDTO1 = new UserDTO("mockEmail1@gmail.com", "mockedUserName1","mockPas1");
+        when(securityUtils.getCurrentUserName()).thenReturn("PostServiceUsername1");
+        UserDTO userDTO1 = new UserDTO("PostServiceUsername1@gmail.com", "PostServiceUsername1","mockPas1");
         userService.save(userDTO1);
         List<Set<Feeling>> feelings = List.of(Set.of(LOVE), Set.of(LOVE, HAPPY), Set.of(SAD), Set.of(LOVE, HAPPY, SAD));
         for(int i = 0;i<5;i++){
@@ -92,8 +92,8 @@ class PostServiceTest {
     }
 
     void prepareDataUser2() throws InterruptedException {
-        when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName2");
-        UserDTO userDTO2 = new UserDTO("mockEmail2@gmail.com", "mockedUserName2","mockPas2");
+        when(securityUtils.getCurrentUserName()).thenReturn("PostServiceUsername2");
+        UserDTO userDTO2 = new UserDTO("PostServiceUsername2@gmail.com", "PostServiceUsername2","mockPas2");
         userService.save(userDTO2);
         List<Set<Feeling>> feelings = List.of(Set.of(LOVE), Set.of(SAD));
         for(int i = 0;i<3;i++){
@@ -109,7 +109,7 @@ class PostServiceTest {
                 .postText("this is a mocked text")
                 .postFeelings(Set.of(LOVE, HAPPY)).build();
 
-        UserDTO userDTO = new UserDTO("mockEmail11@gmail.com", "mockedUserName11","mockPas11");
+        UserDTO userDTO = new UserDTO("mockEmail11@gmail.com", "PostServiceUsername11","mockPas11");
 
         userService.save(userDTO);
 
@@ -132,8 +132,8 @@ class PostServiceTest {
                          Integer year, Integer contentSize) throws InterruptedException {
 
         Map<String, List<String>> userPosts = Map.of(
-                "mockedUserName1", List.of("4 user1", "3 user1", "2 user1", "1 user1", "0 user1"),
-                "mockedUserName2", List.of("2 user2", "1 user2", "0 user2")
+                "PostServiceUsername1", List.of("4 user1", "3 user1", "2 user1", "1 user1", "0 user1"),
+                "PostServiceUsername2", List.of("2 user2", "1 user2", "0 user2")
         );
 
         when(securityUtils.getCurrentUserName()).thenReturn(userName);
@@ -157,14 +157,14 @@ class PostServiceTest {
         int month = currentDate.getMonthValue();
         int year = currentDate.getYear();
         return Stream.of(
-                Arguments.of("mockedUserName1", 1, 0, day, month, year, 1), // check the user1 has at least one post
-                Arguments.of("mockedUserName2", 1, 0, day, month, year, 1), // check the user2 has at least one post
-                Arguments.of("mockedUserName1", 10, 0, day, month, year, 5), // check all the posts of user1
-                Arguments.of("mockedUserName2", 10, 0, day, month, year, 3), // check all the posts of user2
-                Arguments.of("mockedUserName1", 2, 1, day, month, year, 2), // check posts of page 2 of user1
-                Arguments.of("mockedUserName2", 2, 1, day, month, year, 1), // check posts of page 2 of user2
-                Arguments.of("mockedUserName1", 10, 0, (day + 5) % 30, month, year, 0), // check posts of user that created in other day
-                Arguments.of("mockedUserName2", 10, 0, (day + 5) % 30, month, year, 0)
+                Arguments.of("PostServiceUsername1", 1, 0, day, month, year, 1), // check the user1 has at least one post
+                Arguments.of("PostServiceUsername2", 1, 0, day, month, year, 1), // check the user2 has at least one post
+                Arguments.of("PostServiceUsername1", 10, 0, day, month, year, 5), // check all the posts of user1
+                Arguments.of("PostServiceUsername2", 10, 0, day, month, year, 3), // check all the posts of user2
+                Arguments.of("PostServiceUsername1", 2, 1, day, month, year, 2), // check posts of page 2 of user1
+                Arguments.of("PostServiceUsername2", 2, 1, day, month, year, 1), // check posts of page 2 of user2
+                Arguments.of("PostServiceUsername1", 10, 0, (day + 5) % 30, month, year, 0), // check posts of user that created in other day
+                Arguments.of("PostServiceUsername2", 10, 0, (day + 5) % 30, month, year, 0)
         );
     }
 
@@ -187,15 +187,15 @@ class PostServiceTest {
 
     static Stream<Arguments> getFeedOfUserTestData() {
         return Stream.of(
-                Arguments.of("mockedUserName1", 0, 10, null, List.of("2 user2", "1 user2", "0 user2")),
-                Arguments.of("mockedUserName2", 0, 10, null, List.of("4 user1", "3 user1", "2 user1", "1 user1", "0 user1")),
-                Arguments.of("mockedUserName1", 0, 10, List.of(LOVE), List.of("2 user2", "0 user2")),
-                Arguments.of("mockedUserName2", 0, 10, List.of(LOVE, HAPPY), List.of("4 user1", "3 user1", "1 user1", "0 user1")),
-                Arguments.of("mockedUserName1", 0, 10, List.of(LOVE, HAPPY, SAD),List.of("2 user2", "1 user2", "0 user2")),
-                Arguments.of("mockedUserName1", 0, 10, List.of(LOVE, HAPPY, SAD, INSPIRE),List.of("2 user2", "1 user2", "0 user2")),
-                Arguments.of("mockedUserName2", 0, 10, List.of(SAD),List.of("3 user1", "2 user1")),
-                Arguments.of("mockedUserName2", 0, 10, List.of(INSPIRE),List.of()),// return noting
-                Arguments.of("mockedUserName2", 0, 10, List.of(), List.of("4 user1", "3 user1", "2 user1", "1 user1", "0 user1"))// return all
+                Arguments.of("PostServiceUsername1", 0, 10, null, List.of("2 user2", "1 user2", "0 user2")),
+                Arguments.of("PostServiceUsername2", 0, 10, null, List.of("4 user1", "3 user1", "2 user1", "1 user1", "0 user1")),
+                Arguments.of("PostServiceUsername1", 0, 10, List.of(LOVE), List.of("2 user2", "0 user2")),
+                Arguments.of("PostServiceUsername2", 0, 10, List.of(LOVE, HAPPY), List.of("4 user1", "3 user1", "1 user1", "0 user1")),
+                Arguments.of("PostServiceUsername1", 0, 10, List.of(LOVE, HAPPY, SAD),List.of("2 user2", "1 user2", "0 user2")),
+                Arguments.of("PostServiceUsername1", 0, 10, List.of(LOVE, HAPPY, SAD, INSPIRE),List.of("2 user2", "1 user2", "0 user2")),
+                Arguments.of("PostServiceUsername2", 0, 10, List.of(SAD),List.of("3 user1", "2 user1")),
+                Arguments.of("PostServiceUsername2", 0, 10, List.of(INSPIRE),List.of()),// return noting
+                Arguments.of("PostServiceUsername2", 0, 10, List.of(), List.of("4 user1", "3 user1", "2 user1", "1 user1", "0 user1"))// return all
         );
     }
 
