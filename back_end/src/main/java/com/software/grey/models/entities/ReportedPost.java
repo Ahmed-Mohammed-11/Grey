@@ -1,13 +1,17 @@
 package com.software.grey.models.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
-@Table(name = "reported_posts", schema = "grey")
+@Table(name = "reported_posts")
 @IdClass(ReportedPostId.class)
 public class ReportedPost {
 

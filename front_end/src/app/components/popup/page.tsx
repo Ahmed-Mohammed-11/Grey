@@ -41,19 +41,18 @@ export default function PopupScreen() {
         else setFullFeelings(true)
     }
     const handleAdd = (feeling: Feeling) => () => {
-        if (selectedFeelings.size < 3)
-            setSelectedFeelings((feelings) => {
-                feelings.add(feeling);
-                return new Set<Feeling>(feelings);
-            });
-        handleFeelingsChange();
+        if (!fullFeelings) {
+            selectedFeelings.add(feeling);
+            setSelectedFeelings(new Set<Feeling>(selectedFeelings));
+            handleFeelingsChange();
+        }
     };
     const handleDelete = (chipToDelete: Feeling) => () => {
-        setSelectedFeelings((feelings) => {
-            feelings.delete(chipToDelete);
-            return new Set<Feeling>(feelings);
-        });
-        handleFeelingsChange();
+        if (selectedFeelings.size){
+            selectedFeelings.delete(chipToDelete);
+            setSelectedFeelings(new Set<Feeling>(selectedFeelings));
+            handleFeelingsChange();
+        }
     };
 
 
@@ -83,6 +82,7 @@ export default function PopupScreen() {
     const fetchResponse = async (postDTO : PostDTO) => {
         const response = createPostController.sendPostRequest(postDTO, CREATE_POST_ENDPOINT);
         notify(response);
+        clearPostInfo();
     }
     async function notify(response: Promise<Response>) {
         try {
@@ -93,7 +93,7 @@ export default function PopupScreen() {
                     error: 'Something went wrong',
                 },
                 {
-                    position: "bottom-right",
+                    position: "bottom-left",
                     autoClose: 2000,
                     theme: "colored",
                     hideProgressBar: true
@@ -104,7 +104,11 @@ export default function PopupScreen() {
             console.log(error)
         }
     }
-
+    const clearPostInfo = () => {
+        setIsPostTextValid("")
+        setSelectedFeelings(new Set<Feeling>());
+        handleFeelingsChange();
+    }
 
 
     return (
@@ -169,7 +173,7 @@ export default function PopupScreen() {
                                 <button
                                         className={`${styles.button} ${styles.filled}
                                         ${!isFeelingsValid || !isPostTextValid ? styles.disabled : ""}`}
-                                        disabled={!isFeelingsValid || !isPostTextValid}
+                                        disabled={!isFeelingsValid || (isPostTextValid == "")}
                                         onClick={() => {handleCreatePost(); close()}}>
                                     create post <IoSend/>
                                 </button>

@@ -71,7 +71,7 @@ public class PostController {
             description = "Use this end point to enable the user to report a post")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Post reported successfully"),
-            @ApiResponse(responseCode = "400", description = "Post was not reported due to invalid request body"),
+            @ApiResponse(responseCode = "400", description = "Post already reported"),
             @ApiResponse(responseCode = "401", description = "User is not authenticated"),
             @ApiResponse(responseCode = "404", description = "Post not found")
     })

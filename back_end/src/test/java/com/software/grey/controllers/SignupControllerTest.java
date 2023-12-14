@@ -1,6 +1,6 @@
 package com.software.grey.controllers;
 
-import com.software.grey.exceptions.UserExistsException;
+import com.software.grey.exceptions.exceptions.UserExistsException;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.BasicUser;
 import com.software.grey.models.enums.Role;
