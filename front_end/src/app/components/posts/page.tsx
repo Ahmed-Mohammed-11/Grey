@@ -109,8 +109,3 @@ export default function Feed(props:any) {
         </Box>
     )
 }
-
-/* current bugs
-  - the filters when change feed type not reset as view just reset as vars
-  - can't filter with more than one feeling back end bug
-*/

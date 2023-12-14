@@ -6,10 +6,6 @@ import Box from '@mui/material/Box';
 import React, { useState, useEffect } from 'react';
 import styles from './page.module.css'
 
-// interface CustomDatePickerProps {
-//   onDateChange: (newDate: Date) => void;
-// }
-
 export default function CustomDatePicker(props:any) {
   const [cleared, setCleared] = React.useState<boolean>(false);
 
@@ -21,7 +17,7 @@ export default function CustomDatePicker(props:any) {
   };
 
   const handleClearDate = () => {
-        let day = null;
+    let day = null;
     let month = null;
     let year = null;
     props.onDateChange({day:day, month:month, year:year});
