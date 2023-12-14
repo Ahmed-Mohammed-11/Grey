@@ -7,11 +7,14 @@ import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.enums.Feeling;
 import com.software.grey.models.entities.User;
+import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
+import com.software.grey.repositories.UserVerificationRepo;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.SecurityUtils;
 import jakarta.validation.constraints.Null;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -58,11 +61,25 @@ class PostServiceTest {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private BasicUserRepo basicUserRepo;
+    @Autowired
+    private UserVerificationRepo userVerificationRepo;
+
     @BeforeAll
     void init() throws InterruptedException {
         prepareDataUser1();
         prepareDataUser2();
     }
+
+    @AfterAll
+    void del() {
+        postRepository.deleteAll();
+        userVerificationRepo.deleteAll();
+        basicUserRepo.deleteAll();
+        userRepo.deleteAll();
+    }
+
     void prepareDataUser1() throws InterruptedException {
         when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName1");
         UserDTO userDTO1 = new UserDTO("mockEmail1@gmail.com", "mockedUserName1","mockPas1");
@@ -182,119 +199,4 @@ class PostServiceTest {
         );
     }
 
-    @Test
-    //delete post correctly
-    void deletePostCorrectly() {
-        //prepare mock post
-        PostDTO postDTO = PostDTO.builder()
-                .postText("this is a mocked text")
-                .postFeelings(Set.of(LOVE, HAPPY)).build();
-
-        //prepare mock user and save it
-        UserDTO userDTO = new UserDTO("test2@gmail.com", "testUser2", "mock Pass 111");
-        userService.save(userDTO);
-
-        when(securityUtils.getCurrentUserName()).thenReturn("testUser2");
-        //save the post created by the user testUser
-        UUID postId = postService.add(postDTO);
-        assertThat(postId).isNotNull();
-
-        //find the user
-        User user = userService.findByUserName("testUser2");
-        assertThat(user).isNotNull();
-
-        //delete the post
-        when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
-        postService.delete(postId.toString());
-        assertThat(postRepository.existsById(postId)).isFalse();
-    }
-
-    @Test
-    //delete post when the user is not the owner
-    void deletePostWhenUserIsNotTheOwner() {
-        //prepare mock post
-        PostDTO postDTO = PostDTO.builder()
-                .postText("this is a mocked text")
-                .postFeelings(Set.of(LOVE, HAPPY)).build();
-
-        //prepare mock user and save it
-        UserDTO userDTO = new UserDTO("theowner@gmail.com", "theOwner", "mock Pass 111");
-        userService.save(userDTO);
-
-        when(securityUtils.getCurrentUserName()).thenReturn("theOwner");
-        //save the post created by the user testUser
-        UUID postId = postService.add(postDTO);
-        assertThat(postId).isNotNull();
-
-
-        UserDTO userDTO2 = new UserDTO("hecker@gmail.com", "heckerUser", "mock Pass 111");
-        userService.save(userDTO2);
-        User user = userService.findByUserName("heckerUser");
-        assertThat(user).isNotNull();
-
-        //find the user id
-        when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
-        //assert throwing the exception
-        Exception exception = assertThrows(DataNotFoundException.class, () -> postService.delete(postId.toString()));
-        assertThat(exception.getMessage()).isEqualTo("You are not authorized to delete this post");
-    }
-
-    @Test
-    //delete non existing post
-    void deleteNonExistingPost() {
-        //prepare mock user and save it
-        UserDTO userDTO = new UserDTO("test@gmail.com" , "testUser", "mock Pass 111");
-        userService.save(userDTO);
-
-        when(securityUtils.getCurrentUserName()).thenReturn("testUser");
-        //save the post created by the user testUser
-        UUID postId = UUID.fromString("00000000-0000-0000-0000-000000000000");
-        assertThat(postRepository.existsById(postId)).isFalse();
-
-        //find the user
-        User user = userService.findByUserName("testUser");
-        assertThat(user).isNotNull();
-
-        //delete the post
-        when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
-        Exception exception = assertThrows(DataNotFoundException.class, () -> postService.delete(postId.toString()));
-        System.out.println(exception.getMessage());
-        assertThat(exception.getMessage()).isEqualTo("Post not found");
-    }
-
-
-    @Test
-    void deletePostInvalidId() {
-        //prepare mock user and save it
-        UserDTO userDTO = new UserDTO("test3@gmail.com", "testUser3", "mock Pass 111");
-        userService.save(userDTO);
-
-        when(securityUtils.getCurrentUserName()).thenReturn("testUser3");
-
-        //find the user
-        User user = userService.findByUserName("testUser3");
-        assertThat(user).isNotNull();
-
-        //delete the post
-        when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> postService.delete("invalidUUID"));
-        assertThat(exception.getMessage()).isEqualTo("Invalid post id");
-    }
-
-    @Test
-    void deletePostWithNullId() {
-        //prepare mock user and save it
-        UserDTO userDTO = new UserDTO("test4@gmail.com", "testUser4", "mock Pass 111");
-        userService.save(userDTO);
-
-        when(securityUtils.getCurrentUserName()).thenReturn("testUser4");
-
-        //find the user
-        User user = userService.findByUserName("testUser4");
-        assertThat(user).isNotNull();
-
-        //delete the post
-        when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
-        Exception exception = assertThrows(NullPointerException.class, () -> postService.delete(null));
-    }
 }

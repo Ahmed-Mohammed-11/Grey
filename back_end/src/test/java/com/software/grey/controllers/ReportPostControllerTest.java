@@ -55,7 +55,9 @@ class ReportPostControllerTest {
     private final SignupController signup;
     private final UserRepo userRepo;
     private final PostRepository postRepository;
+    @Autowired
     private BasicUserRepo basicUserRepo;
+    @Autowired
     private UserVerificationRepo userVerificationRepo;
 
     private ArrayList<UUID> posts;
@@ -97,6 +99,8 @@ class ReportPostControllerTest {
     @AfterAll
     void cleanUpAll() {
         postRepository.deleteAll();
+        userVerificationRepo.deleteAll();
+        basicUserRepo.deleteAll();
         userRepo.deleteAll();
     }
 
