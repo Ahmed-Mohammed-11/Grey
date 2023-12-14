@@ -1,6 +1,6 @@
 package com.software.grey.services.implementations;
 
-import com.software.grey.exceptions.UserReportedPostBeforeException;
+import com.software.grey.exceptions.exceptions.UserReportedPostBeforeException;
 import com.software.grey.exceptions.exceptions.DataNotFoundException;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
@@ -28,6 +28,8 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
+import static com.software.grey.utils.ErrorMessages.POST_REPORTED_BEFORE;
+
 @Service
 @AllArgsConstructor
 public class PostService implements IPostService {
@@ -53,17 +55,24 @@ public class PostService implements IPostService {
     }
 
     public void report(String postId) {
-        Post post = findPostById(UUID.fromString(postId));
-        String userName = securityUtils.getCurrentUserName();
-        User reporter = userService.findByUserName(userName);
-
-        ReportedPost reportedPost = new ReportedPost();
-        reportedPost.setPost(post);
-        reportedPost.setReporter(reporter);
-
-        if(userReportedPostBefore(post, reporter)){
-            throw new UserReportedPostBeforeException("Post was already reported by you");
+        UUID postUUID;
+        try {
+            postUUID = UUID.fromString(postId);
+        } catch (IllegalArgumentException e) {
+            throw new DataNotFoundException("Invalid post id");
         }
+
+        Post post = findPostById(postUUID);
+        User reporter = securityUtils.getCurrentUser();
+
+        ReportedPost reportedPost = ReportedPost.builder()
+                .post(post)
+                .reporter(reporter)
+                .build();
+
+        if(userReportedPostBefore(post, reporter))
+            throw new UserReportedPostBeforeException(POST_REPORTED_BEFORE);
+
         reportedPostRepository.save(reportedPost);
     }
 

@@ -1,7 +1,6 @@
 package com.software.grey.repositories;
 
 import com.software.grey.models.entities.Post;
-
 import com.software.grey.models.entities.User;
 import com.software.grey.models.enums.Feeling;
 import com.software.grey.models.projections.FeelingCountProjection;

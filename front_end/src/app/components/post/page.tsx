@@ -7,7 +7,7 @@ import {SlOptions} from "react-icons/sl";
 import React from "react";
 import {MdDelete, MdReport} from "react-icons/md";
 import {Chip, IconButton, ListItem, Menu, MenuItem} from "@mui/material";
-import {toast} from "react-toastify";
+import {toast, ToastOptions} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import deletePostController from "@/app/services/deletePostController";
 import SavePostController from "@/app/services/SavePostController";
@@ -21,6 +21,12 @@ import {
 
 export default function Post(props: any) {
     let post = props.post;
+    const toastStyleTopRight: ToastOptions = {
+        position: "top-right",
+        autoClose: 2000,
+        theme: "colored",
+        hideProgressBar: true
+    }
 
     const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(null);
     const openMenu = Boolean(menuAnchorEl);
@@ -50,36 +56,20 @@ export default function Post(props: any) {
     async function toastResponse(response: Promise<Response>) {
         try {
             await toast.promise(response.then(res => {
-                    if (res.status === 200) {
+                    if (res.status === 200 || res.status === 201) {
                         res.text().then((data: any) => {
-                            toast.success(data, {
-                                position: "top-right",
-                                autoClose: 2000,
-                                theme: "colored",
-                                hideProgressBar: true
-                            });
+                            toast.success(data, toastStyleTopRight);
                         });
                     } else {
-                        res.json().then((data: any) => {
-                            toast.error(data.message, {
-                                position: "top-right",
-                                autoClose: 2000,
-                                theme: "colored",
-                                hideProgressBar: true
-                            });
+                        res.text().then((data: any) => {
+                            toast.error(data, toastStyleTopRight);
                         });
                     }
                 }, (err) => { console.log(err) }),
                 {
-                    pending: 'wait a moment with me ...',
+                    pending: 'Wait a moment with me ...',
                     error: 'Server took too long to respond',
-                },
-                {
-                    position: "top-right",
-                    autoClose: 2000,
-                    theme: "colored",
-                    hideProgressBar: true
-                }
+                }, toastStyleTopRight
             );
         } catch (error) {
             console.error(error);
