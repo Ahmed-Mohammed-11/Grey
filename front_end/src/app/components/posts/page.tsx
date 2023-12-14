@@ -17,6 +17,7 @@ export default function Feed(props:any) {
     const [posts, setPosts] = useState<any[]>([]);
     const [filterData, setFilterData] = useState<PostFilterDTO>({} as PostFilterDTO);
     const [pageIndex, setPageIndex] = useState<number>(0);
+    const [lastPage, setLastPage] = useState<boolean>(false);
 
     useEffect(() => {
       setAuth(localStorage.getItem('Authorization'));
@@ -54,7 +55,7 @@ export default function Feed(props:any) {
             mode: 'cors',
           };
           console.log("this is filter data", filterData)
-          const response = await fetch(BASE_BACKEND_URL + props.feedType, {
+          const response = await fetch(BASE_BACKEND_URL + props.feedTypeEndPoint, {
             method: 'POST',
             body: JSON.stringify({...(filterData),pageNumber: pageIndex, pageSize:5}),
             headers,
@@ -66,6 +67,7 @@ export default function Feed(props:any) {
       
           const newData = await response.json();
           setTotalNumberOfPages(newData.totalPages);
+          setLastPage(newData.last)
           console.log("this is the response ", newData)
           setPosts((prevPosts) => {
             return [...(prevPosts ?? []), ...newData.content];
@@ -90,9 +92,9 @@ export default function Feed(props:any) {
 
     return (
         <Box className={styles.feed} width={props.width}>
-          <PostFilters showDatePicker={true} applyFilters={applyFilters}/>
+          <PostFilters showDatePicker={props.feedType == 2} showFeelingSelection={props.feedType === 0} applyFilters={applyFilters}/>
           {renderPosts()}
-          {totalNumberOfPages - 1 !== pageIndex && (
+          {!lastPage && (
             <div className={styles.postSkeleton} ref={ref}>
               <div className={styles.postContent}>
                 <Skeleton variant="circular" width={70} height={70} />
@@ -110,6 +112,5 @@ export default function Feed(props:any) {
 
 /* current bugs
   - the filters when change feed type not reset as view just reset as vars
-  - in the initial reload too much request and doublicate posts retrieve
   - can't filter with more than one feeling back end bug
 */

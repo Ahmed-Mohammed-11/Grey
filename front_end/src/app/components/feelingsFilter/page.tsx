@@ -29,7 +29,7 @@ export default function FeelingsFilter(props: any) {
         else setIsFeelingsValid(true);
         if (selectedFeelings.size < props.limit) setFullFeelings(false);
         else setFullFeelings(true);
-        props.onDataChange(Array.from(selectedFeelings));
+        props.onDataChange(selectedFeelings);
     };
 
     const handleAdd = (feeling: Feeling) => () => {

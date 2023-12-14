@@ -24,7 +24,7 @@ const Feed = () => {
     <div>
       <Box className={styles.container}>
         <SideBar width={'25%'} onChange={handleChange} />
-        <Posts width={'75%'} feedType={endpointMapping[selectedFeedIndex]}  />
+        <Posts width={'75%'} feedType={selectedFeedIndex} feedTypeEndPoint={endpointMapping[selectedFeedIndex]}  />
       </Box>
     </div>
   );
