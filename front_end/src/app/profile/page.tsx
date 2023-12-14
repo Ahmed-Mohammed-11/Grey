@@ -1,5 +1,5 @@
 'use client'
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import styles from './page.module.css';
 import {useRef, useState} from 'react';
 import clientValidateForm from "../security/userValidation/clientFormValidation";
@@ -8,6 +8,8 @@ import { UPDATE_USER_ENDPOINT } from "../constants/apiConstants";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 function Profile() {
 
@@ -22,6 +24,7 @@ function Profile() {
   const [username, setUsername] = useState(initialUsername);
   const [email, setEmail] = useState(initialEmail);
   const [password, setPassword] = useState(initialPassword);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [isUserValid, setIsUserValid] = useState({
     username: true,
@@ -37,6 +40,10 @@ function Profile() {
 
   const noChange = (user: User) : boolean => {
     return user.username === initialUsername && user.email === initialEmail && user.password === initialPassword
+  }
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword)
   }
 
   const fetchServerResponse = async (userDto: UserDTO) => {
@@ -109,7 +116,7 @@ function Profile() {
 
   return (
     <Box className={styles.container}>
-      <Box className={styles.signupForm}>
+      <Box className={styles.profile}>
         <TextField className={styles.textArea}
           label='Username'
           placeholder='new username'
@@ -136,10 +143,23 @@ function Profile() {
           placeholder='new password'
           inputRef={passwordRef}
           variant="filled"
+          type={showPassword ? 'text' : 'password'}
           error={!isUserValid.password}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           helperText={(isUserValid.password)? "" : errors.password}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={handleTogglePassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
         ></TextField>
         <Button className={styles.button}
           variant="contained"
