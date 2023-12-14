@@ -67,7 +67,6 @@ function validatePassword(formData: any) {
 }
 
 function clientValidateForm(formData: any) {
-
     isUserValid = {
         username: true,
         email: true,

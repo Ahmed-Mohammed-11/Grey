@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 
-public interface GoogleUserRepo extends JpaRepository<GoogleUser, UUID> {
+public interface GoogleUserRepo extends JpaRepository<GoogleUser, String> {
     GoogleUser findByUsername(String username);
 
     GoogleUser findByEmail(String email);

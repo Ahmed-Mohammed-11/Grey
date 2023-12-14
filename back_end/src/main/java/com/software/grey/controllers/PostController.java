@@ -3,6 +3,8 @@ package com.software.grey.controllers;
 import com.software.grey.SavedPostEnum;
 import com.software.grey.models.dtos.PostDTO;
 
+import com.software.grey.models.entities.Post;
+import com.software.grey.recommendationsystem.Recommender;
 import com.software.grey.services.SavedPostService;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.services.implementations.PostService;
@@ -17,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -79,4 +82,19 @@ public class PostController {
                 "We will review your report and take the necessary actions.");
     }
 
+
+    @Operation(
+            summary = "Delete a post",
+            description = "This endpoint is used to delete a post from user's created posts")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Post deleted successfully"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "401", description = "Not Authorized"),
+            @ApiResponse(responseCode = "404", description = "Not Found")
+    })
+    @DeleteMapping(EndPoints.DELETE_POST + "/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable("id") String postId) {
+        postService.delete(postId);
+        return ResponseEntity.status(HttpStatus.OK).body("Post was deleted successfully!");
+    }
 }

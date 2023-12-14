@@ -27,6 +27,10 @@ public class SecurityUtils {
         return userRepo.findByUsername(username);
     }
 
+    public String getCurrentUserId() {
+        return getCurrentUser().getId();
+    }
+
     public String generateConfirmationCode() {
         return RandomStringUtils.random(10, 0, 0, true, true, null, new SecureRandom());
     }

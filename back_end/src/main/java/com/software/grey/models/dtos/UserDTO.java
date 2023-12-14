@@ -1,14 +1,17 @@
 package com.software.grey.models.dtos;
 
+import com.software.grey.models.entities.Avatar;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import static com.software.grey.utils.RegularExpressions.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class UserDTO {
 
     @NotBlank(message = "Email is mandatory")

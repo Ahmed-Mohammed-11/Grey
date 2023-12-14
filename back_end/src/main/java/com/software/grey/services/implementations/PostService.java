@@ -8,7 +8,9 @@ import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.ReportedPost;
 import com.software.grey.models.entities.ReportedPostId;
 import com.software.grey.models.entities.User;
+import com.software.grey.models.enums.Feeling;
 import com.software.grey.models.mappers.PostMapper;
+import com.software.grey.models.projections.FeelingCountProjection;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.ReportedPostRepository;
 import com.software.grey.services.IPostService;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 import static com.software.grey.utils.ErrorMessages.POST_REPORTED_BEFORE;
@@ -92,4 +95,29 @@ public class PostService implements IPostService {
                 pageable).map(postMapper::toPostDTO);
     }
 
+    public void delete(String postId) {
+
+        String currentUserId = securityUtils.getCurrentUserId();
+        UUID uuid;
+        try {
+            uuid = UUID.fromString(postId);
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Invalid post id");
+        }
+
+        Post post = findPostById(UUID.fromString(postId));
+        if(!post.getUser().getId().toString().equals(currentUserId)){
+            throw new DataNotFoundException("You are not authorized to delete this post");
+        }
+
+        postRepository.deleteById(post.getId());
+    }
+  
+    public List<FeelingCountProjection> getCountOfPostedFeelings(User user) {
+        return postRepository.findCountOfFeelingsByUser(user.getId());
+    }
+
+    public List<Post> getByFeelings(Feeling feeling, String userId, Pageable page){
+        return postRepository.findByPostFeelingsAndUserIdNot(feeling, userId, page);
+    }
 }
