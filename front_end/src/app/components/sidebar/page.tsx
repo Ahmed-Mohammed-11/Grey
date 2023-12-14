@@ -13,7 +13,7 @@ import { FaBookOpen } from "react-icons/fa";
 import { useState } from 'react';
 
 export default function SideBar(props:any) {
-  const [activeTab, setActiveTab] = useState(4);
+  const [activeTab, setActiveTab] = useState(0);
 
   const buttonsText = ["feed", "explore", "diary", "saved", "profile", "settings"];
   const buttonsIcons = [

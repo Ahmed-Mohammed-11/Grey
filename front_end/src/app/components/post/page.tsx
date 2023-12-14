@@ -4,7 +4,6 @@ import styles from "./page.module.css"
 import {Box} from "@mui/system";
 import {BsBookmark, BsFillBookmarkFill} from "react-icons/bs";
 import {SlOptions} from "react-icons/sl";
-import React from "react";
 import {MdDelete, MdReport} from "react-icons/md";
 import {Chip, IconButton, ListItem, Menu, MenuItem} from "@mui/material";
 import {toast} from "react-toastify";

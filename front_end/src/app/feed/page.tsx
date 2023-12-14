@@ -19,7 +19,7 @@ const Feed = () => {
   const [selectedFeedIndex, setSelectedFeedIndex] = useState(0);
   const posts = <Posts width={'75%'} feedType={endpointMapping[selectedFeedIndex]}  />
   const profile = <Profile />
-  const [display, setDisplay] = useState(profile)
+  const [display, setDisplay] = useState(posts)
 
   const handleChange = (newSelectedPageIndex: number) => {
     if (newSelectedPageIndex == 4) {

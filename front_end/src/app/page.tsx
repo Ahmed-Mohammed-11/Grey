@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import React, {useEffect, useState} from "react";
 import SideBar from "./components/sidebar/page";
 import styles from "./page.module.css"
-import Profile from "./components/sidebar/profile";
+import Profile from "./profile/page";
 import Feed from "./components/posts/page";
 
 
