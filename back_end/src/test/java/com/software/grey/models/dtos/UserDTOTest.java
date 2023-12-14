@@ -75,9 +75,4 @@ class UserDTOTest {
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(user);
         assertTrue(violations.isEmpty());
     }
-
-
-
-
-
 }
