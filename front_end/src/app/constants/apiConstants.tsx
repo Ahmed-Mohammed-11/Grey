@@ -14,3 +14,4 @@ export const FEED_ENDPOINT = CREATE_POST_ENDPOINT + '/feed';
 export const EXPLORE_ENDPOINT = CREATE_POST_ENDPOINT + '/explore';
 export const DIARY_ENDPOINT = CREATE_POST_ENDPOINT + '/diary';
 export const SAVED_ENDPOINT = CREATE_POST_ENDPOINT + '/saved';
+export const UPDATE_USER_ENDPOINT = '/user/update'

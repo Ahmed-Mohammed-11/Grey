@@ -19,5 +19,7 @@ public class EndPoints {
     public static final String VERIFY_REGISTRATION = "user/verify";
     public static final String ROOT = "http://localhost:3000";
     public static final String GET_DIARY = "/diary";
+    public static final String USER = "/user";
+    public static final String UPDATE_USER = "/update";
 
 }
