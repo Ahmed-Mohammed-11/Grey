@@ -24,11 +24,11 @@
 }
 
 .menu_item{
-    padding: 4px 16px;
+    padding: 8px 16px;
     align-items: stretch;
 }
 .icon{
-    padding: 0 3% 0 0;
+    padding: 0 4% 0 0;
     font-size: 23px;
 }
 

@@ -33,7 +33,7 @@ function Home() {
     return (
         <>
             <Box className={styles.container}>
-                <SideBar width={'25%'} onChange={handleChange} />
+                <SideBar width={'20%'} onChange={handleChange} />
                 {display}
             </Box>
         </>

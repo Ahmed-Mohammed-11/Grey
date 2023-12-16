@@ -2,61 +2,28 @@
 import React from 'react';
 import Popup from 'reactjs-popup';
 import styles from "./page.module.css"
-import Profile from "@/app/components/sidebar/profile";
-import {Box} from "@mui/system";
+import User from "@/app/components/sidebar/user";
 import {FaPen} from "react-icons/fa";
 import {IoSend} from "react-icons/io5";
-// import {Alert, Snackbar, TextareaAutosize, Tooltip} from "@mui/material";
-import {IoMdAdd} from "react-icons/io";
-import {Alert, Snackbar, Chip, IconButton, ListItem, Menu, MenuItem, TextareaAutosize, Tooltip} from "@mui/material";
+import {TextareaAutosize} from "@mui/material";
 import Feeling from "@/app/models/dtos/Feeling";
 import PostDTO from "@/app/models/dtos/PostDTO";
 import {CREATE_POST_ENDPOINT} from "@/app/constants/apiConstants";
 import createPostController from "@/app/services/createPostController";
-import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
 import FeelingsFilter from '../feelingsFilter/page';
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-const allFeelings = new Set<Feeling>([Feeling.HAPPY, Feeling.SAD,
-    Feeling.ANGER, Feeling.DISGUST,
-    Feeling.FEAR, Feeling.ANXIOUS,
-    Feeling.INSPIRE, Feeling.LOVE]);
-
 export default function PopupScreen() {
     // Feelings chips
     const [selectedFeelings, setSelectedFeelings] = React.useState(new Set<Feeling>());
-    /*
-    const [isFeelingsValid, setIsFeelingsValid] = React.useState(false);
-    const [fullFeelings, setFullFeelings] = React.useState(false);
 
-    const handleFeelingsChange = () => {
-        if(selectedFeelings.size === 0) setIsFeelingsValid(false)
-        else setIsFeelingsValid(true)
-
-        if (selectedFeelings.size < 3) setFullFeelings(false)
-        else setFullFeelings(true)
-    }
-    const handleAdd = (feeling: Feeling) => () => {
-        if (!fullFeelings) {
-            selectedFeelings.add(feeling);
-            setSelectedFeelings(new Set<Feeling>(selectedFeelings));
-            handleFeelingsChange();
-        }
-    };
-    const handleDelete = (chipToDelete: Feeling) => () => {
-        if (selectedFeelings.size){
-            selectedFeelings.delete(chipToDelete);
-            setSelectedFeelings(new Set<Feeling>(selectedFeelings));
-            handleFeelingsChange();
-        }
-    };
-
-*/
 
     // Handling post text and send to server
     const [isPostTextValid, setIsPostTextValid] = React.useState("");
-    const handlePostText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {setIsPostTextValid(event.target.value);}
+    const handlePostText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setIsPostTextValid(event.target.value);
+    }
     const handleCreatePost = () => {
         let post: PostDTO = {
             postText: isPostTextValid,
@@ -76,14 +43,16 @@ export default function PopupScreen() {
 
 
     // Handling server response
-    const fetchResponse = async (postDTO : PostDTO) => {
+    const fetchResponse = async (postDTO: PostDTO) => {
         const response = createPostController.sendPostRequest(postDTO, CREATE_POST_ENDPOINT);
         notify(response);
         clearPostInfo();
     }
+
     async function notify(response: Promise<Response>) {
         try {
-            toast.promise(response.then(res => {}),
+            toast.promise(response.then(res => {
+                }),
                 {
                     pending: 'Creating post...',
                     success: 'Shared to the world successfully',
@@ -101,21 +70,21 @@ export default function PopupScreen() {
             console.log(error)
         }
     }
+
     const clearPostInfo = () => {
         setIsPostTextValid("")
         setSelectedFeelings(new Set<Feeling>());
-        handleFeelingsChange();
     }
 
 
     return (
-        <Popup trigger={<button className={styles.create_button}><FaPen/>create post </button>} modal nested>
+        <Popup trigger={<button className={styles.create_button}><FaPen/>shout</button>} modal nested>
             {close => {
                 return (
                     <section className={styles.container}>
                         <div className={styles.modal}>
                             <div className={styles.profile}>
-                                <Profile name={"@hesham09"}/>
+                                <User name={"@hesham09"} backgroundColor={"#9DB2BF"}/>
                             </div>
                             <FeelingsFilter limit={3} onDataChange={setSelectedFeelings}/>
                             <TextareaAutosize
@@ -130,10 +99,13 @@ export default function PopupScreen() {
                                     cancel
                                 </button>
                                 <button
-                                        className={`${styles.button} ${styles.filled}
+                                    className={`${styles.button} ${styles.filled}
                                         ${!(selectedFeelings.size > 0) || !isPostTextValid ? styles.disabled : ""}`}
-                                        disabled={!(selectedFeelings.size > 0) || (isPostTextValid == "")}
-                                        onClick={() => {handleCreatePost(); close()}}>
+                                    disabled={!(selectedFeelings.size > 0) || (isPostTextValid == "")}
+                                    onClick={() => {
+                                        handleCreatePost();
+                                        close()
+                                    }}>
                                     create post <IoSend/>
                                 </button>
                             </div>

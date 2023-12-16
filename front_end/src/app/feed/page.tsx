@@ -17,7 +17,7 @@ const Feed = () => {
   };
 
   const [selectedFeedIndex, setSelectedFeedIndex] = useState(0);
-  const posts = <Posts width={'75%'} feedTypeEndPoint={endpointMapping[selectedFeedIndex]} feedType={selectedFeedIndex} />
+  const posts = <Posts width={'78%'} feedTypeEndPoint={endpointMapping[selectedFeedIndex]} feedType={selectedFeedIndex} />
   const profile = <Profile />
   const [display, setDisplay] = useState(posts)
 
@@ -33,7 +33,7 @@ const Feed = () => {
   return (
     <div>
       <Box className={styles.container}>
-        <SideBar width={'25%'} onChange={handleChange} />
+        <SideBar width={'22%'} onChange={handleChange} />
         {display}
       </Box>
     </div>

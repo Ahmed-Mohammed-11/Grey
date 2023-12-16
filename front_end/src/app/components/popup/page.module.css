@@ -70,9 +70,9 @@
 }
 
 .filled{
-    background: #526D82;
+    background: rgb(46, 160, 67);
     color: #DDE6ED;
-    box-shadow: 2px 3px 10px #5b5b5b;
+    box-shadow: 2px 3px 11px 0px #2ea0438c;
 }
 
 .disabled{
@@ -91,11 +91,11 @@
     padding: 12px;
     outline: none;
     text-transform: capitalize;
-    font-size: calc(3*calc(min(1vh, 1vw)));
+    font-size: calc(2*calc(min(1vh, 1vw)));
     font-family: "Montserrat SemiBold", sans-serif;
-    background: #DDE6ED;
-    color: #333;
-    box-shadow: 2px 3px 10px #4177a1;
+    background: rgb(46, 160, 67);
+    color: #FFF;
+    border: none;
     border-radius: 16px;
     font-weight: bold;
     box-sizing: border-box;

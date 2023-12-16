@@ -4,12 +4,13 @@ import {Box} from "@mui/system";
 import Post from "@/app/components/post/page";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import React, { useState, useEffect } from 'react';
-import { useInView } from "react-intersection-observer"
+import React, {useState, useEffect} from 'react';
+import {useInView} from "react-intersection-observer"
 import {BASE_BACKEND_URL, DIARY_ENDPOINT, EXPLORE_ENDPOINT} from "@/app/constants/apiConstants";
-import { Skeleton } from '@mui/material';
+import {Skeleton} from '@mui/material';
 import PostFilters from "../postFilter/page";
 import PostFilterDTO from '../../models/dtos/PostFilterDTO';
+import PopupScreen from "@/app/components/popup/page";
 
 export default function Feed(props: any) {
     const {ref, inView} = useInView();
@@ -21,40 +22,39 @@ export default function Feed(props: any) {
     const [lastPage, setLastPage] = useState<boolean>(false);
 
     useEffect(() => {
-      setAuth(localStorage.getItem('Authorization'));
+        setAuth(localStorage.getItem('Authorization'));
     }, []);
 
     useEffect(() => {
-      setFilterData({} as PostFilterDTO);
+        setFilterData({} as PostFilterDTO);
     }, [props.feedType]);
 
     useEffect(() => {
-      setPosts([])
-      if(pageIndex == 0) {
-        console.log("in index == 0")
-        loadMore();
-      }
-      else setPageIndex(0);
+        setPosts([])
+        if (pageIndex == 0) {
+            console.log("in index == 0")
+            loadMore();
+        } else setPageIndex(0);
     }, [filterData]);
 
-    useEffect(() =>{
-      console.log("from view")
-      if(inView && posts.length != 0){
-        setPageIndex(Math.max(Math.min(pageIndex + 1, totalNumberOfPages - 1), 0))
-      }
+    useEffect(() => {
+        console.log("from view")
+        if (inView && posts.length != 0) {
+            setPageIndex(Math.max(Math.min(pageIndex + 1, totalNumberOfPages - 1), 0))
+        }
     }, [inView])
 
     useEffect(() => {
-      loadMore();
+        loadMore();
     }, [pageIndex]);
 
     const loadMore = async () => {
         try {
-          const headers = {
-            'Content-Type': 'application/json',
-            Authorization: auth!,
-            mode: 'cors',
-          };
+            const headers = {
+                'Content-Type': 'application/json',
+                Authorization: auth!,
+                mode: 'cors',
+            };
 
             let response: Response
 
@@ -74,26 +74,26 @@ export default function Feed(props: any) {
                 const explorePosts = await response.json();
 
                 setPosts((prevPosts) => {
-                  return [...(prevPosts ?? []), ...explorePosts];
+                    return [...(prevPosts ?? []), ...explorePosts];
                 });
-           } else {
-              response = await fetch(BASE_BACKEND_URL + props.feedTypeEndPoint, {
-                method: 'POST',
-                body: JSON.stringify({...(filterData),pageNumber: pageIndex, pageSize:5}),
-                headers,
-              });
+            } else {
+                response = await fetch(BASE_BACKEND_URL + props.feedTypeEndPoint, {
+                    method: 'POST',
+                    body: JSON.stringify({...(filterData), pageNumber: pageIndex, pageSize: 5}),
+                    headers,
+                });
 
-              if (!response.ok) {
-                throw new Error('Network response was not ok');
-              }
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
 
-              const newData = await response.json();
-              setTotalNumberOfPages(newData.totalPages);
-              setLastPage(newData.last)
-              setPosts((prevPosts) => {
-                return [...(prevPosts ?? []), ...newData.content];
-              });
-           }
+                const newData = await response.json();
+                setTotalNumberOfPages(newData.totalPages);
+                setLastPage(newData.last)
+                setPosts((prevPosts) => {
+                    return [...(prevPosts ?? []), ...newData.content];
+                });
+            }
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -114,18 +114,21 @@ export default function Feed(props: any) {
 
     return (
         <Box className={styles.feed} width={props.width}>
-          <PostFilters showDatePicker={props.feedType == 2} showFeelingSelection={props.feedType === 0} applyFilters={applyFilters}/>
-          {renderPosts()}
-          {!lastPage && (
-            <div className={styles.postSkeleton} ref={ref}>
-              <div className={styles.postContent}>
-                <Skeleton variant="circular" width={70} height={70} />
-                <div className={styles.additionalContent}>
-                  <Skeleton height={20} width="60%" />
-                  <Skeleton height={20} width="80%" />
-                  </div>
-              </div>
-            </div>
+            <Box className={styles.posts_bar}>
+                <PopupScreen/>
+                <PostFilters showDatePicker={props.feedType == 2} showFeelingSelection={props.feedType === 0}
+                             applyFilters={applyFilters}/>
+            </Box>
+            {renderPosts()}
+            {!lastPage && (
+                <div className={styles.post_skeleton} ref={ref}>
+                    <div className={styles.container}>
+                        <Skeleton variant="circular" className={styles.chip_shape}/>
+                        <Skeleton variant="circular" className={styles.chip_shape}/>
+                    </div>
+                    <Skeleton className={styles.text_shape}/>
+                    <Skeleton className={styles.text_shape}/>
+                </div>
             )}
             <ToastContainer/>
         </Box>

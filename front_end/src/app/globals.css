@@ -69,3 +69,52 @@
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
 }
+
+
+.ANGER:hover{
+    background-color: #FF0000;
+    color: white;
+    cursor: pointer;
+}
+
+.ANXIOUS:hover{
+    background-color: #00FFFF;
+    color: black;
+    cursor: pointer;
+}
+
+.DISGUST:hover{
+    background-color: #8B4513;
+    color: white;
+    cursor: pointer;
+}
+
+.FEAR:hover{
+    background-color: #f64e4e;
+    color: white;
+    cursor: pointer;
+}
+
+.HAPPY:hover{
+    background-color: #FFD700;
+    color: black;
+    cursor: pointer;
+}
+
+.INSPIRE:hover{
+    background-color: #00FF00;
+    color: black;
+    cursor: pointer;
+}
+
+.LOVE:hover{
+    background-color: #dd4296;
+    color: white;
+    cursor: pointer;
+}
+
+.SAD:hover{
+    background-color: #1976d2;
+    color: white;
+    cursor: pointer;
+}

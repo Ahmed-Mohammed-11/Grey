@@ -4,10 +4,12 @@
     flex-direction: column;
     box-sizing: border-box;
     padding: 1% 2%;
+    border-right: 1px solid #526D82;
 }
 
 .container_buttons {
     display: flex;
+    margin-top: 10%;
     flex-direction: column;
 }
 
@@ -26,15 +28,12 @@
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    font-size: 10vh;
     overflow: visible !important;
-    color: #DDE6ED;
-    background: #9DB2BF;
     box-sizing: border-box;
 }
 
 .profile_image > * {
-    margin: -9px 0 0 -9px;
+    margin: -12px 0 0 -12px;
 }
 
 .profile_image:after {
@@ -58,14 +57,16 @@
 
 .button {
     width: 100%;
-    height: calc(min(10vh, 10vw));
+    height: calc(min(8vh, 8vw));
     display: flex;
-    font-weight: bold;
-    text-transform: uppercase;
+    margin-bottom: 5%;
+    padding-left: 7%;
+    text-transform: capitalize;
+    gap: 15px;
     justify-content: flex-start !important;
-    letter-spacing: calc(calc(min(1vh, 1vw))) !important;
+    letter-spacing: calc(min(.5vh, .5vw)) !important;
     align-items: center;
-    font-size: calc(3 * calc(min(1vh, 1vw)));
+    font-size: calc(2.5 * calc(min(1vh, 1vw)));
     color: #526D82;
     border-radius: 16px;
     box-sizing: border-box;
@@ -82,11 +83,12 @@
     background: #526D82;
     color: #FFF;
     border-radius: 16px;
+    font-weight: bold;
 }
 
 .active:hover{
-    background: #526D82;
-    color: #DDE6ED;
+    background: #344e64;
+    color: #FFF;
 }
 
 .active:after {
@@ -101,7 +103,8 @@
     box-sizing: border-box;
 }
 
-/* for any direct child in .button */
-.button > * {
-    width: 30%;
+.icon{
+    font-size: 23px;
+    height: 78%;
+    color: inherit;
 }

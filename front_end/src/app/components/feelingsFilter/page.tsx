@@ -5,7 +5,6 @@ import {Box} from "@mui/system";
 import {IoMdAdd} from "react-icons/io";
 import {Chip, IconButton, ListItem, Menu, MenuItem, Tooltip} from "@mui/material";
 import Feeling from "@/app/models/dtos/Feeling";
-import { useState, useEffect } from 'react';
 
 export default function FeelingsFilter(props: any) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -48,21 +47,21 @@ export default function FeelingsFilter(props: any) {
 
     return (
         <Box className={styles.feelings}>
-            <ListItem>
+            <Box>
                 {Array.from(selectedFeelings).map((feeling: any, feelingIndex: any) => (
                     <Chip
                         label={feeling}
-                        className={feeling}
+                        className={`${feeling} ${styles.chip}`}
                         onDelete={handleDelete(feeling)}
                         key={feelingIndex}
                     />
                 ))}
-            </ListItem>
+            </Box>
+
             <Tooltip title="Add Feeling">
                 <IconButton
                     id="basic-button"
                     disabled={fullFeelings}
-                    className={styles.feeling_button}
                     aria-controls={open ? 'basic-menu' : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
@@ -79,7 +78,7 @@ export default function FeelingsFilter(props: any) {
                 MenuListProps={{ 'aria-labelledby': 'basic-button' }}>
                 {Array.from(allFeelings).filter((feeling) =>
                     !selectedFeelings.has(feeling)).map((feeling: any, feelingIndex: any) => (
-                        <MenuItem className={feeling} onClick={handleAdd(feeling)}>
+                        <MenuItem className={`${feeling} ${styles.menu_item}`} onClick={handleAdd(feeling)}>
                             {feeling}
                         </MenuItem>
                     ))}

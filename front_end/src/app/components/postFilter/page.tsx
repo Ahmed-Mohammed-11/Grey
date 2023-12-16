@@ -1,8 +1,7 @@
 "use client";
 import CustomDatePicker from "./customDatePicker";
-import styles from "./page.module.css";
-import { Box } from "@mui/system";
-import React, { useState, useEffect } from 'react';
+import {Box} from "@mui/system";
+import React, {useEffect, useState} from 'react';
 import PostFilterDTO from '../../models/dtos/PostFilterDTO';
 import FeelingsFilter from "../feelingsFilter/page";
 import Feeling from "@/app/models/dtos/Feeling";

@@ -16,16 +16,11 @@ import {
     DELETE_POST_ENDPOINT,
     DIARY_ENDPOINT
 } from "@/app/constants/apiConstants";
+import {toastResponse} from "@/app/constants/displayTextMessages";
 
 
 export default function Post(props: any) {
     let post = props.post;
-    const toastStyleTopRight: ToastOptions = {
-        position: "top-right",
-        autoClose: 2000,
-        theme: "colored",
-        hideProgressBar: true
-    }
 
     const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(null);
     const openMenu = Boolean(menuAnchorEl);
@@ -51,30 +46,6 @@ export default function Post(props: any) {
         const data = deletePostController.sendDeleteRequest({postId: postId}, DELETE_POST_ENDPOINT);
         toastResponse(data);
     }
-
-    async function toastResponse(response: Promise<Response>) {
-        try {
-            await toast.promise(response.then(res => {
-                    if (res.status === 200 || res.status === 201) {
-                        res.text().then((data: any) => {
-                            toast.success(data, toastStyleTopRight);
-                        });
-                    } else {
-                        res.text().then((data: any) => {
-                            toast.error(data, toastStyleTopRight);
-                        });
-                    }
-                }, (err) => { console.log(err) }),
-                {
-                    pending: 'Wait a moment with me ...',
-                    error: 'Server took too long to respond',
-                }, toastStyleTopRight
-            );
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
 
     return (
         <Box width={props.width}>
@@ -112,7 +83,7 @@ export default function Post(props: any) {
                             <MdReport className={styles.icon}/>
                             Report Post
                         </MenuItem>
-                        {props.feedType === DIARY_ENDPOINT && (
+                        {props.feedType === 2 && (
                             <MenuItem
                             className={styles.menu_item}
                             onClick={() => {

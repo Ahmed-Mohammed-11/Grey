@@ -1,59 +1,17 @@
-.cornerShapes{
-    width:700px;
-    height:700px;
-    position:fixed;
-    border-radius: 150px;
-}
-
-.topLeft
-{
-    top:0;
-    left:0;
-    transform: rotate(45deg)  translate(-70%, 0%);
-}
-
-.bottomRight
-{
-    right:0;
-    bottom:0;
-    transform: rotate(45deg) translate(70%, 0%);
-}
-
 .container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: #0a0a0a;
   margin: auto;
   border-radius: 50px;
   width: 80%;
-  height: 95%;
-  box-shadow: rgba(50, 50, 93, 0.25) 0 2px 5px -1px, rgba(0, 0, 0, 0.3) 0 1px 3px -1px;
-  background-color: #DDE6ED;
-  max-width: 1400px;
-  max-height: 1200px;
-  min-width: 300px;
-  min-height: 500px;
 }
 
 .textArea {
   width: 60%;
   height: 100%;
   margin: 2.2% !important;
-}
-
-.profile {
-  display: flex;
-  flex: 40%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-  max-width: 600px;
-  max-height: 480px;
-  min-width: 150px;
-  min-height: 500px;
 }
 
 .button {
