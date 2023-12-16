@@ -7,8 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.software.grey.utils.EndPoints.SIGNUP;
-import static com.software.grey.utils.EndPoints.VERIFY_REGISTERATION;
+import static com.software.grey.utils.EndPoints.*;
 
 @CrossOrigin
 @RestController
@@ -26,7 +25,7 @@ public class SignupController {
         return ResponseEntity.status(HttpStatus.OK).body("User created!");
     }
 
-    @PutMapping(VERIFY_REGISTERATION)
+    @PutMapping(VERIFY_REGISTRATION)
     public ResponseEntity<String> verify(@RequestParam String userID, @RequestParam String registrationCode) {
         userService.verifyUser(userID, registrationCode);
         return ResponseEntity.status(HttpStatus.OK).body("User verified");
