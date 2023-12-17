@@ -1,7 +1,6 @@
-import { json } from "stream/consumers";
 import { BASE_BACKEND_URL } from "../constants/apiConstants";
 
-class UpdateUserConroller {
+class UpdateUserController {
   sendPutRequest(payload: Object, endpoint: string):Promise<Response> {
     const url = BASE_BACKEND_URL + endpoint
     let headers = new Headers();
@@ -16,5 +15,5 @@ class UpdateUserConroller {
   }
 }
 
-const updateUserController = new UpdateUserConroller();
+const updateUserController = new UpdateUserController();
 export default updateUserController;

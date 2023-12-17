@@ -9,7 +9,7 @@ import {useInView} from "react-intersection-observer"
 import {BASE_BACKEND_URL, DIARY_ENDPOINT, EXPLORE_ENDPOINT} from "@/app/constants/apiConstants";
 import {Skeleton} from '@mui/material';
 import PostFilters from "../postFilter/page";
-import PostFilterDTO from '../../models/dtos/PostFilterDTO';
+import PostFilterDTO from '@/app/entities/dtos/PostFilterDTO';
 import PopupScreen from "@/app/components/popup/page";
 
 export default function Feed(props: any) {
@@ -33,7 +33,7 @@ export default function Feed(props: any) {
         setPosts([])
         if (pageIndex == 0) {
             console.log("in index == 0")
-            loadMore();
+            loadMore().then(r => console.log("loaded more"));
         } else setPageIndex(0);
     }, [filterData]);
 
@@ -45,7 +45,7 @@ export default function Feed(props: any) {
     }, [inView])
 
     useEffect(() => {
-        loadMore();
+        loadMore().then(r => console.log("loaded more"));
     }, [pageIndex]);
 
     const loadMore = async () => {

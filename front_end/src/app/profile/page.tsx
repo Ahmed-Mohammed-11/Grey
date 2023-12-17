@@ -1,5 +1,5 @@
 'use client'
-import {Box, Button, IconButton, InputAdornment, Link, TextField} from "@mui/material";
+import {Box, Button, IconButton, InputAdornment, TextField} from "@mui/material";
 import styles from './page.module.css';
 import {useRef, useState} from 'react';
 import clientValidateForm from "../security/userValidation/clientFormValidation";
@@ -67,12 +67,12 @@ function Profile() {
         if (isError) {
             toast.error(message, {
                 position: toast.POSITION.TOP_RIGHT,
-                autoClose: 1000,
+                autoClose: 2000,
             })
         } else {
             toast.success(message, {
                 position: toast.POSITION.TOP_RIGHT,
-                autoClose: 1000,
+                autoClose: 2000,
             })
         }
     }
@@ -121,10 +121,8 @@ function Profile() {
 
     return (
         // user avatar is so small when theme registry applied
-        // <ThemeRegistry options={{key: 'mui'}}>
             <Box className={styles.container}>
                 <User name={"username"} backgroundColor={"red"}/>
-                {/*<Box className={styles.profile}>*/}
                 <TextField className={styles.textArea}
                     label='Username'
                     placeholder='new username'
@@ -173,10 +171,11 @@ function Profile() {
                     variant="contained"
                     size="large"
                     onClick={handleUpdate}
-                >save changes</Button>
+                >
+                    save changes
+                </Button>
                 <ToastContainer/>
             </Box>
-        // </ThemeRegistry>
     )
 }
 

@@ -3,8 +3,8 @@ import React from 'react';
 import styles from "./page.module.css"
 import {Box} from "@mui/system";
 import {IoMdAdd} from "react-icons/io";
-import {Chip, IconButton, ListItem, Menu, MenuItem, Tooltip} from "@mui/material";
-import Feeling from "@/app/models/dtos/Feeling";
+import {Chip, IconButton, Menu, MenuItem, Tooltip} from "@mui/material";
+import Feeling from "@/app/entities/dtos/Feeling";
 
 export default function FeelingsFilter(props: any) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

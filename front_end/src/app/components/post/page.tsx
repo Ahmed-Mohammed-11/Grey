@@ -9,12 +9,11 @@ import {Chip, IconButton, ListItem, Menu, MenuItem} from "@mui/material";
 import {toast, ToastOptions} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import deletePostController from "@/app/services/deletePostController";
-import SavePostController from "@/app/services/SavePostController";
+import postRequestWithUrlParams from "@/app/services/postRequestWithUrlParams";
 import {
     REPORT_POST_ENDPOINT,
     SAVE_POST_ENDPOINT,
     DELETE_POST_ENDPOINT,
-    DIARY_ENDPOINT
 } from "@/app/constants/apiConstants";
 import {toastResponse} from "@/app/constants/displayTextMessages";
 
@@ -32,19 +31,19 @@ export default function Post(props: any) {
     };
 
 
-    const handleSavePost = (postId: string) => {
-        const data = SavePostController.sendPostRequest({postId: postId}, SAVE_POST_ENDPOINT);
-        toastResponse(data);
+    const handleSavePost = async (postId: string) => {
+        const data = postRequestWithUrlParams.sendPostRequest({postId: postId}, SAVE_POST_ENDPOINT);
+        await toastResponse(data);
     };
 
-    const handleReportPost = (postId: string) => {
-        const data = SavePostController.sendPostRequest({postId: postId}, REPORT_POST_ENDPOINT);
-        toastResponse(data);
+    const handleReportPost = async (postId: string) => {
+        const data = postRequestWithUrlParams.sendPostRequest({postId: postId}, REPORT_POST_ENDPOINT);
+        await toastResponse(data);
     }
 
-    const handleDeletePost = (postId: string) => {
+    const handleDeletePost = async (postId: string) => {
         const data = deletePostController.sendDeleteRequest({postId: postId}, DELETE_POST_ENDPOINT);
-        toastResponse(data);
+        await toastResponse(data);
     }
 
     return (

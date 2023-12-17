@@ -46,7 +46,7 @@ function handleAuth(userDTO: UserDTO){
     localStorage.setItem("Authorization", authToken);
 }
 
-function signinServerFormValidationMapper(responseStatus: number, responseBody: UserValidationResponse, userDTO: UserDTO) {
+function loginServerFormValidationMapper(responseStatus: number, responseBody: UserValidationResponse, userDTO: UserDTO) {
 
     isUserValid = {
         username: true,
@@ -69,13 +69,16 @@ function signinServerFormValidationMapper(responseStatus: number, responseBody: 
             break;
         case 401:
             handleWrongCredentials(responseBody);
+            break;
         case 404:
+            console.log("404");
             break;
         default:
             break;
     }
 
     return {isUserValid, errors};
+
 }
 
-export default signinServerFormValidationMapper;
+export default loginServerFormValidationMapper;

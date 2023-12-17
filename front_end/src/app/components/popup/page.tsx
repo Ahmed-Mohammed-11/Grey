@@ -6,8 +6,8 @@ import User from "@/app/components/sidebar/user";
 import {FaPen} from "react-icons/fa";
 import {IoSend} from "react-icons/io5";
 import {TextareaAutosize} from "@mui/material";
-import Feeling from "@/app/models/dtos/Feeling";
-import PostDTO from "@/app/models/dtos/PostDTO";
+import Feeling from "@/app/entities/dtos/Feeling";
+import PostDTO from "@/app/entities/dtos/PostDTO";
 import {CREATE_POST_ENDPOINT} from "@/app/constants/apiConstants";
 import createPostController from "@/app/services/createPostController";
 import FeelingsFilter from '../feelingsFilter/page';
@@ -38,20 +38,20 @@ export default function PopupScreen() {
             postText: post.postText,
             postFeelings: Array.from(post.postFeelings)
         }
-        fetchResponse(postDTO);
+        await fetchResponse(postDTO);
     }
 
 
     // Handling server response
     const fetchResponse = async (postDTO: PostDTO) => {
         const response = createPostController.sendPostRequest(postDTO, CREATE_POST_ENDPOINT);
-        notify(response);
+        await notify(response);
         clearPostInfo();
     }
 
     async function notify(response: Promise<Response>) {
         try {
-            toast.promise(response.then(res => {
+            await toast.promise(response.then(res => {
                 }),
                 {
                     pending: 'Creating post...',
