@@ -70,9 +70,8 @@
 }
 
 .filled{
-    background: rgb(46, 160, 67);
+    background: #526D82;
     color: #DDE6ED;
-    box-shadow: 2px 3px 11px 0px #2ea0438c;
 }
 
 .disabled{
@@ -92,12 +91,10 @@
     outline: none;
     text-transform: capitalize;
     font-size: calc(2*calc(min(1vh, 1vw)));
-    font-family: "Montserrat SemiBold", sans-serif;
-    background: rgb(46, 160, 67);
+    background: #526D82;
     color: #FFF;
     border: none;
     border-radius: 16px;
-    font-weight: bold;
     box-sizing: border-box;
 }
 
