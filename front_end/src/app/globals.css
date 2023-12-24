@@ -34,7 +34,7 @@
 
 .ANGER{
     margin: 0 1% 0 0;
-    background-color: #607274  !important;
+    background-color: #495759 !important;
     color: white  !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
@@ -60,6 +60,7 @@
 .INSPIRE{
     margin: 0 1% 0 0;
     background-color: #8ACDD7  !important;
+    color: #FFFFFF !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
