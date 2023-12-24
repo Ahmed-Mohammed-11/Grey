@@ -15,7 +15,6 @@ import {
     SAVE_POST_ENDPOINT,
     DELETE_POST_ENDPOINT,
 } from "@/app/constants/apiConstants";
-import {toastResponse} from "@/app/constants/displayTextMessages";
 
 
 export default function Post(props: any) {
@@ -46,6 +45,37 @@ export default function Post(props: any) {
         await toastResponse(data);
     }
 
+
+    const toastStyleTopRight: ToastOptions = {
+        position: "top-right",
+        autoClose: 3000,
+        theme: "colored",
+        hideProgressBar: true
+    }
+
+    async function toastResponse(response: Promise<Response>) {
+        try {
+            await toast.promise(response.then(res => {
+                    if (res.status === 200 || res.status === 201) {
+                        res.text().then((data: any) => {
+                            toast.success(data, toastStyleTopRight);
+                        });
+                    } else {
+                        res.text().then((data: any) => {
+                            toast.error(data, toastStyleTopRight);
+                        });
+                    }
+                }, (err) => { console.log(err) }),
+                {
+                    pending: 'Wait a moment with me ...',
+                    error: 'Server took too long to respond',
+                }, toastStyleTopRight
+            );
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <Box width={props.width}>
             <Box className={styles.post} key={post.id}>
@@ -58,15 +88,15 @@ export default function Post(props: any) {
 
                     <IconButton onClick={() => handleSavePost(post.id)}>
                         {post.saved ?
-                            <BsFillBookmarkFill className={styles.icon}></BsFillBookmarkFill>
-                            : <BsBookmark className={styles.icon}></BsBookmark>}
+                            <BsFillBookmarkFill className={styles.main_icons}></BsFillBookmarkFill>
+                            : <BsBookmark className={styles.main_icons}></BsBookmark>}
                     </IconButton>
 
                     <IconButton
                         aria-controls={openMenu ? 'options-menu' : undefined}
                         aria-expanded={openMenu ? 'true' : undefined}
                         onClick={handleMenuClick}>
-                        <SlOptions className={styles.icon}></SlOptions>
+                        <SlOptions className={styles.main_icons}></SlOptions>
                     </IconButton>
                     <Menu
                         id="options-menu"

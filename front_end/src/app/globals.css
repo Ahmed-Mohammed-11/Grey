@@ -1,7 +1,7 @@
 .DISGUST{
     margin: 0 1% 0 0;
-    background-color: #8B4513;
-    color: white;
+    background-color: #8B4513 !important;
+    color: white  !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
@@ -9,8 +9,8 @@
 
 .HAPPY {
     margin: 0 1% 0 0;
-    background-color: #FFD700;
-    color: black;
+    background-color: #FFD700  !important;
+    color: black  !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
@@ -18,8 +18,8 @@
 
 .SAD{
     margin: 0 1% 0 0;
-    background-color: #1976d2;
-    color: white;
+    background-color: #1976d2 !important;
+    color: white  !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
@@ -27,8 +27,8 @@
 
 .FEAR{
     margin: 0 1% 0 0;
-    background-color: #f64e4e;
-    color: white;
+    background-color: #f64e4e  !important;
+    color: white  !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
@@ -36,8 +36,8 @@
 
 .ANGER{
     margin: 0 1% 0 0;
-    background-color: #FF0000;
-    color: white;
+    background-color: #FF0000  !important;
+    color: white  !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
@@ -45,8 +45,8 @@
 
 .ANXIOUS{
     margin: 0 1% 0 0;
-    background-color: #00FFFF;
-    color: black;
+    background-color: #00FFFF  !important;
+    color: black  !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
@@ -54,8 +54,8 @@
 
 .LOVE{
     margin: 0 1% 0 0;
-    background-color: #dd4296;
-    color: white;
+    background-color: #dd4296  !important;
+    color: white  !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
@@ -63,8 +63,8 @@
 
 .INSPIRE{
     margin: 0 1% 0 0;
-    background-color: #00FF00;
-    color: black;
+    background-color: #00FF00  !important;
+    color: black  !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
     font-weight: 700;

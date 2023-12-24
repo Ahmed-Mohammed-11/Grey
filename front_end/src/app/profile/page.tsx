@@ -4,17 +4,14 @@ import styles from './page.module.css';
 import {useRef, useState} from 'react';
 import clientValidateForm from "../security/userValidation/clientFormValidation";
 import updateUserController from "../services/updateUserController";
-import {SIGN_UP_ROUTE, UPDATE_USER_ENDPOINT} from "../constants/apiConstants";
+import {UPDATE_USER_ENDPOINT} from "../constants/apiConstants";
 import {toast} from "react-toastify";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import User from '../components/sidebar/user';
-import GoogleAuthn from "@/app/googleAuthentication/GoogleAuthn";
-import {LOGIN_PANEL_TEXT} from "@/app/constants/displayTextMessages";
-import {FaArrowLeft} from "react-icons/fa";
-import ThemeRegistry from "@/app/themes/themeRegistry";
+import authTokenBuilder from "@/app/utils/authTokenBuilder";
 
 function Profile() {
 
@@ -52,24 +49,32 @@ function Profile() {
     }
 
     const fetchServerResponse = async (userDto: UserDTO) => {
+        console.log("before update");
+        console.log(userDto);
         const response = await updateUserController.sendPutRequest(userDto, UPDATE_USER_ENDPOINT)
         console.log(response)
         const message = await response.text()
         console.log(message)
         if (!response.ok) {
-            notify(message || "Server error", true)
+            userDto = {
+                username: initialUsername,
+                email: initialEmail,
+                password: initialPassword
+            }
+            notify(message || "Error occurred while changing profile info", true, userDto)
         } else {
-            notify(message, false)
+            notify(message, false, userDto)
         }
     }
 
-    const notify = (message: string, isError: boolean) => {
+    const notify = (message: string, isError: boolean, userDto:UserDTO) => {
         if (isError) {
             toast.error(message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000,
             })
         } else {
+            authTokenBuilder(userDto);
             toast.success(message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000,
@@ -77,7 +82,7 @@ function Profile() {
         }
     }
 
-    const sendRequest = (user: User) => {
+    const sendRequest = async (user: User) => {
         let userDto: UserDTO = {
             username: user.username,
             email: user.email,
@@ -86,7 +91,7 @@ function Profile() {
 
         console.log(userDto)
 
-        fetchServerResponse(userDto)
+        await fetchServerResponse(userDto)
     }
 
     const handleUpdate = () => {
@@ -108,7 +113,12 @@ function Profile() {
 
         if (noChange(user)) {
             console.log('no change')
-            notify('No change', false)
+            const userDto:UserDTO = {
+                username: initialUsername,
+                email: initialEmail,
+                password: initialPassword
+            }
+            notify('No change', false, userDto)
             return
         }
 

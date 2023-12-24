@@ -46,6 +46,7 @@ export default function Feed(props: any) {
 
     useEffect(() => {
         loadMore().then(r => console.log("loaded more"));
+
     }, [pageIndex]);
 
     const loadMore = async () => {
