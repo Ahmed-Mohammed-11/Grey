@@ -27,10 +27,10 @@ export default function SideBar(props:any) {
   ];
 
   const handleButtonClick = (index:number) => {
-    setActiveTab(index);
     if (props.onChange) {
       props.onChange(index);
     }
+    setActiveTab(index);
   };
 
   const buttons = buttonsText.map((text, index) => {

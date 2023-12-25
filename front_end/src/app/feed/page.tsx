@@ -33,7 +33,7 @@ const Feed = () => {
   return (
     <div>
       <Box className={styles.container}>
-        <SideBar width={'22%'} onChange={handleChange} />
+        <SideBar width={'20%'} onChange={handleChange} />
         {display}
       </Box>
     </div>

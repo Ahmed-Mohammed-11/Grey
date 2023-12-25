@@ -21,8 +21,8 @@
 }
 
 .profile_image {
-    width: calc(min(17vh, 17vw));
-    height: calc(min(17vh, 17vw));
+    width: calc(min(17vh, 17vw)) !important;
+    height: calc(min(17vh, 17vw)) !important;
     position: relative;
     display: flex;
     justify-content: center;
@@ -33,7 +33,7 @@
 }
 
 .profile_image > * {
-    margin: -12px 0 0 -12px;
+    margin-left: -13px;
 }
 
 .profile_image:after {
@@ -73,22 +73,22 @@
 }
 
 .button:hover{
-    background: #DDE6ED;
-    color: #526D82;
+    /*background: #DDE6ED;*/
+    /*color: #526D82;*/
 }
 
 
 .active {
     position: relative;
-    background: #526D82;
-    color: #FFF;
+    /*background: #526D82;*/
+    /*color: #FFF;*/
     border-radius: 16px;
     font-weight: bold;
 }
 
 .active:hover{
-    background: #344e64;
-    color: #FFF;
+    /*background: #344e64;*/
+    /*color: #FFF;*/
 }
 
 .active:after {
@@ -104,7 +104,6 @@
 }
 
 .icon{
-    font-size: 23px;
-    height: 78%;
+    height: 1.6em !important;
     color: inherit;
 }
