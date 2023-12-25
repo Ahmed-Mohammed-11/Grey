@@ -4,17 +4,16 @@ import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.User;
 import com.software.grey.models.enums.Feeling;
-import com.software.grey.recommendationsystem.*;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
 import com.software.grey.utils.SecurityUtils;
-import org.junit.jupiter.api.*;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -138,11 +137,22 @@ class RecommenderIntegrationTest {
     @Test
     void testRecommendIntegrationWithPaging() {
         // Assuming user2 has posts with different feelings
-        when(securityUtils.getCurrentUser()).thenReturn(user2);
+        when(securityUtils.getCurrentUser()).thenReturn(user1);
 
         PostFilterDTO postFilterDTO = new PostFilterDTO();
         postFilterDTO.setPageNumber(1); // Second page
         postFilterDTO.setPageSize(10);
+
+        Set<Feeling> set = new TreeSet<>();
+        set.add(Feeling.SAD);
+        Post postTemp = Post.builder()
+                .postText("Sad")
+                .user(user1)
+                .postFeelings(set)
+                .postTime(Timestamp.from(Instant.now()))
+                .build();
+        postRepository.save(postTemp);
+
 
         // Act
         List<Post> recommendedPosts = recommender.recommend(postFilterDTO);
