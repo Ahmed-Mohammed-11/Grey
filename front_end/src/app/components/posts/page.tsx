@@ -12,10 +12,9 @@ import PostFilters from "../postFilter/page";
 import PostFilterDTO from '@/app/entities/dtos/PostFilterDTO';
 import PopupScreen from "@/app/components/popup/page";
 
-export default function Feed(props: any) {
+export default function Posts(props: any) {
     const {ref, inView} = useInView();
     const [auth, setAuth] = useState<string | null>(null);
-    // const [totalNumberOfPages, setTotalNumberOfPages] = useState(1);
     const [posts, setPosts] = useState<any[]>([]);
     const [filterData, setFilterData] = useState<PostFilterDTO>({} as PostFilterDTO);
     const [pageIndex, setPageIndex] = useState<number>(0);
@@ -74,7 +73,6 @@ export default function Feed(props: any) {
                     headers,
                 });
 
-                // setTotalNumberOfPages(newData.totalPages);
             }
 
             if (!response.ok) {
