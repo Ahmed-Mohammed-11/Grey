@@ -12,7 +12,7 @@ import PostFilters from "../postFilter/page";
 import PostFilterDTO from '@/app/entities/dtos/PostFilterDTO';
 import PopupScreen from "@/app/components/popup/page";
 
-export default function Feed(props: any) {
+export default function Posts(props: any) {
     const {ref, inView} = useInView();
     const [auth, setAuth] = useState<string | null>(null);
     const [totalNumberOfPages, setTotalNumberOfPages] = useState(1);
@@ -32,13 +32,11 @@ export default function Feed(props: any) {
     useEffect(() => {
         setPosts([])
         if (pageIndex == 0) {
-            console.log("in index == 0")
             loadMore().then(r => console.log("loaded more"));
         } else setPageIndex(0);
     }, [filterData]);
 
     useEffect(() => {
-        console.log("from view")
         if (inView && posts.length != 0) {
             setPageIndex(Math.max(Math.min(pageIndex + 1, totalNumberOfPages - 1), 0))
         }
