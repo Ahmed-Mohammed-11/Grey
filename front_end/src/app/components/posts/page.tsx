@@ -124,8 +124,8 @@ export default function Feed(props: any) {
             {!lastPage && (
                 <div className={styles.post_skeleton} ref={ref}>
                     <div className={styles.container}>
-                        <Skeleton variant="circular" className={styles.chip_shape}/>
-                        <Skeleton variant="circular" className={styles.chip_shape}/>
+                        <Skeleton className={styles.chip_shape}/>
+                        <Skeleton className={styles.chip_shape}/>
                     </div>
                     <Skeleton className={styles.text_shape}/>
                     <Skeleton className={styles.text_shape}/>

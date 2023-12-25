@@ -78,7 +78,7 @@ export default function PopupScreen() {
 
 
     return (
-        <Popup trigger={<button className={styles.create_button}><FaPen/>shout  .. </button>} modal nested>
+        <Popup trigger={<button className={styles.create_button}><FaPen/>Express</button>} modal nested>
             {close => {
                 return (
                     <section className={styles.container}>

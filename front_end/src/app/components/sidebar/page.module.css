@@ -9,6 +9,7 @@
 
 .container_buttons {
     display: flex;
+    gap: 10px;
     margin-top: 10%;
     flex-direction: column;
 }
@@ -70,18 +71,18 @@
     color: #526D82;
     border-radius: 16px;
     box-sizing: border-box;
+    transition: all .3s ease-in-out !important;
 }
 
-.button:hover{
-    /*background: #DDE6ED;*/
-    /*color: #526D82;*/
+.button:hover:not(.active) {
+    transform: translateX(10px);
 }
 
 
 .active {
     position: relative;
-    /*background: #526D82;*/
-    /*color: #FFF;*/
+    background: #526D82 !important;
+    color: #FFF !important;
     border-radius: 16px;
     font-weight: bold;
 }
@@ -98,7 +99,7 @@
     height: 100%;
     top: -8px;
     left: -9px;
-    border-radius: 16px;
+    border-radius: inherit;
     border: 2px solid #333;
     box-sizing: border-box;
 }

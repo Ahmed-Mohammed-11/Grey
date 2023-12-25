@@ -39,11 +39,12 @@
     height: 30px;
     margin: 0 7px 0 0;
     border-radius: 15px;
-    background: #8ACDD7;
+    background: rgb(211 236 255 / 56%) !important;
 }
 
 .text_shape {
     width: 100%;
     height: 30px;
     padding: 0;
+    background: rgb(211 236 255 / 56%) !important;
 }
