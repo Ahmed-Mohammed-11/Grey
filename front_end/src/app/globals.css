@@ -1,52 +1,53 @@
 .DISGUST{
     margin: 0 1% 0 0;
-    background-color: #DF826C !important;
+    background-color: #8B8682 !important;
     color: white  !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
-    font-weight: 700;
+    font-weight: 900;
 }
 
 .HAPPY {
     margin: 0 1% 0 0;
-    background-color: #F6ECA9  !important;
+    background-color: #FDD835 !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
-    font-weight: 700;
+    font-weight: 900;
 }
 
 .SAD{
     margin: 0 1% 0 0;
-    background-color: #31304D !important;
+    background-color: #81D4FA !important;
     color: white  !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
-    font-weight: 700;
+    font-weight: 900;
 }
 
 .FEAR{
     margin: 0 1% 0 0;
-    background-color: #F3F8FF  !important;
+    background-color: #78909C !important;
+    color: white  !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
-    font-weight: 700;
+    font-weight: 900;
 }
 
 .ANGER{
     margin: 0 1% 0 0;
-    background-color: #495759 !important;
+    background-color: #EF5350 !important;
     color: white  !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
-    font-weight: 700;
+    font-weight: 900;
 }
 
 .ANXIOUS{
     margin: 0 1% 0 0;
-    background-color: #FFF78A  !important;
+    background-color: #C5CAE9 !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
-    font-weight: 700;
+    font-weight: 900;
 }
 
 .LOVE{
@@ -54,63 +55,47 @@
     background-color: #FFC0D9  !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
-    font-weight: 700;
+    font-weight: 900;
 }
 
 .INSPIRE{
     margin: 0 1% 0 0;
-    background-color: #8ACDD7  !important;
+    background-color: #4CAF50  !important;
     color: #FFFFFF !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
-    font-weight: 700;
+    font-weight: 900;
 }
 
 
 .ANGER:hover{
-    /*background-color: #FF0000;*/
-    /*color: white;*/
     cursor: pointer;
 }
 
 .ANXIOUS:hover{
-    /*background-color: #00FFFF;*/
-    /*color: black;*/
     cursor: pointer;
 }
 
 .DISGUST:hover{
-    /*background-color: #8B4513;*/
-    /*color: white;*/
     cursor: pointer;
 }
 
 .FEAR:hover{
-    /*background-color: #f64e4e;*/
-    /*color: white;*/
     cursor: pointer;
 }
 
 .HAPPY:hover{
-    /*background-color: #FFD700;*/
-    /*color: black;*/
     cursor: pointer;
 }
 
 .INSPIRE:hover{
-    /*background-color: #00FF00;*/
-    /*color: black;*/
     cursor: pointer;
 }
 
 .LOVE:hover{
-    /*background-color: #dd4296;*/
-    /*color: white;*/
     cursor: pointer;
 }
 
 .SAD:hover{
-    /*background-color: #1976d2;*/
-    /*color: white;*/
     cursor: pointer;
 }
