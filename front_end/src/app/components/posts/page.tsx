@@ -15,7 +15,6 @@ import PopupScreen from "@/app/components/popup/page";
 export default function Posts(props: any) {
     const {ref, inView} = useInView();
     const [auth, setAuth] = useState<string | null>(null);
-    const [totalNumberOfPages, setTotalNumberOfPages] = useState(1);
     const [posts, setPosts] = useState<any[]>([]);
     const [filterData, setFilterData] = useState<PostFilterDTO>({} as PostFilterDTO);
     const [pageIndex, setPageIndex] = useState<number>(0);
@@ -37,14 +36,16 @@ export default function Posts(props: any) {
     }, [filterData]);
 
     useEffect(() => {
-        if (inView && posts.length != 0) {
-            setPageIndex(Math.max(Math.min(pageIndex + 1, totalNumberOfPages - 1), 0))
+        if (inView && !lastPage) {
+            setPageIndex(i => i + 1);
         }
     }, [inView])
 
     useEffect(() => {
-        loadMore().then(r => console.log("loaded more"));
-
+        loadMore().then(() => {
+            if(inView)
+                setPageIndex(i => i + 1);
+        })
     }, [pageIndex]);
 
     const loadMore = async () => {
@@ -58,7 +59,6 @@ export default function Posts(props: any) {
             let response: Response
 
             // TODO change all the requests to get requests
-            // TODO handle the case where backend sends a list not a page
             if (props.feedType == 1) {
                 response = await fetch(BASE_BACKEND_URL + props.feedTypeEndPoint
                     + "?pageNumber=" + pageIndex + "&pageSize=" + '5', {
@@ -66,15 +66,6 @@ export default function Posts(props: any) {
                     headers,
                 });
 
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                const explorePosts = await response.json();
-
-                setPosts((prevPosts) => {
-                    return [...(prevPosts ?? []), ...explorePosts];
-                });
             } else {
                 response = await fetch(BASE_BACKEND_URL + props.feedTypeEndPoint, {
                     method: 'POST',
@@ -82,17 +73,17 @@ export default function Posts(props: any) {
                     headers,
                 });
 
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                const newData = await response.json();
-                setTotalNumberOfPages(newData.totalPages);
-                setLastPage(newData.last)
-                setPosts((prevPosts) => {
-                    return [...(prevPosts ?? []), ...newData.content];
-                });
             }
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const newData = await response.json();
+            setLastPage(newData.last)
+            setPosts((prevPosts) => {
+                return [...(prevPosts ?? []), ...newData.content];
+            });
         } catch (error) {
             console.error('Error fetching data:', error);
         }
