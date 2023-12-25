@@ -4,7 +4,7 @@
     flex-direction: column;
     box-sizing: border-box;
     padding: 1% 2%;
-    border-right: 1px solid #526D82;
+    border-right: 1px solid rgba(82, 109, 130, 0.3);
 }
 
 .container_buttons {
@@ -33,10 +33,6 @@
     box-sizing: border-box;
 }
 
-.profile_image > * {
-    margin-left: -13px;
-}
-
 .profile_image:after {
     content: "";
     width: 100%;
@@ -47,6 +43,10 @@
     border-radius: 50%;
     border: 2px solid #333;
     box-sizing: border-box;
+}
+
+.profile_image > * {
+    margin-left: -13px;
 }
 
 .container_profile h3 {
@@ -74,6 +74,21 @@
     transition: all .3s ease-in-out !important;
 }
 
+.button:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: -8px;
+    left: -9px;
+    border-radius: inherit;
+    border: 2px solid #333;
+    box-sizing: border-box;
+    transform: scale(0);
+    transform-origin: center center;
+    transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
 .button:hover:not(.active) {
     transform: translateX(10px);
 }
@@ -87,21 +102,8 @@
     font-weight: bold;
 }
 
-.active:hover{
-    /*background: #344e64;*/
-    /*color: #FFF;*/
-}
-
-.active:after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: -8px;
-    left: -9px;
-    border-radius: inherit;
-    border: 2px solid #333;
-    box-sizing: border-box;
+.active::after {
+    transform: scale(1);
 }
 
 .icon{

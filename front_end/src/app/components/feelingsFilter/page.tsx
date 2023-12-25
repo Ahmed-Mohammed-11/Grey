@@ -58,7 +58,7 @@ export default function FeelingsFilter(props: any) {
                 ))}
             </Box>
 
-            <Tooltip title="Add Feeling">
+            <Tooltip title="Feelings Filter">
                 <IconButton
                     id="basic-button"
                     disabled={fullFeelings}

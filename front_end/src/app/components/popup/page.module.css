@@ -93,40 +93,10 @@
     text-transform: capitalize;
     font-size: calc(2*calc(min(1vh, 1vw)));
     border: none;
-    border-radius: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
     box-sizing: border-box;
-}
-.create_button::before{
-    content: "";
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    position: absolute;
-    z-index: -1;
-    box-sizing: border-box;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(0.9);
-        box-shadow: 0 0 0 0 rgba(204, 204, 204, 0.7);
-    }
-
-    70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 1em rgba(255, 255, 255, 0.3);
-    }
-
-    90% {
-        transform: scale(1);
-        box-shadow: 0 0 0 5em rgba(255, 255, 255, 0);
-    }
-
-    100% {
-        transform: scale(0.9);
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-    }
 }
 
 .modal > .close {

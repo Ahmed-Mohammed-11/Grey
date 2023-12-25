@@ -9,7 +9,7 @@
 .posts_bar{
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: flex-start;
     margin: 10px 0;
     flex-wrap: wrap;
     flex-direction: column;
