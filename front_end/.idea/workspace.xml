@@ -5,13 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="SG-103 Merging complete">
-      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/dtos/RecommendedPostsDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/controllers/ExploreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/controllers/ExploreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/controllers/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/controllers/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/services/impl/SavedPostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/services/implementations/SavedPostServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/services/implementations/ExploreService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/services/implementations/ExploreService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/components/posts/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/posts/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/sidebar/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/sidebar/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/constants/apiConstants.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/constants/apiConstants.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/feed/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/page.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/feed/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +79,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;SG-188-change-returned-data-from-recommendation-system&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;SG-120-Refactor-Frontend-code&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Belal/Desktop/First Semester/Software Engineering/Project/SWE-Project/front_end/public&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -88,7 +88,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;npm.grey.executor&quot;: &quot;Run&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Omar\\Projects\\Grey\\Grey milestone temp\\SWE-Project\\front_end\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -137,7 +137,7 @@
       <workItem from="1702226815689" duration="4564000" />
       <workItem from="1702387395959" duration="643000" />
       <workItem from="1702751037725" duration="13239000" />
-      <workItem from="1703522972093" duration="2732000" />
+      <workItem from="1703505241975" duration="8288000" />
     </task>
     <task id="LOCAL-00001" summary="Google button enhanced &amp; side button added">
       <option name="closed" value="true" />
