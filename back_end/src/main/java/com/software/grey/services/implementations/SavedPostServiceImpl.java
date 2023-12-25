@@ -1,4 +1,4 @@
-package com.software.grey.services.impl;
+package com.software.grey.services.implementations;
 
 import com.software.grey.SavedPostEnum;
 import com.software.grey.models.entities.Post;
