@@ -27,6 +27,6 @@ public class SavedPost {
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post post;
 
-    @Column(name = "saved_time")
+    @Column(name = "post_saved_time")
     private Timestamp SavedTime;
 }

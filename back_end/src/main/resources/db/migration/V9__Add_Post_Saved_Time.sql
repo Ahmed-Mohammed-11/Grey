@@ -1,0 +1,1 @@
+ALTER TABLE saved_post ADD COLUMN post_saved_time TIMESTAMP;

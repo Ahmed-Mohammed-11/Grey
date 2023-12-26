@@ -47,6 +47,7 @@ public class PostService implements IPostService {
     private UserService userService;
 
     private SecurityUtils securityUtils;
+
     public UUID add(PostDTO postDTO) {
         Post post = postMapper.toPost(postDTO);
         String userName = securityUtils.getCurrentUserName();

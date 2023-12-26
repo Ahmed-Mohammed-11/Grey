@@ -20,6 +20,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -61,7 +63,7 @@ public class SavedPostServiceImpl implements SavedPostService {
                 savedPostRepository.deleteById(savedPostId);
                 return SavedPostEnum.REMOVED;
             } else {
-                savedPostRepository.save(new SavedPost(user, post.get()));
+                savedPostRepository.save(new SavedPost(user, post.get(), Timestamp.from(Instant.now())));
                 return SavedPostEnum.SAVED;
             }
         }
@@ -74,7 +76,6 @@ public class SavedPostServiceImpl implements SavedPostService {
 
     public Page<PostDTO> getSavedPosts(PostFilterDTO postFilterDTO) {
         String userName = securityUtils.getCurrentUserName();
-
         List<String> feelings = Optional.ofNullable(postFilterDTO.getFeelings())
                 .filter(list -> !list.isEmpty())
                 .map(list -> list.stream().map(Enum::name).collect(Collectors.toList()))
@@ -86,7 +87,7 @@ public class SavedPostServiceImpl implements SavedPostService {
                 postFilterDTO.getPageNumber(),
                 postFilterDTO.getPageSize());
 
-        Page<Post> pos = savedPostRepository.findSavedPostsByUsernameAndDayMonthYear(feelings,
+        Page<Post> pos = savedPostRepository.findSavedPostsByUsernameAndDayMonthYear(userName, feelings,
                 postFilterDTO.getDay(),
                 postFilterDTO.getMonth(),
                 postFilterDTO.getYear(), pageable).map(SavedPost::getPost);
