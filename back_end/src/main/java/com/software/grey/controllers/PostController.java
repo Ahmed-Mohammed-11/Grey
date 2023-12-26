@@ -96,7 +96,7 @@ public class PostController {
             @ApiResponse(responseCode = "200", description = "Posts retrieved successfully"),
             @ApiResponse(responseCode = "401", description = "User is not authenticated")
     })
-    @GetMapping(EndPoints.REPORT_POST)
+    @PostMapping(EndPoints.REPORT_POST)
     public ResponseEntity<Page<PostDTO>> getAllReportedPosts(@RequestBody PostFilterDTO postFilterDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(postService.getReportedPosts(postFilterDTO));
     }

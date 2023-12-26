@@ -6,7 +6,7 @@ import lombok.Builder;
 @AllArgsConstructor
 @Builder
 public class UserResponseDTO {
-    public String Username;
+    public String username;
     public String email;
     public String role;
 }

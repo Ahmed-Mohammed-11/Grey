@@ -4,7 +4,13 @@ import React, { useState, useEffect } from 'react';
 import { Box } from '@mui/system';
 import Posts from '@/app/components/posts/page';
 import SideBar from '@/app/components/sidebar/page';
-import { DIARY_ENDPOINT, EXPLORE_ENDPOINT, FEED_ENDPOINT, SAVED_ENDPOINT } from '../constants/apiConstants';
+import {
+  DIARY_ENDPOINT,
+  EXPLORE_ENDPOINT,
+  FEED_ENDPOINT,
+  REPORTED_ENDPOINT,
+  SAVED_ENDPOINT
+} from '../constants/apiConstants';
 import Profile from '../profile/page';
 import {setDefaultAutoSelectFamily} from "node:net";
 
@@ -15,6 +21,7 @@ const Home = () => {
     1: EXPLORE_ENDPOINT,
     2: DIARY_ENDPOINT,
     3: SAVED_ENDPOINT,
+    5: REPORTED_ENDPOINT,
   };
 
   const profile = <Profile />
@@ -25,7 +32,7 @@ const Home = () => {
   const handleChange = (newSelectedPageIndex: number) => {
     if (newSelectedPageIndex === 4) {
       setDisplay(profile)
-    } else if (newSelectedPageIndex <= 3) {
+    } else {
       const posts = <Posts width={'80%'}
                            feedTypeEndPoint={endpointMapping[newSelectedPageIndex]}
                            feedType={newSelectedPageIndex} />
@@ -34,9 +41,7 @@ const Home = () => {
   };
 
   const user = localStorage.getItem('user') || '{}';
-  if (user == '{}') {
-    window.location.href = '/login';
-  }
+  (user == '{}') && (window.location.href = '/login');
 
   return (
     <div>

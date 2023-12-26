@@ -2,28 +2,27 @@
 import Button from '@mui/material/Button';
 import styles from "./page.module.css"
 import {Box} from "@mui/system";
-import {MdExplore} from "react-icons/md";
+import {MdExplore, MdReport} from "react-icons/md";
 import {AiFillHome} from "react-icons/ai";
 import {FaUserLarge} from "react-icons/fa6";
-import {RiSettings4Fill} from "react-icons/ri";
 import {BsFillBookmarkFill} from "react-icons/bs";
 import User from "@/app/components/sidebar/user";
-import PopupScreen from "@/app/components/popup/page";
-import { FaBookOpen } from "react-icons/fa";
-import { useState } from 'react';
-import {Icon, IconButton} from "@mui/material";
+import {FaBookOpen} from "react-icons/fa";
+import {useState} from 'react';
+import {Icon} from "@mui/material";
 
 export default function SideBar(props:any) {
   const [activeTab, setActiveTab] = useState(0);
+  const username = localStorage.getItem('username')!;
 
-  const buttonsText = ["feed", "explore", "diary", "saved", "profile", "settings"];
+  const buttonsText = ["feed", "explore", "diary", "saved", "profile", "reported"];
   const buttonsIcons = [
     <AiFillHome />,
     <MdExplore />,
     <FaBookOpen />,
     <BsFillBookmarkFill />,
     <FaUserLarge />,
-    <RiSettings4Fill />,
+    <MdReport />
   ];
 
   const handleButtonClick = (index:number) => {
@@ -47,7 +46,7 @@ export default function SideBar(props:any) {
 
     return (
         <Box className={styles.side_bar} width={props.width}>
-            <User name={"@hesham09"} backgroundColor={"#c3dff8"}></User>
+            <User name={'@' + username} backgroundColor={"#c3dff8"}></User>
             <Box className={styles.container_buttons}>{buttons}</Box>
         </Box>
     )

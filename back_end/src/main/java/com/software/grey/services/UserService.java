@@ -59,7 +59,7 @@ public class UserService {
         String username = securityUtils.getCurrentUserName();
         User user = userRepo.findByUsername(username);
         return UserResponseDTO.builder()
-                .Username(user.getUsername())
+                .username(user.getUsername())
                 .email(user.getEmail())
                 .role(user.getRole().toString()).build();
     }
