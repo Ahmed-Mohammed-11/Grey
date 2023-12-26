@@ -52,7 +52,7 @@ public class PostController {
         } else if (saved == SavedPostEnum.REMOVED) {
             return new ResponseEntity<>("Removed successfully", HttpStatus.OK);
         }
-        return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("You wrote this", HttpStatus.NOT_FOUND);
     }
 
     @Operation(
