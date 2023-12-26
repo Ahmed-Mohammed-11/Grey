@@ -104,7 +104,7 @@ export default function PopupScreen() {
     const clearPostInfo = () => {
         setIsPostTextValid("")
         setSelectedFeelings(new Set<Feeling>());
-        handleFeelingsChange();
+        // handleFeelingsChange();
     }
 
 
