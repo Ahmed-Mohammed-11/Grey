@@ -1,6 +1,8 @@
 package com.software.grey.services;
 
 import com.software.grey.exceptions.exceptions.DataNotFoundException;
+import com.software.grey.exceptions.exceptions.PostNotFoundException;
+import com.software.grey.exceptions.exceptions.UserNotAuthorizedException;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.User;
@@ -134,7 +136,7 @@ public class PostServiceDeleteTest {
         //find the user id
         when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
         //assert throwing the exception
-        Exception exception = assertThrows(DataNotFoundException.class, () -> postService.delete(postId.toString()));
+        UserNotAuthorizedException exception = assertThrows(UserNotAuthorizedException.class, () -> postService.delete(postId.toString()));
         assertThat(exception.getMessage()).isEqualTo("You are not authorized to delete this post");
     }
 
@@ -156,8 +158,7 @@ public class PostServiceDeleteTest {
 
         //delete the post
         when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
-        Exception exception = assertThrows(DataNotFoundException.class, () -> postService.delete(postId.toString()));
-        System.out.println(exception.getMessage());
+        PostNotFoundException exception = assertThrows(PostNotFoundException.class, () -> postService.delete(postId.toString()));
         assertThat(exception.getMessage()).isEqualTo("Post not found");
     }
 

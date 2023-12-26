@@ -2,6 +2,7 @@ package com.software.grey.services;
 
 import com.software.grey.controllers.SignupController;
 import com.software.grey.exceptions.exceptions.DataNotFoundException;
+import com.software.grey.exceptions.exceptions.PostNotFoundException;
 import com.software.grey.exceptions.exceptions.UserReportedPostBeforeException;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
@@ -34,6 +35,7 @@ import static com.software.grey.models.enums.Feeling.SAD;
 import static java.lang.Math.ceil;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -230,8 +232,7 @@ class ReportPostServiceTest {
         User user = userRepo.findByUsername("mocked User1");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
-        DataNotFoundException exception = Assertions.assertThrows(DataNotFoundException.class,
-                () -> postService.report(finalRandomUUID.toString()));
+        PostNotFoundException exception = assertThrows(PostNotFoundException.class, () -> postService.report(finalRandomUUID.toString()));
         assertEquals("Post not found", exception.getMessage());
     }
 }
