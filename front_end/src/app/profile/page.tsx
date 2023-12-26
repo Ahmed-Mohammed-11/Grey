@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import buildAuthToken from "../utils/authTokenBuilder";
 
 function Profile() {
 
@@ -46,14 +47,20 @@ function Profile() {
     setShowPassword(!showPassword)
   }
 
+  const handleAuth = (userDTO: UserDTO) => {
+    const authToken = buildAuthToken(userDTO);
+    localStorage.setItem("Authorization", authToken);
+  }
+
   const fetchServerResponse = async (userDto: UserDTO) => {
     const response = await updateUserController.sendPutRequest(userDto, UPDATE_USER_ENDPOINT)
     console.log(response)
     const message = await response.text()
     console.log(message)
     if (!response.ok) {
-      notify(message || "Server error", true)
+      notify(message || "You must login again", true)
     } else {
+      handleAuth(userDto)
       notify(message, false)
     }
   }
