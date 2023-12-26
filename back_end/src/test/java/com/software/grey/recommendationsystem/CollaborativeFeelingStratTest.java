@@ -18,12 +18,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -163,11 +162,11 @@ class CollaborativeFeelingStratTest {
         map.put(Feeling.ANXIOUS, 0.5);
 
         // Mock the behavior of dependencies
-        when(postService.getCountOfPostedFeelings(user2)).thenReturn(myList);
+        when(postService.getCountOfPostedFeelings(user1)).thenReturn(myList);
 
 //        when(collaborativeFeelingStratSpy.getFeelingPercentage(myList)).thenReturn(map);
         // Call the method under test
-        List<Post> returnedData = collaborativeFeelingStrat.recommend(user2, 0, 50);
+        List<Post> returnedData = collaborativeFeelingStrat.recommend(user1, 0, 50);
 
         // Assertions
         assertEquals(30, returnedData.size(), "The result should contain 30 posts");

@@ -6,8 +6,9 @@ import Posts from '@/app/components/posts/page';
 import SideBar from '@/app/components/sidebar/page';
 import { DIARY_ENDPOINT, EXPLORE_ENDPOINT, FEED_ENDPOINT, SAVED_ENDPOINT } from '../constants/apiConstants';
 import Profile from '../profile/page';
+import {setDefaultAutoSelectFamily} from "node:net";
 
-const Feed = () => {
+const Home = () => {
 
   const endpointMapping: Record<number, string> = {
     0: FEED_ENDPOINT,
@@ -16,28 +17,30 @@ const Feed = () => {
     3: SAVED_ENDPOINT,
   };
 
-  const [selectedFeedIndex, setSelectedFeedIndex] = useState(0);
-  const posts = <Posts width={'75%'} feedTypeEndPoint={endpointMapping[selectedFeedIndex]} feedType={selectedFeedIndex} />
   const profile = <Profile />
-  const [display, setDisplay] = useState(posts)
+  const [display, setDisplay] = useState(<Posts width={'80%'}
+                                                feedTypeEndPoint={endpointMapping[0]}
+                                                feedType={0} />)
 
   const handleChange = (newSelectedPageIndex: number) => {
-    if (newSelectedPageIndex == 4) {
+    if (newSelectedPageIndex === 4) {
       setDisplay(profile)
-    } else {
+    } else if (newSelectedPageIndex <= 3) {
+      const posts = <Posts width={'80%'}
+                           feedTypeEndPoint={endpointMapping[newSelectedPageIndex]}
+                           feedType={newSelectedPageIndex} />
       setDisplay(posts)
-      setSelectedFeedIndex(newSelectedPageIndex);
     }
   };
   
   return (
     <div>
       <Box className={styles.container}>
-        <SideBar width={'25%'} onChange={handleChange} />
+        <SideBar width={'20%'} onChange={handleChange} />
         {display}
       </Box>
     </div>
   );
 };
 
-export default Feed;
+export default Home;

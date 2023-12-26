@@ -7,10 +7,11 @@ import {AiFillHome} from "react-icons/ai";
 import {FaUserLarge} from "react-icons/fa6";
 import {RiSettings4Fill} from "react-icons/ri";
 import {BsFillBookmarkFill} from "react-icons/bs";
-import Profile from "@/app/components/sidebar/profile";
+import User from "@/app/components/sidebar/user";
 import PopupScreen from "@/app/components/popup/page";
 import { FaBookOpen } from "react-icons/fa";
 import { useState } from 'react';
+import {Icon, IconButton} from "@mui/material";
 
 export default function SideBar(props:any) {
   const [activeTab, setActiveTab] = useState(0);
@@ -26,10 +27,10 @@ export default function SideBar(props:any) {
   ];
 
   const handleButtonClick = (index:number) => {
-    setActiveTab(index);
     if (props.onChange) {
       props.onChange(index);
     }
+    setActiveTab(index);
   };
 
   const buttons = buttonsText.map((text, index) => {
@@ -37,9 +38,8 @@ export default function SideBar(props:any) {
       <Button
         key={index}
         className={`${styles.button} ${index === activeTab ? styles.active : styles.button}`}
-        onClick={() => handleButtonClick(index)}
-      >
-        {buttonsIcons[index]}
+        onClick={() => handleButtonClick(index)}>
+        <Icon className={styles.icon}>{buttonsIcons[index]}</Icon>
         {text}
       </Button>
     );
@@ -47,8 +47,7 @@ export default function SideBar(props:any) {
 
     return (
         <Box className={styles.side_bar} width={props.width}>
-            <Profile name={"@hesham09"}></Profile>
-            <PopupScreen/>
+            <User name={"@hesham09"} backgroundColor={"#c3dff8"}></User>
             <Box className={styles.container_buttons}>{buttons}</Box>
         </Box>
     )

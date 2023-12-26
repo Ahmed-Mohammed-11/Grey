@@ -8,7 +8,7 @@ import {FaArrowLeft} from "react-icons/fa";
 import ThemeRegistry from "@/app/themes/themeRegistry";
 import classNames from "classnames";
 import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
-import signinController from "@/app/services/signinController";
+import signinController from "@/app/services/loginController";
 import {
     SIGN_IN_BACKEND_ENDPOINT,
     SIGN_UP_ROUTE,
@@ -17,7 +17,7 @@ import {
 } from "@/app/constants/apiConstants";
 import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
 import {LOGIN_PANEL_TEXT, VERIFY_PANEL_TEXT} from "@/app/constants/displayTextMessages";
-import signinServerFormValidationMapper from "@/app/security/userValidation/signinServerFormValidationMapper";
+import loginServerFormValidationMapper from "@/app/security/userValidation/loginServerFormValidationMapper";
 import {useRouter} from "next/navigation";
 import signupController from "@/app/services/signupController";
 
@@ -56,7 +56,7 @@ function Verify() {
         (responseStat == 200) && router.push(SIGN_IN_ROUTE);
         //if response status is not 200, map response from server to display appropriate error messages
         //and if 200 get auth token and store it in local storage
-        // let {isUserValid, errors} = signinServerFormValidationMapper(responseStat, jsonResponse, userDTO)
+        // let {isUserValid, errors} = loginServerFormValidationMapper(responseStat, jsonResponse, userDTO)
         // setIsUserValid(isUserValid);
         // setErrors(errors);
     }

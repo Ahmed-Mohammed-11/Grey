@@ -1,4 +1,4 @@
-import {BASE_BACKEND_URL} from "@/app/constants/apiConstants";
+import { BASE_BACKEND_URL } from "@/app/constants/apiConstants";
 
 class CreatePostController implements IPostRequestController {
     sendPostRequest(payload: Object, endpoint: string):Promise<Response> {

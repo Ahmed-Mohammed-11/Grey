@@ -4,10 +4,10 @@ import React, {useEffect, useState} from "react";
 import SideBar from "./components/sidebar/page";
 import styles from "./page.module.css"
 import Profile from "./profile/page";
-import Feed from "./components/posts/page";
+import Home from "@/app/home/page";
 
 
-function Home() {
+function Welcome() {
 
     const [Auth, setAuth] = useState<string | null>("")
     useEffect(() => {
@@ -15,28 +15,10 @@ function Home() {
         setAuth(localStorage.getItem("Authorization"));
     })
 
-    const [index, setIndex] = useState(0)
-    const profile = <Profile />
-    const feed = <Feed index={index}/>
-    const [display, setDisplay] = useState(feed)
-
-    const handleChange = (idx: number) => {
-        setIndex(idx)
-        if (idx === 4) {
-            setDisplay(profile)
-        } else {
-            // posts
-            setDisplay(<Feed index={index} />)
-        }
-    }
-
+    // TODO create a Welcome page that redirects to Home if the user is authenticated
+    // Welcome page should explain what Grey hopes to do, and includes a button to the sign up page.
     return (
-        <>
-            <Box className={styles.container}>
-                <SideBar width={'25%'} onChange={handleChange} />
-                {display}
-            </Box>
-        </>
+            <Home />
     )
 }
 
