@@ -32,7 +32,12 @@ const Home = () => {
       setDisplay(posts)
     }
   };
-  
+
+  const user = localStorage.getItem('user') || '{}';
+  if (user == '{}') {
+    window.location.href = '/login';
+  }
+
   return (
     <div>
       <Box className={styles.container}>
