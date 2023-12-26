@@ -14,5 +14,4 @@ public class UserReportedPostBeforeHandler {
     public ResponseEntity<String> handleUserExistsException(UserReportedPostBeforeException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(POST_REPORTED_BEFORE);
     }
-
 }

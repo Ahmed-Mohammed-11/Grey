@@ -14,5 +14,4 @@ public class UserExistsHandler {
     public ResponseEntity<String> handleUserExistsException(UserExistsException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists");
     }
-
 }
