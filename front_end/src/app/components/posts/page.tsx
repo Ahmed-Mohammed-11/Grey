@@ -82,7 +82,9 @@ export default function Posts(props: any) {
             const newData = await response.json();
             setLastPage(newData.last)
             setPosts((prevPosts) => {
-                console.log(newData);
+                // filter new coming posts to get only unique post ids only (to avoid duplicates) with previous posts
+                const uniqueIds = new Set(prevPosts?.map((post) => post.id));
+                newData.content = newData.content.filter((post: any) => !uniqueIds.has(post.id));
                 return [...(prevPosts ?? []), ...newData.content];
             });
         } catch (error) {
