@@ -1,9 +1,8 @@
 package com.software.grey.ServiceTest;
 
-
-import com.software.grey.SavedPostEnum;
 import com.software.grey.TestDataUtil.ObjectsBuilder;
 import com.software.grey.controllers.SignupController;
+import com.software.grey.exceptions.exceptions.UserIsAuthorException;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.SavedPost;
@@ -18,11 +17,10 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
 import java.util.Optional;
 import java.util.UUID;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -86,8 +84,8 @@ class TestSavedPostService {
         // Mock the securityUtils method
         when(securityUtils.getCurrentUser()).thenReturn(a);
         // save the post and assert that it saved successfully
-        SavedPostEnum savedPostEnum = savedPostService.toggleSavedPost(postB.getId().toString());
-        assertThat(savedPostEnum).isEqualTo(SavedPostEnum.SAVED);
+        String result = savedPostService.toggleSavedPost(postB.getId().toString());
+        assertThat(result).isEqualTo("Saved successfully");
 
         // get all saved posts
         Iterable<SavedPost> savedPost = savedPostRepository.findAll();
@@ -118,16 +116,16 @@ class TestSavedPostService {
         // Mock the securityUtils method
         when(securityUtils.getCurrentUser()).thenReturn(a);
         // save the post and assert that it saved successfully
-        SavedPostEnum savedPostEnum = savedPostService.toggleSavedPost(postB.getId().toString());
-        assertThat(savedPostEnum).isEqualTo(SavedPostEnum.SAVED);
+        String result = savedPostService.toggleSavedPost(postB.getId().toString());
+        assertThat(result).isEqualTo("Saved successfully");
 
         // assert that the post is saved
         Iterable<SavedPost> savedPost = savedPostRepository.findAll();
         assertThat(savedPost).hasSize(1);
 
         // un-save the post
-        savedPostEnum = savedPostService.toggleSavedPost(postB.getId().toString());
-        assertThat(savedPostEnum).isEqualTo(SavedPostEnum.REMOVED);
+        result = savedPostService.toggleSavedPost(postB.getId().toString());
+        assertThat(result).isEqualTo("Removed successfully");
 
         savedPost = savedPostRepository.findAll();
         assertThat(savedPost).isEmpty();
@@ -141,6 +139,20 @@ class TestSavedPostService {
         assertThat(post).isPresent();
         assertThat(post.get().getPostText()).isEqualTo(postB.getPostText());
         savedPostRepository.deleteAll();
+    }
+
+
+    @Test
+    void testSaveMyPost() {
+        User b = userRepository.findByUsername("userB");
+        Post postB = postRepository.findByUser(b);
+        // Mock the securityUtils method
+        when(securityUtils.getCurrentUser()).thenReturn(b);
+
+        UserIsAuthorException ex = assertThrows(UserIsAuthorException.class,
+                () -> savedPostService.toggleSavedPost(postB.getId().toString()));
+
+        assertThat(ex.getMessage()).isEqualTo("You have written this post");
     }
 
     @Test
@@ -159,7 +171,9 @@ class TestSavedPostService {
         UUID postId = post.getId();
         postRepository.delete(post);
 
-        SavedPostEnum savedPostEnum = savedPostService.toggleSavedPost(postId.toString());
-        assertThat(savedPostEnum).isEqualTo(SavedPostEnum.NOT_FOUND);
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> savedPostService.toggleSavedPost(postId.toString()));
+
+        assertThat(ex.getMessage()).isEqualTo("Invalid post ID");
     }
 }

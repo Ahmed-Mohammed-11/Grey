@@ -1,6 +1,6 @@
 package com.software.grey.services.impl;
 
-import com.software.grey.SavedPostEnum;
+import com.software.grey.exceptions.exceptions.UserIsAuthorException;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.SavedPost;
 import com.software.grey.models.entities.SavedPostId;
@@ -11,10 +11,8 @@ import com.software.grey.services.SavedPostService;
 import com.software.grey.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 import java.util.UUID;
-
 
 @Service
 @AllArgsConstructor
@@ -25,19 +23,19 @@ public class SavedPostServiceImpl implements SavedPostService {
     private SecurityUtils securityUtils;
 
     @Override
-    public SavedPostEnum toggleSavedPost(String postId) {
+    public String toggleSavedPost(String postId) {
         try {
             return toggle(UUID.fromString(postId));
         } catch (IllegalArgumentException e) {
-            return SavedPostEnum.NOT_FOUND;
+            throw new IllegalArgumentException("Invalid post ID");
         }
     }
 
 
-    private SavedPostEnum toggle(UUID postId) {
+    private String toggle(UUID postId) {
         User user = securityUtils.getCurrentUser();
         if (postId == null || user == null) {
-            return SavedPostEnum.NOT_FOUND;
+            throw new IllegalArgumentException("Invalid arguments");
         }
         Optional<Post> post = postRepository.findById(postId);
 
@@ -47,13 +45,13 @@ public class SavedPostServiceImpl implements SavedPostService {
 
             if (savedPostRepository.existsById(savedPostId)) {
                 savedPostRepository.deleteById(savedPostId);
-                return SavedPostEnum.REMOVED;
+                return "Removed successfully";
             } else {
                 savedPostRepository.save(new SavedPost(user, post.get()));
-                return SavedPostEnum.SAVED;
+                return "Saved successfully";
             }
         }
-        return SavedPostEnum.NOT_FOUND;
+        throw new UserIsAuthorException("You have written this post");
     }
 
     private boolean userIsNotThePostAuthor(User user, Post post) {
