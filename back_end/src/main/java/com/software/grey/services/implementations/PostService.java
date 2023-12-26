@@ -3,7 +3,6 @@ package com.software.grey.services.implementations;
 import com.software.grey.exceptions.exceptions.PostNotFoundException;
 import com.software.grey.exceptions.exceptions.UserNotAuthorizedException;
 import com.software.grey.exceptions.exceptions.UserReportedPostBeforeException;
-import com.software.grey.exceptions.exceptions.DataNotFoundException;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.entities.Post;
@@ -27,10 +26,11 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static com.software.grey.utils.ErrorMessages.POST_REPORTED_BEFORE;
 
@@ -86,6 +86,16 @@ public class PostService implements IPostService {
 
     public Post findPostById(UUID id){
         return postRepository.findById(id).orElseThrow(() -> new PostNotFoundException("Post not found"));
+    }
+
+    public Page<PostDTO> getReportedPosts(PostFilterDTO postFilterDTO) {
+        Pageable pageable = PageRequest.of(
+                postFilterDTO.getPageNumber(),
+                postFilterDTO.getPageSize());
+
+        return reportedPostRepository.findByOrderByPostPostTimeDesc(pageable)
+                .map(ReportedPost::getPost)
+                .map(postMapper::toPostDTO);
     }
 
     public Page<PostDTO> getDiary(PostFilterDTO postFilterDTO) {
