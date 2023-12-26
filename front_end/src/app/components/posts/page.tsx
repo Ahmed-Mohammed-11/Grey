@@ -82,6 +82,7 @@ export default function Posts(props: any) {
             const newData = await response.json();
             setLastPage(newData.last)
             setPosts((prevPosts) => {
+                console.log(newData);
                 return [...(prevPosts ?? []), ...newData.content];
             });
         } catch (error) {

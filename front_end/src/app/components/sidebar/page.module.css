@@ -41,7 +41,7 @@
     top: -9px;
     left: -8px;
     border-radius: 50%;
-    border: 2px solid #333;
+    border: 2px solid #314b60;
     box-sizing: border-box;
 }
 
@@ -74,6 +74,10 @@
     transition: all .3s ease-in-out !important;
 }
 
+.button:hover{
+    color: #DDE6ED;
+}
+
 .button:after {
     content: "";
     position: absolute;
@@ -82,7 +86,7 @@
     top: -8px;
     left: -9px;
     border-radius: inherit;
-    border: 2px solid #333;
+    border: 2px solid #314b60;
     box-sizing: border-box;
     transform: scale(0);
     transform-origin: center center;
@@ -97,7 +101,7 @@
 .active {
     position: relative;
     background: #526D82 !important;
-    color: #FFF !important;
+    color: #DDE6ED !important;
     border-radius: 16px;
     font-weight: bold;
 }
