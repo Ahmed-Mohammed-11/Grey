@@ -29,10 +29,11 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
-import static com.software.grey.models.enums.Feeling.*;
+import static com.software.grey.models.enums.Feeling.HAPPY;
+import static com.software.grey.models.enums.Feeling.LOVE;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -139,4 +140,5 @@ class ReportPostControllerTest {
                         .string(expectedErrorMessage));
         verify(postService, times(1)).report(anyString());
     }
+
 }
