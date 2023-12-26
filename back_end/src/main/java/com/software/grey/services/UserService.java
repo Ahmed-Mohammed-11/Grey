@@ -3,6 +3,7 @@ package com.software.grey.services;
 import com.software.grey.exceptions.exceptions.FailedToUpdateException;
 import com.software.grey.exceptions.exceptions.UserExistsException;
 import com.software.grey.models.dtos.UserDTO;
+import com.software.grey.models.dtos.responseDTOs.UserResponseDTO;
 import com.software.grey.models.entities.BasicUser;
 import com.software.grey.models.entities.GoogleUser;
 import com.software.grey.models.entities.User;
@@ -54,8 +55,13 @@ public class UserService {
         this.securityUtils = securityUtils;
     }
 
-    public String getUserRole() {
-        return securityUtils.getCurrentUser().getRole().toString();
+    public UserResponseDTO getUser() {
+        String username = securityUtils.getCurrentUserName();
+        User user = userRepo.findByUsername(username);
+        return UserResponseDTO.builder()
+                .Username(user.getUsername())
+                .email(user.getEmail())
+                .role(user.getRole().toString()).build();
     }
 
 
