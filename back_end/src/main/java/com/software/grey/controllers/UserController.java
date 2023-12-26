@@ -21,8 +21,8 @@ public class UserController {
     private final UserService userService;
 
     @Operation(
-            summary = "Get the user",
-            description = "Get the user with the given id")
+            summary = "Update the user",
+            description = "Update the user with the given id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User updated successfully"),
             @ApiResponse(responseCode = "400", description = "something went wrong")
@@ -31,5 +31,10 @@ public class UserController {
     public ResponseEntity<String> updateUser(@Valid @RequestBody UserDTO userDTO) {
         userService.updateUser(userDTO);
         return ResponseEntity.ok().body("Updated successfully");
+    }
+
+    @GetMapping
+    public ResponseEntity<String> getUserRole() {
+        return ResponseEntity.ok().body(userService.getUserRole());
     }
 }

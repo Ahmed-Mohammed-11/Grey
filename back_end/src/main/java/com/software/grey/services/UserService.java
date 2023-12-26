@@ -1,7 +1,7 @@
 package com.software.grey.services;
 
-import com.software.grey.exceptions.exceptions.UserExistsException;
 import com.software.grey.exceptions.exceptions.FailedToUpdateException;
+import com.software.grey.exceptions.exceptions.UserExistsException;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.BasicUser;
 import com.software.grey.models.entities.GoogleUser;
@@ -25,7 +25,6 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 
 @Service
@@ -54,6 +53,11 @@ public class UserService {
         this.emailSender = emailSender;
         this.securityUtils = securityUtils;
     }
+
+    public String getUserRole() {
+        return securityUtils.getCurrentUser().getRole().toString();
+    }
+
 
     public void save(UserDTO userDTO) {
         if (userExists(userDTO))
