@@ -20,7 +20,7 @@
     margin: 0;
     box-sizing: border-box;
     width: 100%;
-    height: 45%;
+    height: 55%;
 }
 
 .welcome h2 {
@@ -32,12 +32,12 @@
 }
 
 .welcome text {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #DDE6ED;
     font-weight: 400;
     margin: 0;
     padding: 0;
-    width: 60%;
+    width: 70%;
     text-align: center;
     word-wrap: break-word;
 }
@@ -58,8 +58,6 @@
     transition: 0.3s;
     text-transform: none !important;
 }
-
-
 
 
 

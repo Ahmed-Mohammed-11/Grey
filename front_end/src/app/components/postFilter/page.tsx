@@ -11,12 +11,10 @@ export default function PostFilters(props: any) {
     const [filterData, setFilterData] = useState<PostFilterDTO>({} as PostFilterDTO);
 
     useEffect(() => {
-        console.log("######", filterData)
         props.applyFilters(filterData);
     }, [filterData]);
 
     const handleDateFilter = (date: any) => {
-        console.log("date filter change")
         setFilterData({
             ...(filterData),
             day: date.day,
@@ -26,7 +24,6 @@ export default function PostFilters(props: any) {
     };
 
     const handleFeelingsFilter = (selectedFeelings: Set<Feeling>) => {
-        console.log("feeling filter change")
         setFilterData({...(filterData), feelings: Array.from(selectedFeelings)})
     };
 
