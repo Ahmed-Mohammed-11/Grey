@@ -104,4 +104,16 @@ public class PostController {
         postService.delete(postId);
         return ResponseEntity.status(HttpStatus.OK).body("Post was deleted successfully!");
     }
+
+    @DeleteMapping(EndPoints.DELETE_REPORTED_POST + "/{id}")
+    public ResponseEntity<String> deleteReportedPost(@PathVariable("id") String postId) {
+        postService.deleteReportedPost(postId);
+        return ResponseEntity.status(HttpStatus.OK).body("Post was deleted successfully!");
+    }
+
+    @DeleteMapping(EndPoints.REMOVE_REPORTED_POST + "/{id}")
+    public ResponseEntity<String> removeReportedPost(@PathVariable("id") String postId) {
+        postService.removeReportedPost(postId);
+        return ResponseEntity.status(HttpStatus.OK).body("Post is safe!");
+    }
 }

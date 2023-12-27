@@ -64,6 +64,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, LOGIN_FAIL).permitAll()
                                 .requestMatchers(HttpMethod.PUT, VERIFY_REGISTRATION).permitAll()
                                 .requestMatchers(HttpMethod.GET, TEST).permitAll()
+                                .requestMatchers(HttpMethod.DELETE, DELETE_REPORTED_POST).hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, REMOVE_REPORTED_POST).hasRole("ADMIN")
                                 .anyRequest()
                                 .authenticated()
                 )

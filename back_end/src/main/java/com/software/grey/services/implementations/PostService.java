@@ -3,7 +3,6 @@ package com.software.grey.services.implementations;
 import com.software.grey.exceptions.exceptions.PostNotFoundException;
 import com.software.grey.exceptions.exceptions.UserNotAuthorizedException;
 import com.software.grey.exceptions.exceptions.UserReportedPostBeforeException;
-import com.software.grey.exceptions.exceptions.DataNotFoundException;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.entities.Post;
@@ -17,6 +16,7 @@ import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.ReportedPostRepository;
 import com.software.grey.services.IPostService;
 import com.software.grey.services.UserService;
+import com.software.grey.utils.ErrorMessages;
 import com.software.grey.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,8 +31,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.List;
 import java.util.UUID;
-
-import static com.software.grey.utils.ErrorMessages.POST_REPORTED_BEFORE;
 
 @Service
 @AllArgsConstructor
@@ -63,7 +61,7 @@ public class PostService implements IPostService {
         try {
             postUUID = UUID.fromString(postId);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid post id");
+            throw new IllegalArgumentException(ErrorMessages.INVALID_POST_ID);
         }
 
         Post post = findPostById(postUUID);
@@ -75,7 +73,7 @@ public class PostService implements IPostService {
                 .build();
 
         if(userReportedPostBefore(post, reporter))
-            throw new UserReportedPostBeforeException(POST_REPORTED_BEFORE);
+            throw new UserReportedPostBeforeException(ErrorMessages.POST_REPORTED_BEFORE);
 
         reportedPostRepository.save(reportedPost);
     }
@@ -126,7 +124,7 @@ public class PostService implements IPostService {
         try {
             uuid = UUID.fromString(postId);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid post id");
+            throw new IllegalArgumentException(ErrorMessages.INVALID_POST_ID);
         }
 
         Post post = findPostById(uuid);
@@ -143,5 +141,26 @@ public class PostService implements IPostService {
 
     public List<Post> getByFeelings(Feeling feeling, String userId, Pageable page){
         return postRepository.findByPostFeelingsAndUserIdNot(feeling, userId, page);
+    }
+
+    public void deleteReportedPost(String postId) {
+        removeReportedPost(postId);
+        Post post = findPostById(UUID.fromString(postId));
+        postRepository.delete(post);
+    }
+
+    public void removeReportedPost(String postId) {
+        UUID uuid;
+        try {
+            uuid = UUID.fromString(postId);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(ErrorMessages.INVALID_POST_ID);
+        }
+
+        if (!reportedPostRepository.existsByPostId(uuid)) {
+            throw new PostNotFoundException(ErrorMessages.POST_ALREADY_DELETED);
+        }
+
+        reportedPostRepository.deleteByPostId(uuid);
     }
 }
