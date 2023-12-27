@@ -2,6 +2,10 @@ package com.software.grey.controllers;
 
 import com.software.grey.SavedPostEnum;
 import com.software.grey.models.dtos.PostDTO;
+import com.software.grey.models.entities.Post;
+import com.software.grey.models.entities.SavedPost;
+import com.software.grey.recommendationsystem.Recommender;
+import com.software.grey.services.SavedPostService;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.services.SavedPostService;
 import com.software.grey.services.implementations.PostService;
@@ -106,5 +110,16 @@ public class PostController {
     public ResponseEntity<String> deletePost(@PathVariable("id") String postId) {
         postService.delete(postId);
         return ResponseEntity.status(HttpStatus.OK).body("Post was deleted successfully!");
+    }
+
+    @Operation(
+            summary = "Get the Saved Posts",
+            description = "Get all posts that user saved with pagination and filter by date")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Posts retrieved correctly")
+    })
+    @PostMapping(EndPoints.GET_SAVED_POSTS)
+    public ResponseEntity<Page<PostDTO>> getSavedPosts(@Valid @RequestBody PostFilterDTO postFilterDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(savedPostService.getSavedPosts(postFilterDTO));
     }
 }
