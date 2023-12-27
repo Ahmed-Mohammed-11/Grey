@@ -23,7 +23,7 @@ public class CollaborativeFeelingStrat extends RecommendationStrategy {
     public List<Post> recommend(User user, Integer pageNumber, Integer count) {
         // get most common user's feelings
         List<FeelingCountProjection> feelingsCount = postService.getCountOfPostedFeelings(user);
-        if(feelingsCount.isEmpty() || feelingsCount.get(0).getFeelingCount() == 0)
+        if (feelingsCount.isEmpty() || feelingsCount.get(0).getFeelingCount() == 0)
             return new ArrayList<>();
         Pageable page = PageRequest.of(pageNumber, count);
         return postRepository.findByCollaborativeFiltering(feelingsCount.get(0).getFeeling().toString(), user.getId(), page);

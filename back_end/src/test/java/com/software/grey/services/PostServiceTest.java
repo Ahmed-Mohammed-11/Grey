@@ -78,34 +78,34 @@ class PostServiceTest {
 
     void prepareDataUser1() throws InterruptedException {
         when(securityUtils.getCurrentUserName()).thenReturn("PostServiceUsername1");
-        UserDTO userDTO1 = new UserDTO("PostServiceUsername1@gmail.com", "PostServiceUsername1","mockPas1");
+        UserDTO userDTO1 = new UserDTO("PostServiceUsername1@gmail.com", "PostServiceUsername1", "mockPas1");
         userService.save(userDTO1);
         List<Set<Feeling>> feelings = List.of(Set.of(LOVE), Set.of(LOVE, HAPPY), Set.of(SAD), Set.of(LOVE, HAPPY, SAD));
-        for(int i = 0;i<5;i++){
-            postService.add(PostDTO.builder().postText(i + " user1").postFeelings(feelings.get(i% feelings.size())).build());
+        for (int i = 0; i < 5; i++) {
+            postService.add(PostDTO.builder().postText(i + " user1").postFeelings(feelings.get(i % feelings.size())).build());
             Thread.sleep(30);
         }
     }
 
     void prepareDataUser2() throws InterruptedException {
         when(securityUtils.getCurrentUserName()).thenReturn("PostServiceUsername2");
-        UserDTO userDTO2 = new UserDTO("PostServiceUsername2@gmail.com", "PostServiceUsername2","mockPas2");
+        UserDTO userDTO2 = new UserDTO("PostServiceUsername2@gmail.com", "PostServiceUsername2", "mockPas2");
         userService.save(userDTO2);
         List<Set<Feeling>> feelings = List.of(Set.of(LOVE), Set.of(SAD));
-        for(int i = 0;i<3;i++){
-            postService.add(PostDTO.builder().postText(i + " user2").postFeelings(feelings.get(i% feelings.size())).build());
+        for (int i = 0; i < 3; i++) {
+            postService.add(PostDTO.builder().postText(i + " user2").postFeelings(feelings.get(i % feelings.size())).build());
             Thread.sleep(30);
         }
     }
 
     @Test
-    void addPostCorrectly(){
+    void addPostCorrectly() {
 
         PostDTO postDTO = PostDTO.builder()
                 .postText("this is a mocked text")
                 .postFeelings(Set.of(LOVE, HAPPY)).build();
 
-        UserDTO userDTO = new UserDTO("mockEmail11@gmail.com", "PostServiceUsername11","mockPas11");
+        UserDTO userDTO = new UserDTO("mockEmail11@gmail.com", "PostServiceUsername11", "mockPas11");
 
         userService.save(userDTO);
 

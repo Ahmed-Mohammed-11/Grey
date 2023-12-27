@@ -49,13 +49,13 @@ class CollaborativeFeelingStratTest {
         user2 = User.builder().email("collaborativeFeelingUnit2@example.com").username("collaborativeFeelingUnit2").build();
         userRepo.save(user1);
         userRepo.save(user2);
-        for(int i = 0; i < 30; i++) {
+        for (int i = 0; i < 30; i++) {
             Set<Feeling> set = new TreeSet<>();
             set.add(Feeling.SAD);
             Post post = Post.builder().postText("Sad").user(user2).postFeelings(set).build();
             postRepository.save(post);
         }
-        for(int i = 0; i < 30; i++) {
+        for (int i = 0; i < 30; i++) {
             Set<Feeling> set = new TreeSet<>();
             set.add(Feeling.ANXIOUS);
             Post post = Post.builder().postText("Anxious").user(user2).postFeelings(set).build();
@@ -68,9 +68,10 @@ class CollaborativeFeelingStratTest {
     }
 
     @AfterAll
-    void del(){
+    void del() {
         postRepository.deleteAll();
     }
+
     // post.setPostTime(Timestamp.from(Instant.now()));
     @Test
     void recommendSimpleSmoke() {
@@ -85,9 +86,11 @@ class CollaborativeFeelingStratTest {
 
         assertEquals(10, returnedData.size());
         boolean flag = false;
-        for(Post p : returnedData) {
-            if (p.getPostFeelings().contains(Feeling.ANXIOUS))
+        for (Post p : returnedData) {
+            if (p.getPostFeelings().contains(Feeling.ANXIOUS)) {
                 flag = true;
+                break;
+            }
         }
         assertTrue(flag);
     }
@@ -118,7 +121,7 @@ class CollaborativeFeelingStratTest {
         when(postService.getCountOfPostedFeelings(user1)).thenReturn(myList);
 //        when(collaborativeFeelingStratSpy.getFeelingPercentage(myList)).thenReturn(Collections.emptyMap());
 
-        assertTrue(collaborativeFeelingStrat.recommend(user1, 0, 10).size() == 0);
+        assertEquals(0, collaborativeFeelingStrat.recommend(user1, 0, 10).size());
     }
 
     @Test

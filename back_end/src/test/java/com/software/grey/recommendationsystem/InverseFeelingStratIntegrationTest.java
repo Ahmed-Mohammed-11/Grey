@@ -20,34 +20,36 @@ import java.util.TreeSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class InverseFeelingStratIntegrationTest {
     @Autowired
+    InverseFeelingStrat inverseFeelingStrat;
+    @Autowired
     private PostRepository postRepository;
     @Autowired
     private UserRepo userRepo;
-    @Autowired
-    InverseFeelingStrat inverseFeelingStrat;
     @Autowired
     private UserVerificationRepo userVerificationRepo;
     @Autowired
     private BasicUserRepo basicUserRepo;
     private User user1;
     private User user2;
+
     @BeforeAll
     void init() {
         user1 = User.builder().email("InverseFeeling@example.com").username("InverseFeeling").build();
         user2 = User.builder().email("InverseFeeling2@example.com").username("InverseFeeling2").build();
         userRepo.save(user1);
         userRepo.save(user2);
-        for(int i = 0; i < 30; i++) {
+        for (int i = 0; i < 30; i++) {
             Set<Feeling> set = new TreeSet<>();
             set.add(Feeling.HAPPY);
             Post post = Post.builder().postText("Osama is happy awy awy awy").user(user2).postFeelings(set).build();
             postRepository.save(post);
         }
-        for(int i = 0; i < 30; i++) {
+        for (int i = 0; i < 30; i++) {
             Set<Feeling> set = new TreeSet<>();
             set.add(Feeling.ANXIOUS);
             Post post = Post.builder().postText("Anxious").user(user2).postFeelings(set).build();
@@ -56,7 +58,7 @@ class InverseFeelingStratIntegrationTest {
     }
 
     @AfterAll
-    void del(){
+    void del() {
         postRepository.deleteAll();
         userVerificationRepo.deleteAll();
         basicUserRepo.deleteAll();
@@ -72,7 +74,7 @@ class InverseFeelingStratIntegrationTest {
 
         List<Post> posts = inverseFeelingStrat.recommend(user1, 0, 10);
         assertEquals(10, posts.size());
-        for(Post p: posts) {
+        for (Post p : posts) {
             assertTrue(p.getPostFeelings().contains(Feeling.HAPPY));
         }
     }

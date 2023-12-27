@@ -15,13 +15,10 @@ class UserDTOTest {
 
     @BeforeAll
     static void setUp() {
-        try
-        {
+        try {
             ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
             validator = factory.getValidator();
-        }
-        catch (ValidationException e)
-        {
+        } catch (ValidationException e) {
             System.out.println("ERROR: " + e.getMessage());
         }
 

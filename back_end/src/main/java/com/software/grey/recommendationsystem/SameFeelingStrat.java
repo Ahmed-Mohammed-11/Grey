@@ -12,11 +12,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Component
-public class SameFeelingStrat extends RecommendationStrategy{
+public class SameFeelingStrat extends RecommendationStrategy {
     private PostService postService;
 
     @Override
@@ -33,6 +32,6 @@ public class SameFeelingStrat extends RecommendationStrategy{
                     Pageable page = PageRequest.of(pageNumber, numOfPosts);
                     return postService.getByFeelings(entry.getKey(), user.getId(), page).stream();
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 }

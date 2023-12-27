@@ -17,13 +17,13 @@ class FeelingCountImpl implements FeelingCountProjection {
     }
 
     @Override
-    public int getFeelingCount() {
-        return this.feelingCount;
+    public void setFeeling(Feeling feeling) {
+        this.feeling = feeling;
     }
 
     @Override
-    public void setFeeling(Feeling feeling) {
-        this.feeling = feeling;
+    public int getFeelingCount() {
+        return this.feelingCount;
     }
 
     @Override

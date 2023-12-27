@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class EmailSender {
-    private SimpleJavaMailProvider emailProvider;
-    private BasicUserRepo basicUserRepo;
+    private final SimpleJavaMailProvider emailProvider;
+    private final BasicUserRepo basicUserRepo;
 
     @Value("${grey.from}")
     private String fromAddress;

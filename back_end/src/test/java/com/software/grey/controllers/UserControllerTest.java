@@ -2,7 +2,10 @@ package com.software.grey.controllers;
 
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.BasicUser;
-import com.software.grey.repositories.*;
+import com.software.grey.repositories.BasicUserRepo;
+import com.software.grey.repositories.GoogleUserRepo;
+import com.software.grey.repositories.UserRepo;
+import com.software.grey.repositories.UserVerificationRepo;
 import com.software.grey.utils.EndPoints;
 import com.software.grey.utils.ErrorMessages;
 import com.software.grey.utils.SecurityUtils;
@@ -64,9 +67,10 @@ class UserControllerTest {
         basicUserRepo.deleteAll();
         userRepo.deleteAll();
     }
+
     @Test
     @WithMockUser(username = "greyUser", roles = "ROLES_USER")
-    void testUpdateUserName() throws Exception{
+    void testUpdateUserName() throws Exception {
         BasicUser oldUser = basicUserRepo.findById(userId).get();
 
         when(securityUtils.getCurrentUser()).thenReturn(oldUser);

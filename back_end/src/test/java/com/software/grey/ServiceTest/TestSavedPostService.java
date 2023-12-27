@@ -20,6 +20,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Optional;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -41,10 +43,10 @@ class TestSavedPostService {
     private final BasicUserRepo basicUserRepo;
 
     @Autowired
-    TestSavedPostService (SavedPostService savedPostService, ObjectsBuilder objectsBuilder1,
-                          UserRepo userRepository, PostRepository postRepository,
-                          SavedPostRepository savedPostRepository, SignupController signupController,
-                          UserVerificationRepo userVerificationRepo, BasicUserRepo basicUserRepo, PostService postService) {
+    TestSavedPostService(SavedPostService savedPostService, ObjectsBuilder objectsBuilder1,
+                         UserRepo userRepository, PostRepository postRepository,
+                         SavedPostRepository savedPostRepository, SignupController signupController,
+                         UserVerificationRepo userVerificationRepo, BasicUserRepo basicUserRepo, PostService postService) {
         this.savedPostService = savedPostService;
         this.objectsBuilder = objectsBuilder1;
         this.userRepository = userRepository;

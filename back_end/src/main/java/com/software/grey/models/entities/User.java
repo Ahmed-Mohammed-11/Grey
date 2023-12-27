@@ -39,6 +39,7 @@ public class User {
     private Avatar avatar;
 
     private boolean enabled;
+
     private boolean authenticated;
 
 }

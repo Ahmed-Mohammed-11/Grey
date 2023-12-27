@@ -7,7 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.software.grey.utils.EndPoints.*;
+import static com.software.grey.utils.EndPoints.SIGNUP;
+import static com.software.grey.utils.EndPoints.VERIFY_REGISTRATION;
 
 @CrossOrigin
 @RestController

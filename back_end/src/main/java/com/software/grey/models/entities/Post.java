@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
 import java.sql.Timestamp;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -41,9 +43,26 @@ public class Post implements Comparable<Post> {
 
     @Override
     public int compareTo(Post o) {
-        if(this.postTime.compareTo(o.postTime) == 0){
+        if (this.postTime.equals(o.postTime)) {
             return this.id.compareTo(o.id);
         }
         return o.postTime.compareTo(this.postTime);
     }
+
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Post post = (Post) o;
+//        return Objects.equals(id, post.id) &&
+//                Objects.equals(postText, post.postText) &&
+//                Objects.equals(user, post.user) &&
+//                Objects.equals(postFeelings, post.postFeelings) &&
+//                Objects.equals(postTime, post.postTime);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id, postText, user, postFeelings, postTime);
+//    }
 }

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
-import java.util.Objects;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @SpringBootTest
@@ -27,8 +27,8 @@ class OAuth2LoginSuccessHandlerTest {
         userService.saveGoogleUser(myUser);
         GoogleUser user = googleUserRepo.findByUsername("mockUser");
 
-        assert(Objects.equals(user.getUsername(), "mockUser"));
-        assert(Objects.equals(user.getEmail(), "mockEmail@gmail.com"));
-        assert(user.getRole() == Role.USER);
+        assertThat(user.getUsername()).isEqualTo("mockUser");
+        assertThat(user.getEmail()).isEqualTo("mockEmail@gmail.com");
+        assertThat(user.getRole()).isEqualTo(Role.USER);
     }
 }

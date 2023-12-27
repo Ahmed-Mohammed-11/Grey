@@ -45,8 +45,8 @@ class SignupControllerTest {
         UserDTO myUser = new UserDTO("mockEmail123@gmail.com", "testUserGrey", "mock Password test");
         signupController.signup(myUser);
         BasicUser user = basicUserRepo.findByUsername("testUserGrey");
-        assert(Objects.equals(user.getUsername(), "testUserGrey"));
-        assert(Objects.equals(user.getEmail(), "mockEmail123@gmail.com"));
+        assert (Objects.equals(user.getUsername(), "testUserGrey"));
+        assert (Objects.equals(user.getEmail(), "mockEmail123@gmail.com"));
         assertTrue(bCryptPasswordEncoder.matches("mock Password test", user.getPassword()));
         assert(user.getRole() == Role.USER);
     }
@@ -71,8 +71,8 @@ class SignupControllerTest {
     void signupWithNonValidEmail_ShouldFail() throws Exception {
         UserDTO myUser = new UserDTO("mockEmail", "mockUser12", "mock Password test");
         mockMvc.perform(post(SIGNUP)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(myUser)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(myUser)))
                 .andExpect(status().isBadRequest());
 //                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("Email Format isn't valid"));
     }

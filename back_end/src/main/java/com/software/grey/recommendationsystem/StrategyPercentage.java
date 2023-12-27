@@ -15,7 +15,7 @@ public class StrategyPercentage {
         this.postsMap = new HashMap<>();
     }
 
-    public void addNewStrategyPercentage(RecommendationStrategy recommendationStrategy, Integer precentage){
+    public void addNewStrategyPercentage(RecommendationStrategy recommendationStrategy, Integer precentage) {
         this.percentageMap.put(recommendationStrategy, precentage);
     }
 
@@ -28,7 +28,7 @@ public class StrategyPercentage {
         this.postsMap.remove(recommendationStrategy);
     }
 
-    public Integer getStrategyPercentage(RecommendationStrategy recommendationStrategy){
+    public Integer getStrategyPercentage(RecommendationStrategy recommendationStrategy) {
         return this.percentageMap.get(recommendationStrategy);
     }
 

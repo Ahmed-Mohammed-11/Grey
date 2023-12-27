@@ -34,7 +34,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class FilterSavedPostTest {
+class FilterSavedPostTest {
 
     @MockBean
     private SecurityUtils securityUtils;
@@ -122,7 +122,7 @@ public class FilterSavedPostTest {
 
     @ParameterizedTest
     @MethodSource("getSavedPostsOfUserTestData")
-    void getSavedPostsOfUser(String userName, Integer pageNumber, Integer pageSize,Integer day, Integer month,
+    void getSavedPostsOfUser(String userName, Integer pageNumber, Integer pageSize, Integer day, Integer month,
                              Integer year, List<Feeling> feelings, List<String> postsStrings) throws InterruptedException {
 
         when(securityUtils.getCurrentUserName()).thenReturn(userName);

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class UserNotAuthorizedHandler {
     @ExceptionHandler(UserNotAuthorizedException.class)
-    public ResponseEntity<String> handleUserNotFoundException(UserNotAuthorizedException userNotAuthorizedException){
+    public ResponseEntity<String> handleUserNotFoundException(UserNotAuthorizedException userNotAuthorizedException) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(userNotAuthorizedException.getMessage());
     }
 }

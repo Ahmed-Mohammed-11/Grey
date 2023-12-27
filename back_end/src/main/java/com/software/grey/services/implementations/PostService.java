@@ -110,10 +110,10 @@ public class PostService implements IPostService {
         String userName = securityUtils.getCurrentUserName();
         List<String> feelings = Optional.ofNullable(postFilterDTO.getFeelings())
                 .filter(list -> !list.isEmpty())
-                .map(list -> list.stream().map(Enum::name).collect(Collectors.toList()))
+                .map(list -> list.stream().map(Enum::name).toList())
                 .orElseGet(() -> Arrays.stream(Feeling.values())
                         .map(Enum::name)
-                        .collect(Collectors.toList()));
+                        .toList());
 
         Pageable pageable = PageRequest.of(
                 postFilterDTO.getPageNumber(),
@@ -143,7 +143,7 @@ public class PostService implements IPostService {
         return postRepository.findCountOfFeelingsByUser(user.getId());
     }
 
-    public List<Post> getByFeelings(Feeling feeling, String userId, Pageable page){
+    public List<Post> getByFeelings(Feeling feeling, String userId, Pageable page) {
         return postRepository.findByPostFeelingsAndUserIdNot(feeling, userId, page);
     }
 

@@ -3,8 +3,6 @@ package com.software.grey.services;
 import com.software.grey.controllers.SignupController;
 import com.software.grey.exceptions.exceptions.PostNotFoundException;
 import com.software.grey.exceptions.exceptions.UserReportedPostBeforeException;
-import com.software.grey.models.dtos.PostDTO;
-import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.ReportedPostId;
@@ -100,10 +98,10 @@ class ReportPostServiceTest {
     private void createPostsForUser1() {
         for (int i = 0; i < 5; i++)
             posts.add(postRepository.save(Post.builder()
-                            .postText("Some bad text" + i)
-                            .user(userRepo.findByUsername(user1))
-                            .postFeelings(Set.of(LOVE, HAPPY))
-                            .build()));
+                    .postText("Some bad text" + i)
+                    .user(userRepo.findByUsername(user1))
+                    .postFeelings(Set.of(LOVE, HAPPY))
+                    .build()));
     }
 
     void addUser2() {
@@ -136,6 +134,7 @@ class ReportPostServiceTest {
         userService.saveGoogleUser(userG);
         createPostsForGUser();
     }
+
     private void createPostsForGUser() {
         for (int i = 0; i < 3; i++)
             posts.add(postRepository.save(Post.builder()
@@ -152,7 +151,7 @@ class ReportPostServiceTest {
     }
 
     @Test
-    void reportExistingPostUser1_shouldBeValid(){
+    void reportExistingPostUser1_shouldBeValid() {
         User user = userRepo.findByUsername("mocked User1");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
@@ -164,7 +163,7 @@ class ReportPostServiceTest {
     }
 
     @Test
-    void reportExistingPostUser2_shouldBeValid(){
+    void reportExistingPostUser2_shouldBeValid() {
         User user = userRepo.findByUsername("mocked User2");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
@@ -176,7 +175,7 @@ class ReportPostServiceTest {
     }
 
     @Test
-    void reportExistingPostUserG_shouldBeValid(){
+    void reportExistingPostUserG_shouldBeValid() {
         User user = userRepo.findByUsername("mockGmail");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
@@ -188,7 +187,7 @@ class ReportPostServiceTest {
     }
 
     @Test
-    void duplicateReportExistingPostBasicUser_shouldThrowException(){
+    void duplicateReportExistingPostBasicUser_shouldThrowException() {
         User user = userRepo.findByUsername("mocked User1");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
@@ -201,7 +200,7 @@ class ReportPostServiceTest {
     }
 
     @Test
-    void duplicateReportExistingPostGoogleUser_shouldThrowException(){
+    void duplicateReportExistingPostGoogleUser_shouldThrowException() {
         User user = userRepo.findByUsername("mockGmail");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
@@ -214,7 +213,7 @@ class ReportPostServiceTest {
     }
 
     @Test
-    void reportNotExistingPost_shouldThrowException(){
+    void reportNotExistingPost_shouldThrowException() {
         UUID randomUUID = UUID.randomUUID();
         while (postRepository.existsById(randomUUID.toString()))
             randomUUID = UUID.randomUUID();

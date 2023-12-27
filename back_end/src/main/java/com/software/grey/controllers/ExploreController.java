@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping(EndPoints.POST)
@@ -25,9 +26,9 @@ public class ExploreController {
             @ApiResponse(responseCode = "200", description = "Posts retrieved correctly")
     })
     @GetMapping(EndPoints.EXPLORE)
-    public ResponseEntity<RecommendedPostsDTO> getExplore(@RequestParam int pageNumber, @RequestParam int pageSize){
+    public ResponseEntity<RecommendedPostsDTO> getExplore(@RequestParam int pageNumber, @RequestParam int pageSize) {
         RecommendedPostsDTO recommendedPostsDTO = exploreService.getRecommendedPosts(pageNumber, pageSize);
         return ResponseEntity.status(HttpStatus.OK)
-                        .body(recommendedPostsDTO);
+                .body(recommendedPostsDTO);
     }
 }

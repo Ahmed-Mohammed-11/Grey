@@ -1,6 +1,5 @@
 package com.software.grey.services;
 
-import com.software.grey.exceptions.exceptions.DataNotFoundException;
 import com.software.grey.exceptions.exceptions.PostNotFoundException;
 import com.software.grey.exceptions.exceptions.UserNotAuthorizedException;
 import com.software.grey.models.dtos.PostDTO;
@@ -25,7 +24,6 @@ import java.util.Set;
 import java.util.UUID;
 
 import static com.software.grey.models.enums.Feeling.*;
-import static com.software.grey.models.enums.Feeling.SAD;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
@@ -33,7 +31,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
-public class PostServiceDeleteTest {
+class PostServiceDeleteTest {
 
     @Autowired
     private PostRepository postRepository;

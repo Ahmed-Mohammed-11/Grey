@@ -86,7 +86,7 @@ public class UserService {
                 .build();
         userVerificationRepo.save(userVerification);
 
-        if(ENABLEMAIL)
+        if (ENABLEMAIL)
             emailSender.send(userDTO, confirmationCode);
     }
 
@@ -139,7 +139,7 @@ public class UserService {
         return userRepo.existsByUsername(userDTO.username) || userRepo.existsByEmail(userDTO.email);
     }
 
-    public User findByUserName(String userName){
+    public User findByUserName(String userName) {
         return userRepo.findByUsername(userName);
     }
 
@@ -182,7 +182,7 @@ public class UserService {
         updatedUser = userMapper.toUser(userDTO, updatedUser);
 
         if (updatedUser.getPassword() != null && !updatedUser.getPassword().equals(oldPassword)) {   // if password has changed
-            if (updatedUser.getPassword().matches(RegularExpressions.PASSWORD_REGEX)){  // if password is valid
+            if (updatedUser.getPassword().matches(RegularExpressions.PASSWORD_REGEX)) {  // if password is valid
                 updatedUser.setPassword(bCryptPasswordEncoder.encode(updatedUser.getPassword())); // encode password
             } else {
                 throw new FailedToUpdateException(ErrorMessages.INVALID_PASSWORD);

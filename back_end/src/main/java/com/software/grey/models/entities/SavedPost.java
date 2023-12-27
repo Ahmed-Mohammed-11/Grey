@@ -28,5 +28,5 @@ public class SavedPost {
     private Post post;
 
     @Column(name = "post_saved_time")
-    private Timestamp SavedTime;
+    private Timestamp savedTime;
 }

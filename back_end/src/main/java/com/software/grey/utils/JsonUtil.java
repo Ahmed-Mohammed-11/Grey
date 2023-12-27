@@ -10,7 +10,7 @@ public class JsonUtil {
         try {
             return new ObjectMapper().writeValueAsString(obj);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException("Invalid object");
         }
     }
 }

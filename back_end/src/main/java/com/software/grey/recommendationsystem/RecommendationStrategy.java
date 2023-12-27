@@ -11,12 +11,13 @@ import java.util.Map;
 
 public abstract class RecommendationStrategy {
     public abstract List<Post> recommend(User user, Integer pageNumber, Integer count);
+
     protected Map<Feeling, Double> getFeelingPercentage(List<FeelingCountProjection> feelingsCount) {
         Integer totalFeelingSize = getSumOfFeelings(feelingsCount);
         Map<Feeling, Double> percentageMap = new LinkedHashMap<>();
 
         for (FeelingCountProjection f : feelingsCount) {
-            if(f.getFeelingCount() == 0 || totalFeelingSize == 0)
+            if (f.getFeelingCount() == 0 || totalFeelingSize == 0)
                 continue;
             Double percentage = f.getFeelingCount() / Double.valueOf(totalFeelingSize);
             percentageMap.put(f.getFeeling(), percentage);

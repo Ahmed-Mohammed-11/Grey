@@ -38,24 +38,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-
 class ReportPostControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    private UserService userService;
-
-    @MockBean
-    private PostService postService;
-
-    @MockBean
-    private SecurityUtils securityUtils;
 
     private final SignupController signup;
     private final UserRepo userRepo;
     private final PostRepository postRepository;
+    @Autowired
+    private MockMvc mockMvc;
+    @MockBean
+    private final UserService userService;
+    @MockBean
+    private final PostService postService;
+    @MockBean
+    private final SecurityUtils securityUtils;
     @Autowired
     private BasicUserRepo basicUserRepo;
     @Autowired
@@ -124,7 +119,7 @@ class ReportPostControllerTest {
     @WithMockUser(username = "greyUser", roles = "ROLES_USER")
     void reportPost_shouldBeNotFound() throws Exception {
         UUID randomNotInPosts = UUID.randomUUID();
-        while(posts.contains(randomNotInPosts))
+        while (posts.contains(randomNotInPosts))
             randomNotInPosts = UUID.randomUUID();
 
         when(securityUtils.getCurrentUser()).thenReturn(userRepo.findByUsername("grey User"));

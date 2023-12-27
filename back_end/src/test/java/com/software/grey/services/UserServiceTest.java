@@ -23,6 +23,7 @@ class UserServiceTest {
 
     @Autowired
     UserVerificationRepo userVerificationRepo;
+
     @Test
     void userExistsShouldBeTrue() {
         UserDTO user = new UserDTO("aad12356hb@gmail.com", "aad24", "pass");

@@ -95,6 +95,6 @@ public class Recommender {
     }
 
     private int calculateNumberOfPostsFromPercentage(int totalSize, double percentage) {
-        return (int)(percentage * totalSize);
+        return (int) (percentage * totalSize);
     }
 }
