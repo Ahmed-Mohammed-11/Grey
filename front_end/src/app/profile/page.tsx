@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import User from '../components/sidebar/user';
-import authTokenBuilder from "@/app/utils/authTokenBuilder";
+import buildAuthToken from "@/app/utils/authTokenBuilder";
 
 function Profile() {
 
@@ -48,32 +48,29 @@ function Profile() {
     }
 
     const fetchServerResponse = async (userDto: UserDTO) => {
-        console.log("before update");
-        console.log(userDto);
         const response = await updateUserController.sendPutRequest(userDto, UPDATE_USER_ENDPOINT)
-        console.log(response)
         const message = await response.text()
-        console.log(message)
         if (!response.ok) {
             userDto = {
                 username: initialUsername,
                 email: initialEmail,
                 password: initialPassword
             }
-            notify(message || "Error occurred while changing profile info", true, userDto)
+            notify(message || "You need to login again", true)
         } else {
-            notify(message, false, userDto)
+            const authToken = buildAuthToken(userDto)
+            localStorage.setItem("Authorization", authToken)
+            notify(message, false)
         }
     }
 
-    const notify = (message: string, isError: boolean, userDto: UserDTO) => {
+    const notify = (message: string, isError: boolean) => {
         if (isError) {
             toast.error(message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000,
             })
         } else {
-            authTokenBuilder(userDto);
             toast.success(message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000,
@@ -117,7 +114,7 @@ function Profile() {
                 email: initialEmail,
                 password: initialPassword
             }
-            notify('No change', false, userDto)
+            notify('No change', false)
             return
         }
 
