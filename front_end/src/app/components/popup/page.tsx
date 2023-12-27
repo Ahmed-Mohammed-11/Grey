@@ -14,7 +14,7 @@ import FeelingsFilter from '../feelingsFilter/page';
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function PopupScreen() {
+export default function PopupScreen(props: any) {
     // user info
     const username = localStorage.getItem('username')!;
 
@@ -48,6 +48,13 @@ export default function PopupScreen() {
     // Handling server response
     const fetchResponse = async (postDTO: PostDTO) => {
         const response = createPostController.sendPostRequest(postDTO, CREATE_POST_ENDPOINT);
+        if((await response).status === 201){
+            props.setPosts(
+                (prev: any) => {
+                    return [postDTO, ...prev]
+                }
+            )
+        }
         await notify(response);
         clearPostInfo();
     }

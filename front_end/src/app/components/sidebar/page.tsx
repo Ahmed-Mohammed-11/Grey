@@ -11,7 +11,7 @@ import {FaBookOpen} from "react-icons/fa";
 import {useState} from 'react';
 import {Icon} from "@mui/material";
 
-export default function SideBar(props:any) {
+export default function SideBar(props: any) {
   const [activeTab, setActiveTab] = useState(0);
   const username = localStorage.getItem('username')!;
 
@@ -25,12 +25,12 @@ export default function SideBar(props:any) {
     <MdReport />
   ];
 
-  const handleButtonClick = (index:number) => {
-    if (props.onChange) {
-      props.onChange(index);
-    }
-    setActiveTab(index);
-  };
+    const handleButtonClick = (index: number) => {
+        if (props.onChange) {
+            props.onChange(index);
+        }
+        setActiveTab(index);
+    };
 
   const buttons = buttonsText.map((text, index) => {
     return (

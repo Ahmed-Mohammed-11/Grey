@@ -5,33 +5,33 @@
     color: #DDE6ED;
 }
 
-.post > .post_header{
+.post > .post_header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 16px 0 0;
 }
 
-.menu_item{
+.menu_item {
     padding: 8px 16px;
     align-items: stretch;
 }
 
-.icon{
+.icon {
     padding: 0 4% 0 0;
     font-size: 23px;
 }
 
-.main_icons{
+.main_icons {
     padding: 0 4% 0 0;
     font-size: 23px;
     color: #DDE6ED;
 }
 
-.menu_item:hover{
+.menu_item:hover {
     color: #DDE6ED;
 }
 
-.post > .post_text{
+.post > .post_text {
     padding: 0 16px;
 }

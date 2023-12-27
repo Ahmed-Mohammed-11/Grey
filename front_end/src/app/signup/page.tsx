@@ -46,7 +46,7 @@ function Page() {
         }
 
         // validate user credentials on client side
-        let { isUserValid, errors} = clientValidateForm(user)
+        let {isUserValid, errors} = clientValidateForm(user)
         setIsUserValid(isUserValid)
         setErrors(errors);
 
@@ -104,8 +104,8 @@ function Page() {
                         inputRef={usernameRef}
                         required
                         variant="filled"
-                        error = {!isUserValid.username}
-                        helperText = {(isUserValid.username)? "": errors.username}
+                        error={!isUserValid.username}
+                        helperText={(isUserValid.username) ? "" : errors.username}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>

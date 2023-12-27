@@ -16,18 +16,30 @@ export default function ReportedPost(props: any) {
     let post = props.post;
     const handleSafePost = async (postId: string) => {
         const data = deletePostController.sendDeleteRequest({postId: postId}, SAFE_POST_ENDPOINT);
+        if ((await data).status === 200) {
+            // delete post from the frontend
+            props.setPosts(
+                props.posts.filter((post: any) => post.id !== postId)
+            );
+        }
         await toastResponse(data);
     }
 
     const handleNotSafePost = async (postId: string) => {
         const data = deletePostController.sendDeleteRequest({postId: postId}, NOT_SAFE_POST_ENDPOINT);
+        if ((await data).status === 200) {
+            // delete post from the frontend
+            props.setPosts(
+                props.posts.filter((post: any) => post.id !== postId)
+            );
+        }
         await toastResponse(data);
 
     }
 
     return (
         <Box className={styles.reported_post}>
-            <Post key={post.id} post={post} feedType={props.feedType} reported={true}/>
+            <Post key={post.id} post={post} feedType={props.feedType} reported={true} setPosts={props.setPosts} posts={props.posts}/>
 
             <hr className={styles.hr}></hr>
 

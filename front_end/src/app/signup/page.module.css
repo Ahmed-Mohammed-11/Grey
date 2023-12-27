@@ -1,21 +1,19 @@
-.cornerShapes{
-    width:700px;
-    height:700px;
-    position:fixed;
+.cornerShapes {
+    width: 700px;
+    height: 700px;
+    position: fixed;
     border-radius: 150px;
 }
 
-.topLeft
-{
-    top:0;
-    left:0;
-    transform: rotate(45deg)  translate(-70%, 0%);
+.topLeft {
+    top: 0;
+    left: 0;
+    transform: rotate(45deg) translate(-70%, 0%);
 }
 
-.bottomRight
-{
-    right:0;
-    bottom:0;
+.bottomRight {
+    right: 0;
+    bottom: 0;
     transform: rotate(45deg) translate(70%, 0%);
 }
 

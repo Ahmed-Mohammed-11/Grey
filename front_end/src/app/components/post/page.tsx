@@ -42,6 +42,12 @@ export default function Post(props: any) {
 
     const handleDeletePost = async (postId: string) => {
         const data = deletePostController.sendDeleteRequest({postId: postId}, DELETE_POST_ENDPOINT);
+        if ((await data).status === 200) {
+            // delete post from the frontend
+            props.setPosts(
+                props.posts.filter((post: any) => post.id !== postId)
+            );
+        }
         await toastResponse(data);
     }
 

@@ -3,6 +3,7 @@ package com.software.grey.controllers;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.enums.Feeling;
+import com.software.grey.services.SavedPostService;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.EndPoints;
 import com.software.grey.utils.SecurityUtils;
@@ -40,6 +41,9 @@ class PostControllerTest {
 
     @MockBean
     private PostService postService;
+
+    @MockBean
+    private SavedPostService savedPostService;
 
     @MockBean
     private SecurityUtils securityUtils;
@@ -237,6 +241,43 @@ class PostControllerTest {
                 Arguments.of(0, 5, List.of(HAPPY,SAD,LOVE,INSPIRE,ANXIOUS,FEAR),HttpStatus.OK.value()),
                 Arguments.of(-1, 5, List.of(HAPPY,SAD,LOVE),HttpStatus.BAD_REQUEST.value()),
                 Arguments.of(0, 0, List.of(HAPPY,SAD,LOVE),HttpStatus.BAD_REQUEST.value())
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("paginationOfSavedPostsAcceptParameters")
+    @WithMockUser(username = "greyUser", roles = "ROLES_USER")
+    void getSavedPostsOfUserWithAcceptPagination(Integer pageNumber, Integer pageSize, Integer day, Integer month,
+                                            Integer year, List<Feeling> feelings, Integer expectedStatus) throws Exception {
+        int numberOfMethodCall = expectedStatus==200?1:0;
+        PostFilterDTO postFilterDTO = PostFilterDTO.builder()
+                .pageNumber(pageNumber).pageSize(pageSize).day(day).month(month).year(year).feelings(feelings).build();
+        mockMvc.perform(post(EndPoints.POST + EndPoints.GET_SAVED_POSTS)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(postFilterDTO)))
+                .andExpect(status().is(expectedStatus));
+        verify(savedPostService, times(numberOfMethodCall)).getSavedPosts(any(PostFilterDTO.class));
+    }
+
+    static Stream<Arguments> paginationOfSavedPostsAcceptParameters() {
+        return Stream.of(
+                Arguments.of(0, 1, null, null, null, null, HttpStatus.OK.value()),
+                Arguments.of(10, 10, null, null, null, null, HttpStatus.OK.value()),
+                Arguments.of(10, 10, 10, null, null, null, HttpStatus.OK.value()),
+                Arguments.of(10, 10, 10, 11, null, null, HttpStatus.OK.value()),
+                Arguments.of(10, 10, 10, 11, 2020, null, HttpStatus.OK.value()),
+                Arguments.of(10, 10, null, 11, 2020, null, HttpStatus.OK.value()),
+                Arguments.of(10, 10, null, null, 2020, null, HttpStatus.OK.value()),
+
+                Arguments.of(0, 1, null, null, null, null,HttpStatus.OK.value()),
+                Arguments.of(0, 1, null, null, null, List.of(HAPPY),HttpStatus.OK.value()),
+                Arguments.of(0, 1, null, null, null, List.of(HAPPY,SAD),HttpStatus.OK.value()),
+                Arguments.of(0, 1, null, null, null, List.of(HAPPY,SAD,LOVE),HttpStatus.OK.value()),
+                Arguments.of(5, 10, null, null, null, List.of(HAPPY,SAD,LOVE),HttpStatus.OK.value()),
+                Arguments.of(0, 5, null, null, null, List.of(HAPPY,SAD,LOVE,INSPIRE),HttpStatus.OK.value()),
+                Arguments.of(0, 5, null, null, null, List.of(HAPPY,SAD,LOVE,INSPIRE,ANXIOUS,FEAR),HttpStatus.OK.value()),
+                Arguments.of(-1, 5, null, null, null, List.of(HAPPY,SAD,LOVE),HttpStatus.BAD_REQUEST.value()),
+                Arguments.of(0, 0, null, null, null, List.of(HAPPY,SAD,LOVE),HttpStatus.BAD_REQUEST.value())
         );
     }
 }

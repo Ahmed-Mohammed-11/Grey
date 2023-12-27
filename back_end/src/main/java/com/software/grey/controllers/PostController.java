@@ -2,6 +2,10 @@ package com.software.grey.controllers;
 
 import com.software.grey.SavedPostEnum;
 import com.software.grey.models.dtos.PostDTO;
+import com.software.grey.models.entities.Post;
+import com.software.grey.models.entities.SavedPost;
+import com.software.grey.recommendationsystem.Recommender;
+import com.software.grey.services.SavedPostService;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.services.SavedPostService;
 import com.software.grey.services.implementations.PostService;
@@ -38,15 +42,18 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(postService.add(postDTO));
     }
 
+    @Operation(
+            summary = "save/unsave a post",
+            description = "Use this end point to enable the user to save/unsave a post"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Post saved/unsaved successfully"),
+            @ApiResponse(responseCode = "400", description = "Post was not save due to invalid request body"),
+            @ApiResponse(responseCode = "401", description = "User is not authenticated")
+    })
     @PostMapping(path = EndPoints.SAVE_POST + "/{id}")
     public ResponseEntity<String> savePost(@PathVariable("id") String postId) {
-        SavedPostEnum saved = savedPostService.toggleSavedPost(postId);
-        if (saved == SavedPostEnum.SAVED) {
-            return new ResponseEntity<>("Saved successfully", HttpStatus.OK);
-        } else if (saved == SavedPostEnum.REMOVED) {
-            return new ResponseEntity<>("Removed successfully", HttpStatus.OK);
-        }
-        return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.OK).body(savedPostService.toggleSavedPost(postId));
     }
 
     @Operation(
@@ -143,5 +150,16 @@ public class PostController {
     public ResponseEntity<String> removeReportedPost(@PathVariable("id") String postId) {
         postService.removeReportedPost(postId);
         return ResponseEntity.status(HttpStatus.OK).body("Post is safe!");
+    }
+
+    @Operation(
+            summary = "Get the Saved Posts",
+            description = "Get all posts that user saved with pagination and filter by date")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Posts retrieved correctly")
+    })
+    @PostMapping(EndPoints.GET_SAVED_POSTS)
+    public ResponseEntity<Page<PostDTO>> getSavedPosts(@Valid @RequestBody PostFilterDTO postFilterDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(savedPostService.getSavedPosts(postFilterDTO));
     }
 }

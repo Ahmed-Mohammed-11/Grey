@@ -5,13 +5,13 @@ import {useRef, useState} from 'react';
 import clientValidateForm from "../security/userValidation/clientFormValidation";
 import updateUserController from "../services/updateUserController";
 import {UPDATE_USER_ENDPOINT} from "../constants/apiConstants";
-import {toast} from "react-toastify";
-import {ToastContainer} from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import User from '../components/sidebar/user';
-import authTokenBuilder from "@/app/utils/authTokenBuilder";
+import buildAuthToken from "@/app/utils/authTokenBuilder";
+import getUser from "@/app/utils/getUser";
 
 function Profile() {
 
@@ -19,9 +19,9 @@ function Profile() {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
-    const initialUsername = 'hesham09'
-    const initialEmail = 'hamadayl3b@grey.com'
-    const initialPassword = 'Everyone loves Ahmed Elnaggar'
+    const initialUsername = localStorage.getItem("username") || 'Ahmed Elnaggar'
+    const initialEmail = localStorage.getItem("email") || "nagarito@gmail.com"
+    const initialPassword = ""
 
     const [username, setUsername] = useState(initialUsername);
     const [email, setEmail] = useState(initialEmail);
@@ -49,32 +49,30 @@ function Profile() {
     }
 
     const fetchServerResponse = async (userDto: UserDTO) => {
-        console.log("before update");
-        console.log(userDto);
         const response = await updateUserController.sendPutRequest(userDto, UPDATE_USER_ENDPOINT)
-        console.log(response)
         const message = await response.text()
-        console.log(message)
         if (!response.ok) {
             userDto = {
                 username: initialUsername,
                 email: initialEmail,
                 password: initialPassword
             }
-            notify(message || "Error occurred while changing profile info", true, userDto)
+            notify(message || "You need to login again", true)
         } else {
-            notify(message, false, userDto)
+            const authToken = buildAuthToken(userDto)
+            localStorage.setItem("Authorization", authToken)
+            getUser()
+            notify(message, false)
         }
     }
 
-    const notify = (message: string, isError: boolean, userDto:UserDTO) => {
+    const notify = (message: string, isError: boolean) => {
         if (isError) {
             toast.error(message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000,
             })
         } else {
-            authTokenBuilder(userDto);
             toast.success(message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000,
@@ -113,12 +111,12 @@ function Profile() {
 
         if (noChange(user)) {
             console.log('no change')
-            const userDto:UserDTO = {
+            const userDto: UserDTO = {
                 username: initialUsername,
                 email: initialEmail,
                 password: initialPassword
             }
-            notify('No change', false, userDto)
+            notify('No change', false)
             return
         }
 
@@ -131,61 +129,61 @@ function Profile() {
 
     return (
         // user avatar is so small when theme registry applied
-            <Box className={styles.container}>
-                <User name={"username"} backgroundColor={"red"}/>
-                <TextField className={styles.textArea}
-                    label='Username'
-                    placeholder='new username'
-                    inputRef={usernameRef}
-                    variant="filled"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    error={!isUserValid.username}
-                    helperText={(isUserValid.username) ? "" : errors.username}
-                >
-                </TextField>
-                <TextField className={styles.textArea}
-                    label='Email'
-                    placeholder='new email'
-                    inputRef={emailRef}
-                    variant="filled"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    error={!isUserValid.email}
-                    helperText={(isUserValid.email) ? "" : errors.email}
-                ></TextField>
-                <TextField className={styles.textArea}
-                    label='Password'
-                    placeholder='new password'
-                    inputRef={passwordRef}
-                    variant="filled"
-                    type={showPassword ? 'text' : 'password'}
-                    error={!isUserValid.password}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    helperText={(isUserValid.password) ? "" : errors.password}
-                    InputProps={{
-                       endAdornment: (
-                           <InputAdornment position="end">
-                               <IconButton
-                                   onClick={handleTogglePassword}
-                                   edge="end"
-                               >
-                                   {showPassword ? <VisibilityOff/> : <Visibility/>}
-                               </IconButton>
-                           </InputAdornment>
-                       )
-                    }}
-                ></TextField>
-                <Button className={styles.button}
+        <Box className={styles.container}>
+            <User name={initialUsername} backgroundColor={"red"}/>
+            <TextField className={styles.textArea}
+                       label='Username'
+                       placeholder='new username'
+                       inputRef={usernameRef}
+                       variant="filled"
+                       value={username}
+                       onChange={(e) => setUsername(e.target.value)}
+                       error={!isUserValid.username}
+                       helperText={(isUserValid.username) ? "" : errors.username}
+            >
+            </TextField>
+            <TextField className={styles.textArea}
+                       label='Email'
+                       placeholder='new email'
+                       inputRef={emailRef}
+                       variant="filled"
+                       value={email}
+                       onChange={(e) => setEmail(e.target.value)}
+                       error={!isUserValid.email}
+                       helperText={(isUserValid.email) ? "" : errors.email}
+            ></TextField>
+            <TextField className={styles.textArea}
+                       label='Password'
+                       placeholder='new password'
+                       inputRef={passwordRef}
+                       variant="filled"
+                       type={showPassword ? 'text' : 'password'}
+                       error={!isUserValid.password}
+                       value={password}
+                       onChange={(e) => setPassword(e.target.value)}
+                       helperText={(isUserValid.password) ? "" : errors.password}
+                       InputProps={{
+                           endAdornment: (
+                               <InputAdornment position="end">
+                                   <IconButton
+                                       onClick={handleTogglePassword}
+                                       edge="end"
+                                   >
+                                       {showPassword ? <VisibilityOff/> : <Visibility/>}
+                                   </IconButton>
+                               </InputAdornment>
+                           )
+                       }}
+            ></TextField>
+            <Button className={styles.button}
                     variant="contained"
                     size="large"
                     onClick={handleUpdate}
-                >
-                    save changes
-                </Button>
-                <ToastContainer/>
-            </Box>
+            >
+                save changes
+            </Button>
+            <ToastContainer/>
+        </Box>
     )
 }
 

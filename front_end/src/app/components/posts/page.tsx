@@ -22,7 +22,10 @@ export default function Posts(props: any) {
     const [filterData, setFilterData] = useState<PostFilterDTO>({} as PostFilterDTO);
     const [pageIndex, setPageIndex] = useState<number>(0);
     const [lastPage, setLastPage] = useState<boolean>(false);
-    const [emptyPosts, setEmptyPosts] = useState<boolean>(true);
+    const [emptyPosts, setEmptyPosts] = useState<boolean>(false);
+
+    const datePickerActiveIndex = [2, 3];
+    const feelingsActiveIndex = [0, 3];
 
     useEffect(() => {
         setAuth(localStorage.getItem('Authorization'));
@@ -47,7 +50,7 @@ export default function Posts(props: any) {
 
     useEffect(() => {
         loadMore().then(() => {
-            if(inView)
+            if (inView)
                 setPageIndex(i => i + 1);
         })
     }, [pageIndex]);
@@ -82,7 +85,7 @@ export default function Posts(props: any) {
             if (!response.ok) {
                 if(response.status == 403) {
                     toast.error("You are not authorized to see this", toastStyleTopRight);
-                    setEmptyPosts(true);
+                    // setEmptyPosts(true);
                 }
                 throw new Error('Network response was not ok');
             }
@@ -95,15 +98,15 @@ export default function Posts(props: any) {
                 newData.content = newData.content.filter((post: any) => !uniqueIds.has(post.id));
                 return [...(prevPosts ?? []), ...newData.content];
             });
-            if(newData.content.length == 0) {
-                console.log("empty posts")
-                setEmptyPosts(true);
-            }else {
-                console.log(newData.content.length)
-                console.log(posts.length)
-                console.log("not empty posts")
-                setEmptyPosts(false);
-            }
+            // if(newData.content.length == 0) {
+            //     console.log("empty posts")
+            //     setEmptyPosts(true);
+            // }else {
+            //     console.log(newData.content.length)
+            //     console.log(posts.length)
+            //     console.log("not empty posts")
+            //     setEmptyPosts(false);
+            // }
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -120,14 +123,14 @@ export default function Posts(props: any) {
 
     const renderPosts = () => {
         return props.feedType === 5 ?
-            posts.map((post: any) => <ReportedPost post={post} />) :
-            posts.map((post: any) => <Post key={post.id} post={post} feedType={props.feedType}/>);
+            posts.map((post: any) => <ReportedPost post={post} setPosts={setPosts} posts={posts} />) :
+            posts.map((post: any) => <Post key={post.id} post={post} feedType={props.feedType} setPosts={setPosts} posts={posts} />);
     };
 
     const renderEmptyPosts = () => {
         return (
             <Box className={styles.empty_posts}>
-                <span className={styles.line} />
+                {/*<span className={styles.line} />*/}
 
                 <Box className={styles.empty_text}>
                     No posts to show
@@ -139,14 +142,15 @@ export default function Posts(props: any) {
     return (
         <Box className={styles.feed} width={props.width}>
             <Box className={styles.posts_bar}>
-                <PopupScreen/>
-                <PostFilters showDatePicker={props.feedType == 2} showFeelingSelection={props.feedType === 0}
-                             applyFilters={applyFilters}/>
+                <PopupScreen setPosts={setPosts} posts={posts}/>
+                <PostFilters showDatePicker = {datePickerActiveIndex.includes(props.feedType)}
+                             showFeelingSelection = {feelingsActiveIndex.includes(props.feedType)}
+                             applyFilters = {applyFilters}/>
             </Box>
             <Box className={styles.posts}>
-                {!emptyPosts ? renderPosts() : renderEmptyPosts()}
+                {!emptyPosts ? renderPosts() : renderPosts()}
             </Box>
-            {!lastPage && !emptyPosts && (
+            {!lastPage && (
                 <div className={styles.post_skeleton} ref={ref}>
                     <div className={styles.container}>
                         <Skeleton className={styles.chip_shape}/>

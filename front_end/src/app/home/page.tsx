@@ -26,10 +26,10 @@ const Home = () => {
     5: REPORTED_ENDPOINT,
   };
 
-  const profile = <Profile />
-  const [display, setDisplay] = useState(<Posts width={'80%'}
-                                                feedTypeEndPoint={endpointMapping[0]}
-                                                feedType={0} />)
+    const profile = <Profile/>
+    const [display, setDisplay] = useState(<Posts width={'80%'}
+                                                  feedTypeEndPoint={endpointMapping[0]}
+                                                  feedType={0}/>)
 
   const handleChange = (newSelectedPageIndex: number) => {
     if (newSelectedPageIndex === 4) {

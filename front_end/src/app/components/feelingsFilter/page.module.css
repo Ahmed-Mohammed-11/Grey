@@ -8,11 +8,11 @@
     box-sizing: border-box;
 }
 
-.chip{
-    margin : 5px;
+.chip {
+    margin: 5px;
     padding: 5px;
 }
 
-.menu_item:hover{
+.menu_item:hover {
     opacity: 0.8;
 }

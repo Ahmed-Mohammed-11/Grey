@@ -58,12 +58,14 @@ function Page() {
         let jsonResponse = await toJSON(response.body!);
         let responseStat = response.status;
         //if response status is 200, redirect to home page
-        (responseStat == 200) && await getUser().then(() => router.push(HOME_ROUTE));
         //if response status is not 200, map response from server to display appropriate error messages
         //and if 200 get auth token and store it in local storage
-        let {isUserValid, errors} = loginServerFormValidationMapper(responseStat, jsonResponse, userDTO)
+        let {isUserValid, errors} = loginServerFormValidationMapper(responseStat, jsonResponse, userDTO);
+
         setIsUserValid(isUserValid);
         setErrors(errors);
+
+        (responseStat == 200) && await getUser().then(() => router.push(HOME_ROUTE));
     }
 
     let topLeftShapeClass = classNames(styles.topLeft, styles.cornerShapes);

@@ -74,13 +74,13 @@
 }
 
 .button:hover,
-.active{
+.active {
     color: #DDE6ED !important;
     background: none !important
 }
 
 .button:after,
-.button:before{
+.button:before {
     content: "";
     position: absolute;
     top: 0;
@@ -105,12 +105,12 @@
 }
 
 .button:hover::before,
-.active::before{
+.active::before {
     visibility: visible;
     transform: translate(-10px, -10px);
 }
 .button:hover::after,
-.active::after{
+.active::after {
     transform: scaleX(1);
     transform-origin: left;
 }
@@ -140,7 +140,7 @@
     transform-origin: left;
 }
 
-.icon{
+.icon {
     height: 1.6em !important;
     color: inherit;
 }
