@@ -2,9 +2,6 @@ package com.software.grey.controllers;
 
 import com.software.grey.SavedPostEnum;
 import com.software.grey.models.dtos.PostDTO;
-import com.software.grey.models.entities.Post;
-import com.software.grey.recommendationsystem.Recommender;
-import com.software.grey.services.SavedPostService;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.services.SavedPostService;
 import com.software.grey.services.implementations.PostService;
@@ -19,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -65,7 +61,7 @@ public class PostController {
             @ApiResponse(responseCode = "200", description = "Posts retrieved correctly")
     })
     @PostMapping(EndPoints.GET_DIARY)
-    public ResponseEntity<Page<PostDTO>> getDiary(@Valid @RequestBody PostFilterDTO postFilterDTO){
+    public ResponseEntity<Page<PostDTO>> getDiary(@Valid @RequestBody PostFilterDTO postFilterDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(postService.getDiary(postFilterDTO));
     }
 
@@ -76,7 +72,7 @@ public class PostController {
             @ApiResponse(responseCode = "200", description = "Posts retrieved correctly")
     })
     @PostMapping(EndPoints.GET_FEED)
-    public ResponseEntity<Page<PostDTO>> getFeed(@Valid @RequestBody PostFilterDTO postFilterDTO){
+    public ResponseEntity<Page<PostDTO>> getFeed(@Valid @RequestBody PostFilterDTO postFilterDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(postService.getFeed(postFilterDTO));
     }
 

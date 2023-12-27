@@ -1,19 +1,9 @@
-.feed{
-    /*width: 100%;*/
-    height: 91vh;
-    margin: 20px auto;
-    padding: 10px 20px;
-    overflow-y: scroll;
-    line-height: 2em;
-    box-sizing: border-box;
-}
-
 .post{
     margin: 20px 0;
     padding: 10px;
     border-radius: 10px;
     background-color: #526D82;
-    color: #FFF;
+    color: #DDE6ED;
 }
 
 .post > .post_header{
@@ -24,12 +14,23 @@
 }
 
 .menu_item{
-    padding: 4px 16px;
+    padding: 8px 16px;
     align-items: stretch;
 }
+
 .icon{
-    padding: 0 3% 0 0;
+    padding: 0 4% 0 0;
     font-size: 23px;
+}
+
+.main_icons{
+    padding: 0 4% 0 0;
+    font-size: 23px;
+    color: #DDE6ED;
+}
+
+.menu_item:hover{
+    color: #DDE6ED;
 }
 
 .post > .post_text{
