@@ -48,7 +48,7 @@ class SignupControllerTest {
         assert(Objects.equals(user.getUsername(), "testUserGrey"));
         assert(Objects.equals(user.getEmail(), "mockEmail123@gmail.com"));
         assertTrue(bCryptPasswordEncoder.matches("mock Password test", user.getPassword()));
-        assert(user.getRole() == Role.ROLE_USER);
+        assert(user.getRole() == Role.USER);
     }
 
     @Test

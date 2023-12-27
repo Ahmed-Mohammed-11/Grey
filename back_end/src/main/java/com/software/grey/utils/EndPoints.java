@@ -21,7 +21,6 @@ public class EndPoints {
     public static final String GET_FEED = "/feed";
     public static final String USER = "/user";
     public static final String UPDATE_USER = "/update";
-    public static final String DELETE_REPORTED_POST = "/reported/delete";
-    public static final String REMOVE_REPORTED_POST = "/reported/remove";
+    public static final String REMOVE_REPORTED_POST = REPORT_POST + "/remove";
 
 }
