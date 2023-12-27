@@ -4,24 +4,36 @@ package com.software.grey.ServiceTest;
 import com.software.grey.SavedPostEnum;
 import com.software.grey.TestDataUtil.ObjectsBuilder;
 import com.software.grey.controllers.SignupController;
+import com.software.grey.models.dtos.PostDTO;
+import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.SavedPost;
 import com.software.grey.models.entities.User;
+import com.software.grey.models.enums.Feeling;
 import com.software.grey.repositories.*;
 import com.software.grey.services.SavedPostService;
+import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.SecurityUtils;
+import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.logging.Filter;
+import java.util.stream.Stream;
 
+import static com.software.grey.models.enums.Feeling.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -44,7 +56,7 @@ class TestSavedPostService {
     TestSavedPostService (SavedPostService savedPostService, ObjectsBuilder objectsBuilder1,
                           UserRepo userRepository, PostRepository postRepository,
                           SavedPostRepository savedPostRepository, SignupController signupController,
-                          UserVerificationRepo userVerificationRepo, BasicUserRepo basicUserRepo) {
+                          UserVerificationRepo userVerificationRepo, BasicUserRepo basicUserRepo, PostService postService) {
         this.savedPostService = savedPostService;
         this.objectsBuilder = objectsBuilder1;
         this.userRepository = userRepository;
@@ -56,7 +68,7 @@ class TestSavedPostService {
     }
 
     @BeforeAll
-    void init() {
+    void init() throws InterruptedException {
         UserDTO myUser = new UserDTO("mockEmailSave@gmail.com", "testUserSave", "mock Password test");
         signupController.signup(myUser);
 
@@ -67,7 +79,6 @@ class TestSavedPostService {
         User b = userRepository.findByUsername("userB");
         Post postB = objectsBuilder.createPostB(b);
         postRepository.save(postB);
-
     }
 
     @AfterAll
