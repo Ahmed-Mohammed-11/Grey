@@ -115,7 +115,7 @@ class PostServiceTest {
 
         when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName");
 
-        UUID postId = postService.add(postDTO);
+        String postId = postService.add(postDTO);
 
         assertThat(postId).isNotNull();
         assertThat(postRepository.existsById(postId)).isTrue();

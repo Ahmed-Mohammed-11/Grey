@@ -13,7 +13,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 
 @Service
@@ -26,15 +25,6 @@ public class SavedPostServiceImpl implements SavedPostService {
 
     @Override
     public SavedPostEnum toggleSavedPost(String postId) {
-        try {
-            return toggle(UUID.fromString(postId));
-        } catch (IllegalArgumentException e) {
-            return SavedPostEnum.NOT_FOUND;
-        }
-    }
-
-
-    private SavedPostEnum toggle(UUID postId) {
         User user = securityUtils.getCurrentUser();
         if (postId == null || user == null) {
             return SavedPostEnum.NOT_FOUND;

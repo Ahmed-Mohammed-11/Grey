@@ -16,8 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping(EndPoints.POST)
 @AllArgsConstructor
@@ -36,7 +34,7 @@ public class PostController {
             @ApiResponse(responseCode = "401", description = "User is not authenticated")
     })
     @PostMapping(EndPoints.ADD_POST)
-    public ResponseEntity<UUID> addPost(@Valid @RequestBody PostDTO postDTO) {
+    public ResponseEntity<String> addPost(@Valid @RequestBody PostDTO postDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(postService.add(postDTO));
     }
 
