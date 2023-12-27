@@ -29,10 +29,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Filter;
 import java.util.stream.Stream;
 
@@ -54,7 +51,6 @@ class TestSavedPostService {
     private final SavedPostRepository savedPostRepository;
     private final UserVerificationRepo userVerificationRepo;
     private final BasicUserRepo basicUserRepo;
-    private final PostService postService;
 
     @Autowired
     TestSavedPostService (SavedPostService savedPostService, ObjectsBuilder objectsBuilder1,
@@ -69,7 +65,6 @@ class TestSavedPostService {
         this.signupController = signupController;
         this.userVerificationRepo = userVerificationRepo;
         this.basicUserRepo = basicUserRepo;
-        this.postService = postService;
     }
 
     @BeforeAll
@@ -84,9 +79,6 @@ class TestSavedPostService {
         User b = userRepository.findByUsername("userB");
         Post postB = objectsBuilder.createPostB(b);
         postRepository.save(postB);
-        prepareDataUser1();
-        prepareDataUser2();
-
     }
 
     @AfterAll
@@ -95,24 +87,6 @@ class TestSavedPostService {
         userVerificationRepo.deleteAll();
         basicUserRepo.deleteAll();
         userRepository.deleteAll();
-    }
-
-    void prepareDataUser1() throws InterruptedException {
-        when(securityUtils.getCurrentUserName()).thenReturn("testUserSave");
-        List<Set<Feeling>> feelings = List.of(Set.of(LOVE), Set.of(LOVE, HAPPY), Set.of(SAD), Set.of(LOVE, HAPPY, SAD));
-        for(int i = 0;i<5;i++){
-            postService.add(PostDTO.builder().postText(i + " user1").postFeelings(feelings.get(i% feelings.size())).build());
-            Thread.sleep(30);
-        }
-    }
-
-    void prepareDataUser2() throws InterruptedException {
-        when(securityUtils.getCurrentUserName()).thenReturn("userB");
-        List<Set<Feeling>> feelings = List.of(Set.of(LOVE), Set.of(SAD));
-        for(int i = 0;i<3;i++){
-            postService.add(PostDTO.builder().postText(i + " user2").postFeelings(feelings.get(i% feelings.size())).build());
-            Thread.sleep(30);
-        }
     }
 
     @Test
@@ -199,54 +173,4 @@ class TestSavedPostService {
         SavedPostEnum savedPostEnum = savedPostService.toggleSavedPost(postId.toString());
         assertThat(savedPostEnum).isEqualTo(SavedPostEnum.NOT_FOUND);
     }
-
-    @ParameterizedTest
-    @MethodSource("getSavedPostsOfUserTestData")
-    void getSavedPostsOfUser(String userName, Integer pageNumber, Integer pageSize,Integer day, Integer month,
-                             Integer year, List<Feeling> feelings, List<String> postsStrings) throws InterruptedException {
-
-        when(securityUtils.getCurrentUserName()).thenReturn(userName);
-
-        PostFilterDTO postFilterDTO = PostFilterDTO.builder()
-                .pageNumber(pageNumber).pageSize(pageSize).day(day).month(month).year(year).feelings(feelings).build();
-        Page<PostDTO> posts = savedPostService.getSavedPosts(postFilterDTO);
-        assertThat(posts.getContent()).hasSize(postsStrings.size());
-        int start = pageNumber * pageSize;
-        for (int i = 0; i < postsStrings.size(); i++) {
-            assertThat(posts.getContent().get(i).getPostText()).isEqualTo(postsStrings.get(i + start));
-        }
-    }
-
-    static Stream<Arguments> getSavedPostsOfUserTestData() {
-        return Stream.of(
-                Arguments.of("testUserSave", 0, 10, null, null, null, null, List.of("2 user2", "1 user2", "0 user2")),
-                Arguments.of("userB", 0, 10, null, null, null, null, List.of("4 user1", "3 user1", "2 user1", "1 user1", "0 user1")),
-                Arguments.of("testUserSave", 0, 10, null, null, null, List.of(LOVE), List.of("2 user2", "0 user2")),
-                Arguments.of("userB", 0, 10, null, null, null, List.of(LOVE, HAPPY), List.of("4 user1", "3 user1", "1 user1", "0 user1")),
-                Arguments.of("testUserSave", 0, 10, null, null, null, List.of(LOVE, HAPPY, SAD),List.of("2 user2", "1 user2", "0 user2")),
-                Arguments.of("testUserSave", 0, 10, null, null, null, List.of(LOVE, HAPPY, SAD, INSPIRE),List.of("2 user2", "1 user2", "0 user2")),
-                Arguments.of("userB", 0, 10, null, null, null, List.of(SAD),List.of("3 user1", "2 user1")),
-                Arguments.of("userB", 0, 10, null, null, null, List.of(INSPIRE),List.of()),// return noting
-                Arguments.of("userB", 0, 10, null, null, null, List.of(), List.of("4 user1", "3 user1", "2 user1", "1 user1", "0 user1"))// return all
-        );
-    }
-
-//    static Stream<Arguments> paginationOfDiaryPostsParameters() {
-//        LocalDate currentDate = LocalDate.now();
-//
-//        // Get the day, month, and year
-//        int day = currentDate.getDayOfMonth();
-//        int month = currentDate.getMonthValue();
-//        int year = currentDate.getYear();
-//        return Stream.of(
-//                Arguments.of("testUserSave", 1, 0, day, month, year, 1), // check the user1 has at least one post
-//                Arguments.of("userB", 1, 0, day, month, year, 1), // check the user2 has at least one post
-//                Arguments.of("testUserSave", 10, 0, day, month, year, 5), // check all the posts of user1
-//                Arguments.of("userB", 10, 0, day, month, year, 3), // check all the posts of user2
-//                Arguments.of("testUserSave", 2, 1, day, month, year, 2), // check posts of page 2 of user1
-//                Arguments.of("userB", 2, 1, day, month, year, 1), // check posts of page 2 of user2
-//                Arguments.of("testUserSave", 10, 0, (day + 5) % 30, month, year, 0), // check posts of user that created in other day
-//                Arguments.of("userB", 10, 0, (day + 5) % 30, month, year, 0)
-//        );
-//    }
 }

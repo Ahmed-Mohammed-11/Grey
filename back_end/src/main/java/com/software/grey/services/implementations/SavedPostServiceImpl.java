@@ -87,11 +87,10 @@ public class SavedPostServiceImpl implements SavedPostService {
                 postFilterDTO.getPageNumber(),
                 postFilterDTO.getPageSize());
 
-        Page<Post> pos = savedPostRepository.findSavedPostsByUsernameAndDayMonthYear(userName, feelings,
+        return savedPostRepository.findSavedPostsByUsernameAndDayMonthYear(userName, feelings,
                 postFilterDTO.getDay(),
                 postFilterDTO.getMonth(),
-                postFilterDTO.getYear(), pageable).map(SavedPost::getPost);
-        return pos
+                postFilterDTO.getYear(), pageable).map(SavedPost::getPost)
                 .map(postMapper::toPostDTO);
     }
 }

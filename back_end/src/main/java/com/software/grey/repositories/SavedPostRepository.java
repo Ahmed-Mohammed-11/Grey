@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public interface SavedPostRepository extends JpaRepository<SavedPost, SavedPostId> {
     @Query(value = """
-        SELECT sp.user_id, sp.post_id, sp.post_saved_time
+        SELECT DISTINCT sp.user_id, sp.post_id, sp.post_saved_time
         FROM saved_post sp
         JOIN post p ON p.id = sp.post_id
         JOIN user u ON u.id = sp.user_id
