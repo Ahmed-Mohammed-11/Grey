@@ -1,17 +1,13 @@
 import {
     EMAIL_EMPTY_MSG,
-    PASSWORD_EMPTY_MSG,
-    USERNAME_EMPTY_MSG,
-    USERNAME_INVALID_MSG,
     EMAIL_INVALID_MSG,
-    PASSWORD_INVALID_MSG
+    PASSWORD_EMPTY_MSG,
+    PASSWORD_INVALID_MSG,
+    USERNAME_EMPTY_MSG,
+    USERNAME_INVALID_MSG
 } from "@/app/constants/displayErrorMessages";
 
-import {
-    EMAIL_REGEX,
-    PASSWORD_REGEX,
-    USERNAME_REGEX
-} from "@/app/constants/regularExpressions";
+import {EMAIL_REGEX, PASSWORD_REGEX, USERNAME_REGEX} from "@/app/constants/regularExpressions";
 
 let isUserValid = {
     username: true,
@@ -38,14 +34,14 @@ function validateUsername(formData: any) {
     }
 }
 
-function validateEmail(formData: any){
+function validateEmail(formData: any) {
     if (!formData.email) {
         isUserValid.email = false;
         errors.email = EMAIL_EMPTY_MSG;
         return;
     }
 
-    if(!formData.email.match(EMAIL_REGEX)) {
+    if (!formData.email.match(EMAIL_REGEX)) {
         isUserValid.email = false;
         errors.email = EMAIL_INVALID_MSG;
     }

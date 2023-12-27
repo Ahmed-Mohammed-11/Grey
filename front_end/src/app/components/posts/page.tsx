@@ -4,9 +4,9 @@ import {Box} from "@mui/system";
 import Post from "@/app/components/post/page";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useInView} from "react-intersection-observer"
-import {BASE_BACKEND_URL, DIARY_ENDPOINT, EXPLORE_ENDPOINT} from "@/app/constants/apiConstants";
+import {BASE_BACKEND_URL} from "@/app/constants/apiConstants";
 import {Skeleton} from '@mui/material';
 import PostFilters from "../postFilter/page";
 import PostFilterDTO from '@/app/entities/dtos/PostFilterDTO';
@@ -46,7 +46,7 @@ export default function Posts(props: any) {
 
     useEffect(() => {
         loadMore().then(() => {
-            if(inView)
+            if (inView)
                 setPageIndex(i => i + 1);
         })
     }, [pageIndex]);

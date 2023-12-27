@@ -1,10 +1,10 @@
-.container{
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0,0.7);
+    background: rgba(0, 0, 0, 0.7);
 }
 
 .modal {
@@ -55,7 +55,7 @@
     box-sizing: border-box;
 }
 
-.button{
+.button {
     display: flex;
     gap: 0 10px;
     border: none;
@@ -69,19 +69,19 @@
     box-sizing: border-box;
 }
 
-.filled{
+.filled {
     background: #526D82;
     color: #DDE6ED;
 }
 
-.disabled{
+.disabled {
     background: #cfe9ff;
     color: #333;
     box-shadow: none;
     opacity: 0.5;
 }
 
-.create_button{
+.create_button {
     display: flex;
     position: relative;
     flex-direction: row;
@@ -91,7 +91,7 @@
     padding: 12px;
     outline: none;
     text-transform: capitalize;
-    font-size: calc(2*calc(min(1vh, 1vw)));
+    font-size: calc(2 * calc(min(1vh, 1vw)));
     border: none;
     border-radius: 10px;
     cursor: pointer;

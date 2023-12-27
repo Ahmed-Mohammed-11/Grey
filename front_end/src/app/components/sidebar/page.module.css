@@ -74,7 +74,7 @@
     transition: all .3s ease-in-out !important;
 }
 
-.button:hover{
+.button:hover {
     color: #DDE6ED;
 }
 
@@ -110,7 +110,7 @@
     transform: scale(1);
 }
 
-.icon{
+.icon {
     height: 1.6em !important;
     color: inherit;
 }

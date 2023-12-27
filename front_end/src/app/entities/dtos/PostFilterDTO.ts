@@ -6,7 +6,7 @@ class PostFilterDTO {
     day?: number;
     month?: number;
     year?: number;
-    feelings?:Feeling[]
+    feelings?: Feeling[]
 }
 
 export default PostFilterDTO;

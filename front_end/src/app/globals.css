@@ -1,7 +1,7 @@
-.DISGUST{
+.DISGUST {
     margin: 0 1% 0 0;
     background-color: #8B8682 !important;
-    color: white  !important;
+    color: white !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
     font-weight: 900;
@@ -15,34 +15,34 @@
     font-weight: 900;
 }
 
-.SAD{
+.SAD {
     margin: 0 1% 0 0;
     background-color: #81D4FA !important;
-    color: white  !important;
+    color: white !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
     font-weight: 900;
 }
 
-.FEAR{
+.FEAR {
     margin: 0 1% 0 0;
     background-color: #78909C !important;
-    color: white  !important;
+    color: white !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
     font-weight: 900;
 }
 
-.ANGER{
+.ANGER {
     margin: 0 1% 0 0;
     background-color: #EF5350 !important;
-    color: white  !important;
+    color: white !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
     font-weight: 900;
 }
 
-.ANXIOUS{
+.ANXIOUS {
     margin: 0 1% 0 0;
     background-color: #C5CAE9 !important;
     letter-spacing: 2px;
@@ -50,17 +50,17 @@
     font-weight: 900;
 }
 
-.LOVE{
+.LOVE {
     margin: 0 1% 0 0;
-    background-color: #FFC0D9  !important;
+    background-color: #FFC0D9 !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
     font-weight: 900;
 }
 
-.INSPIRE{
+.INSPIRE {
     margin: 0 1% 0 0;
-    background-color: #4CAF50  !important;
+    background-color: #4CAF50 !important;
     color: #FFFFFF !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
@@ -68,34 +68,34 @@
 }
 
 
-.ANGER:hover{
+.ANGER:hover {
     cursor: pointer;
 }
 
-.ANXIOUS:hover{
+.ANXIOUS:hover {
     cursor: pointer;
 }
 
-.DISGUST:hover{
+.DISGUST:hover {
     cursor: pointer;
 }
 
-.FEAR:hover{
+.FEAR:hover {
     cursor: pointer;
 }
 
-.HAPPY:hover{
+.HAPPY:hover {
     cursor: pointer;
 }
 
-.INSPIRE:hover{
+.INSPIRE:hover {
     cursor: pointer;
 }
 
-.LOVE:hover{
+.LOVE:hover {
     cursor: pointer;
 }
 
-.SAD:hover{
+.SAD:hover {
     cursor: pointer;
 }

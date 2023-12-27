@@ -10,11 +10,7 @@ import {toast, ToastOptions} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import deletePostController from "@/app/services/deletePostController";
 import postRequestWithUrlParams from "@/app/services/postRequestWithUrlParams";
-import {
-    REPORT_POST_ENDPOINT,
-    SAVE_POST_ENDPOINT,
-    DELETE_POST_ENDPOINT,
-} from "@/app/constants/apiConstants";
+import {DELETE_POST_ENDPOINT, REPORT_POST_ENDPOINT, SAVE_POST_ENDPOINT,} from "@/app/constants/apiConstants";
 
 
 export default function Post(props: any) {

@@ -1,5 +1,4 @@
-class UserVerification
-{
-    username? : string;
-    confirmationCode? : string;
+class UserVerification {
+    username?: string;
+    confirmationCode?: string;
 }
