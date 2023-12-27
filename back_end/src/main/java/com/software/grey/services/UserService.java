@@ -1,8 +1,9 @@
 package com.software.grey.services;
 
-import com.software.grey.exceptions.exceptions.UserExistsException;
 import com.software.grey.exceptions.exceptions.FailedToUpdateException;
+import com.software.grey.exceptions.exceptions.UserExistsException;
 import com.software.grey.models.dtos.UserDTO;
+import com.software.grey.models.dtos.responseDTOs.UserResponseDTO;
 import com.software.grey.models.entities.BasicUser;
 import com.software.grey.models.entities.GoogleUser;
 import com.software.grey.models.entities.User;
@@ -25,7 +26,6 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 
 @Service
@@ -55,13 +55,23 @@ public class UserService {
         this.securityUtils = securityUtils;
     }
 
+    public UserResponseDTO getUser() {
+        String username = securityUtils.getCurrentUserName();
+        User user = userRepo.findByUsername(username);
+        return UserResponseDTO.builder()
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .role(user.getRole().toString()).build();
+    }
+
+
     public void save(UserDTO userDTO) {
         if (userExists(userDTO))
             throw new UserExistsException("User already exists");
 
         userDTO.password = bCryptPasswordEncoder.encode(userDTO.password);
         BasicUser user = BasicUser.builder()
-                .role(Role.ROLE_USER)
+                .role(Role.USER)
                 .tier(Tier.STANDARD)
                 .registrationType("basic")
                 .enabled(true)
@@ -97,7 +107,7 @@ public class UserService {
 
         GoogleUser user = GoogleUser.builder()
                 .externalID(userDTO.externalID)
-                .role(Role.ROLE_USER)
+                .role(Role.USER)
                 .tier(Tier.STANDARD)
                 .registrationType("google")
                 .enabled(true)

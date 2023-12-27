@@ -10,6 +10,7 @@ import clientValidateForm from "@/app/security/userValidation/clientFormValidati
 import loginController from "@/app/services/loginController";
 import {HOME_ROUTE, LOG_IN_BACKEND_ENDPOINT, SIGN_UP_ROUTE} from "@/app/constants/apiConstants";
 import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
+import getUser from "@/app/utils/getUser";
 import {LOGIN_PANEL_TEXT} from "@/app/constants/displayTextMessages";
 import loginServerFormValidationMapper from "@/app/security/userValidation/loginServerFormValidationMapper";
 import {useRouter} from "next/navigation";
@@ -57,12 +58,14 @@ function Page() {
         let jsonResponse = await toJSON(response.body!);
         let responseStat = response.status;
         //if response status is 200, redirect to home page
-        (responseStat == 200) && router.push(HOME_ROUTE);
         //if response status is not 200, map response from server to display appropriate error messages
         //and if 200 get auth token and store it in local storage
-        let {isUserValid, errors} = loginServerFormValidationMapper(responseStat, jsonResponse, userDTO)
+        let {isUserValid, errors} = loginServerFormValidationMapper(responseStat, jsonResponse, userDTO);
+
         setIsUserValid(isUserValid);
         setErrors(errors);
+
+        (responseStat == 200) && await getUser().then(() => router.push(HOME_ROUTE));
     }
 
     let topLeftShapeClass = classNames(styles.topLeft, styles.cornerShapes);

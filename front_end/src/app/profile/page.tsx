@@ -11,6 +11,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import User from '../components/sidebar/user';
 import buildAuthToken from "@/app/utils/authTokenBuilder";
+import getUser from "@/app/utils/getUser";
 
 function Profile() {
 
@@ -18,9 +19,9 @@ function Profile() {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
-    const initialUsername = 'hesham09'
-    const initialEmail = 'hamadayl3b@grey.com'
-    const initialPassword = 'Everyone loves Ahmed Elnaggar'
+    const initialUsername = localStorage.getItem("username") || 'Ahmed Elnaggar'
+    const initialEmail = localStorage.getItem("email") || "nagarito@gmail.com"
+    const initialPassword = ""
 
     const [username, setUsername] = useState(initialUsername);
     const [email, setEmail] = useState(initialEmail);
@@ -60,6 +61,7 @@ function Profile() {
         } else {
             const authToken = buildAuthToken(userDto)
             localStorage.setItem("Authorization", authToken)
+            getUser()
             notify(message, false)
         }
     }
@@ -128,7 +130,7 @@ function Profile() {
     return (
         // user avatar is so small when theme registry applied
         <Box className={styles.container}>
-            <User name={"username"} backgroundColor={"red"}/>
+            <User name={initialUsername} backgroundColor={"red"}/>
             <TextField className={styles.textArea}
                        label='Username'
                        placeholder='new username'

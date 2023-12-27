@@ -15,6 +15,9 @@ import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function PopupScreen(props: any) {
+    // user info
+    const username = localStorage.getItem('username')!;
+
     // Feelings chips
     const [selectedFeelings, setSelectedFeelings] = React.useState(new Set<Feeling>());
 
@@ -91,7 +94,7 @@ export default function PopupScreen(props: any) {
                     <section className={styles.container}>
                         <div className={styles.modal}>
                             <div className={styles.profile}>
-                                <User name={"@hesham09"} backgroundColor={"#9DB2BF"}/>
+                                <User name={'@' + username} backgroundColor={"#9DB2BF"}/>
                             </div>
                             <FeelingsFilter limit={3} onDataChange={setSelectedFeelings}/>
                             <TextareaAutosize

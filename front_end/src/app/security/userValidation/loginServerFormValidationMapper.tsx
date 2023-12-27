@@ -1,6 +1,7 @@
 import {USER_WRONG_CREDENTIALS_MSG} from "@/app/constants/displayErrorMessages";
 
 import buildAuthToken from "@/app/utils/authTokenBuilder";
+import getUser from "@/app/utils/getUser";
 
 let isUserValid = {
     username: true,

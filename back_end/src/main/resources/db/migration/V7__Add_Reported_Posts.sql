@@ -1,5 +1,5 @@
 CREATE TABLE reported_posts (
-    post_id     BINARY(16),
+    post_id     VARCHAR(70),
     reporter_id VARCHAR(70),
     PRIMARY KEY (post_id, reporter_id),
     FOREIGN KEY (post_id) REFERENCES post (id),

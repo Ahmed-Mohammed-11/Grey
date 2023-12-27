@@ -8,13 +8,18 @@ import {FaArrowRight} from "react-icons/fa";
 import {useRef, useState} from "react";
 import signupController from "@/app/services/signupController";
 import {SIGNUP_PANEL_TEXT} from "@/app/constants/displayTextMessages";
-import {HOME_ROUTE, SIGN_IN_ROUTE, SIGN_UP_BACKEND_ENDPOINT} from "@/app/constants/apiConstants";
+import {
+    HOME_ROUTE,
+    SIGN_IN_ROUTE,
+    SIGN_UP_BACKEND_ENDPOINT,
+    SIGN_UP_VERIFICATION_ENDPOINT
+} from "@/app/constants/apiConstants";
 import classNames from "classnames";
 import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
 import signupServerFormValidationMapper from "@/app/security/userValidation/signupServerFormValidationMapper";
 import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
 import {useRouter} from "next/navigation";
-
+import getUser from "@/app/utils/getUser";
 function Page() {
     const usernameRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
@@ -66,7 +71,7 @@ function Page() {
         let jsonResponse = await toJSON(response.body!);
         let responseStat = response.status;
         //if response status is 200, redirect to home page
-        (responseStat == 200) && router.push(HOME_ROUTE);
+        (responseStat == 200) && await getUser().then(() => router.push(HOME_ROUTE));
         //if response status is not 200, map response from server to display appropriate error messages
         //and if 200 get auth token and store it in local storage
         let {isUserValid, errors} = signupServerFormValidationMapper(responseStat, jsonResponse, userDTO)
@@ -112,8 +117,8 @@ function Page() {
                         inputRef={emailRef}
                         required
                         variant="filled"
-                        error={!isUserValid.email}
-                        helperText={(isUserValid.email) ? "" : errors.email}
+                        error = {!isUserValid.email}
+                        helperText = {(isUserValid.email)? "": errors.email}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
@@ -125,8 +130,8 @@ function Page() {
                         inputRef={passwordRef}
                         required
                         variant="filled"
-                        error={!isUserValid.password}
-                        helperText={(isUserValid.password) ? "Make it strong" : errors.password}
+                        error = {!isUserValid.password}
+                        helperText = {(isUserValid.password)? "Make it strong": errors.password}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>

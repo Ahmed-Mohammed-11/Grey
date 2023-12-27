@@ -7,11 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-
 import java.sql.Timestamp;
-import java.util.Comparator;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name = "post")
@@ -24,7 +21,7 @@ public class Post implements Comparable<Post> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
     @Column(name = "text")
     private String postText;

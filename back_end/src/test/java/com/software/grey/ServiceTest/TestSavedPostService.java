@@ -3,39 +3,23 @@ package com.software.grey.ServiceTest;
 import com.software.grey.TestDataUtil.ObjectsBuilder;
 import com.software.grey.controllers.SignupController;
 import com.software.grey.exceptions.exceptions.UserIsAuthorException;
-import com.software.grey.models.dtos.PostDTO;
-import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.SavedPost;
 import com.software.grey.models.entities.User;
-import com.software.grey.models.enums.Feeling;
 import com.software.grey.repositories.*;
 import com.software.grey.services.SavedPostService;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.SecurityUtils;
-import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
 import java.util.Optional;
-import java.util.UUID;
-
-import org.springframework.data.domain.Page;
-
-import java.time.LocalDate;
-import java.util.*;
-import java.util.logging.Filter;
-import java.util.stream.Stream;
-
-import static com.software.grey.models.enums.Feeling.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -185,12 +169,12 @@ class TestSavedPostService {
 
         // create the post but do not save it, so it will be not-found
         Post post = postRepository.findByUser(b);
-        UUID postId = post.getId();
+        String postId = post.getId();
         postRepository.delete(post);
 
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
-                () -> savedPostService.toggleSavedPost(postId.toString()));
+                () -> savedPostService.toggleSavedPost(postId));
 
-        assertThat(ex.getMessage()).isEqualTo("Invalid post ID");
+        assertThat(ex.getMessage()).isEqualTo("Invalid arguments");
     }
 }

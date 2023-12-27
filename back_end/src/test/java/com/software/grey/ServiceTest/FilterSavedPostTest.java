@@ -1,13 +1,9 @@
 package com.software.grey.ServiceTest;
 
-import com.software.grey.SavedPostEnum;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.dtos.UserDTO;
-import com.software.grey.models.entities.BasicUser;
-import com.software.grey.models.entities.User;
 import com.software.grey.models.enums.Feeling;
-import com.software.grey.models.mappers.UserMapper;
 import com.software.grey.repositories.*;
 import com.software.grey.services.SavedPostService;
 import com.software.grey.services.UserService;
@@ -25,11 +21,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.test.annotation.DirtiesContext;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
-import java.time.LocalDate;
 import java.util.stream.Stream;
 
 import static com.software.grey.models.enums.Feeling.*;
@@ -71,8 +66,8 @@ public class FilterSavedPostTest {
     @BeforeAll
     void init() throws InterruptedException {
 
-        List<UUID> postsIdUser1 = prepareDataUser1();
-        List<UUID> postsIdUser2 = prepareDataUser2();
+        List<String> postsIdUser1 = prepareDataUser1();
+        List<String> postsIdUser2 = prepareDataUser2();
 
         initializeSavedPosts(postsIdUser1, "PostServiceUsername2");
         initializeSavedPosts(postsIdUser2, "PostServiceUsername1");
@@ -87,39 +82,39 @@ public class FilterSavedPostTest {
         userRepo.deleteAll();
     }
 
-    List<UUID> prepareDataUser1() throws InterruptedException {
+    List<String> prepareDataUser1() throws InterruptedException {
         UserDTO userDTO1 = UserDTO.builder().username("PostServiceUsername1").email("PostServiceUsername1@gmail.com").password("111 222 333").build();
         userService.save(userDTO1);
 
-        List<UUID> ids = new ArrayList<>();
+        List<String> ids = new ArrayList<>();
         when(securityUtils.getCurrentUserName()).thenReturn("PostServiceUsername1");
         List<Set<Feeling>> feelings = List.of(Set.of(LOVE), Set.of(LOVE, HAPPY), Set.of(SAD), Set.of(LOVE, HAPPY, SAD));
         for(int i = 0;i<5;i++){
-            UUID id = postService.add(PostDTO.builder().postText(i + " user1").postFeelings(feelings.get(i% feelings.size())).build());
+            String id = postService.add(PostDTO.builder().postText(i + " user1").postFeelings(feelings.get(i% feelings.size())).build());
             ids.add(id);
         }
         return ids;
     }
 
-    List<UUID> prepareDataUser2() throws InterruptedException {
+    List<String> prepareDataUser2() throws InterruptedException {
         UserDTO userDTO2 = UserDTO.builder().username("PostServiceUsername2").email("PostServiceUsername2@gmail.com").password("222 333 444").build();
         userService.save(userDTO2);
 
-        List<UUID> ids = new ArrayList<>();
+        List<String> ids = new ArrayList<>();
         when(securityUtils.getCurrentUserName()).thenReturn("PostServiceUsername2");
         List<Set<Feeling>> feelings = List.of(Set.of(LOVE), Set.of(SAD));
         for(int i = 0;i<3;i++){
-            UUID id = postService.add(PostDTO.builder().postText(i + " user2").postFeelings(feelings.get(i% feelings.size())).build());
+            String id = postService.add(PostDTO.builder().postText(i + " user2").postFeelings(feelings.get(i% feelings.size())).build());
             Thread.sleep(30);
             ids.add(id);
         }
         return ids;
     }
 
-    private void initializeSavedPosts(List<UUID> postIds, String username) throws InterruptedException {
+    private void initializeSavedPosts(List<String> postIds, String username) throws InterruptedException {
         when(securityUtils.getCurrentUser()).thenReturn(userService.findByUserName(username));
         for (int i = 0; i < 3; i++) {
-            UUID id = postIds.get(i);
+            String id = postIds.get(i);
             savedPostService.toggleSavedPost(id.toString());
             Thread.sleep(30);
         }

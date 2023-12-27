@@ -6,11 +6,15 @@ import {BsBookmark, BsFillBookmarkFill} from "react-icons/bs";
 import {SlOptions} from "react-icons/sl";
 import {MdDelete, MdReport} from "react-icons/md";
 import {Chip, IconButton, ListItem, Menu, MenuItem} from "@mui/material";
-import {toast, ToastOptions} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import deletePostController from "@/app/services/deletePostController";
 import postRequestWithUrlParams from "@/app/services/postRequestWithUrlParams";
-import {DELETE_POST_ENDPOINT, REPORT_POST_ENDPOINT, SAVE_POST_ENDPOINT,} from "@/app/constants/apiConstants";
+import {
+    REPORT_POST_ENDPOINT,
+    SAVE_POST_ENDPOINT,
+    DELETE_POST_ENDPOINT,
+} from "@/app/constants/apiConstants";
+import toastResponse from "@/app/utils/notifyToast";
 
 
 export default function Post(props: any) {
@@ -39,45 +43,12 @@ export default function Post(props: any) {
     const handleDeletePost = async (postId: string) => {
         const data = deletePostController.sendDeleteRequest({postId: postId}, DELETE_POST_ENDPOINT);
         if ((await data).status === 200) {
-            //delete post from the frontend
+            // delete post from the frontend
             props.setPosts(
                 props.posts.filter((post: any) => post.id !== postId)
             );
         }
         await toastResponse(data);
-    }
-
-
-    const toastStyleTopRight: ToastOptions = {
-        position: "top-right",
-        autoClose: 3000,
-        theme: "colored",
-        hideProgressBar: true
-    }
-
-    async function toastResponse(response: Promise<Response>) {
-        try {
-            await toast.promise(response.then(res => {
-                    if (res.status === 200 || res.status === 201) {
-                        res.text().then((data: any) => {
-                            toast.success(data, toastStyleTopRight);
-                        });
-                    } else {
-                        res.text().then((data: any) => {
-                            toast.error(data, toastStyleTopRight);
-                        });
-                    }
-                }, (err) => {
-                    console.log(err)
-                }),
-                {
-                    pending: 'Wait a moment with me ...',
-                    error: 'Server took too long to respond',
-                }, toastStyleTopRight
-            );
-        } catch (error) {
-            console.error(error);
-        }
     }
 
     return (
@@ -90,18 +61,19 @@ export default function Post(props: any) {
                         ))}
                     </ListItem>
 
-                    <IconButton onClick={() => handleSavePost(post.id)}>
-                        {post.saved ?
-                            <BsFillBookmarkFill className={styles.main_icons}></BsFillBookmarkFill>
-                            : <BsBookmark className={styles.main_icons}></BsBookmark>}
-                    </IconButton>
-
-                    <IconButton
-                        aria-controls={openMenu ? 'options-menu' : undefined}
-                        aria-expanded={openMenu ? 'true' : undefined}
-                        onClick={handleMenuClick}>
-                        <SlOptions className={styles.main_icons}></SlOptions>
-                    </IconButton>
+                    {!props.reported &&
+                        (<IconButton onClick={() => handleSavePost(post.id)}>
+                            {post.saved ?
+                                <BsFillBookmarkFill className={styles.main_icons}></BsFillBookmarkFill>
+                                : <BsBookmark className={styles.main_icons}></BsBookmark>}
+                        </IconButton>)}
+                    {!props.reported &&
+                        (<IconButton
+                            aria-controls={openMenu ? 'options-menu' : undefined}
+                            aria-expanded={openMenu ? 'true' : undefined}
+                            onClick={handleMenuClick}>
+                            <SlOptions className={styles.main_icons}></SlOptions>
+                        </IconButton>)}
                     <Menu
                         id="options-menu"
                         anchorEl={menuAnchorEl}

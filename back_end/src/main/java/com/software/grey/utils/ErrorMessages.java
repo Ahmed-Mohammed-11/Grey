@@ -9,5 +9,8 @@ public class ErrorMessages {
     public static final String INVALID_USERNAME = "Invalid username";
     public static final String USERNAME_EXISTS = "Username already exists";
     public static final String EMAIL_EXISTS = "Email already exists";
+    public static final String POST_NOT_FOUND = "Post not found";
+    public static final String POST_ALREADY_DELETED = "Post already deleted";
+    public static final String INVALID_POST_ID = "Invalid post id";
     private ErrorMessages() {}
 }

@@ -26,6 +26,7 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -40,15 +41,6 @@ public class SavedPostServiceImpl implements SavedPostService {
 
     @Override
     public String toggleSavedPost(String postId) {
-        try {
-            return toggle(UUID.fromString(postId));
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid post ID");
-        }
-    }
-
-
-    private String toggle(UUID postId) {
         User user = securityUtils.getCurrentUser();
         if (postId == null || user == null) {
             throw new IllegalArgumentException("Invalid arguments");

@@ -15,6 +15,14 @@
     flex-direction: column;
 }
 
+.posts{
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 15px;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
 
 .load {
     height: 30px;
@@ -48,4 +56,31 @@
     height: 30px;
     padding: 0;
     background: rgb(211 236 255 / 56%) !important;
+}
+
+.empty_posts {
+    font-family: "Montserrat ExtraBold", sans-serif !important;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+}
+
+.empty_text {
+
+}
+
+.line {
+    position: absolute;
+    left: 48%;
+    width: 22%;
+    top: 50%;
+    height: 2%;
+    z-index: -1;
+    background: #d72828;
+    opacity: 0.4;
+    transform-origin: right;
+    transition: transform 0.4s ease-in-out .6s;
+
 }
