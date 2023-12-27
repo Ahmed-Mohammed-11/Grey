@@ -3,7 +3,7 @@ import {useRouter} from "next/navigation";
 import {HOME_ROUTE, LANDING_ROUTE} from "@/app/constants/apiConstants";
 
 function checkAuth() {
-    try{
+    try {
         let Auth = localStorage.getItem("Authorization");
         return !(Auth === null || Auth === undefined || Auth === "");
     } catch (e) {
