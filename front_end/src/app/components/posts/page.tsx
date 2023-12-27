@@ -4,13 +4,14 @@ import {Box} from "@mui/system";
 import Post from "@/app/components/post/page";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useInView} from "react-intersection-observer"
-import {BASE_BACKEND_URL, DIARY_ENDPOINT, EXPLORE_ENDPOINT} from "@/app/constants/apiConstants";
+import {BASE_BACKEND_URL} from "@/app/constants/apiConstants";
 import {Skeleton} from '@mui/material';
 import PostFilters from "../postFilter/page";
 import PostFilterDTO from '@/app/entities/dtos/PostFilterDTO';
 import PopupScreen from "@/app/components/popup/page";
+import ReportedPost from "@/app/components/reported post/page";
 
 export default function Posts(props: any) {
     const {ref, inView} = useInView();
@@ -102,7 +103,9 @@ export default function Posts(props: any) {
     };
 
     const renderPosts = () => {
-        return posts.map((post: any) => <Post key={post.id} post={post} feedType={props.feedType}/>);
+        return props.feedType === 5 ?
+            posts.map((post: any) => <ReportedPost post={post} />) :
+            posts.map((post: any) => <Post key={post.id} post={post} feedType={props.feedType}/>);
     };
 
     return (
@@ -112,7 +115,9 @@ export default function Posts(props: any) {
                 <PostFilters showDatePicker={props.feedType == 2} showFeelingSelection={props.feedType === 0}
                              applyFilters={applyFilters}/>
             </Box>
-            {renderPosts()}
+            <Box className={styles.posts}>
+                {renderPosts()}
+            </Box>
             {!lastPage && (
                 <div className={styles.post_skeleton} ref={ref}>
                     <div className={styles.container}>

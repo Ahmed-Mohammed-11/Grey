@@ -89,6 +89,18 @@ public class PostController {
                 "We will review your report and take the necessary actions.");
     }
 
+    @Operation(
+            summary = "Get all reported posts",
+            description = "Use this secure end point to get reported posts")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Posts retrieved successfully"),
+            @ApiResponse(responseCode = "401", description = "User is not authenticated")
+    })
+    @PostMapping(EndPoints.REPORT_POST)
+    public ResponseEntity<Page<PostDTO>> getAllReportedPosts(@RequestBody PostFilterDTO postFilterDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(postService.getReportedPosts(postFilterDTO));
+    }
+
 
     @Operation(
             summary = "Delete a post",

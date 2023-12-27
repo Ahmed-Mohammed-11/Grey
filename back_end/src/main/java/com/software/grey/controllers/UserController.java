@@ -2,6 +2,8 @@ package com.software.grey.controllers;
 
 
 import com.software.grey.models.dtos.UserDTO;
+import com.software.grey.models.dtos.responseDTOs.UserResponseDTO;
+import com.software.grey.repositories.UserRepo;
 import com.software.grey.services.UserService;
 import com.software.grey.utils.EndPoints;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<String> getUserRole() {
-        return ResponseEntity.ok().body(userService.getUserRole());
+    public ResponseEntity<UserResponseDTO> getUser() {
+        return ResponseEntity.ok().body(userService.getUser());
     }
 }

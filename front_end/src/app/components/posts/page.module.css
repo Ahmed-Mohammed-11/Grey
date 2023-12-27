@@ -15,6 +15,14 @@
     flex-direction: column;
 }
 
+.posts{
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 15px;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
 
 .load{
     height: 30px;
