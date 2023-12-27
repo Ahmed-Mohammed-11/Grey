@@ -6,7 +6,6 @@ import {BsBookmark, BsFillBookmarkFill} from "react-icons/bs";
 import {SlOptions} from "react-icons/sl";
 import {MdDelete, MdReport} from "react-icons/md";
 import {Chip, IconButton, ListItem, Menu, MenuItem} from "@mui/material";
-import {toast, ToastOptions} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import deletePostController from "@/app/services/deletePostController";
 import postRequestWithUrlParams from "@/app/services/postRequestWithUrlParams";
@@ -15,6 +14,7 @@ import {
     SAVE_POST_ENDPOINT,
     DELETE_POST_ENDPOINT,
 } from "@/app/constants/apiConstants";
+import toastResponse from "@/app/utils/notifyToast";
 
 
 export default function Post(props: any) {
@@ -45,37 +45,6 @@ export default function Post(props: any) {
         await toastResponse(data);
     }
 
-
-    const toastStyleTopRight: ToastOptions = {
-        position: "top-right",
-        autoClose: 3000,
-        theme: "colored",
-        hideProgressBar: true
-    }
-
-    async function toastResponse(response: Promise<Response>) {
-        try {
-            await toast.promise(response.then(res => {
-                    if (res.status === 200 || res.status === 201) {
-                        res.text().then((data: any) => {
-                            toast.success(data, toastStyleTopRight);
-                        });
-                    } else {
-                        res.text().then((data: any) => {
-                            toast.error(data, toastStyleTopRight);
-                        });
-                    }
-                }, (err) => { console.log(err) }),
-                {
-                    pending: 'Wait a moment with me ...',
-                    error: 'Server took too long to respond',
-                }, toastStyleTopRight
-            );
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
     return (
         <Box width={props.width}>
             <Box className={styles.post} key={post.id}>
@@ -86,18 +55,19 @@ export default function Post(props: any) {
                         ))}
                     </ListItem>
 
-                    <IconButton onClick={() => handleSavePost(post.id)}>
-                        {post.saved ?
-                            <BsFillBookmarkFill className={styles.main_icons}></BsFillBookmarkFill>
-                            : <BsBookmark className={styles.main_icons}></BsBookmark>}
-                    </IconButton>
-
-                    <IconButton
-                        aria-controls={openMenu ? 'options-menu' : undefined}
-                        aria-expanded={openMenu ? 'true' : undefined}
-                        onClick={handleMenuClick}>
-                        <SlOptions className={styles.main_icons}></SlOptions>
-                    </IconButton>
+                    {!props.reported &&
+                        (<IconButton onClick={() => handleSavePost(post.id)}>
+                            {post.saved ?
+                                <BsFillBookmarkFill className={styles.main_icons}></BsFillBookmarkFill>
+                                : <BsBookmark className={styles.main_icons}></BsBookmark>}
+                        </IconButton>)}
+                    {!props.reported &&
+                        (<IconButton
+                            aria-controls={openMenu ? 'options-menu' : undefined}
+                            aria-expanded={openMenu ? 'true' : undefined}
+                            onClick={handleMenuClick}>
+                            <SlOptions className={styles.main_icons}></SlOptions>
+                        </IconButton>)}
                     <Menu
                         id="options-menu"
                         anchorEl={menuAnchorEl}
@@ -114,14 +84,14 @@ export default function Post(props: any) {
                         </MenuItem>
                         {props.feedType === 2 && (
                             <MenuItem
-                            className={styles.menu_item}
-                            onClick={() => {
-                                handleMenuClose();
-                                handleDeletePost(post.id);
-                            }}>
-                            <MdDelete className={styles.icon}/>
-                            Delete Post
-                        </MenuItem>
+                                className={styles.menu_item}
+                                onClick={() => {
+                                    handleMenuClose();
+                                    handleDeletePost(post.id);
+                                }}>
+                                <MdDelete className={styles.icon}/>
+                                Delete Post
+                            </MenuItem>
                         )}
                     </Menu>
                 </Box>

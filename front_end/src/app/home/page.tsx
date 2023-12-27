@@ -1,21 +1,23 @@
 'use client'
 import styles from './page.module.css'
-import React, { useState, useEffect } from 'react';
-import { Box } from '@mui/system';
+import React, {useState} from 'react';
+import {Box} from '@mui/system';
 import Posts from '@/app/components/posts/page';
 import SideBar from '@/app/components/sidebar/page';
 import {
-  DIARY_ENDPOINT,
-  EXPLORE_ENDPOINT,
-  FEED_ENDPOINT,
-  REPORTED_ENDPOINT,
-  SAVED_ENDPOINT
+    DIARY_ENDPOINT,
+    EXPLORE_ENDPOINT,
+    FEED_ENDPOINT,
+    REPORTED_ENDPOINT,
+    SAVED_ENDPOINT,
+    SIGN_IN_ROUTE
 } from '../constants/apiConstants';
 import Profile from '../profile/page';
-import {setDefaultAutoSelectFamily} from "node:net";
+import {useRouter} from "next/navigation";
 
 const Home = () => {
 
+  const router = useRouter();
   const endpointMapping: Record<number, string> = {
     0: FEED_ENDPOINT,
     1: EXPLORE_ENDPOINT,
@@ -40,8 +42,8 @@ const Home = () => {
     }
   };
 
-  const user = localStorage.getItem('user') || '{}';
-  (user == '{}') && (window.location.href = '/login');
+  const user = localStorage.getItem('Authorization') || '{}';
+  (user == '{}') && (router.push(SIGN_IN_ROUTE));
 
   return (
     <div>
