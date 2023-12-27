@@ -14,8 +14,6 @@ async function toastResponse(response: Promise<Response>) {
                     res.text().then((data: any) => {
                         toast.success(data, toastStyleTopRight);
                     });
-                } else if (res.status === 403) {
-                    toast.error("You are not a moderator", toastStyleTopRight);
                 } else {
                     res.text().then((data: any) => {
                         toast.error(data, toastStyleTopRight);
