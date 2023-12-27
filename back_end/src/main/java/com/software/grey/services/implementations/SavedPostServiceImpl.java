@@ -79,9 +79,7 @@ public class SavedPostServiceImpl implements SavedPostService {
         List<String> feelings = Optional.ofNullable(postFilterDTO.getFeelings())
                 .filter(list -> !list.isEmpty())
                 .map(list -> list.stream().map(Enum::name).collect(Collectors.toList()))
-                .orElseGet(() -> Arrays.stream(Feeling.values())
-                        .map(Enum::name)
-                        .collect(Collectors.toList()));
+                .orElseGet(() -> Arrays.stream(Feeling.values()).map(Enum::name).collect(Collectors.toList()));
 
         Pageable pageable = PageRequest.of(
                 postFilterDTO.getPageNumber(),

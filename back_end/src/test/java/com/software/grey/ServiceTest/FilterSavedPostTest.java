@@ -65,6 +65,9 @@ public class FilterSavedPostTest {
     @Autowired
     private SavedPostRepository savedPostRepository;
 
+    @Autowired
+    private UserVerificationRepo userVerificationRepo;
+
     @BeforeAll
     void init() throws InterruptedException {
 
@@ -79,6 +82,9 @@ public class FilterSavedPostTest {
     void del() {
         savedPostRepository.deleteAll();
         postRepository.deleteAll();
+        userVerificationRepo.deleteAll();
+        basicUserRepo.deleteAll();
+        userRepo.deleteAll();
     }
 
     List<UUID> prepareDataUser1() throws InterruptedException {
