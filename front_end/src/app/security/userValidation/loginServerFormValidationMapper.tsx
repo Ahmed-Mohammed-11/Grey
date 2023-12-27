@@ -1,6 +1,7 @@
 import {USER_WRONG_CREDENTIALS_MSG} from "@/app/constants/displayErrorMessages";
 
 import buildAuthToken from "@/app/utils/authTokenBuilder";
+
 let isUserValid = {
     username: true,
     email: true,
@@ -13,35 +14,31 @@ let errors = {
     password: ""
 };
 
-let router ;
+let router;
 
-function handleInvalidCredentials(responseBody: UserValidationResponse)
-{
-    if (responseBody.username)
-    {
+function handleInvalidCredentials(responseBody: UserValidationResponse) {
+    if (responseBody.username) {
         errors.username = responseBody.username;
         isUserValid.username = false;
     }
-    if (responseBody.email)
-    {
+    if (responseBody.email) {
         errors.email = responseBody.email;
         isUserValid.email = false;
     }
-    if (responseBody.password)
-    {
+    if (responseBody.password) {
         errors.password = responseBody.password;
         isUserValid.password = false;
     }
 }
 
-function handleWrongCredentials(responseBody: UserValidationResponse){
+function handleWrongCredentials(responseBody: UserValidationResponse) {
     isUserValid.password = false;
     isUserValid.username = false;
     errors.username = USER_WRONG_CREDENTIALS_MSG;
     errors.password = USER_WRONG_CREDENTIALS_MSG;
 }
 
-function handleAuth(userDTO: UserDTO){
+function handleAuth(userDTO: UserDTO) {
     const authToken = buildAuthToken(userDTO);
     localStorage.setItem("Authorization", authToken);
 }

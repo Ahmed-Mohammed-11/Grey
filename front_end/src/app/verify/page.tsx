@@ -1,23 +1,13 @@
 'use client';
 import styles from './page.module.css'
-import {Button, TextField, Link} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import {Box} from "@mui/system";
-import GoogleAuthn from "@/app/googleAuthentication/GoogleAuthn"
 import {useRef, useState} from "react";
-import {FaArrowLeft} from "react-icons/fa";
 import ThemeRegistry from "@/app/themes/themeRegistry";
 import classNames from "classnames";
-import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
-import signinController from "@/app/services/loginController";
-import {
-    SIGN_IN_BACKEND_ENDPOINT,
-    SIGN_UP_ROUTE,
-    HOME_ROUTE,
-    SIGN_UP_VERIFICATION_ENDPOINT, SIGN_IN_ROUTE
-} from "@/app/constants/apiConstants";
+import {SIGN_IN_ROUTE, SIGN_UP_VERIFICATION_ENDPOINT} from "@/app/constants/apiConstants";
 import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
-import {LOGIN_PANEL_TEXT, VERIFY_PANEL_TEXT} from "@/app/constants/displayTextMessages";
-import loginServerFormValidationMapper from "@/app/security/userValidation/loginServerFormValidationMapper";
+import {VERIFY_PANEL_TEXT} from "@/app/constants/displayTextMessages";
 import {useRouter} from "next/navigation";
 import signupController from "@/app/services/signupController";
 
@@ -71,8 +61,8 @@ function Verify() {
             ></Box>
             <Box className={bottomRightShapeClass}
                  sx={{
-                background: (theme) => theme.palette.primary.light
-                }}
+                     background: (theme) => theme.palette.primary.light
+                 }}
             ></Box>
             <Box className={styles.container}>
                 <Box className={styles.signinForm}>
@@ -83,8 +73,8 @@ function Verify() {
                         inputRef={usernameRef}
                         required
                         variant="filled"
-                        error = {!isUserValid.username}
-                        helperText = {(isUserValid.username)? "": errors.username}
+                        error={!isUserValid.username}
+                        helperText={(isUserValid.username) ? "" : errors.username}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
@@ -113,7 +103,8 @@ function Verify() {
 
                 <Box className={styles.panel}>
                     <Box className={styles.panelBanner}> GREY </Box>
-                    <Box typography="body1" color="text.primary" fontSize="2rem" className={styles.panelText}> {VERIFY_PANEL_TEXT} </Box>
+                    <Box typography="body1" color="text.primary" fontSize="2rem"
+                         className={styles.panelText}> {VERIFY_PANEL_TEXT} </Box>
                 </Box>
                 {/*<Link href={SIGN_UP_ROUTE}>*/}
                 {/*    <Button className={styles.iconButton} variant="contained" size="large">*/}

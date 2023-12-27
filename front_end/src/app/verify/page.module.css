@@ -1,22 +1,20 @@
-.cornerShapes{
-    width:700px;
-    height:700px;
-    position:fixed;
+.cornerShapes {
+    width: 700px;
+    height: 700px;
+    position: fixed;
     border-radius: 150px;
 }
 
-.topLeft
-{
-    top:0;
-    left:0;
-    transform: rotate(45deg)  translate(-70%, 0%);
+.topLeft {
+    top: 0;
+    left: 0;
+    transform: rotate(45deg) translate(-70%, 0%);
 
 }
 
-.bottomRight
-{
-    right:0;
-    bottom:0;
+.bottomRight {
+    right: 0;
+    bottom: 0;
     transform: rotate(45deg) translate(70%, 0%);
 }
 
@@ -68,7 +66,7 @@
 }
 
 
-.iconButton{
+.iconButton {
     position: absolute !important;
     width: 80px;
     height: 80px;
@@ -84,7 +82,7 @@
 }
 
 
-.link{
+.link {
     text-decoration: none !important;
 }
 
@@ -119,21 +117,18 @@
     letter-spacing: 2rem;
 }
 
-.link{
+.link {
     text-decoration: none !important;
 }
 
-.panelText
-{
+.panelText {
     text-align: center;
     width: 70%;
 
 }
 
-@media (max-width: 1100px)
-{
-    .container
-    {
+@media (max-width: 1100px) {
+    .container {
         justify-content: center;
         align-items: center;
     }
@@ -150,14 +145,13 @@
         display: none;
     }
 
-    .topLeft
-    {
+    .topLeft {
         width: 600px;
         height: 600px;
         border-radius: 100px;
     }
-    .bottomRight
-    {
+
+    .bottomRight {
         width: 600px;
         height: 600px;
         border-radius: 100px;

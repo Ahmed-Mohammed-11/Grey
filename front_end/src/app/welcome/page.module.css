@@ -1,0 +1,66 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    transform: translate(0, 0);
+    position: absolute;
+}
+
+.welcome {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 45%;
+}
+
+.welcome h2 {
+    font-size: 3.5rem;
+    color: #DDE6ED;
+    font-weight: 900;
+    margin: 0;
+    padding: 0;
+}
+
+.welcome text {
+    font-size: 2rem;
+    color: #DDE6ED;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    width: 60%;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.welcome button {
+    font-size: 1.8rem;
+    color: #2C3E50;
+    width: 100%;
+    height: 60%;
+    text-align: center;
+    word-wrap: break-word;
+    background-color: #DDE6ED !important;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-transform: none !important;
+}
+
+
+
+
+
+
