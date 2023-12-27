@@ -1,6 +1,5 @@
 package com.software.grey.recommendationsystem;
 
-import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.entities.Post;
 import org.springframework.stereotype.Component;
 

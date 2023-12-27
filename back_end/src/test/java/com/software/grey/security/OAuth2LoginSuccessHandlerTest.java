@@ -29,6 +29,6 @@ class OAuth2LoginSuccessHandlerTest {
 
         assert(Objects.equals(user.getUsername(), "mockUser"));
         assert(Objects.equals(user.getEmail(), "mockEmail@gmail.com"));
-        assert(user.getRole() == Role.ROLE_USER);
+        assert(user.getRole() == Role.USER);
     }
 }

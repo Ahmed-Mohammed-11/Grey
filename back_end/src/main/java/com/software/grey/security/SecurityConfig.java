@@ -1,6 +1,7 @@
 package com.software.grey.security;
 
 
+import com.software.grey.models.enums.Role;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -64,6 +65,10 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, LOGIN_FAIL).permitAll()
                                 .requestMatchers(HttpMethod.PUT, VERIFY_REGISTRATION).permitAll()
                                 .requestMatchers(HttpMethod.GET, TEST).permitAll()
+                                .requestMatchers(HttpMethod.DELETE, REPORT_POST).hasRole(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.DELETE, REMOVE_REPORTED_POST).hasRole(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.DELETE, REPORT_POST).hasRole(Role.MODERATOR.name())
+                                .requestMatchers(HttpMethod.DELETE, REMOVE_REPORTED_POST).hasRole(Role.MODERATOR.name())
                                 .anyRequest()
                                 .authenticated()
                 )

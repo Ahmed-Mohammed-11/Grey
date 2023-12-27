@@ -97,7 +97,7 @@ public class PostServiceDeleteTest {
 
         when(securityUtils.getCurrentUserName()).thenReturn("testUser2");
         //save the post created by the user testUser
-        UUID postId = postService.add(postDTO);
+        String postId = postService.add(postDTO);
         assertThat(postId).isNotNull();
 
         //find the user
@@ -124,7 +124,7 @@ public class PostServiceDeleteTest {
 
         when(securityUtils.getCurrentUserName()).thenReturn("theOwner");
         //save the post created by the user testUser
-        UUID postId = postService.add(postDTO);
+        String postId = postService.add(postDTO);
         assertThat(postId).isNotNull();
 
 
@@ -149,7 +149,7 @@ public class PostServiceDeleteTest {
 
         when(securityUtils.getCurrentUserName()).thenReturn("testUser");
         //save the post created by the user testUser
-        UUID postId = UUID.fromString("00000000-0000-0000-0000-000000000000");
+        String postId = "00000000-0000-0000-0000-000000000000";
         assertThat(postRepository.existsById(postId)).isFalse();
 
         //find the user
@@ -177,8 +177,8 @@ public class PostServiceDeleteTest {
 
         //delete the post
         when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> postService.delete("invalidUUID"));
-        assertThat(exception.getMessage()).isEqualTo("Invalid post id");
+        Exception exception = assertThrows(PostNotFoundException.class, () -> postService.delete("invalidUUID"));
+        assertThat(exception.getMessage()).isEqualTo("Post not found");
     }
 
     @Test

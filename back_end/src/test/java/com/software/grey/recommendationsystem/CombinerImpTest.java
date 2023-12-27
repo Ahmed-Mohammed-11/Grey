@@ -25,7 +25,7 @@ class CombinerImpTest {
             List<Post> temp = new ArrayList<>();
             for(int j = 0; j < 20; j++) {
                 Post post = Post.builder()
-                        .id(UUID.randomUUID())
+                        .id(UUID.randomUUID().toString())
                         .postText("tired " + j)
                         .postFeelings(Collections.singleton(Feeling.SAD))
                         .postTime(new Timestamp(System.currentTimeMillis() + (j+1)*(i+1)))
@@ -58,7 +58,7 @@ class CombinerImpTest {
         List<Post> singleList = new ArrayList<>();
         for (int j = 0; j < 10; j++) {
             Post post = Post.builder()
-                    .id(UUID.randomUUID())
+                    .id(UUID.randomUUID().toString())
                     .postText("happy " + j)
                     .postFeelings(Collections.singleton(Feeling.HAPPY))
                     .postTime(new Timestamp(System.currentTimeMillis() + j + 1))

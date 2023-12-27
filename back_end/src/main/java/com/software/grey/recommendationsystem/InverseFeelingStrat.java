@@ -4,7 +4,6 @@ import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.User;
 import com.software.grey.models.enums.Feeling;
 import com.software.grey.models.projections.FeelingCountProjection;
-import com.software.grey.repositories.PostRepository;
 import com.software.grey.services.implementations.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;

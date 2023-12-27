@@ -61,7 +61,7 @@ class ReportPostControllerTest {
     @Autowired
     private UserVerificationRepo userVerificationRepo;
 
-    private ArrayList<UUID> posts;
+    private ArrayList<String> posts;
 
     @Autowired
     ReportPostControllerTest(UserService userService, PostService postService, SecurityUtils securityUtils,

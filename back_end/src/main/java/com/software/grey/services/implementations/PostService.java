@@ -16,6 +16,7 @@ import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.ReportedPostRepository;
 import com.software.grey.services.IPostService;
 import com.software.grey.services.UserService;
+import com.software.grey.utils.ErrorMessages;
 import com.software.grey.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -48,7 +49,7 @@ public class PostService implements IPostService {
 
     private SecurityUtils securityUtils;
 
-    public UUID add(PostDTO postDTO) {
+    public String add(PostDTO postDTO) {
         Post post = postMapper.toPost(postDTO);
         String userName = securityUtils.getCurrentUserName();
         User user = userService.findByUserName(userName);
@@ -59,14 +60,7 @@ public class PostService implements IPostService {
     }
 
     public void report(String postId) {
-        UUID postUUID;
-        try {
-            postUUID = UUID.fromString(postId);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid post id");
-        }
-
-        Post post = findPostById(postUUID);
+        Post post = findPostById(postId);
         User reporter = securityUtils.getCurrentUser();
 
         ReportedPost reportedPost = ReportedPost.builder()
@@ -75,7 +69,7 @@ public class PostService implements IPostService {
                 .build();
 
         if(userReportedPostBefore(post, reporter))
-            throw new UserReportedPostBeforeException(POST_REPORTED_BEFORE);
+            throw new UserReportedPostBeforeException(ErrorMessages.POST_REPORTED_BEFORE);
 
         reportedPostRepository.save(reportedPost);
     }
@@ -84,7 +78,7 @@ public class PostService implements IPostService {
         return reportedPostRepository.existsById(new ReportedPostId(post, reporter));
     }
 
-    public Post findPostById(UUID id){
+    public Post findPostById(String id){
         return postRepository.findById(id).orElseThrow(() -> new PostNotFoundException("Post not found"));
     }
 
@@ -131,20 +125,18 @@ public class PostService implements IPostService {
 
     public void delete(String postId) {
 
-        String currentUserId = securityUtils.getCurrentUserId();
-        UUID uuid;
-        try {
-            uuid = UUID.fromString(postId);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid post id");
+        if (postId == null) {
+            throw new NullPointerException("Post id is null");
         }
 
-        Post post = findPostById(uuid);
+        String currentUserId = securityUtils.getCurrentUserId();
+
+        Post post = findPostById(postId);
         if(!post.getUser().getId().equals(currentUserId)){
             throw new UserNotAuthorizedException("You are not authorized to delete this post");
         }
 
-        postRepository.deleteById(uuid) ;
+        postRepository.deleteById(postId) ;
     }
 
     public List<FeelingCountProjection> getCountOfPostedFeelings(User user) {
@@ -153,5 +145,19 @@ public class PostService implements IPostService {
 
     public List<Post> getByFeelings(Feeling feeling, String userId, Pageable page){
         return postRepository.findByPostFeelingsAndUserIdNot(feeling, userId, page);
+    }
+
+    public void deleteReportedPost(String postId) {
+        removeReportedPost(postId);
+        Post post = findPostById(postId);
+        postRepository.delete(post);
+    }
+
+    public void removeReportedPost(String postId) {
+        if (!reportedPostRepository.existsByPostId(postId)) {
+            throw new PostNotFoundException(ErrorMessages.POST_ALREADY_DELETED);
+        }
+
+        reportedPostRepository.deleteByPostId(postId);
     }
 }

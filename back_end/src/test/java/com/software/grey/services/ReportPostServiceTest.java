@@ -216,7 +216,7 @@ class ReportPostServiceTest {
     @Test
     void reportNotExistingPost_shouldThrowException(){
         UUID randomUUID = UUID.randomUUID();
-        while (postRepository.existsById(randomUUID))
+        while (postRepository.existsById(randomUUID.toString()))
             randomUUID = UUID.randomUUID();
         UUID finalRandomUUID = randomUUID;
 

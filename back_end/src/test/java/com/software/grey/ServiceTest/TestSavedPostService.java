@@ -156,10 +156,10 @@ class TestSavedPostService {
 
         // create the post but do not save it, so it will be not-found
         Post post = postRepository.findByUser(b);
-        UUID postId = post.getId();
+        String postId = post.getId();
         postRepository.delete(post);
 
-        SavedPostEnum savedPostEnum = savedPostService.toggleSavedPost(postId.toString());
+        SavedPostEnum savedPostEnum = savedPostService.toggleSavedPost(postId);
         assertThat(savedPostEnum).isEqualTo(SavedPostEnum.NOT_FOUND);
     }
 }

@@ -71,7 +71,7 @@ public class UserService {
 
         userDTO.password = bCryptPasswordEncoder.encode(userDTO.password);
         BasicUser user = BasicUser.builder()
-                .role(Role.ROLE_USER)
+                .role(Role.USER)
                 .tier(Tier.STANDARD)
                 .registrationType("basic")
                 .enabled(true)
@@ -107,7 +107,7 @@ public class UserService {
 
         GoogleUser user = GoogleUser.builder()
                 .externalID(userDTO.externalID)
-                .role(Role.ROLE_USER)
+                .role(Role.USER)
                 .tier(Tier.STANDARD)
                 .registrationType("google")
                 .enabled(true)
