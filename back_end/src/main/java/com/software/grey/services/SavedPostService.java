@@ -6,6 +6,6 @@ import com.software.grey.models.dtos.PostFilterDTO;
 import org.springframework.data.domain.Page;
 
 public interface SavedPostService {
-    SavedPostEnum toggleSavedPost(String postId);
+    String toggleSavedPost(String postId);
     Page<PostDTO> getSavedPosts(PostFilterDTO postFilterDTO);
 }
