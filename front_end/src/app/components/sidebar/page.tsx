@@ -40,6 +40,7 @@ export default function SideBar(props:any) {
         onClick={() => handleButtonClick(index)}>
         <Icon className={styles.icon}>{buttonsIcons[index]}</Icon>
         {text}
+        <span className={styles.line}></span>
       </Button>
     );
   });
