@@ -33,6 +33,7 @@ public class SecurityConfig {
     private String frontUrl;
 
     public SecurityConfig(OAuth2LoginSuccessHandler oauth2LoginSuccessHandler, BasicLoginSuccessHandler basicLoginSuccessHandler, BasicLoginFailureHandler basicLoginFailureHandler) {
+
         this.oauth2LoginSuccessHandler = oauth2LoginSuccessHandler;
         this.basicLoginSuccessHandler = basicLoginSuccessHandler;
         this.basicLoginFailureHandler = basicLoginFailureHandler;
@@ -45,18 +46,21 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource) {
+
         JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
         userDetailsManager.setUsersByUsernameQuery("""
                 SELECT username, password, enabled
                 FROM user
                 JOIN user_basic_auth ON user.id = user_basic_auth.local_id
-                WHERE username=?""");
+                WHERE username=?
+                """);
         userDetailsManager.setAuthoritiesByUsernameQuery("SELECT username, role FROM user WHERE username=?");
         return userDetailsManager;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http
                 .authorizeHttpRequests(auth ->
                         auth
@@ -66,11 +70,11 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.PUT, VERIFY_REGISTRATION).permitAll()
                                 .requestMatchers(HttpMethod.GET, TEST).permitAll()
                                 .requestMatchers(HttpMethod.POST, POST + REPORT_POST)
-                                        .hasAnyAuthority(Role.ADMIN.name(), Role.MODERATOR.name())
+                                .hasAnyAuthority(Role.ADMIN.name(), Role.MODERATOR.name())
                                 .requestMatchers(HttpMethod.DELETE, POST + REPORT_POST + "/**")
-                                        .hasAnyAuthority(Role.MODERATOR.name(), Role.ADMIN.name())
+                                .hasAnyAuthority(Role.MODERATOR.name(), Role.ADMIN.name())
                                 .requestMatchers(HttpMethod.DELETE, POST + REMOVE_REPORTED_POST + "/**")
-                                        .hasAnyAuthority(Role.MODERATOR.name(), Role.ADMIN.name())
+                                .hasAnyAuthority(Role.MODERATOR.name(), Role.ADMIN.name())
                                 .anyRequest()
                                 .authenticated()
                 )

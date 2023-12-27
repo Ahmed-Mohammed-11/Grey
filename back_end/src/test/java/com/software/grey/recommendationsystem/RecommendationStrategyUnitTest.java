@@ -18,7 +18,7 @@ class RecommendationStrategyUnitTest {
     SameFeelingStrat recommendationStrategy;
 
     @Test
-     void testGetFeelingPercentage() {
+    void testGetFeelingPercentage() {
         // Create a list of FeelingCountProjection for testing
         List<FeelingCountProjection> feelingsCount = Arrays.asList(
                 new FeelingCountImpl(Feeling.HAPPY, 3),
@@ -36,7 +36,7 @@ class RecommendationStrategyUnitTest {
     }
 
     @Test
-     void testGetFeelingPercentageWithEmptyList() {
+    void testGetFeelingPercentageWithEmptyList() {
         // Create an empty list of FeelingCountProjection for testing
         List<FeelingCountProjection> feelingsCount = List.of();
 
@@ -48,7 +48,7 @@ class RecommendationStrategyUnitTest {
     }
 
     @Test
-     void testGetFeelingPercentage_WithZeroFeeling() {
+    void testGetFeelingPercentage_WithZeroFeeling() {
         // Create a list of FeelingCountProjection for testing
         List<FeelingCountProjection> feelingsCount = Arrays.asList(
                 new FeelingCountImpl(Feeling.HAPPY, 5),
@@ -64,7 +64,7 @@ class RecommendationStrategyUnitTest {
     }
 
     @Test
-     void testGetFeelingPercentage_WithZeroFeeling2() {
+    void testGetFeelingPercentage_WithZeroFeeling2() {
         // Create a list of FeelingCountProjection for testing
         List<FeelingCountProjection> feelingsCount = Arrays.asList(
                 new FeelingCountImpl(Feeling.HAPPY, 0),
@@ -79,7 +79,7 @@ class RecommendationStrategyUnitTest {
     }
 
     @Test
-     void testGetSumOfFeelings() {
+    void testGetSumOfFeelings() {
         // Create a list of FeelingCountProjection for testing
         List<FeelingCountProjection> feelingsCount = Arrays.asList(
                 new FeelingCountImpl(Feeling.HAPPY, 3),
@@ -95,7 +95,7 @@ class RecommendationStrategyUnitTest {
     }
 
     @Test
-     void testGetSumOfFeelingsWithEmptyList() {
+    void testGetSumOfFeelingsWithEmptyList() {
         // Create an empty list of FeelingCountProjection for testing
         List<FeelingCountProjection> feelingsCount = List.of();
 
@@ -107,7 +107,7 @@ class RecommendationStrategyUnitTest {
     }
 
     @Test
-     void testGetSumOfFeelings_WithZeroFeeling() {
+    void testGetSumOfFeelings_WithZeroFeeling() {
         // Create a list of FeelingCountProjection for testing
         List<FeelingCountProjection> feelingsCount = Arrays.asList(
                 new FeelingCountImpl(Feeling.HAPPY, 5),
@@ -122,7 +122,7 @@ class RecommendationStrategyUnitTest {
     }
 
     @Test
-     void testGetSumOfFeelings_WithZeroFeeling2() {
+    void testGetSumOfFeelings_WithZeroFeeling2() {
         // Create a list of FeelingCountProjection for testing
         List<FeelingCountProjection> feelingsCount = Arrays.asList(
                 new FeelingCountImpl(Feeling.HAPPY, 0),

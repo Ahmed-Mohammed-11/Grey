@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class RecommendationStrategy {
+
     public abstract List<Post> recommend(User user, Integer pageNumber, Integer count);
 
     protected Map<Feeling, Double> getFeelingPercentage(List<FeelingCountProjection> feelingsCount) {

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.validator.constraints.Range;
+
 import java.util.List;
 
 @Data
@@ -33,5 +34,4 @@ public class PostFilterDTO {
     private Integer year;
 
     private List<Feeling> feelings;
-
 }

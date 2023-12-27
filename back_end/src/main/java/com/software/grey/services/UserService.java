@@ -3,7 +3,7 @@ package com.software.grey.services;
 import com.software.grey.exceptions.exceptions.FailedToUpdateException;
 import com.software.grey.exceptions.exceptions.UserExistsException;
 import com.software.grey.models.dtos.UserDTO;
-import com.software.grey.models.dtos.responseDTOs.UserResponseDTO;
+import com.software.grey.models.dtos.UserResponseDTO;
 import com.software.grey.models.entities.BasicUser;
 import com.software.grey.models.entities.GoogleUser;
 import com.software.grey.models.entities.User;
@@ -29,16 +29,24 @@ import java.util.Optional;
 
 
 @Service
-//@AllArgsConstructor
 public class UserService {
+
     private final UserRepo userRepo;
+
     private final BasicUserRepo basicUserRepo;
+
     private final GoogleUserRepo googleUserRepo;
+
     private final UserVerificationRepo userVerificationRepo;
+
     private final UserMapper userMapper;
+
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     private final EmailSender emailSender;
+
     private final SecurityUtils securityUtils;
+
     private final boolean ENABLEMAIL = false;
 
     public UserService(UserRepo userRepo, BasicUserRepo basicUserRepo, GoogleUserRepo googleUserRepo,
@@ -143,9 +151,6 @@ public class UserService {
         return userRepo.findByUsername(userName);
     }
 
-    /*
-     * @return true if user was updated successfully, false otherwise
-     */
     public void updateUser(UserDTO userDTO) {
         User user = securityUtils.getCurrentUser();
         if (user == null || userDTO == null || isNotValidDTO(userDTO)) {

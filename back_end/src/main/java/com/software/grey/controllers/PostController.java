@@ -1,6 +1,5 @@
 package com.software.grey.controllers;
 
-import com.software.grey.SavedPostEnum;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.services.SavedPostService;

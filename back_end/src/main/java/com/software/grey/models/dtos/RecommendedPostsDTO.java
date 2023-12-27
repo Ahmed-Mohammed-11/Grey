@@ -10,6 +10,8 @@ import java.util.List;
 @Getter
 @Setter
 public class RecommendedPostsDTO {
+
     private List<PostDTO> content;
+
     private boolean last;
 }

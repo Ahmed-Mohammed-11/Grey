@@ -16,7 +16,9 @@ import java.util.List;
 @AllArgsConstructor
 @Component
 public class CollaborativeFeelingStrat extends RecommendationStrategy {
+
     private PostService postService;
+
     private PostRepository postRepository;
 
     @Override
@@ -28,5 +30,4 @@ public class CollaborativeFeelingStrat extends RecommendationStrategy {
         Pageable page = PageRequest.of(pageNumber, count);
         return postRepository.findByCollaborativeFiltering(feelingsCount.get(0).getFeeling().toString(), user.getId(), page);
     }
-
 }

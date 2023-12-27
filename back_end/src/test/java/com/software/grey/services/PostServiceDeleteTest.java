@@ -21,7 +21,6 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 import static com.software.grey.models.enums.Feeling.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -104,7 +103,7 @@ class PostServiceDeleteTest {
 
         //delete the post
         when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
-        postService.delete(postId.toString());
+        postService.delete(postId);
         assertThat(postRepository.existsById(postId)).isFalse();
     }
 
@@ -134,7 +133,7 @@ class PostServiceDeleteTest {
         //find the user id
         when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
         //assert throwing the exception
-        UserNotAuthorizedException exception = assertThrows(UserNotAuthorizedException.class, () -> postService.delete(postId.toString()));
+        UserNotAuthorizedException exception = assertThrows(UserNotAuthorizedException.class, () -> postService.delete(postId));
         assertThat(exception.getMessage()).isEqualTo("You are not authorized to delete this post");
     }
 
@@ -156,7 +155,7 @@ class PostServiceDeleteTest {
 
         //delete the post
         when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
-        PostNotFoundException exception = assertThrows(PostNotFoundException.class, () -> postService.delete(postId.toString()));
+        PostNotFoundException exception = assertThrows(PostNotFoundException.class, () -> postService.delete(postId));
         assertThat(exception.getMessage()).isEqualTo("Post not found");
     }
 

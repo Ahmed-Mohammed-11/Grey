@@ -30,10 +30,6 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import static com.software.grey.utils.ErrorMessages.POST_REPORTED_BEFORE;
 
 @Service
 @AllArgsConstructor
@@ -68,7 +64,7 @@ public class PostService implements IPostService {
                 .reporter(reporter)
                 .build();
 
-        if(userReportedPostBefore(post, reporter))
+        if (userReportedPostBefore(post, reporter))
             throw new UserReportedPostBeforeException(ErrorMessages.POST_REPORTED_BEFORE);
 
         reportedPostRepository.save(reportedPost);
@@ -78,7 +74,7 @@ public class PostService implements IPostService {
         return reportedPostRepository.existsById(new ReportedPostId(post, reporter));
     }
 
-    public Post findPostById(String id){
+    public Post findPostById(String id) {
         return postRepository.findById(id).orElseThrow(() -> new PostNotFoundException("Post not found"));
     }
 
@@ -132,11 +128,11 @@ public class PostService implements IPostService {
         String currentUserId = securityUtils.getCurrentUserId();
 
         Post post = findPostById(postId);
-        if(!post.getUser().getId().equals(currentUserId)){
+        if (!post.getUser().getId().equals(currentUserId)) {
             throw new UserNotAuthorizedException("You are not authorized to delete this post");
         }
 
-        postRepository.deleteById(postId) ;
+        postRepository.deleteById(postId);
     }
 
     public List<FeelingCountProjection> getCountOfPostedFeelings(User user) {

@@ -16,6 +16,7 @@ import java.util.Map;
 @AllArgsConstructor
 @Component
 public class SameFeelingStrat extends RecommendationStrategy {
+
     private PostService postService;
 
     @Override

@@ -3,6 +3,8 @@ package com.software.grey.services;
 import com.software.grey.controllers.SignupController;
 import com.software.grey.exceptions.exceptions.PostNotFoundException;
 import com.software.grey.exceptions.exceptions.UserReportedPostBeforeException;
+import com.software.grey.models.dtos.PostDTO;
+import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.ReportedPostId;
@@ -157,7 +159,7 @@ class ReportPostServiceTest {
 
         // loop over posts and report each one
         for (Post post : posts) {
-            postService.report(post.getId().toString());
+            postService.report(post.getId());
             assertThat(reportedPostRepository.existsById(new ReportedPostId(post, user))).isTrue();
         }
     }
@@ -169,7 +171,7 @@ class ReportPostServiceTest {
 
         // loop over posts and report each one
         for (Post post : posts) {
-            postService.report(post.getId().toString());
+            postService.report(post.getId());
             assertThat(reportedPostRepository.existsById(new ReportedPostId(post, user))).isTrue();
         }
     }
@@ -181,7 +183,7 @@ class ReportPostServiceTest {
 
         // loop over posts and report each one
         for (Post post : posts) {
-            postService.report(post.getId().toString());
+            postService.report(post.getId());
             assertThat(reportedPostRepository.existsById(new ReportedPostId(post, user))).isTrue();
         }
     }
@@ -193,9 +195,9 @@ class ReportPostServiceTest {
 
         // loop over posts and report each one
         for (Post post : posts) {
-            postService.report(post.getId().toString());
+            postService.report(post.getId());
             Assertions.assertThrows(UserReportedPostBeforeException.class,
-                    () -> postService.report(post.getId().toString()));
+                    () -> postService.report(post.getId()));
         }
     }
 
@@ -206,9 +208,9 @@ class ReportPostServiceTest {
 
         // loop over posts and report each one
         for (Post post : posts) {
-            postService.report(post.getId().toString());
+            postService.report(post.getId());
             Assertions.assertThrows(UserReportedPostBeforeException.class,
-                    () -> postService.report(post.getId().toString()));
+                    () -> postService.report(post.getId()));
         }
     }
 
@@ -234,7 +236,7 @@ class ReportPostServiceTest {
 
         // loop over posts and report each one
         for (Post post : posts) {
-            postService.report(post.getId().toString());
+            postService.report(post.getId());
         }
 
         PostFilterDTO postFilterDTO = PostFilterDTO.builder()

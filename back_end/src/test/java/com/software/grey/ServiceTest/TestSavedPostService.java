@@ -20,8 +20,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Optional;
-import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -87,7 +85,7 @@ class TestSavedPostService {
         // Mock the securityUtils method
         when(securityUtils.getCurrentUser()).thenReturn(a);
         // save the post and assert that it saved successfully
-        String result = savedPostService.toggleSavedPost(postB.getId().toString());
+        String result = savedPostService.toggleSavedPost(postB.getId());
         assertThat(result).isEqualTo("Saved successfully");
 
         // get all saved posts
@@ -119,7 +117,7 @@ class TestSavedPostService {
         // Mock the securityUtils method
         when(securityUtils.getCurrentUser()).thenReturn(a);
         // save the post and assert that it saved successfully
-        String result = savedPostService.toggleSavedPost(postB.getId().toString());
+        String result = savedPostService.toggleSavedPost(postB.getId());
         assertThat(result).isEqualTo("Saved successfully");
 
         // assert that the post is saved
@@ -127,7 +125,7 @@ class TestSavedPostService {
         assertThat(savedPost).hasSize(1);
 
         // un-save the post
-        result = savedPostService.toggleSavedPost(postB.getId().toString());
+        result = savedPostService.toggleSavedPost(postB.getId());
         assertThat(result).isEqualTo("Removed successfully");
 
         savedPost = savedPostRepository.findAll();
@@ -153,7 +151,7 @@ class TestSavedPostService {
         when(securityUtils.getCurrentUser()).thenReturn(b);
 
         UserIsAuthorException ex = assertThrows(UserIsAuthorException.class,
-                () -> savedPostService.toggleSavedPost(postB.getId().toString()));
+                () -> savedPostService.toggleSavedPost(postB.getId()));
 
         assertThat(ex.getMessage()).isEqualTo("You have written this post");
     }

@@ -17,6 +17,7 @@ import java.sql.Timestamp;
 @Builder
 @IdClass(SavedPostId.class)
 public class SavedPost {
+
     @Id
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id", referencedColumnName = "id")

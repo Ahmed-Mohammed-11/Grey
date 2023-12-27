@@ -1,7 +1,6 @@
 package com.software.grey.services.implementations;
 
 import com.software.grey.exceptions.exceptions.UserIsAuthorException;
-import com.software.grey.SavedPostEnum;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.entities.Post;
@@ -26,15 +25,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import java.util.UUID;
-
 @Service
 @AllArgsConstructor
 public class SavedPostServiceImpl implements SavedPostService {
 
     private SavedPostRepository savedPostRepository;
+
     private PostRepository postRepository;
+
     private SecurityUtils securityUtils;
+
     private PostMapper postMapper;
 
     @Override

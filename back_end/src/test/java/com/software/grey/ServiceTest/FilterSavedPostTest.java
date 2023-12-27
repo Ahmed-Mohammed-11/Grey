@@ -89,8 +89,8 @@ class FilterSavedPostTest {
         List<String> ids = new ArrayList<>();
         when(securityUtils.getCurrentUserName()).thenReturn("PostServiceUsername1");
         List<Set<Feeling>> feelings = List.of(Set.of(LOVE), Set.of(LOVE, HAPPY), Set.of(SAD), Set.of(LOVE, HAPPY, SAD));
-        for(int i = 0;i<5;i++){
-            String id = postService.add(PostDTO.builder().postText(i + " user1").postFeelings(feelings.get(i% feelings.size())).build());
+        for (int i = 0; i < 5; i++) {
+            String id = postService.add(PostDTO.builder().postText(i + " user1").postFeelings(feelings.get(i % feelings.size())).build());
             ids.add(id);
         }
         return ids;
@@ -103,8 +103,8 @@ class FilterSavedPostTest {
         List<String> ids = new ArrayList<>();
         when(securityUtils.getCurrentUserName()).thenReturn("PostServiceUsername2");
         List<Set<Feeling>> feelings = List.of(Set.of(LOVE), Set.of(SAD));
-        for(int i = 0;i<3;i++){
-            String id = postService.add(PostDTO.builder().postText(i + " user2").postFeelings(feelings.get(i% feelings.size())).build());
+        for (int i = 0; i < 3; i++) {
+            String id = postService.add(PostDTO.builder().postText(i + " user2").postFeelings(feelings.get(i % feelings.size())).build());
             Thread.sleep(30);
             ids.add(id);
         }
@@ -115,7 +115,7 @@ class FilterSavedPostTest {
         when(securityUtils.getCurrentUser()).thenReturn(userService.findByUserName(username));
         for (int i = 0; i < 3; i++) {
             String id = postIds.get(i);
-            savedPostService.toggleSavedPost(id.toString());
+            savedPostService.toggleSavedPost(id);
             Thread.sleep(30);
         }
     }
@@ -157,10 +157,10 @@ class FilterSavedPostTest {
                 Arguments.of("PostServiceUsername2", 0, 10, (day + 5) % 30, month, year, null, List.of()),
                 Arguments.of("PostServiceUsername1", 0, 10, null, null, null, List.of(LOVE), List.of("2 user2", "0 user2")),
                 Arguments.of("PostServiceUsername2", 0, 10, day, month, year, List.of(LOVE, HAPPY), List.of("1 user1", "0 user1")),
-                Arguments.of("PostServiceUsername1", 0, 10, day, month, year, List.of(LOVE, HAPPY, SAD),List.of("2 user2", "1 user2", "0 user2")),
-                Arguments.of("PostServiceUsername1", 0, 10, null, null, null, List.of(LOVE, HAPPY, SAD, INSPIRE),List.of("2 user2", "1 user2", "0 user2")),
-                Arguments.of("PostServiceUsername2", 0, 10, null, null, null, List.of(SAD),List.of("2 user1")),
-                Arguments.of("PostServiceUsername2", 0, 10, null, null, null, List.of(INSPIRE),List.of()),// return noting
+                Arguments.of("PostServiceUsername1", 0, 10, day, month, year, List.of(LOVE, HAPPY, SAD), List.of("2 user2", "1 user2", "0 user2")),
+                Arguments.of("PostServiceUsername1", 0, 10, null, null, null, List.of(LOVE, HAPPY, SAD, INSPIRE), List.of("2 user2", "1 user2", "0 user2")),
+                Arguments.of("PostServiceUsername2", 0, 10, null, null, null, List.of(SAD), List.of("2 user1")),
+                Arguments.of("PostServiceUsername2", 0, 10, null, null, null, List.of(INSPIRE), List.of()),// return noting
                 Arguments.of("PostServiceUsername2", 0, 10, null, null, null, List.of(), List.of("2 user1", "1 user1", "0 user1"))// return all
         );
     }

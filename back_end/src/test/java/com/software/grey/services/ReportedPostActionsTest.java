@@ -4,7 +4,6 @@ import com.software.grey.controllers.SignupController;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.ReportedPost;
-import com.software.grey.models.entities.ReportedPostId;
 import com.software.grey.models.entities.User;
 import com.software.grey.repositories.*;
 import com.software.grey.services.implementations.PostService;
@@ -23,11 +22,10 @@ import java.util.Set;
 import static com.software.grey.models.enums.Feeling.LOVE;
 import static com.software.grey.models.enums.Feeling.SAD;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ReportedPostActionsTest {
+class ReportedPostActionsTest {
     @MockBean
     private SecurityUtils securityUtils;
     @Autowired
@@ -44,10 +42,10 @@ public class ReportedPostActionsTest {
     private BasicUserRepo basicUserRepo;
     @Autowired
     private UserRepo userRepo;
-    private ArrayList<Post> posts = new ArrayList<>();
+    private final ArrayList<Post> posts = new ArrayList<>();
 
     @BeforeAll
-    void init () {
+    void init() {
         UserDTO userA = new UserDTO("mockusera@gmail.com", "mockusera", "Write unethical post");
         UserDTO userB = new UserDTO("mockuserb@gmail.com", "mockuserb", "report unethical post");
         signupController.signup(userA);
@@ -69,7 +67,7 @@ public class ReportedPostActionsTest {
     }
 
     @AfterAll
-    void cleanUp () {
+    void cleanUp() {
         reportedPostRepository.deleteAll();
         postRepository.deleteAll();
         userVerificationRepo.deleteAll();
@@ -78,14 +76,14 @@ public class ReportedPostActionsTest {
     }
 
     @Test
-    void shouldReturnAllReportedPosts () {
+    void shouldReturnAllReportedPosts() {
         assertEquals(10, reportedPostRepository.findAll().size());
     }
 
     @Test
-    void DeleteReportedPost () {
+    void DeleteReportedPost() {
         Post post = posts.get(0);
-        postService.deleteReportedPost(post.getId().toString());
+        postService.deleteReportedPost(post.getId());
         assertEquals(9, reportedPostRepository.findAll().size());
     }
 

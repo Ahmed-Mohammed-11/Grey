@@ -17,9 +17,11 @@ import java.util.List;
 public class ExploreService {
 
     private Recommender recommender;
+
     private PostMapper postMapper;
 
     public RecommendedPostsDTO getRecommendedPosts(int pageNumber, int pageSize) {
+
         PostFilterDTO postFilterDTO = PostFilterDTO.builder().pageNumber(pageNumber).pageSize(pageSize).build();
         List<Post> recPosts = recommender.recommend(postFilterDTO);
         List<PostDTO> postsDTO = new ArrayList<>();

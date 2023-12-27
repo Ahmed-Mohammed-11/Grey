@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Table(name = "user_verification")
 public class UserVerification {
+
     @Id
     private String id;
 
