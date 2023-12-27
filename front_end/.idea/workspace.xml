@@ -5,74 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="SG-103 Merging complete">
-      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/exceptions/exception_handlers/UserIsAuthorExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/exceptions/exceptions/UserIsAuthorException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../back_end/src/main/resources/db/migration/V9__Add_Post_Saved_Time.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/ServiceTest/FilterSavedPostTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/landing.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/welcome/page.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/welcome/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/controllers/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/controllers/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/dtos/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/dtos/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/SavedPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/models/entities/SavedPost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/repositories/SavedPostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/repositories/SavedPostRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/services/SavedPostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/services/SavedPostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/services/implementations/SavedPostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/services/implementations/SavedPostServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/ServiceTest/TestSavedPostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/ServiceTest/TestSavedPostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/controllers/PostControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/test/java/com/software/grey/controllers/PostControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/feelingsFilter/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/feelingsFilter/page.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/feelingsFilter/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/feelingsFilter/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/popup/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/popup/page.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/popup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/popup/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/post/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/post/page.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/post/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/post/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/postFilter/customDatePicker.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/postFilter/customDatePicker.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/postFilter/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/postFilter/page.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/postFilter/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/postFilter/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/posts/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/posts/page.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/posts/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/posts/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/reported post/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/reported post/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/sidebar/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/sidebar/page.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/sidebar/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/sidebar/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/constants/apiConstants.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/constants/apiConstants.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/constants/displayErrorMessages.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/constants/displayErrorMessages.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/constants/displayTextMessages.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/constants/displayTextMessages.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/entities/dtos/PostFilterDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/entities/dtos/PostFilterDTO.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/entities/objects/UserValidationResponse.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/entities/objects/UserValidationResponse.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/entities/objects/UserVerification.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/entities/objects/UserVerification.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/home/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/login/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/login/page.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/login/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/login/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/profile/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/page.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/profile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/security/userValidation/clientFormValidation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/security/userValidation/clientFormValidation.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/security/userValidation/loginServerFormValidationMapper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/security/userValidation/loginServerFormValidationMapper.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/security/userValidation/signupServerFormValidationMapper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/security/userValidation/signupServerFormValidationMapper.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/IDeleteRequestController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/IDeleteRequestController.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/IGetRequestController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/IGetRequestController.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/IPostRequestController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/IPostRequestController.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/createPostController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/createPostController.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/deletePostController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/deletePostController.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/loginController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/loginController.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/postRequestWithUrlParams.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/postRequestWithUrlParams.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/signupController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/signupController.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/updateUserController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/updateUserController.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/signup/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/page.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/signup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/utils/authTokenBuilder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/utils/authTokenBuilder.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/utils/getUser.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/utils/getUser.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/utils/readableStreamResponseBodytoJSON.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/utils/readableStreamResponseBodytoJSON.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/verify/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/verify/page.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/verify/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/verify/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +73,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Merging SG-12-Moderator-Dashboard",
+    "git-widget-placeholder": "SG-12-Moderator-Dashboard",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/Belal/Desktop/First Semester/Software Engineering/Project/SWE-Project/front_end/public",
     "node.js.detected.package.eslint": "true",
