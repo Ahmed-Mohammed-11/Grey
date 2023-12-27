@@ -5,21 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="SG-103 Merging complete">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_12_22_PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_21_2023_4_02_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_21_2023_4_02_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_20_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_20_AM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_20_AM__Changes_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_32_AM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_12_19_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_12_19_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_12_19_PM__Changes_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_12_21_PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_7_50_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_7_50_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_28_2023_7_38_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_28_2023_7_38_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_28_2023_7_38_PM__Changes_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_21_2023_1_13_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_21_2023_1_13_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/posts/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/posts/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/sidebar/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/sidebar/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/constants/apiConstants.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/constants/apiConstants.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/feed/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/page.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/feed/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,27 +73,34 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "SG-125-BL-Implement-same-feeling-strategy",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Omar/Projects/Grey/Grey milestone temp/SWE-Project/front_end",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "ts.external.directory.path": "C:\\Omar\\Projects\\Grey\\Grey milestone temp\\SWE-Project\\front_end\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;SG-120-Refactor-Frontend-code&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Belal/Desktop/First Semester/Software Engineering/Project/SWE-Project/front_end/public&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.grey.executor&quot;: &quot;Run&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Omar\\Projects\\Grey\\Grey milestone temp\\SWE-Project\\front_end\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Belal\Desktop\First Semester\Software Engineering\Project\SWE-Project\front_end\public" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Belal\Desktop\First Semester\Software Engineering\Project\SWE-Project\front_end\src\app\components\sidebar" />
+      <recent name="C:\Users\Belal\Desktop\First Semester\Software Engineering\Project\SWE-Project\front_end\src\app\profile" />
+      <recent name="C:\Users\Belal\Desktop\First Semester\Software Engineering\Project\SWE-Project\front_end\public" />
       <recent name="C:\Users\Belal\Desktop\First Semester\Software Engineering\Project\SWE-Project\front_end\src\app\models\dtos" />
       <recent name="D:\Projects\SWE-Grey\SWE-Project\front_end\src\app" />
     </key>
@@ -137,6 +136,8 @@
       <workItem from="1702153450901" duration="2853000" />
       <workItem from="1702226815689" duration="4564000" />
       <workItem from="1702387395959" duration="643000" />
+      <workItem from="1702751037725" duration="13239000" />
+      <workItem from="1703505241975" duration="8288000" />
     </task>
     <task id="LOCAL-00001" summary="Google button enhanced &amp; side button added">
       <option name="closed" value="true" />

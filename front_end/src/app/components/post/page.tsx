@@ -9,23 +9,16 @@ import {Chip, IconButton, ListItem, Menu, MenuItem} from "@mui/material";
 import {toast, ToastOptions} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import deletePostController from "@/app/services/deletePostController";
-import SavePostController from "@/app/services/SavePostController";
+import postRequestWithUrlParams from "@/app/services/postRequestWithUrlParams";
 import {
     REPORT_POST_ENDPOINT,
     SAVE_POST_ENDPOINT,
     DELETE_POST_ENDPOINT,
-    DIARY_ENDPOINT
 } from "@/app/constants/apiConstants";
 
 
 export default function Post(props: any) {
     let post = props.post;
-    const toastStyleTopRight: ToastOptions = {
-        position: "top-right",
-        autoClose: 2000,
-        theme: "colored",
-        hideProgressBar: true
-    }
 
     const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(null);
     const openMenu = Boolean(menuAnchorEl);
@@ -37,19 +30,27 @@ export default function Post(props: any) {
     };
 
 
-    const handleSavePost = (postId: string) => {
-        const data = SavePostController.sendPostRequest({postId: postId}, SAVE_POST_ENDPOINT);
-        toastResponse(data);
+    const handleSavePost = async (postId: string) => {
+        const data = postRequestWithUrlParams.sendPostRequest({postId: postId}, SAVE_POST_ENDPOINT);
+        await toastResponse(data);
     };
 
-    const handleReportPost = (postId: string) => {
-        const data = SavePostController.sendPostRequest({postId: postId}, REPORT_POST_ENDPOINT);
-        toastResponse(data);
+    const handleReportPost = async (postId: string) => {
+        const data = postRequestWithUrlParams.sendPostRequest({postId: postId}, REPORT_POST_ENDPOINT);
+        await toastResponse(data);
     }
 
-    const handleDeletePost = (postId: string) => {
+    const handleDeletePost = async (postId: string) => {
         const data = deletePostController.sendDeleteRequest({postId: postId}, DELETE_POST_ENDPOINT);
-        toastResponse(data);
+        await toastResponse(data);
+    }
+
+
+    const toastStyleTopRight: ToastOptions = {
+        position: "top-right",
+        autoClose: 3000,
+        theme: "colored",
+        hideProgressBar: true
     }
 
     async function toastResponse(response: Promise<Response>) {
@@ -75,7 +76,6 @@ export default function Post(props: any) {
         }
     }
 
-
     return (
         <Box width={props.width}>
             <Box className={styles.post} key={post.id}>
@@ -88,15 +88,15 @@ export default function Post(props: any) {
 
                     <IconButton onClick={() => handleSavePost(post.id)}>
                         {post.saved ?
-                            <BsFillBookmarkFill className={styles.icon}></BsFillBookmarkFill>
-                            : <BsBookmark className={styles.icon}></BsBookmark>}
+                            <BsFillBookmarkFill className={styles.main_icons}></BsFillBookmarkFill>
+                            : <BsBookmark className={styles.main_icons}></BsBookmark>}
                     </IconButton>
 
                     <IconButton
                         aria-controls={openMenu ? 'options-menu' : undefined}
                         aria-expanded={openMenu ? 'true' : undefined}
                         onClick={handleMenuClick}>
-                        <SlOptions className={styles.icon}></SlOptions>
+                        <SlOptions className={styles.main_icons}></SlOptions>
                     </IconButton>
                     <Menu
                         id="options-menu"
@@ -112,7 +112,7 @@ export default function Post(props: any) {
                             <MdReport className={styles.icon}/>
                             Report Post
                         </MenuItem>
-                        {props.feedType === DIARY_ENDPOINT && (
+                        {props.feedType === 2 && (
                             <MenuItem
                             className={styles.menu_item}
                             onClick={() => {

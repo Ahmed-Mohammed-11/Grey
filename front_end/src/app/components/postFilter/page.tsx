@@ -1,11 +1,10 @@
 "use client";
 import CustomDatePicker from "./customDatePicker";
-import styles from "./page.module.css";
-import { Box } from "@mui/system";
-import React, { useState, useEffect } from 'react';
-import PostFilterDTO from '../../models/dtos/PostFilterDTO';
+import {Box} from "@mui/system";
+import React, {useEffect, useState} from 'react';
+import PostFilterDTO from '@/app/entities/dtos/PostFilterDTO';
 import FeelingsFilter from "../feelingsFilter/page";
-import Feeling from "@/app/models/dtos/Feeling";
+import Feeling from "@/app/entities/dtos/Feeling";
 
 export default function PostFilters(props: any) {
   const { showDatePicker } = props;
@@ -25,7 +24,7 @@ export default function PostFilters(props: any) {
   };
 
   const handleFeelingsFilter = (selectedFeelings:Set<Feeling>) => {
-    console.log("feelign filter change")
+    console.log("feeling filter change")
     setFilterData({...(filterData), feelings:Array.from(selectedFeelings)})
   };
 

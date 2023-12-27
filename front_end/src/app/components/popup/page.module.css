@@ -72,7 +72,6 @@
 .filled{
     background: #526D82;
     color: #DDE6ED;
-    box-shadow: 2px 3px 10px #5b5b5b;
 }
 
 .disabled{
@@ -84,6 +83,7 @@
 
 .create_button{
     display: flex;
+    position: relative;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -91,13 +91,11 @@
     padding: 12px;
     outline: none;
     text-transform: capitalize;
-    font-size: calc(3*calc(min(1vh, 1vw)));
-    font-family: "Montserrat SemiBold", sans-serif;
-    background: #DDE6ED;
-    color: #333;
-    box-shadow: 2px 3px 10px #4177a1;
-    border-radius: 16px;
-    font-weight: bold;
+    font-size: calc(2*calc(min(1vh, 1vw)));
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
     box-sizing: border-box;
 }
 

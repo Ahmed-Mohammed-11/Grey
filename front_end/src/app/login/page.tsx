@@ -1,18 +1,17 @@
 'use client';
 import styles from './page.module.css'
-import {Button, TextField, Link} from "@mui/material";
+import {Button, Link, TextField} from "@mui/material";
 import {Box} from "@mui/system";
 import GoogleAuthn from "@/app/googleAuthentication/GoogleAuthn"
 import {useRef, useState} from "react";
 import {FaArrowLeft} from "react-icons/fa";
-import ThemeRegistry from "@/app/themes/themeRegistry";
 import classNames from "classnames";
 import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
-import signinController from "@/app/services/signinController";
-import {SIGN_IN_BACKEND_ENDPOINT, SIGN_UP_ROUTE, HOME_ROUTE} from "@/app/constants/apiConstants";
+import loginController from "@/app/services/loginController";
+import {HOME_ROUTE, LOG_IN_BACKEND_ENDPOINT, SIGN_UP_ROUTE} from "@/app/constants/apiConstants";
 import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
 import {LOGIN_PANEL_TEXT} from "@/app/constants/displayTextMessages";
-import signinServerFormValidationMapper from "@/app/security/userValidation/signinServerFormValidationMapper";
+import loginServerFormValidationMapper from "@/app/security/userValidation/loginServerFormValidationMapper";
 import {useRouter} from "next/navigation";
 
 function Page() {
@@ -35,11 +34,11 @@ function Page() {
         }
 
         // validate user credentials on client side
-        let { isUserValid, errors} = clientValidateForm(user)
+        let {isUserValid, errors} = clientValidateForm(user)
         setIsUserValid(isUserValid)
         setErrors(errors);
 
-        // if user credentials are valid, try send to server
+        // if user credentials are valid, try sending to server
         isUserValid.username && isUserValid.password && sendInfoToServer(user)
     }
 
@@ -49,11 +48,11 @@ function Page() {
             username: user.username,
             password: user.password
         }
-        fetchResponse(userDTO);
+        await fetchResponse(userDTO);
     }
 
     const fetchResponse = async (userDTO: UserDTO) => {
-        let response = await signinController.sendPostRequest(userDTO, SIGN_IN_BACKEND_ENDPOINT);
+        let response = await loginController.sendPostRequest(userDTO, LOG_IN_BACKEND_ENDPOINT);
         // toJSON util to convert ReadableStream to JSON
         let jsonResponse = await toJSON(response.body!);
         let responseStat = response.status;
@@ -61,7 +60,7 @@ function Page() {
         (responseStat == 200) && router.push(HOME_ROUTE);
         //if response status is not 200, map response from server to display appropriate error messages
         //and if 200 get auth token and store it in local storage
-        let {isUserValid, errors} = signinServerFormValidationMapper(responseStat, jsonResponse, userDTO)
+        let {isUserValid, errors} = loginServerFormValidationMapper(responseStat, jsonResponse, userDTO)
         setIsUserValid(isUserValid);
         setErrors(errors);
     }
@@ -69,15 +68,16 @@ function Page() {
     let topLeftShapeClass = classNames(styles.topLeft, styles.cornerShapes);
     let bottomRightShapeClass = classNames(styles.bottomRight, styles.cornerShapes);
     return (
-        <ThemeRegistry options={{key: 'mui'}}>
+        <Box>
             <Box className={topLeftShapeClass} sx={{
                 background: (theme) => theme.palette.primary.light
             }}
-            ></Box>
+            >
+            </Box>
             <Box className={bottomRightShapeClass}
                  sx={{
-                background: (theme) => theme.palette.primary.light
-                }}
+                     background: (theme) => theme.palette.primary.light
+                 }}
             ></Box>
             <Box className={styles.container}>
                 <Box className={styles.signinForm}>
@@ -88,8 +88,8 @@ function Page() {
                         inputRef={usernameRef}
                         required
                         variant="filled"
-                        error = {!isUserValid.username}
-                        helperText = {(isUserValid.username)? "": errors.username}
+                        error={!isUserValid.username}
+                        helperText={(isUserValid.username) ? "" : errors.username}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
@@ -102,8 +102,8 @@ function Page() {
                         inputRef={passwordRef}
                         required
                         variant="filled"
-                        error = {!isUserValid.password}
-                        helperText = {(isUserValid.password)? "": errors.password}
+                        error={!isUserValid.password}
+                        helperText={(isUserValid.password) ? "" : errors.password}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
@@ -123,7 +123,8 @@ function Page() {
 
                 <Box className={styles.panel}>
                     <Box className={styles.panelBanner}> GREY </Box>
-                    <Box typography="body1" color="text.primary" fontSize="2rem" className={styles.panelText}> {LOGIN_PANEL_TEXT} </Box>
+                    <Box typography="body1" color="text.primary" fontSize="2rem"
+                         className={styles.panelText}> {LOGIN_PANEL_TEXT} </Box>
                 </Box>
                 <Link href={SIGN_UP_ROUTE}>
                     <Button className={styles.iconButton} variant="contained" size="large">
@@ -131,7 +132,7 @@ function Page() {
                     </Button>
                 </Link>
             </Box>
-        </ThemeRegistry>
+        </Box>
     )
 }
 

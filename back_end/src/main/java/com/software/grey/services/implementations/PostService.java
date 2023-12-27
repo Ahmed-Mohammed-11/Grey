@@ -1,5 +1,7 @@
 package com.software.grey.services.implementations;
 
+import com.software.grey.exceptions.exceptions.PostNotFoundException;
+import com.software.grey.exceptions.exceptions.UserNotAuthorizedException;
 import com.software.grey.exceptions.exceptions.UserReportedPostBeforeException;
 import com.software.grey.exceptions.exceptions.DataNotFoundException;
 import com.software.grey.models.dtos.PostDTO;
@@ -61,7 +63,7 @@ public class PostService implements IPostService {
         try {
             postUUID = UUID.fromString(postId);
         } catch (IllegalArgumentException e) {
-            throw new DataNotFoundException("Invalid post id");
+            throw new IllegalArgumentException("Invalid post id");
         }
 
         Post post = findPostById(postUUID);
@@ -83,7 +85,7 @@ public class PostService implements IPostService {
     }
 
     public Post findPostById(UUID id){
-        return postRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Post not found"));
+        return postRepository.findById(id).orElseThrow(() -> new PostNotFoundException("Post not found"));
     }
 
     public Page<PostDTO> getDiary(PostFilterDTO postFilterDTO) {
@@ -123,16 +125,16 @@ public class PostService implements IPostService {
         UUID uuid;
         try {
             uuid = UUID.fromString(postId);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Invalid post id");
         }
 
-        Post post = findPostById(UUID.fromString(postId));
-        if(!post.getUser().getId().toString().equals(currentUserId)){
-            throw new DataNotFoundException("You are not authorized to delete this post");
+        Post post = findPostById(uuid);
+        if(!post.getUser().getId().equals(currentUserId)){
+            throw new UserNotAuthorizedException("You are not authorized to delete this post");
         }
 
-        postRepository.deleteById(post.getId());
+        postRepository.deleteById(uuid) ;
     }
 
     public List<FeelingCountProjection> getCountOfPostedFeelings(User user) {
