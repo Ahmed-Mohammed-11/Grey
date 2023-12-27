@@ -102,13 +102,13 @@ export default function Posts(props: any) {
     };
 
     const renderPosts = () => {
-        return posts.map((post: any) => <Post key={post.id} post={post} feedType={props.feedType}/>);
+        return posts.map((post: any) => <Post key={post.id} post={post} feedType={props.feedType} setPosts={setPosts} posts={posts}/>);
     };
 
     return (
         <Box className={styles.feed} width={props.width}>
             <Box className={styles.posts_bar}>
-                <PopupScreen/>
+                <PopupScreen setPosts={setPosts} />
                 <PostFilters showDatePicker={props.feedType == 2} showFeelingSelection={props.feedType === 0}
                              applyFilters={applyFilters}/>
             </Box>

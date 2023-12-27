@@ -42,6 +42,12 @@ export default function Post(props: any) {
 
     const handleDeletePost = async (postId: string) => {
         const data = deletePostController.sendDeleteRequest({postId: postId}, DELETE_POST_ENDPOINT);
+        if ((await data).status === 200) {
+            //delete post from the frontend
+            props.setPosts(
+                props.posts.filter((post: any) => post.id !== postId)
+            );
+        }
         await toastResponse(data);
     }
 
@@ -65,7 +71,9 @@ export default function Post(props: any) {
                             toast.error(data, toastStyleTopRight);
                         });
                     }
-                }, (err) => { console.log(err) }),
+                }, (err) => {
+                    console.log(err)
+                }),
                 {
                     pending: 'Wait a moment with me ...',
                     error: 'Server took too long to respond',
@@ -114,14 +122,14 @@ export default function Post(props: any) {
                         </MenuItem>
                         {props.feedType === 2 && (
                             <MenuItem
-                            className={styles.menu_item}
-                            onClick={() => {
-                                handleMenuClose();
-                                handleDeletePost(post.id);
-                            }}>
-                            <MdDelete className={styles.icon}/>
-                            Delete Post
-                        </MenuItem>
+                                className={styles.menu_item}
+                                onClick={() => {
+                                    handleMenuClose();
+                                    handleDeletePost(post.id);
+                                }}>
+                                <MdDelete className={styles.icon}/>
+                                Delete Post
+                            </MenuItem>
                         )}
                     </Menu>
                 </Box>

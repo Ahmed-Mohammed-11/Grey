@@ -38,7 +38,7 @@ export default function CustomDatePicker(props:any) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box className={styles.customDatePickerContainer}>
-        <DemoItem label="DatePicker">
+        <DemoItem label="Filter posts by creation date">
           <DatePicker
             className={styles.customDatePicker}
             onChange={handleSetDate}
