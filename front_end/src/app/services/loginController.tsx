@@ -1,4 +1,4 @@
-import { BASE_BACKEND_URL } from "@/app/constants/apiConstants";
+import {BASE_BACKEND_URL} from "@/app/constants/apiConstants";
 
 class LoginController implements IPostRequestController {
     sendPostRequest(payload: UserDTO, endpoint: string) {

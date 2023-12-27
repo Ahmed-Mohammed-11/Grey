@@ -5,8 +5,7 @@ import {useRef, useState} from 'react';
 import clientValidateForm from "../security/userValidation/clientFormValidation";
 import updateUserController from "../services/updateUserController";
 import {UPDATE_USER_ENDPOINT} from "../constants/apiConstants";
-import {toast} from "react-toastify";
-import {ToastContainer} from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -110,7 +109,7 @@ function Profile() {
 
         if (noChange(user)) {
             console.log('no change')
-            const userDto:UserDTO = {
+            const userDto: UserDTO = {
                 username: initialUsername,
                 email: initialEmail,
                 password: initialPassword
@@ -128,61 +127,61 @@ function Profile() {
 
     return (
         // user avatar is so small when theme registry applied
-            <Box className={styles.container}>
-                <User name={"username"} backgroundColor={"red"}/>
-                <TextField className={styles.textArea}
-                    label='Username'
-                    placeholder='new username'
-                    inputRef={usernameRef}
-                    variant="filled"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    error={!isUserValid.username}
-                    helperText={(isUserValid.username) ? "" : errors.username}
-                >
-                </TextField>
-                <TextField className={styles.textArea}
-                    label='Email'
-                    placeholder='new email'
-                    inputRef={emailRef}
-                    variant="filled"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    error={!isUserValid.email}
-                    helperText={(isUserValid.email) ? "" : errors.email}
-                ></TextField>
-                <TextField className={styles.textArea}
-                    label='Password'
-                    placeholder='new password'
-                    inputRef={passwordRef}
-                    variant="filled"
-                    type={showPassword ? 'text' : 'password'}
-                    error={!isUserValid.password}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    helperText={(isUserValid.password) ? "" : errors.password}
-                    InputProps={{
-                       endAdornment: (
-                           <InputAdornment position="end">
-                               <IconButton
-                                   onClick={handleTogglePassword}
-                                   edge="end"
-                               >
-                                   {showPassword ? <VisibilityOff/> : <Visibility/>}
-                               </IconButton>
-                           </InputAdornment>
-                       )
-                    }}
-                ></TextField>
-                <Button className={styles.button}
+        <Box className={styles.container}>
+            <User name={"username"} backgroundColor={"red"}/>
+            <TextField className={styles.textArea}
+                       label='Username'
+                       placeholder='new username'
+                       inputRef={usernameRef}
+                       variant="filled"
+                       value={username}
+                       onChange={(e) => setUsername(e.target.value)}
+                       error={!isUserValid.username}
+                       helperText={(isUserValid.username) ? "" : errors.username}
+            >
+            </TextField>
+            <TextField className={styles.textArea}
+                       label='Email'
+                       placeholder='new email'
+                       inputRef={emailRef}
+                       variant="filled"
+                       value={email}
+                       onChange={(e) => setEmail(e.target.value)}
+                       error={!isUserValid.email}
+                       helperText={(isUserValid.email) ? "" : errors.email}
+            ></TextField>
+            <TextField className={styles.textArea}
+                       label='Password'
+                       placeholder='new password'
+                       inputRef={passwordRef}
+                       variant="filled"
+                       type={showPassword ? 'text' : 'password'}
+                       error={!isUserValid.password}
+                       value={password}
+                       onChange={(e) => setPassword(e.target.value)}
+                       helperText={(isUserValid.password) ? "" : errors.password}
+                       InputProps={{
+                           endAdornment: (
+                               <InputAdornment position="end">
+                                   <IconButton
+                                       onClick={handleTogglePassword}
+                                       edge="end"
+                                   >
+                                       {showPassword ? <VisibilityOff/> : <Visibility/>}
+                                   </IconButton>
+                               </InputAdornment>
+                           )
+                       }}
+            ></TextField>
+            <Button className={styles.button}
                     variant="contained"
                     size="large"
                     onClick={handleUpdate}
-                >
-                    save changes
-                </Button>
-                <ToastContainer/>
-            </Box>
+            >
+                save changes
+            </Button>
+            <ToastContainer/>
+        </Box>
     )
 }
 

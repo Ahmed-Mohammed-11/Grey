@@ -75,13 +75,13 @@ export default function FeelingsFilter(props: any) {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClosePopup}
-                MenuListProps={{ 'aria-labelledby': 'basic-button' }}>
+                MenuListProps={{'aria-labelledby': 'basic-button'}}>
                 {Array.from(allFeelings).filter((feeling) =>
                     !selectedFeelings.has(feeling)).map((feeling: any, feelingIndex: any) => (
-                        <MenuItem className={`${feeling} ${styles.menu_item}`} onClick={handleAdd(feeling)}>
-                            {feeling}
-                        </MenuItem>
-                    ))}
+                    <MenuItem className={`${feeling} ${styles.menu_item}`} onClick={handleAdd(feeling)}>
+                        {feeling}
+                    </MenuItem>
+                ))}
             </Menu>
         </Box>
     );

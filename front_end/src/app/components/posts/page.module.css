@@ -1,4 +1,4 @@
-.feed{
+.feed {
     padding: 10px 20px;
     overflow-y: scroll;
     line-height: 2em;
@@ -6,7 +6,7 @@
     height: 100vh;
 }
 
-.posts_bar{
+.posts_bar {
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -16,7 +16,7 @@
 }
 
 
-.load{
+.load {
     height: 30px;
     background-color: red;
 }
@@ -28,12 +28,13 @@
     background-color: #526d82;
 }
 
-.container{
+.container {
     width: 100%;
     height: 100%;
     display: flex;
     padding: 10px 0;
 }
+
 .chip_shape {
     width: 88px;
     height: 30px;

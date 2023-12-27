@@ -8,17 +8,13 @@ import {FaArrowRight} from "react-icons/fa";
 import {useRef, useState} from "react";
 import signupController from "@/app/services/signupController";
 import {SIGNUP_PANEL_TEXT} from "@/app/constants/displayTextMessages";
-import {
-    HOME_ROUTE,
-    SIGN_IN_ROUTE,
-    SIGN_UP_BACKEND_ENDPOINT,
-    SIGN_UP_VERIFICATION_ENDPOINT
-} from "@/app/constants/apiConstants";
+import {HOME_ROUTE, SIGN_IN_ROUTE, SIGN_UP_BACKEND_ENDPOINT} from "@/app/constants/apiConstants";
 import classNames from "classnames";
 import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
 import signupServerFormValidationMapper from "@/app/security/userValidation/signupServerFormValidationMapper";
 import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
 import {useRouter} from "next/navigation";
+
 function Page() {
     const usernameRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
@@ -45,7 +41,7 @@ function Page() {
         }
 
         // validate user credentials on client side
-        let { isUserValid, errors} = clientValidateForm(user)
+        let {isUserValid, errors} = clientValidateForm(user)
         setIsUserValid(isUserValid)
         setErrors(errors);
 
@@ -103,8 +99,8 @@ function Page() {
                         inputRef={usernameRef}
                         required
                         variant="filled"
-                        error = {!isUserValid.username}
-                        helperText = {(isUserValid.username)? "": errors.username}
+                        error={!isUserValid.username}
+                        helperText={(isUserValid.username) ? "" : errors.username}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
@@ -116,8 +112,8 @@ function Page() {
                         inputRef={emailRef}
                         required
                         variant="filled"
-                        error = {!isUserValid.email}
-                        helperText = {(isUserValid.email)? "": errors.email}
+                        error={!isUserValid.email}
+                        helperText={(isUserValid.email) ? "" : errors.email}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
@@ -129,8 +125,8 @@ function Page() {
                         inputRef={passwordRef}
                         required
                         variant="filled"
-                        error = {!isUserValid.password}
-                        helperText = {(isUserValid.password)? "Make it strong": errors.password}
+                        error={!isUserValid.password}
+                        helperText={(isUserValid.password) ? "Make it strong" : errors.password}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>
