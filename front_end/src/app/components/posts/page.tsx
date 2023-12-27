@@ -20,6 +20,9 @@ export default function Posts(props: any) {
     const [pageIndex, setPageIndex] = useState<number>(0);
     const [lastPage, setLastPage] = useState<boolean>(false);
 
+    const datePickerActiveIndex = [2, 3];
+    const feelingsActiveIndex = [0, 3];
+
     useEffect(() => {
         setAuth(localStorage.getItem('Authorization'));
     }, []);
@@ -108,9 +111,10 @@ export default function Posts(props: any) {
     return (
         <Box className={styles.feed} width={props.width}>
             <Box className={styles.posts_bar}>
-                <PopupScreen setPosts={setPosts} />
-                <PostFilters showDatePicker={props.feedType == 2} showFeelingSelection={props.feedType === 0}
-                             applyFilters={applyFilters}/>
+                <PopupScreen/>
+                <PostFilters showDatePicker = {datePickerActiveIndex.includes(props.feedType)} 
+                             showFeelingSelection = {feelingsActiveIndex.includes(props.feedType)}
+                             applyFilters = {applyFilters}/>
             </Box>
             {renderPosts()}
             {!lastPage && (
