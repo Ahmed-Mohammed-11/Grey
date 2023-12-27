@@ -1,6 +1,6 @@
 import {toast, ToastOptions} from "react-toastify";
 
-const toastStyleTopRight: ToastOptions = {
+export const toastStyleTopRight: ToastOptions = {
     position: "top-right",
     autoClose: 3000,
     theme: "colored",
@@ -14,6 +14,8 @@ async function toastResponse(response: Promise<Response>) {
                     res.text().then((data: any) => {
                         toast.success(data, toastStyleTopRight);
                     });
+                } else if (res.status === 403) {
+                    toast.error("You are not a moderator", toastStyleTopRight);
                 } else {
                     res.text().then((data: any) => {
                         toast.error(data, toastStyleTopRight);
