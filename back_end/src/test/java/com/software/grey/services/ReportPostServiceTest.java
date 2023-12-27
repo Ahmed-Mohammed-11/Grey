@@ -1,7 +1,6 @@
 package com.software.grey.services;
 
 import com.software.grey.controllers.SignupController;
-import com.software.grey.exceptions.exceptions.DataNotFoundException;
 import com.software.grey.exceptions.exceptions.PostNotFoundException;
 import com.software.grey.exceptions.exceptions.UserReportedPostBeforeException;
 import com.software.grey.models.dtos.PostDTO;
@@ -14,25 +13,17 @@ import com.software.grey.repositories.*;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
-import org.springframework.test.annotation.DirtiesContext;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.UUID;
 
 import static com.software.grey.models.enums.Feeling.*;
-import static com.software.grey.models.enums.Feeling.SAD;
-import static java.lang.Math.ceil;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -234,5 +225,22 @@ class ReportPostServiceTest {
 
         PostNotFoundException exception = assertThrows(PostNotFoundException.class, () -> postService.report(finalRandomUUID.toString()));
         assertEquals("Post not found", exception.getMessage());
+    }
+
+    @Test
+    void getReportedPostsSmokeTest() {
+
+        User user = userRepo.findByUsername("mocked User1");
+        when(securityUtils.getCurrentUser()).thenReturn(user);
+
+        // loop over posts and report each one
+        for (Post post : posts) {
+            postService.report(post.getId().toString());
+        }
+
+        PostFilterDTO postFilterDTO = PostFilterDTO.builder()
+                .pageNumber(0).pageSize(5).build();
+        Page<PostDTO> p = postService.getReportedPosts(postFilterDTO);
+        assertThat(p.getContent()).hasSize(5);
     }
 }

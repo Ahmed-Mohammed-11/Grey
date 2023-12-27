@@ -68,46 +68,76 @@
     letter-spacing: calc(min(.5vh, .5vw)) !important;
     align-items: center;
     font-size: calc(2.5 * calc(min(1vh, 1vw)));
-    color: #526D82;
     border-radius: 16px;
     box-sizing: border-box;
-    transition: all .3s ease-in-out !important;
+    transition: all .5s ease-in-out, color .3s cubic-bezier(0.075, 0.82, 0.165, 1) !important;
 }
 
-.button:hover{
-    color: #DDE6ED;
+.button:hover,
+.active{
+    color: #DDE6ED !important;
+    background: none !important
 }
 
-.button:after {
+.button:after,
+.button:before{
     content: "";
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    top: -8px;
-    left: -9px;
     border-radius: inherit;
-    border: 2px solid #314b60;
     box-sizing: border-box;
-    transform: scale(0);
-    transform-origin: center center;
-    transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transform-origin: right;
+}
+.button:before{
+    z-index: 10;
+    border: 2px solid #333;
+    visibility: hidden;
+    transition: all .5s ease-in-out .5s;
+}
+.button:after{
+    transform: scaleX(0);
+    background: #526D82 !important;
+    z-index: -2;
+    transition: transform 0.4s ease-in-out;
 }
 
-.button:hover:not(.active) {
-    transform: translateX(10px);
+.button:hover::before,
+.active::before{
+    visibility: visible;
+    transform: translate(-10px, -10px);
+}
+.button:hover::after,
+.active::after{
+    transform: scaleX(1);
+    transform-origin: left;
 }
 
+.line{
+    position: absolute;
+    bottom: 30%;
+    left: 20%;
+    width: 60%;
+    height: 20%;
+    z-index: -1;
+    background: #81D4FA;
+    opacity: 0.4;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s ease-in-out .6s;
+}
 
 .active {
     position: relative;
-    background: #526D82 !important;
-    color: #DDE6ED !important;
     border-radius: 16px;
     font-weight: bold;
 }
 
-.active::after {
-    transform: scale(1);
+.active .line{
+    transform: scaleX(1);
+    transform-origin: left;
 }
 
 .icon{
