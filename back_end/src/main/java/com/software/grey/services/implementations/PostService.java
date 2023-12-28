@@ -33,8 +33,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static com.software.grey.utils.ErrorMessages.POST_REPORTED_BEFORE;
-
 @Service
 @AllArgsConstructor
 public class PostService implements IPostService {
@@ -154,9 +152,16 @@ public class PostService implements IPostService {
     }
 
     public void removeReportedPost(String postId) {
-        if (!reportedPostRepository.existsByPostId(postId)) {
+        if (postId == null)
+            throw new NullPointerException("Post id is null");
+
+        UUID.fromString(postId);
+
+        if (!postRepository.existsById(postId))
             throw new PostNotFoundException(ErrorMessages.POST_ALREADY_DELETED);
-        }
+
+        if (!reportedPostRepository.existsByPostId(postId))
+            throw new PostNotFoundException(ErrorMessages.POST_ALREADY_DELETED);
 
         reportedPostRepository.deleteByPostId(postId);
     }

@@ -1,9 +1,11 @@
 package com.software.grey.services;
 
 import com.software.grey.controllers.SignupController;
+import com.software.grey.exceptions.exceptions.PostNotFoundException;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.ReportedPost;
+import static org.assertj.core.api.Assertions.assertThat;
 import com.software.grey.models.entities.ReportedPostId;
 import com.software.grey.models.entities.User;
 import com.software.grey.repositories.*;
@@ -23,11 +25,11 @@ import java.util.Set;
 import static com.software.grey.models.enums.Feeling.LOVE;
 import static com.software.grey.models.enums.Feeling.SAD;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ReportedPostActionsTest {
+class ReportedPostActionsTest {
     @MockBean
     private SecurityUtils securityUtils;
     @Autowired
@@ -45,6 +47,7 @@ public class ReportedPostActionsTest {
     @Autowired
     private UserRepo userRepo;
     private ArrayList<Post> posts = new ArrayList<>();
+    private User reporter;
 
     @BeforeAll
     void init () {
@@ -61,10 +64,13 @@ public class ReportedPostActionsTest {
                     .build()));
         }
 
-        User userb = userRepo.findByUsername("mockuserb");
+        reporter = userRepo.findByUsername("mockuserb");
 
-        for (Post post : posts) {
-            reportedPostRepository.save(ReportedPost.builder().post(post).reporter(userb).build());
+        for (int i = 0; i < 5; i++) {
+            reportedPostRepository.save(ReportedPost.builder()
+                    .post(posts.get(i))
+                    .reporter(reporter)
+                    .build());
         }
     }
 
@@ -83,10 +89,49 @@ public class ReportedPostActionsTest {
     }
 
     @Test
-    void DeleteReportedPost () {
+    void deleteReportedPost () {
         Post post = posts.get(0);
-        postService.deleteReportedPost(post.getId().toString());
-        assertEquals(9, reportedPostRepository.findAll().size());
+        postService.deleteReportedPost(post.getId());
+        assertThat(reportedPostRepository.existsById(new ReportedPostId(post, reporter))).isFalse();
+        assertThat(postRepository.existsById(post.getId())).isFalse();
+    }
+
+    @Test
+    void removeReportedPost () {
+        Post post = posts.get(1);
+        postService.removeReportedPost(post.getId());
+        assertThat(reportedPostRepository.existsById(new ReportedPostId(post, reporter))).isFalse();
+        assertThat(postRepository.existsById(post.getId())).isTrue();
+    }
+
+    @Test
+    void testNullInput () {
+        assertThrows(NullPointerException.class, () -> postService.deleteReportedPost(null));
+        assertThrows(NullPointerException.class, () -> postService.removeReportedPost(null));
+    }
+
+    @Test
+    void testInvalidInput () {
+        assertThrows(IllegalArgumentException.class, () -> postService.deleteReportedPost("invalid input"));
+        assertThrows(IllegalArgumentException.class, () -> postService.removeReportedPost("invalid input"));
+    }
+
+    @Test
+    void testNonExistingPost () {
+        assertThrows(PostNotFoundException.class, () -> postService.deleteReportedPost("00000000-0000-0000-0000-000000000000"));
+        assertThrows(PostNotFoundException.class, () -> postService.removeReportedPost("00000000-0000-0000-0000-000000000000"));
+    }
+
+    @Test
+    void deleteUnreportedPost () {
+        Post post = posts.get(6);
+        assertThrows(PostNotFoundException.class, () -> postService.deleteReportedPost(post.getId()));
+    }
+
+    @Test
+    void removeUnreportedPost () {
+        Post post = posts.get(7);
+        assertThrows(PostNotFoundException.class, () -> postService.removeReportedPost(post.getId()));
     }
 
 }
