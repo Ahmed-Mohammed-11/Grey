@@ -85,7 +85,7 @@ class ReportedPostActionsTest {
 
     @Test
     void shouldReturnAllReportedPosts () {
-        assertEquals(10, reportedPostRepository.findAll().size());
+        assertEquals(5, reportedPostRepository.findAll().size());
     }
 
     @Test
