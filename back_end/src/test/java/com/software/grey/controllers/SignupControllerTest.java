@@ -5,7 +5,7 @@ import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.BasicUser;
 import com.software.grey.models.enums.Role;
 import com.software.grey.repositories.BasicUserRepo;
-import com.software.grey.services.implementations.UserServiceImpl;
+import com.software.grey.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -32,7 +32,7 @@ class SignupControllerTest {
     @Autowired
     MockMvc mockMvc;
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
     @Autowired
     private SignupController signupController;
     @Autowired

@@ -6,7 +6,7 @@ import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.enums.Feeling;
 import com.software.grey.repositories.*;
 import com.software.grey.services.SavedPostService;
-import com.software.grey.services.implementations.UserServiceImpl;
+import com.software.grey.services.UserService;
 import com.software.grey.services.implementations.PostServiceImpl;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.AfterAll;
@@ -40,7 +40,7 @@ class FilterSavedPostTest {
     private SecurityUtils securityUtils;
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Autowired
     private PostServiceImpl postService;
@@ -87,7 +87,7 @@ class FilterSavedPostTest {
         userService.save(userDTO1);
 
         List<String> ids = new ArrayList<>();
-        when(securityUtils.getCurrentUserName()).thenReturn("PostServiceUsername1");
+        when(securityUtils.getCurrentUser()).thenReturn(userService.findByUserName("PostServiceUsername1"));
         List<Set<Feeling>> feelings = List.of(Set.of(LOVE), Set.of(LOVE, HAPPY), Set.of(SAD), Set.of(LOVE, HAPPY, SAD));
         for (int i = 0; i < 5; i++) {
             String id = postService.add(PostDTO.builder().postText(i + " user1").postFeelings(feelings.get(i % feelings.size())).build());
@@ -101,7 +101,7 @@ class FilterSavedPostTest {
         userService.save(userDTO2);
 
         List<String> ids = new ArrayList<>();
-        when(securityUtils.getCurrentUserName()).thenReturn("PostServiceUsername2");
+        when(securityUtils.getCurrentUser()).thenReturn(userService.findByUserName("PostServiceUsername2"));
         List<Set<Feeling>> feelings = List.of(Set.of(LOVE), Set.of(SAD));
         for (int i = 0; i < 3; i++) {
             String id = postService.add(PostDTO.builder().postText(i + " user2").postFeelings(feelings.get(i % feelings.size())).build());

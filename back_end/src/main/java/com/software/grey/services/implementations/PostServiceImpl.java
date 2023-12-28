@@ -15,7 +15,6 @@ import com.software.grey.models.projections.FeelingCountProjection;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.ReportedPostRepository;
 import com.software.grey.services.PostService;
-import com.software.grey.services.UserService;
 import com.software.grey.utils.ErrorMessages;
 import com.software.grey.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
@@ -42,11 +41,8 @@ public class PostServiceImpl implements PostService {
 
     private SecurityUtils securityUtils;
 
-    private UserService userService;
-
     public String add(PostDTO postDTO) {
-        String userName = securityUtils.getCurrentUserName();
-        User user = userService.findByUserName(userName);
+        User user = securityUtils.getCurrentUser();
         Post post = postMapper.toPost(postDTO);
         post.setUser(user);
         post.setPostTime(Timestamp.from(Instant.now()));

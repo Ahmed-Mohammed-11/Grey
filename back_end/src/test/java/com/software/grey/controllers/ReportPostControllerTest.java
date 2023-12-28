@@ -7,7 +7,7 @@ import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
 import com.software.grey.repositories.UserVerificationRepo;
-import com.software.grey.services.implementations.UserServiceImpl;
+import com.software.grey.services.UserService;
 import com.software.grey.services.implementations.PostServiceImpl;
 import com.software.grey.utils.EndPoints;
 import com.software.grey.utils.SecurityUtils;
@@ -46,7 +46,7 @@ class ReportPostControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private final UserServiceImpl userService;
+    private final UserService userService;
     @MockBean
     private final PostServiceImpl postService;
     @MockBean
@@ -59,7 +59,7 @@ class ReportPostControllerTest {
     private ArrayList<String> posts;
 
     @Autowired
-    ReportPostControllerTest(UserServiceImpl userService, PostServiceImpl postService, SecurityUtils securityUtils,
+    ReportPostControllerTest(UserService userService, PostServiceImpl postService, SecurityUtils securityUtils,
                              SignupController signup, UserRepo userRepo, PostRepository postRepository) {
         this.userService = userService;
         this.postService = postService;

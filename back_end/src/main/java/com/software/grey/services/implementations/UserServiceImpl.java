@@ -22,6 +22,7 @@ import com.software.grey.utils.SecurityUtils;
 import com.software.grey.utils.emailsender.EmailSender;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ import java.util.Optional;
 
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
@@ -49,20 +51,6 @@ public class UserServiceImpl implements UserService {
     private final SecurityUtils securityUtils;
 
     private final boolean ENABLEMAIL = false;
-
-    public UserServiceImpl(UserRepo userRepo, BasicUserRepo basicUserRepo, GoogleUserRepo googleUserRepo,
-                           UserVerificationRepo userVerificationRepo, UserMapper userMapper,
-                           BCryptPasswordEncoder bCryptPasswordEncoder, EmailSender emailSender,
-                           SecurityUtils securityUtils) {
-        this.userRepo = userRepo;
-        this.basicUserRepo = basicUserRepo;
-        this.googleUserRepo = googleUserRepo;
-        this.userVerificationRepo = userVerificationRepo;
-        this.userMapper = userMapper;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.emailSender = emailSender;
-        this.securityUtils = securityUtils;
-    }
 
     public UserResponseDTO getUser() {
         String username = securityUtils.getCurrentUserName();

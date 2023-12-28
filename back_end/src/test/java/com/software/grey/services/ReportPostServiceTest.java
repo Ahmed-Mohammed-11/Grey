@@ -11,7 +11,6 @@ import com.software.grey.models.entities.ReportedPostId;
 import com.software.grey.models.entities.User;
 import com.software.grey.repositories.*;
 import com.software.grey.services.implementations.PostServiceImpl;
-import com.software.grey.services.implementations.UserServiceImpl;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +50,7 @@ class ReportPostServiceTest {
     private PostServiceImpl postService;
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Autowired
     private SignupController signup;

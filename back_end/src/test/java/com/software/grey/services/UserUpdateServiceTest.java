@@ -6,7 +6,6 @@ import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.BasicUser;
 import com.software.grey.models.entities.GoogleUser;
 import com.software.grey.repositories.*;
-import com.software.grey.services.implementations.UserServiceImpl;
 import com.software.grey.utils.ErrorMessages;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.AfterAll;
@@ -29,7 +28,7 @@ class UserUpdateServiceTest {
     @MockBean
     private SecurityUtils securityUtils;
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
     @Autowired
     private SignupController signupController;
     @Autowired

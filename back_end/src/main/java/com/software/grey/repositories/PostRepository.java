@@ -72,37 +72,20 @@ public interface PostRepository extends JpaRepository<Post, String> {
 
     @Query(value = """
             WITH FeelingPosts AS (
-                SELECT
-                    p.id AS post_id,
-                    p.user_id,
-                    pf.feeling,
-                    p.post_time
-                FROM
-                    post p
-                    JOIN post_feelings pf ON p.id = pf.post_id
-                WHERE
-                    pf.feeling = ?1
+                SELECT p.id AS post_id, p.user_id, pf.feeling, p.post_time
+                FROM post p
+                JOIN post_feelings pf ON p.id = pf.post_id
+                WHERE pf.feeling = ?1
             ),
             UserPosts AS (
-                SELECT
-                    p.id,
-                    p.user_id,
-                    pf.feeling,
-                    p.post_time,
-                    p.text
-                FROM
-                    post p
-                    JOIN post_feelings pf ON p.id = pf.post_id
+                SELECT p.id, p.user_id, pf.feeling, p.post_time, p.text
+                FROM post p
+                JOIN post_feelings pf ON p.id = pf.post_id
             )
-            SELECT DISTINCT
-                up.id,
-                up.text,
-                up.user_id,
-                up.post_time,
-                up.feeling
-            FROM
-                UserPosts up
-                WHERE up.user_id in (SELECT DISTINCT user_id FROM FeelingPosts) AND up.feeling != ?1 AND up.user_id != ?2
+            SELECT DISTINCT up.id, up.text, up.user_id, up.post_time, up.feeling
+            FROM UserPosts up
+            WHERE up.user_id in (SELECT DISTINCT user_id FROM FeelingPosts)
+            AND up.feeling != ?1 AND up.user_id != ?2
             ORDER BY up.post_time DESC;
             """, nativeQuery = true)
     List<Post> findByCollaborativeFiltering(String feeling, String userId, Pageable pageable);
@@ -124,11 +107,10 @@ public interface PostRepository extends JpaRepository<Post, String> {
             WHERE u.username != :userName
             AND (pf.feeling IN (:feelings))
             ORDER BY p.post_time DESC
-            """,
-            countQuery = """
-                    SELECT count(p.id) FROM post p JOIN user u ON u.id = p.user_id
-                    JOIN post_feelings pf ON pf.post_id = p.id
-                    WHERE u.username != :userName AND (pf.feeling IN (:feelings))
-                    """, nativeQuery = true)
+            """, countQuery = """
+            SELECT count(p.id) FROM post p JOIN user u ON u.id = p.user_id
+            JOIN post_feelings pf ON pf.post_id = p.id
+            WHERE u.username != :userName AND (pf.feeling IN (:feelings))
+            """, nativeQuery = true)
     Page<Post> findFeed(@Param("userName") String userName, @Param("feelings") List<String> feelings, Pageable pageable);
 }

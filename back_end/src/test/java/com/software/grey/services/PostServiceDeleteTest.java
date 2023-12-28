@@ -9,7 +9,6 @@ import com.software.grey.models.enums.Feeling;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
 import com.software.grey.services.implementations.PostServiceImpl;
-import com.software.grey.services.implementations.UserServiceImpl;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -43,7 +42,7 @@ class PostServiceDeleteTest {
     private SecurityUtils securityUtils;
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Autowired
     private PostServiceImpl postService;
@@ -93,7 +92,7 @@ class PostServiceDeleteTest {
         UserDTO userDTO = new UserDTO("test2@gmail.com", "testUser2", "mock Pass 111");
         userService.save(userDTO);
 
-        when(securityUtils.getCurrentUserName()).thenReturn("testUser2");
+        when(securityUtils.getCurrentUser()).thenReturn(userService.findByUserName("testUser2"));
         //save the post created by the user testUser
         String postId = postService.add(postDTO);
         assertThat(postId).isNotNull();
@@ -120,7 +119,7 @@ class PostServiceDeleteTest {
         UserDTO userDTO = new UserDTO("theowner@gmail.com", "theOwner", "mock Pass 111");
         userService.save(userDTO);
 
-        when(securityUtils.getCurrentUserName()).thenReturn("theOwner");
+        when(securityUtils.getCurrentUser()).thenReturn(userService.findByUserName("theOwner"));
         //save the post created by the user testUser
         String postId = postService.add(postDTO);
         assertThat(postId).isNotNull();
