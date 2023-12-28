@@ -46,15 +46,6 @@
     box-sizing: border-box;
 }
 
-.modal > .feelings {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 15px;
-    box-sizing: border-box;
-}
-
 .button {
     display: flex;
     gap: 0 10px;
