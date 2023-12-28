@@ -6,7 +6,7 @@ import com.software.grey.models.enums.Feeling;
 import com.software.grey.models.projections.FeelingCountProjection;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
-import com.software.grey.services.implementations.PostService;
+import com.software.grey.services.implementations.PostServiceImpl;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class CollaborativeFeelingStratTest {
     @Mock
-    private PostService postService;
+    private PostServiceImpl postService;
     @Autowired
     @InjectMocks
     private CollaborativeFeelingStrat collaborativeFeelingStrat;

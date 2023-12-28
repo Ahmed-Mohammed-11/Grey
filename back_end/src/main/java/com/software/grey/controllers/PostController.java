@@ -2,8 +2,8 @@ package com.software.grey.controllers;
 
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
+import com.software.grey.services.PostService;
 import com.software.grey.services.SavedPostService;
-import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.EndPoints;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
 
     private PostService postService;
+
     private SavedPostService savedPostService;
 
     @Operation(

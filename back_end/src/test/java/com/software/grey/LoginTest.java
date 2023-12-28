@@ -2,7 +2,7 @@ package com.software.grey;
 
 import com.software.grey.controllers.SignupController;
 import com.software.grey.models.dtos.UserDTO;
-import com.software.grey.services.UserService;
+import com.software.grey.services.implementations.UserServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ class LoginTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private UserService userService; // Assuming you have a UserService
+    private UserServiceImpl userService; // Assuming you have a UserService
 
     @Autowired
     private SignupController signupController;

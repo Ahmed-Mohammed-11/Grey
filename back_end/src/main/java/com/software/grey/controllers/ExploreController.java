@@ -1,7 +1,7 @@
 package com.software.grey.controllers;
 
 import com.software.grey.models.dtos.RecommendedPostsDTO;
-import com.software.grey.services.implementations.ExploreService;
+import com.software.grey.services.ExploreService;
 import com.software.grey.utils.EndPoints;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

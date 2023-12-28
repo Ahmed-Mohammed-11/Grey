@@ -4,7 +4,7 @@ import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.GoogleUser;
 import com.software.grey.models.enums.Role;
 import com.software.grey.repositories.GoogleUserRepo;
-import com.software.grey.services.UserService;
+import com.software.grey.services.implementations.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +17,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class OAuth2LoginSuccessHandlerTest {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
     @Autowired
     private GoogleUserRepo googleUserRepo;
 

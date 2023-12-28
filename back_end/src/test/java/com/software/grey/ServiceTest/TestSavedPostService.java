@@ -9,7 +9,7 @@ import com.software.grey.models.entities.SavedPost;
 import com.software.grey.models.entities.User;
 import com.software.grey.repositories.*;
 import com.software.grey.services.SavedPostService;
-import com.software.grey.services.implementations.PostService;
+import com.software.grey.services.implementations.PostServiceImpl;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -44,7 +44,7 @@ class TestSavedPostService {
     TestSavedPostService(SavedPostService savedPostService, ObjectsBuilder objectsBuilder1,
                          UserRepo userRepository, PostRepository postRepository,
                          SavedPostRepository savedPostRepository, SignupController signupController,
-                         UserVerificationRepo userVerificationRepo, BasicUserRepo basicUserRepo, PostService postService) {
+                         UserVerificationRepo userVerificationRepo, BasicUserRepo basicUserRepo, PostServiceImpl postService) {
         this.savedPostService = savedPostService;
         this.objectsBuilder = objectsBuilder1;
         this.userRepository = userRepository;

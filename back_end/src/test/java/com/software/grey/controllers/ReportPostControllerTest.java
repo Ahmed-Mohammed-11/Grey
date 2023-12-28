@@ -7,8 +7,8 @@ import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
 import com.software.grey.repositories.UserVerificationRepo;
-import com.software.grey.services.UserService;
-import com.software.grey.services.implementations.PostService;
+import com.software.grey.services.implementations.UserServiceImpl;
+import com.software.grey.services.implementations.PostServiceImpl;
 import com.software.grey.utils.EndPoints;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.AfterAll;
@@ -46,9 +46,9 @@ class ReportPostControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private final UserService userService;
+    private final UserServiceImpl userService;
     @MockBean
-    private final PostService postService;
+    private final PostServiceImpl postService;
     @MockBean
     private final SecurityUtils securityUtils;
     @Autowired
@@ -59,7 +59,7 @@ class ReportPostControllerTest {
     private ArrayList<String> posts;
 
     @Autowired
-    ReportPostControllerTest(UserService userService, PostService postService, SecurityUtils securityUtils,
+    ReportPostControllerTest(UserServiceImpl userService, PostServiceImpl postService, SecurityUtils securityUtils,
                              SignupController signup, UserRepo userRepo, PostRepository postRepository) {
         this.userService = userService;
         this.postService = postService;

@@ -9,7 +9,8 @@ import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
 import com.software.grey.repositories.UserVerificationRepo;
-import com.software.grey.services.implementations.PostService;
+import com.software.grey.services.implementations.PostServiceImpl;
+import com.software.grey.services.implementations.UserServiceImpl;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -51,10 +52,10 @@ class PostServiceTest {
     private SecurityUtils securityUtils;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
-    private PostService postService;
+    private PostServiceImpl postService;
 
     @Autowired
     private BasicUserRepo basicUserRepo;

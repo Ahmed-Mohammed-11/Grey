@@ -6,6 +6,7 @@ import com.software.grey.models.dtos.RecommendedPostsDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.mappers.PostMapper;
 import com.software.grey.recommendationsystem.Recommender;
+import com.software.grey.services.ExploreService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class ExploreService {
+public class ExploreServiceImpl implements ExploreService {
 
     private Recommender recommender;
 

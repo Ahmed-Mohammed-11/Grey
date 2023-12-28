@@ -5,6 +5,7 @@ import com.software.grey.models.entities.User;
 import com.software.grey.models.entities.UserVerification;
 import com.software.grey.repositories.UserRepo;
 import com.software.grey.repositories.UserVerificationRepo;
+import com.software.grey.services.implementations.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class UserServiceTest {
     @Autowired
-    UserService userService;
+    UserServiceImpl userService;
     @Autowired
     UserRepo userRepo;
 

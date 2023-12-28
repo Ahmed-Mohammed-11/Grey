@@ -4,7 +4,7 @@ import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.enums.Feeling;
 import com.software.grey.services.SavedPostService;
-import com.software.grey.services.implementations.PostService;
+import com.software.grey.services.implementations.PostServiceImpl;
 import com.software.grey.utils.EndPoints;
 import com.software.grey.utils.SecurityUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -40,7 +40,7 @@ class PostControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private PostService postService;
+    private PostServiceImpl postService;
 
     @MockBean
     private SavedPostService savedPostService;

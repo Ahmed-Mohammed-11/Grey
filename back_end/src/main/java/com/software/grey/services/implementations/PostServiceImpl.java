@@ -14,7 +14,7 @@ import com.software.grey.models.mappers.PostMapper;
 import com.software.grey.models.projections.FeelingCountProjection;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.ReportedPostRepository;
-import com.software.grey.services.IPostService;
+import com.software.grey.services.PostService;
 import com.software.grey.services.UserService;
 import com.software.grey.utils.ErrorMessages;
 import com.software.grey.utils.SecurityUtils;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class PostService implements IPostService {
+public class PostServiceImpl implements PostService {
 
     private PostRepository postRepository;
 
