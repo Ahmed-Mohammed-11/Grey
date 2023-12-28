@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.validator.constraints.Range;
+
 import java.util.List;
 
 @Data
@@ -20,7 +21,7 @@ public class PostFilterDTO {
     @NotNull(message = "page size must not be null")
     private Integer pageSize;
 
-    @Min(value = 0,message = "page number must be at least 0")
+    @Min(value = 0, message = "page number must be at least 0")
     @NotNull(message = "page number must not be null")
     private Integer pageNumber;
 
@@ -33,5 +34,4 @@ public class PostFilterDTO {
     private Integer year;
 
     private List<Feeling> feelings;
-
 }

@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 @Component
-public class CombinerImp implements Combiner{
+public class CombinerImp implements Combiner {
 
     /**
      * @param posts A list of recommended posts, retrieved by any recommendation heuristic
@@ -19,9 +19,8 @@ public class CombinerImp implements Combiner{
     public List<Post> combine(List<List<Post>> posts) {
         Set<Post> set = new TreeSet<>();
         // merge sorted lists into one using a set
-        for(List<Post> postList: posts)
-            for (Post post: postList)
-                set.add(post);
+        for (List<Post> postList : posts)
+            set.addAll(postList);
 
         return new ArrayList<>(set);
     }

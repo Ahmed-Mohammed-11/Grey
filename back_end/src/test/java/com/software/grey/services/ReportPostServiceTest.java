@@ -10,7 +10,7 @@ import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.ReportedPostId;
 import com.software.grey.models.entities.User;
 import com.software.grey.repositories.*;
-import com.software.grey.services.implementations.PostService;
+import com.software.grey.services.implementations.PostServiceImpl;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +47,7 @@ class ReportPostServiceTest {
     private SecurityUtils securityUtils;
 
     @Autowired
-    private PostService postService;
+    private PostServiceImpl postService;
 
     @Autowired
     private UserService userService;
@@ -100,10 +100,10 @@ class ReportPostServiceTest {
     private void createPostsForUser1() {
         for (int i = 0; i < 5; i++)
             posts.add(postRepository.save(Post.builder()
-                            .postText("Some bad text" + i)
-                            .user(userRepo.findByUsername(user1))
-                            .postFeelings(Set.of(LOVE, HAPPY))
-                            .build()));
+                    .postText("Some bad text" + i)
+                    .user(userRepo.findByUsername(user1))
+                    .postFeelings(Set.of(LOVE, HAPPY))
+                    .build()));
     }
 
     void addUser2() {
@@ -136,6 +136,7 @@ class ReportPostServiceTest {
         userService.saveGoogleUser(userG);
         createPostsForGUser();
     }
+
     private void createPostsForGUser() {
         for (int i = 0; i < 3; i++)
             posts.add(postRepository.save(Post.builder()
@@ -152,69 +153,69 @@ class ReportPostServiceTest {
     }
 
     @Test
-    void reportExistingPostUser1_shouldBeValid(){
+    void reportExistingPostUser1_shouldBeValid() {
         User user = userRepo.findByUsername("mocked User1");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
         // loop over posts and report each one
         for (Post post : posts) {
-            postService.report(post.getId().toString());
+            postService.report(post.getId());
             assertThat(reportedPostRepository.existsById(new ReportedPostId(post, user))).isTrue();
         }
     }
 
     @Test
-    void reportExistingPostUser2_shouldBeValid(){
+    void reportExistingPostUser2_shouldBeValid() {
         User user = userRepo.findByUsername("mocked User2");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
         // loop over posts and report each one
         for (Post post : posts) {
-            postService.report(post.getId().toString());
+            postService.report(post.getId());
             assertThat(reportedPostRepository.existsById(new ReportedPostId(post, user))).isTrue();
         }
     }
 
     @Test
-    void reportExistingPostUserG_shouldBeValid(){
+    void reportExistingPostUserG_shouldBeValid() {
         User user = userRepo.findByUsername("mockGmail");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
         // loop over posts and report each one
         for (Post post : posts) {
-            postService.report(post.getId().toString());
+            postService.report(post.getId());
             assertThat(reportedPostRepository.existsById(new ReportedPostId(post, user))).isTrue();
         }
     }
 
     @Test
-    void duplicateReportExistingPostBasicUser_shouldThrowException(){
+    void duplicateReportExistingPostBasicUser_shouldThrowException() {
         User user = userRepo.findByUsername("mocked User1");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
         // loop over posts and report each one
         for (Post post : posts) {
-            postService.report(post.getId().toString());
+            postService.report(post.getId());
             Assertions.assertThrows(UserReportedPostBeforeException.class,
-                    () -> postService.report(post.getId().toString()));
+                    () -> postService.report(post.getId()));
         }
     }
 
     @Test
-    void duplicateReportExistingPostGoogleUser_shouldThrowException(){
+    void duplicateReportExistingPostGoogleUser_shouldThrowException() {
         User user = userRepo.findByUsername("mockGmail");
         when(securityUtils.getCurrentUser()).thenReturn(user);
 
         // loop over posts and report each one
         for (Post post : posts) {
-            postService.report(post.getId().toString());
+            postService.report(post.getId());
             Assertions.assertThrows(UserReportedPostBeforeException.class,
-                    () -> postService.report(post.getId().toString()));
+                    () -> postService.report(post.getId()));
         }
     }
 
     @Test
-    void reportNotExistingPost_shouldThrowException(){
+    void reportNotExistingPost_shouldThrowException() {
         UUID randomUUID = UUID.randomUUID();
         while (postRepository.existsById(randomUUID.toString()))
             randomUUID = UUID.randomUUID();
@@ -235,7 +236,7 @@ class ReportPostServiceTest {
 
         // loop over posts and report each one
         for (Post post : posts) {
-            postService.report(post.getId().toString());
+            postService.report(post.getId());
         }
 
         PostFilterDTO postFilterDTO = PostFilterDTO.builder()

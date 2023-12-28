@@ -6,15 +6,13 @@ import com.software.grey.models.enums.Feeling;
 import com.software.grey.models.projections.FeelingCountProjection;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
-import com.software.grey.services.implementations.PostService;
+import com.software.grey.services.implementations.PostServiceImpl;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,14 +25,14 @@ import java.time.Instant;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
 class SameFeelingStrategyUnitTest {
     @SpyBean
-    private PostService postService;
+    private PostServiceImpl postService;
     @Autowired
     @InjectMocks
     private SameFeelingStrat sameFeelingStrat;
@@ -60,13 +58,13 @@ class SameFeelingStrategyUnitTest {
         userRepo.save(user2);
         userRepo.save(user3);
         userRepo.save(user4);
-        for(int i = 0; i < 30; i++) {
+        for (int i = 0; i < 30; i++) {
             Set<Feeling> set = new TreeSet<>();
             set.add(Feeling.SAD);
             Post post = Post.builder().postText("Sad").user(user2).postFeelings(set).build();
             postRepository.save(post);
         }
-        for(int i = 0; i < 30; i++) {
+        for (int i = 0; i < 30; i++) {
             Set<Feeling> set = new TreeSet<>();
             set.add(Feeling.ANXIOUS);
             Post post = Post.builder().postText("Anxious").user(user2).postFeelings(set).build();
@@ -75,7 +73,7 @@ class SameFeelingStrategyUnitTest {
     }
 
     @AfterAll
-    void del(){
+    void del() {
         postRepository.deleteAll();
         userRepo.deleteAll();
     }
@@ -96,7 +94,7 @@ class SameFeelingStrategyUnitTest {
         List<Post> returnedData = sameFeelingStrat.recommend(user1, 0, 10);
 
         assertEquals(10, returnedData.size());
-        for(Post p : returnedData) {
+        for (Post p : returnedData) {
             assertTrue(p.getPostFeelings().contains(Feeling.SAD));
         }
     }
@@ -177,11 +175,12 @@ class SameFeelingStrategyUnitTest {
         // Assertions
         assertEquals(50, returnedData.size(), "The result should contain 50 posts");
 
-        for(Post p : returnedData) {
+        for (Post p : returnedData) {
             assertTrue(p.getPostFeelings().contains(Feeling.SAD) ||
-                                    p.getPostFeelings().contains(Feeling.ANXIOUS));
+                    p.getPostFeelings().contains(Feeling.ANXIOUS));
         }
     }
+
     @Test
     void recommendPostsWithNullCount() {
         // Mock the behavior of getCount returning null
@@ -192,14 +191,14 @@ class SameFeelingStrategyUnitTest {
     @Test
     void recommendFromAllUsers_ShouldReturnPostsFromAllUsers() {
         // Add posts for user1
-        for(int i = 0; i < 20; i++) {
+        for (int i = 0; i < 20; i++) {
             Set<Feeling> set = new TreeSet<>();
             set.add(Feeling.SAD);
             Post post = Post.builder().postText("Sad").user(user1).postFeelings(set).build();
             postRepository.save(post);
         }
 
-        for(int i = 0; i < 20; i++) {
+        for (int i = 0; i < 20; i++) {
             Set<Feeling> set = new TreeSet<>();
             set.add(Feeling.HAPPY);
             Post post = Post.builder().postText("Happy").user(user1).postFeelings(set).build();
@@ -207,7 +206,7 @@ class SameFeelingStrategyUnitTest {
         }
 
         // Add posts for user3
-        for(int i = 0; i < 25; i++) {
+        for (int i = 0; i < 25; i++) {
             Set<Feeling> set = new TreeSet<>();
             set.add(Feeling.HAPPY);
             Post post = Post.builder().postText("Happy").user(user3).postFeelings(set).build();
@@ -215,7 +214,7 @@ class SameFeelingStrategyUnitTest {
         }
 
         // Add posts for user4
-        for(int i = 0; i < 15; i++) {
+        for (int i = 0; i < 15; i++) {
             Set<Feeling> set = new TreeSet<>();
             set.add(Feeling.ANXIOUS);
             Post post = Post.builder().postText("Anxious").user(user4).postFeelings(set).build();
@@ -254,15 +253,15 @@ class SameFeelingStrategyUnitTest {
         int user2Count = 0;
         int user3Count = 0;
         int user4Count = 0;
-        for(Post p : returnedData) {
+        for (Post p : returnedData) {
             assertTrue(p.getPostFeelings().contains(Feeling.SAD) ||
                     p.getPostFeelings().contains(Feeling.HAPPY) ||
                     p.getPostFeelings().contains(Feeling.ANXIOUS));
-            if(p.getUser().getId() == user2.getId())
+            if (p.getUser().getId() == user2.getId())
                 user2Count++;
-            else if(p.getUser().getId() == user3.getId())
+            else if (p.getUser().getId() == user3.getId())
                 user3Count++;
-            else if(p.getUser().getId() == user4.getId())
+            else if (p.getUser().getId() == user4.getId())
                 user4Count++;
         }
         assertTrue(user2Count > 0);

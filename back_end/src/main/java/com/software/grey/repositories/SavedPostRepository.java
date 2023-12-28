@@ -1,6 +1,5 @@
 package com.software.grey.repositories;
 
-import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.SavedPost;
 import com.software.grey.models.entities.SavedPostId;
 import org.springframework.data.domain.Page;
@@ -14,32 +13,43 @@ import java.util.List;
 
 @Repository
 public interface SavedPostRepository extends JpaRepository<SavedPost, SavedPostId> {
+
+    /**
+     * To find the posts that the user saved and filter them by day, month and year and sort them descendingly.
+     *
+     * @param username the username of the user
+     * @param feelings the feelings to filter with
+     * @param day      the day of the month to filter with
+     * @param month    the month of the year to filter with
+     * @param year     the year to filter with
+     * @param pageable the pagination information
+     * @return the page of posts the user saved in the specified day, month and year
+     */
     @Query(value = """
-        SELECT DISTINCT sp.user_id, sp.post_id, sp.post_saved_time
-        FROM saved_post sp
-        JOIN post p ON p.id = sp.post_id
-        JOIN user u ON u.id = sp.user_id
-        JOIN post_feelings pf ON pf.post_id = p.id
-        WHERE u.username = :username
-        AND (pf.feeling IN (:feelings))
-        AND (:day IS NULL OR DAY(sp.post_saved_time) = :day)
-        AND (:month IS NULL OR MONTH(sp.post_saved_time) = :month)
-        AND (:year IS NULL OR YEAR(sp.post_saved_time) = :year)
-        ORDER BY sp.post_saved_time DESC
-        """,
-            countQuery = """
-        SELECT count(sp.user_id)
-        FROM saved_post sp
-        JOIN post p ON p.id = sp.post_id
-        JOIN user u ON u.id = sp.user_id
-        JOIN post_feelings pf ON pf.post_id = p.id
-        WHERE u.username = :username
-        AND (pf.feeling IN (:feelings))
-        AND (:day IS NULL OR DAY(sp.post_saved_time) = :day)
-        AND (:month IS NULL OR MONTH(sp.post_saved_time) = :month)
-        AND (:year IS NULL OR YEAR(sp.post_saved_time) = :year)
-        ORDER BY sp.post_saved_time DESC
-        """, nativeQuery = true,
+            SELECT DISTINCT sp.user_id, sp.post_id, sp.post_saved_time
+            FROM saved_post sp
+            JOIN post p ON p.id = sp.post_id
+            JOIN user u ON u.id = sp.user_id
+            JOIN post_feelings pf ON pf.post_id = p.id
+            WHERE u.username = :username
+            AND (pf.feeling IN (:feelings))
+            AND (:day IS NULL OR DAY(sp.post_saved_time) = :day)
+            AND (:month IS NULL OR MONTH(sp.post_saved_time) = :month)
+            AND (:year IS NULL OR YEAR(sp.post_saved_time) = :year)
+            ORDER BY sp.post_saved_time DESC
+            """, countQuery = """
+            SELECT count(sp.user_id)
+            FROM saved_post sp
+            JOIN post p ON p.id = sp.post_id
+            JOIN user u ON u.id = sp.user_id
+            JOIN post_feelings pf ON pf.post_id = p.id
+            WHERE u.username = :username
+            AND (pf.feeling IN (:feelings))
+            AND (:day IS NULL OR DAY(sp.post_saved_time) = :day)
+            AND (:month IS NULL OR MONTH(sp.post_saved_time) = :month)
+            AND (:year IS NULL OR YEAR(sp.post_saved_time) = :year)
+            ORDER BY sp.post_saved_time DESC
+            """, nativeQuery = true,
             countProjection = "com.software.grey.models.entities.Post")
     Page<SavedPost> findSavedPostsByUsernameAndDayMonthYear(
             @Param("username") String username,

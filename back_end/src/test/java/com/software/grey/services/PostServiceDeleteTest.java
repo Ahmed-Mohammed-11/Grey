@@ -1,6 +1,5 @@
 package com.software.grey.services;
 
-import com.software.grey.exceptions.exceptions.DataNotFoundException;
 import com.software.grey.exceptions.exceptions.PostNotFoundException;
 import com.software.grey.exceptions.exceptions.UserNotAuthorizedException;
 import com.software.grey.models.dtos.PostDTO;
@@ -9,7 +8,7 @@ import com.software.grey.models.entities.User;
 import com.software.grey.models.enums.Feeling;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
-import com.software.grey.services.implementations.PostService;
+import com.software.grey.services.implementations.PostServiceImpl;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -22,10 +21,8 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 import static com.software.grey.models.enums.Feeling.*;
-import static com.software.grey.models.enums.Feeling.SAD;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
@@ -33,7 +30,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
-public class PostServiceDeleteTest {
+class PostServiceDeleteTest {
 
     @Autowired
     private PostRepository postRepository;
@@ -48,7 +45,7 @@ public class PostServiceDeleteTest {
     private UserService userService;
 
     @Autowired
-    private PostService postService;
+    private PostServiceImpl postService;
 
     @BeforeAll
     void init() throws InterruptedException {
@@ -95,7 +92,7 @@ public class PostServiceDeleteTest {
         UserDTO userDTO = new UserDTO("test2@gmail.com", "testUser2", "mock Pass 111");
         userService.save(userDTO);
 
-        when(securityUtils.getCurrentUserName()).thenReturn("testUser2");
+        when(securityUtils.getCurrentUser()).thenReturn(userService.findByUserName("testUser2"));
         //save the post created by the user testUser
         String postId = postService.add(postDTO);
         assertThat(postId).isNotNull();
@@ -106,7 +103,7 @@ public class PostServiceDeleteTest {
 
         //delete the post
         when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
-        postService.delete(postId.toString());
+        postService.delete(postId);
         assertThat(postRepository.existsById(postId)).isFalse();
     }
 
@@ -122,7 +119,7 @@ public class PostServiceDeleteTest {
         UserDTO userDTO = new UserDTO("theowner@gmail.com", "theOwner", "mock Pass 111");
         userService.save(userDTO);
 
-        when(securityUtils.getCurrentUserName()).thenReturn("theOwner");
+        when(securityUtils.getCurrentUser()).thenReturn(userService.findByUserName("theOwner"));
         //save the post created by the user testUser
         String postId = postService.add(postDTO);
         assertThat(postId).isNotNull();
@@ -136,7 +133,7 @@ public class PostServiceDeleteTest {
         //find the user id
         when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
         //assert throwing the exception
-        UserNotAuthorizedException exception = assertThrows(UserNotAuthorizedException.class, () -> postService.delete(postId.toString()));
+        UserNotAuthorizedException exception = assertThrows(UserNotAuthorizedException.class, () -> postService.delete(postId));
         assertThat(exception.getMessage()).isEqualTo("You are not authorized to delete this post");
     }
 
@@ -158,7 +155,7 @@ public class PostServiceDeleteTest {
 
         //delete the post
         when(securityUtils.getCurrentUserId()).thenReturn(user.getId());
-        PostNotFoundException exception = assertThrows(PostNotFoundException.class, () -> postService.delete(postId.toString()));
+        PostNotFoundException exception = assertThrows(PostNotFoundException.class, () -> postService.delete(postId));
         assertThat(exception.getMessage()).isEqualTo("Post not found");
     }
 

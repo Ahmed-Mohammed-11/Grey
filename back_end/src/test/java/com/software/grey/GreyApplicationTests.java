@@ -10,9 +10,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @SpringBootTest
 class GreyApplicationTests {
 
-	@Test
-	void contextLoads() {
-		assertThat(true).isTrue();
-	}
+    @Test
+    void contextLoads() {
+        assertThat(true).isTrue();
+    }
 
 }

@@ -17,6 +17,7 @@ import java.sql.Timestamp;
 @Builder
 @IdClass(SavedPostId.class)
 public class SavedPost {
+
     @Id
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -28,5 +29,5 @@ public class SavedPost {
     private Post post;
 
     @Column(name = "post_saved_time")
-    private Timestamp SavedTime;
+    private Timestamp savedTime;
 }

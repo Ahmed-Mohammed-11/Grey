@@ -23,7 +23,7 @@ class LoginTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private UserService userService; // Assuming you have a UserService
+    private UserService userService;
 
     @Autowired
     private SignupController signupController;
@@ -43,7 +43,7 @@ class LoginTest {
                         .param("username", username)
                         .param("password", password))
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized()); // Expect a redirect
-                // .andExpect(redirectedUrl(ROOT));
+        // .andExpect(redirectedUrl(ROOT));
     }
 
     @Test
@@ -87,7 +87,7 @@ class LoginTest {
                 .param("username", username)
                 .param("password", password));
 //                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
-                // .andExpect(redirectedUrl(ROOT));
+        // .andExpect(redirectedUrl(ROOT));
 
         // Perform logout
         mockMvc.perform(MockMvcRequestBuilders.post("/logout"))

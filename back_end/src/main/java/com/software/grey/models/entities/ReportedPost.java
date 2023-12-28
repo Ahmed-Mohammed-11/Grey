@@ -26,5 +26,4 @@ public class ReportedPost {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "reporter_id", nullable = false)
     private User reporter;
-
 }

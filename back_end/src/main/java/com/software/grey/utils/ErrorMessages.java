@@ -1,6 +1,7 @@
 package com.software.grey.utils;
 
 public class ErrorMessages {
+
     public static final String POST_LENGTH_LIMIT = "Post length must be at least 1 character and less than 5000";
     public static final String POST_REPORTED_BEFORE = "Post already reported";
     public static final String INVALID_REQUEST_BODY = "Invalid request body";
@@ -12,5 +13,12 @@ public class ErrorMessages {
     public static final String POST_NOT_FOUND = "Post not found";
     public static final String POST_ALREADY_DELETED = "Post already deleted";
     public static final String INVALID_POST_ID = "Invalid post id";
-    private ErrorMessages() {}
+    public static final String POST_ID_NULL = "Post id is null";
+    public static final String USER_NOT_AUTHORIZED = "You are not authorized to delete this post";
+    public static final String USER_NOT_FOUND = "User not found";
+    public static final String INVALID_URL = "Invalid URL";
+    public static final String USER_EXISTS = "Invalid URL";
+
+    private ErrorMessages() {
+    }
 }

@@ -14,7 +14,7 @@ import java.security.SecureRandom;
 @AllArgsConstructor
 public class SecurityUtils {
 
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
 
     public String getCurrentUserName() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

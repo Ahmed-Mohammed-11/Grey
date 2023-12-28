@@ -9,7 +9,7 @@ import com.software.grey.models.entities.SavedPost;
 import com.software.grey.models.entities.User;
 import com.software.grey.repositories.*;
 import com.software.grey.services.SavedPostService;
-import com.software.grey.services.implementations.PostService;
+import com.software.grey.services.implementations.PostServiceImpl;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -41,10 +41,10 @@ class TestSavedPostService {
     private final BasicUserRepo basicUserRepo;
 
     @Autowired
-    TestSavedPostService (SavedPostService savedPostService, ObjectsBuilder objectsBuilder1,
-                          UserRepo userRepository, PostRepository postRepository,
-                          SavedPostRepository savedPostRepository, SignupController signupController,
-                          UserVerificationRepo userVerificationRepo, BasicUserRepo basicUserRepo, PostService postService) {
+    TestSavedPostService(SavedPostService savedPostService, ObjectsBuilder objectsBuilder1,
+                         UserRepo userRepository, PostRepository postRepository,
+                         SavedPostRepository savedPostRepository, SignupController signupController,
+                         UserVerificationRepo userVerificationRepo, BasicUserRepo basicUserRepo, PostServiceImpl postService) {
         this.savedPostService = savedPostService;
         this.objectsBuilder = objectsBuilder1;
         this.userRepository = userRepository;
@@ -85,7 +85,7 @@ class TestSavedPostService {
         // Mock the securityUtils method
         when(securityUtils.getCurrentUser()).thenReturn(a);
         // save the post and assert that it saved successfully
-        String result = savedPostService.toggleSavedPost(postB.getId().toString());
+        String result = savedPostService.toggleSavedPost(postB.getId());
         assertThat(result).isEqualTo("Saved successfully");
 
         // get all saved posts
@@ -117,7 +117,7 @@ class TestSavedPostService {
         // Mock the securityUtils method
         when(securityUtils.getCurrentUser()).thenReturn(a);
         // save the post and assert that it saved successfully
-        String result = savedPostService.toggleSavedPost(postB.getId().toString());
+        String result = savedPostService.toggleSavedPost(postB.getId());
         assertThat(result).isEqualTo("Saved successfully");
 
         // assert that the post is saved
@@ -125,7 +125,7 @@ class TestSavedPostService {
         assertThat(savedPost).hasSize(1);
 
         // un-save the post
-        result = savedPostService.toggleSavedPost(postB.getId().toString());
+        result = savedPostService.toggleSavedPost(postB.getId());
         assertThat(result).isEqualTo("Removed successfully");
 
         savedPost = savedPostRepository.findAll();
@@ -151,7 +151,7 @@ class TestSavedPostService {
         when(securityUtils.getCurrentUser()).thenReturn(b);
 
         UserIsAuthorException ex = assertThrows(UserIsAuthorException.class,
-                () -> savedPostService.toggleSavedPost(postB.getId().toString()));
+                () -> savedPostService.toggleSavedPost(postB.getId()));
 
         assertThat(ex.getMessage()).isEqualTo("You have written this post");
     }

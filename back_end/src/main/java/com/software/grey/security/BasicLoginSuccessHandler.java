@@ -23,5 +23,4 @@ public class BasicLoginSuccessHandler extends SavedRequestAwareAuthenticationSuc
         this.setDefaultTargetUrl(LOGIN_SUCCESS);
         super.onAuthenticationSuccess(request, response, authentication);
     }
-
 }

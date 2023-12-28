@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReportedPostRepository extends JpaRepository<ReportedPost, ReportedPostId> {
-  
+
     @Modifying
     @Transactional
     @Query(value = """
@@ -21,7 +21,8 @@ public interface ReportedPostRepository extends JpaRepository<ReportedPost, Repo
             WHERE post_id = ?1
             """, nativeQuery = true)
     int deleteByPostId(String postId);
+
     boolean existsByPostId(String postId);
 
-    public Page<ReportedPost> findByOrderByPostPostTimeDesc(Pageable page);
+    Page<ReportedPost> findByOrderByPostPostTimeDesc(Pageable page);
 }

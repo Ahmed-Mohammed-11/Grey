@@ -1,14 +1,9 @@
 package com.software.grey.controllers;
 
-import com.software.grey.SavedPostEnum;
 import com.software.grey.models.dtos.PostDTO;
-import com.software.grey.models.entities.Post;
-import com.software.grey.models.entities.SavedPost;
-import com.software.grey.recommendationsystem.Recommender;
-import com.software.grey.services.SavedPostService;
 import com.software.grey.models.dtos.PostFilterDTO;
+import com.software.grey.services.PostService;
 import com.software.grey.services.SavedPostService;
-import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.EndPoints;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -27,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
 
     private PostService postService;
+
     private SavedPostService savedPostService;
 
     @Operation(
@@ -159,7 +155,7 @@ public class PostController {
             @ApiResponse(responseCode = "200", description = "Posts retrieved correctly")
     })
     @PostMapping(EndPoints.GET_SAVED_POSTS)
-    public ResponseEntity<Page<PostDTO>> getSavedPosts(@Valid @RequestBody PostFilterDTO postFilterDTO){
+    public ResponseEntity<Page<PostDTO>> getSavedPosts(@Valid @RequestBody PostFilterDTO postFilterDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(savedPostService.getSavedPosts(postFilterDTO));
     }
 }

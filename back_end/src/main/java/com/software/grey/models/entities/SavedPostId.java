@@ -10,6 +10,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SavedPostId implements Serializable {
+
     private User user;
+
     private Post post;
 }

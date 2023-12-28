@@ -41,7 +41,7 @@ class PostRepositoryTest {
     }
 
     @AfterEach
-    void del(){
+    void del() {
         postRepository.deleteAll();
     }
 

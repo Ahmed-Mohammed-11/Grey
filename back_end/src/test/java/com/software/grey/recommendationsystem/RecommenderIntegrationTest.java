@@ -54,7 +54,7 @@ class RecommenderIntegrationTest {
         userRepo.save(user1);
         userRepo.save(user2);
         userRepo.save(user3);
-        for(int i = 0; i < 30; i++) {
+        for (int i = 0; i < 30; i++) {
             Set<Feeling> set = new TreeSet<>();
             set.add(Feeling.HAPPY);
             Post post = Post.builder()
@@ -65,7 +65,7 @@ class RecommenderIntegrationTest {
                     .build();
             postRepository.save(post);
         }
-        for(int i = 0; i < 30; i++) {
+        for (int i = 0; i < 30; i++) {
             Set<Feeling> set = new TreeSet<>();
             set.add(Feeling.ANXIOUS);
             Post post = Post.builder()
@@ -76,7 +76,7 @@ class RecommenderIntegrationTest {
                     .build();
             postRepository.save(post);
         }
-        for(int i = 0; i < 30; i++) {
+        for (int i = 0; i < 30; i++) {
             Set<Feeling> set = new TreeSet<>();
             set.add(Feeling.SAD);
             Post post = Post.builder()

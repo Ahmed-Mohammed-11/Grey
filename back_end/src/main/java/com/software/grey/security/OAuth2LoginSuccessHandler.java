@@ -32,5 +32,4 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         this.setDefaultTargetUrl(frontUrl);
         super.onAuthenticationSuccess(request, response, authentication);
     }
-
 }

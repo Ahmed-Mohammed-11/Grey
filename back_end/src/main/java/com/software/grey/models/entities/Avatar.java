@@ -13,6 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "avatar")
 public class Avatar {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

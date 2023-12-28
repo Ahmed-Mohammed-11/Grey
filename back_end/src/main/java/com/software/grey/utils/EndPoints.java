@@ -2,7 +2,8 @@ package com.software.grey.utils;
 
 public class EndPoints {
 
-    private EndPoints(){}
+    private EndPoints() {
+    }
 
     public static final String POST = "/posts";
     public static final String EXPLORE = "/explore";
@@ -23,5 +24,4 @@ public class EndPoints {
     public static final String UPDATE_USER = "/update";
     public static final String GET_SAVED_POSTS = "/saved";
     public static final String REMOVE_REPORTED_POST = REPORT_POST + "/remove";
-
 }

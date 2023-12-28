@@ -1,7 +1,6 @@
 package com.software.grey.services.implementations;
 
 import com.software.grey.exceptions.exceptions.UserIsAuthorException;
-import com.software.grey.SavedPostEnum;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.entities.Post;
@@ -18,7 +17,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -27,16 +25,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import java.util.UUID;
-import java.util.stream.Collectors;
-
 @Service
 @AllArgsConstructor
 public class SavedPostServiceImpl implements SavedPostService {
 
     private SavedPostRepository savedPostRepository;
+
     private PostRepository postRepository;
+
     private SecurityUtils securityUtils;
+
     private PostMapper postMapper;
 
     @Override
@@ -70,17 +68,19 @@ public class SavedPostServiceImpl implements SavedPostService {
         String userName = securityUtils.getCurrentUserName();
         List<String> feelings = Optional.ofNullable(postFilterDTO.getFeelings())
                 .filter(list -> !list.isEmpty())
-                .map(list -> list.stream().map(Enum::name).collect(Collectors.toList()))
-                .orElseGet(() -> Arrays.stream(Feeling.values()).map(Enum::name).collect(Collectors.toList()));
+                .map(list -> list.stream().map(Enum::name).toList())
+                .orElseGet(() -> Arrays.stream(Feeling.values()).map(Enum::name).toList());
 
         Pageable pageable = PageRequest.of(
                 postFilterDTO.getPageNumber(),
                 postFilterDTO.getPageSize());
 
         return savedPostRepository.findSavedPostsByUsernameAndDayMonthYear(userName, feelings,
-                postFilterDTO.getDay(),
-                postFilterDTO.getMonth(),
-                postFilterDTO.getYear(), pageable).map(SavedPost::getPost)
+                        postFilterDTO.getDay(),
+                        postFilterDTO.getMonth(),
+                        postFilterDTO.getYear(),
+                        pageable)
+                .map(SavedPost::getPost)
                 .map(postMapper::toPostDTO);
     }
 }

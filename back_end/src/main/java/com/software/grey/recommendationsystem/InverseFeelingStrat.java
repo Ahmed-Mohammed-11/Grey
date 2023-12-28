@@ -4,7 +4,7 @@ import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.User;
 import com.software.grey.models.enums.Feeling;
 import com.software.grey.models.projections.FeelingCountProjection;
-import com.software.grey.services.implementations.PostService;
+import com.software.grey.services.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +16,8 @@ import java.util.Map;
 
 @AllArgsConstructor
 @Component
-public class InverseFeelingStrat extends RecommendationStrategy{
+public class InverseFeelingStrat extends RecommendationStrategy {
+
     private PostService postService;
 
     @Override

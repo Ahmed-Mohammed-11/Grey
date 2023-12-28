@@ -12,23 +12,25 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class CombinerImpTest {
     @Autowired
     CombinerImp combiner;
+
     @Test
     void smokeTestCombine() {
         List<List<Post>> posts = new ArrayList<>();
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             List<Post> temp = new ArrayList<>();
-            for(int j = 0; j < 20; j++) {
+            for (int j = 0; j < 20; j++) {
                 Post post = Post.builder()
                         .id(UUID.randomUUID().toString())
                         .postText("tired " + j)
                         .postFeelings(Collections.singleton(Feeling.SAD))
-                        .postTime(new Timestamp(System.currentTimeMillis() + (j+1)*(i+1)))
+                        .postTime(new Timestamp(System.currentTimeMillis() + (long) (j + 1) * (i + 1)))
                         .build();
                 temp.add(post);
             }

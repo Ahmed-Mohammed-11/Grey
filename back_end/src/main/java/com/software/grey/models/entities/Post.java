@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
 import java.sql.Timestamp;
 import java.util.Set;
 
@@ -41,7 +42,7 @@ public class Post implements Comparable<Post> {
 
     @Override
     public int compareTo(Post o) {
-        if(this.postTime.compareTo(o.postTime) == 0){
+        if (this.postTime.equals(o.postTime)) {
             return this.id.compareTo(o.id);
         }
         return o.postTime.compareTo(this.postTime);

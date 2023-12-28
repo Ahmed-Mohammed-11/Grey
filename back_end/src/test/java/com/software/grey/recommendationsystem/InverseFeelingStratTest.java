@@ -2,21 +2,19 @@ package com.software.grey.recommendationsystem;
 
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.User;
-import com.software.grey.models.entities.UserVerification;
 import com.software.grey.models.enums.Feeling;
 import com.software.grey.models.projections.FeelingCountProjection;
 import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
 import com.software.grey.repositories.UserVerificationRepo;
-import com.software.grey.services.implementations.PostService;
+import com.software.grey.services.implementations.PostServiceImpl;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,14 +24,16 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
+
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
 class InverseFeelingStratTest {
     @SpyBean
-    private PostService postService;
+    private PostServiceImpl postService;
     @Autowired
     @InjectMocks
     private InverseFeelingStrat inverseFeelingStrat;
@@ -56,19 +56,19 @@ class InverseFeelingStratTest {
         user2 = User.builder().email("InverseFeelingUnit2@example.com").username("InverseFeelingUnit2").build();
         userRepo.save(user1);
         userRepo.save(user2);
-        for(int i = 0; i < 30; i++) {
+        for (int i = 0; i < 30; i++) {
             Set<Feeling> set = new TreeSet<>();
             set.add(Feeling.SAD);
             Post post = Post.builder().postText("Sad").user(user2).postFeelings(set).build();
             postRepository.save(post);
         }
-        for(int i = 0; i < 30; i++) {
+        for (int i = 0; i < 30; i++) {
             Set<Feeling> set = new TreeSet<>();
             set.add(Feeling.HAPPY);
             Post post = Post.builder().postText("Anxious").user(user2).postFeelings(set).build();
             postRepository.save(post);
         }
-        for(int i = 0; i < 30; i++) {
+        for (int i = 0; i < 30; i++) {
             Set<Feeling> set = new TreeSet<>();
             set.add(Feeling.HAPPY);
             Post post = Post.builder().postText("Happy").user(user2).postFeelings(set).build();
@@ -77,12 +77,13 @@ class InverseFeelingStratTest {
     }
 
     @AfterAll
-    void del(){
+    void del() {
         postRepository.deleteAll();
         userVerificationRepo.deleteAll();
         basicUserRepo.deleteAll();
         userRepo.deleteAll();
     }
+
     @Test
     void recommendBasedOnOneSadPost_ShouldReturnHappy() {
         List<FeelingCountProjection> myList = new ArrayList<>();
@@ -98,7 +99,7 @@ class InverseFeelingStratTest {
         List<Post> returnedData = inverseFeelingStrat.recommend(user1, 0, 10);
 
         assertEquals(10, returnedData.size());
-        for(Post p : returnedData) {
+        for (Post p : returnedData) {
             assertTrue(p.getPostFeelings().contains(Feeling.HAPPY));
         }
     }
@@ -128,7 +129,7 @@ class InverseFeelingStratTest {
         // Mock the behavior of dependencies
         when(postService.getCountOfPostedFeelings(user1)).thenReturn(myList);
 
-        assertTrue(inverseFeelingStrat.recommend(user1, 0, 10).size() == 0);
+        assertEquals(0, inverseFeelingStrat.recommend(user1, 0, 10).size());
     }
 
     @Test

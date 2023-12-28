@@ -2,7 +2,7 @@ package com.software.grey.exceptions.exception_handlers;
 
 
 import com.software.grey.exceptions.exceptions.DataNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,10 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
+@AllArgsConstructor
 public class DataNotFoundExceptionHandler {
 
-    @Autowired
-    private MessageSource messageSource;
+    private final MessageSource messageSource;
 
     @ExceptionHandler(DataNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

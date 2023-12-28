@@ -8,7 +8,7 @@ import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
 import com.software.grey.repositories.UserVerificationRepo;
 import com.software.grey.services.UserService;
-import com.software.grey.services.implementations.PostService;
+import com.software.grey.services.implementations.PostServiceImpl;
 import com.software.grey.utils.EndPoints;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.AfterAll;
@@ -38,24 +38,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-
 class ReportPostControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    private UserService userService;
-
-    @MockBean
-    private PostService postService;
-
-    @MockBean
-    private SecurityUtils securityUtils;
 
     private final SignupController signup;
     private final UserRepo userRepo;
     private final PostRepository postRepository;
+    @Autowired
+    private MockMvc mockMvc;
+    @MockBean
+    private final UserService userService;
+    @MockBean
+    private final PostServiceImpl postService;
+    @MockBean
+    private final SecurityUtils securityUtils;
     @Autowired
     private BasicUserRepo basicUserRepo;
     @Autowired
@@ -64,7 +59,7 @@ class ReportPostControllerTest {
     private ArrayList<String> posts;
 
     @Autowired
-    ReportPostControllerTest(UserService userService, PostService postService, SecurityUtils securityUtils,
+    ReportPostControllerTest(UserService userService, PostServiceImpl postService, SecurityUtils securityUtils,
                              SignupController signup, UserRepo userRepo, PostRepository postRepository) {
         this.userService = userService;
         this.postService = postService;
@@ -124,7 +119,7 @@ class ReportPostControllerTest {
     @WithMockUser(username = "greyUser", roles = "ROLES_USER")
     void reportPost_shouldBeNotFound() throws Exception {
         UUID randomNotInPosts = UUID.randomUUID();
-        while(posts.contains(randomNotInPosts))
+        while (posts.contains(randomNotInPosts))
             randomNotInPosts = UUID.randomUUID();
 
         when(securityUtils.getCurrentUser()).thenReturn(userRepo.findByUsername("grey User"));
