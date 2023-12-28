@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="SG-103 Merging complete">
-      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back_end/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/posts/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/posts/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +75,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "SG-12-Moderator-Dashboard",
+    "git-widget-placeholder": "SG-5-Milestone-3",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/Belal/Desktop/First Semester/Software Engineering/Project/SWE-Project/front_end/public",
     "node.js.detected.package.eslint": "true",
@@ -132,6 +134,7 @@
       <workItem from="1702387395959" duration="643000" />
       <workItem from="1702751037725" duration="13239000" />
       <workItem from="1703505241975" duration="8288000" />
+      <workItem from="1703756812173" duration="1916000" />
     </task>
     <task id="LOCAL-00001" summary="Google button enhanced &amp; side button added">
       <option name="closed" value="true" />

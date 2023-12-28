@@ -86,8 +86,12 @@ export default function Posts(props: any) {
                 if(response.status == 403) {
                     toast.error("You are not authorized to see this", toastStyleTopRight);
                     // setEmptyPosts(true);
+                    // setNoSkeleton(true);
+                    setLastPage(true);
                 }
                 throw new Error('Network response was not ok');
+            } else {
+                // setNoSkeleton(false);
             }
 
             const newData = await response.json();
