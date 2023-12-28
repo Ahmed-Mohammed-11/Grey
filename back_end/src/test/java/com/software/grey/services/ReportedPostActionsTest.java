@@ -112,8 +112,8 @@ class ReportedPostActionsTest {
 
     @Test
     void testInvalidInput () {
-        assertThrows(IllegalArgumentException.class, () -> postService.deleteReportedPost("invalid input"));
-        assertThrows(IllegalArgumentException.class, () -> postService.removeReportedPost("invalid input"));
+        assertThrows(PostNotFoundException.class, () -> postService.deleteReportedPost("invalid input"));
+        assertThrows(PostNotFoundException.class, () -> postService.removeReportedPost("invalid input"));
     }
 
     @Test

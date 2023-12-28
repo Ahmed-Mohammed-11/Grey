@@ -155,8 +155,6 @@ public class PostService implements IPostService {
         if (postId == null)
             throw new NullPointerException("Post id is null");
 
-        UUID.fromString(postId);
-
         if (!postRepository.existsById(postId))
             throw new PostNotFoundException(ErrorMessages.POST_ALREADY_DELETED);
 
