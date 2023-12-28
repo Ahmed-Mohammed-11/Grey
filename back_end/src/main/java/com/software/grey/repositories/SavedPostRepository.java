@@ -16,11 +16,12 @@ public interface SavedPostRepository extends JpaRepository<SavedPost, SavedPostI
 
     /**
      * To find the posts that the user saved and filter them by day, month and year and sort them descendingly.
+     *
      * @param username the username of the user
      * @param feelings the feelings to filter with
-     * @param day the day of the month to filter with
-     * @param month the month of the year to filter with
-     * @param year the year to filter with
+     * @param day      the day of the month to filter with
+     * @param month    the month of the year to filter with
+     * @param year     the year to filter with
      * @param pageable the pagination information
      * @return the page of posts the user saved in the specified day, month and year
      */

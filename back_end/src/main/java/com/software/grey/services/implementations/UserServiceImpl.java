@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
 
     public void save(UserDTO userDTO) {
         if (userExists(userDTO))
-            throw new UserExistsException("User already exists");
+            throw new UserExistsException(ErrorMessages.USER_EXISTS);
 
         userDTO.password = bCryptPasswordEncoder.encode(userDTO.password);
         BasicUser user = BasicUser.builder()
@@ -134,7 +134,7 @@ public class UserServiceImpl implements UserService {
         if (currentUserConfirmationCode.equals(confirmationCode)) {
             userRepo.setEnableById(userID);
         } else {
-            throw new EntityNotFoundException("Invalid URL");
+            throw new EntityNotFoundException(ErrorMessages.INVALID_URL);
         }
     }
 
@@ -180,7 +180,7 @@ public class UserServiceImpl implements UserService {
 
         Optional<BasicUser> optionalUser = basicUserRepo.findById(user.getId());
         if (optionalUser.isEmpty()) {
-            throw new FailedToUpdateException("User not found");
+            throw new FailedToUpdateException(ErrorMessages.USER_NOT_FOUND);
         }
 
         BasicUser updatedUser = optionalUser.get();
@@ -215,7 +215,7 @@ public class UserServiceImpl implements UserService {
 
         Optional<GoogleUser> optionalUser = googleUserRepo.findById(user.getId());
         if (optionalUser.isEmpty()) {
-            throw new FailedToUpdateException("User not found");
+            throw new FailedToUpdateException(ErrorMessages.USER_NOT_FOUND);
         }
 
         GoogleUser updatedUser = optionalUser.get();

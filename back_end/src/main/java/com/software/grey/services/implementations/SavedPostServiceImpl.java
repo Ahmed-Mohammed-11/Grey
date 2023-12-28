@@ -78,7 +78,9 @@ public class SavedPostServiceImpl implements SavedPostService {
         return savedPostRepository.findSavedPostsByUsernameAndDayMonthYear(userName, feelings,
                         postFilterDTO.getDay(),
                         postFilterDTO.getMonth(),
-                        postFilterDTO.getYear(), pageable).map(SavedPost::getPost)
+                        postFilterDTO.getYear(),
+                        pageable)
+                .map(SavedPost::getPost)
                 .map(postMapper::toPostDTO);
     }
 }

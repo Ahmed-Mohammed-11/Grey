@@ -12,3 +12,8 @@ public class GreyApplication {
         SpringApplication.run(GreyApplication.class, args);
     }
 }
+/*
+    + securityUtil -> replace userRepo with userService (cycle dependency)
+    + postService -> in add post method use util.getUser() instead of userRepo.findByUsername() (tests)
+
+ */

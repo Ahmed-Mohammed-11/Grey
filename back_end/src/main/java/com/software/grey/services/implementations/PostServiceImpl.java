@@ -22,7 +22,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -41,14 +40,14 @@ public class PostServiceImpl implements PostService {
 
     private PostMapper postMapper;
 
-    private UserService userService;
-
     private SecurityUtils securityUtils;
 
+    private UserService userService;
+
     public String add(PostDTO postDTO) {
-        Post post = postMapper.toPost(postDTO);
         String userName = securityUtils.getCurrentUserName();
         User user = userService.findByUserName(userName);
+        Post post = postMapper.toPost(postDTO);
         post.setUser(user);
         post.setPostTime(Timestamp.from(Instant.now()));
         postRepository.save(post);
@@ -75,7 +74,7 @@ public class PostServiceImpl implements PostService {
     }
 
     public Post findPostById(String id) {
-        return postRepository.findById(id).orElseThrow(() -> new PostNotFoundException("Post not found"));
+        return postRepository.findById(id).orElseThrow(() -> new PostNotFoundException(ErrorMessages.POST_NOT_FOUND));
     }
 
     public Page<PostDTO> getReportedPosts(PostFilterDTO postFilterDTO) {
@@ -92,9 +91,8 @@ public class PostServiceImpl implements PostService {
         String userName = securityUtils.getCurrentUserName();
         Pageable pageable = PageRequest.of(
                 postFilterDTO.getPageNumber(),
-                postFilterDTO.getPageSize(),
-                Sort.by("postTime").descending());
-        return postRepository.findDiaryByUsernameAndDayMonthYear(
+                postFilterDTO.getPageSize());
+        return postRepository.findDiaryByUsernameAndDayMonthYearSortedByDate(
                 userName,
                 postFilterDTO.getDay(),
                 postFilterDTO.getMonth(),
@@ -120,18 +118,14 @@ public class PostServiceImpl implements PostService {
     }
 
     public void delete(String postId) {
-
         if (postId == null) {
-            throw new NullPointerException("Post id is null");
+            throw new NullPointerException(ErrorMessages.POST_ID_NULL);
         }
-
         String currentUserId = securityUtils.getCurrentUserId();
-
         Post post = findPostById(postId);
         if (!post.getUser().getId().equals(currentUserId)) {
-            throw new UserNotAuthorizedException("You are not authorized to delete this post");
+            throw new UserNotAuthorizedException(ErrorMessages.USER_NOT_AUTHORIZED);
         }
-
         postRepository.deleteById(postId);
     }
 
@@ -153,7 +147,6 @@ public class PostServiceImpl implements PostService {
         if (!reportedPostRepository.existsByPostId(postId)) {
             throw new PostNotFoundException(ErrorMessages.POST_ALREADY_DELETED);
         }
-
         reportedPostRepository.deleteByPostId(postId);
     }
 }

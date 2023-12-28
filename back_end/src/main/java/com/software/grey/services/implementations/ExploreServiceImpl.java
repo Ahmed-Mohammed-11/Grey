@@ -10,7 +10,6 @@ import com.software.grey.services.ExploreService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,14 +23,11 @@ public class ExploreServiceImpl implements ExploreService {
     public RecommendedPostsDTO getRecommendedPosts(int pageNumber, int pageSize) {
 
         PostFilterDTO postFilterDTO = PostFilterDTO.builder().pageNumber(pageNumber).pageSize(pageSize).build();
-        List<Post> recPosts = recommender.recommend(postFilterDTO);
-        List<PostDTO> postsDTO = new ArrayList<>();
-
-        for (Post p : recPosts)
-            postsDTO.add(postMapper.toPostDTO(p));
+        List<Post> recommendedPosts = recommender.recommend(postFilterDTO);
+        List<PostDTO> postsDTO = recommendedPosts.stream().map(postMapper::toPostDTO).toList();
 
         // convert postsDTO to RecommendedPostsDTO
-        return new RecommendedPostsDTO(postsDTO, recPosts.isEmpty());
+        return new RecommendedPostsDTO(postsDTO, recommendedPosts.isEmpty());
     }
 
 }

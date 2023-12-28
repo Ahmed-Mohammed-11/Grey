@@ -13,6 +13,11 @@ public class ErrorMessages {
     public static final String POST_NOT_FOUND = "Post not found";
     public static final String POST_ALREADY_DELETED = "Post already deleted";
     public static final String INVALID_POST_ID = "Invalid post id";
+    public static final String POST_ID_NULL = "Post id is null";
+    public static final String USER_NOT_AUTHORIZED = "You are not authorized to delete this post";
+    public static final String USER_NOT_FOUND = "User not found";
+    public static final String INVALID_URL = "Invalid URL";
+    public static final String USER_EXISTS = "Invalid URL";
 
     private ErrorMessages() {
     }

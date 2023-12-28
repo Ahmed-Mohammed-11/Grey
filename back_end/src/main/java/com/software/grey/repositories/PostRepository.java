@@ -20,10 +20,11 @@ public interface PostRepository extends JpaRepository<Post, String> {
 
     /**
      * To select posts that the user wrote and filter them by day, month and year and sort them descendingly.
+     *
      * @param userName the username of the user
-     * @param day the day of the month to filter with
-     * @param month the month of the year to filter with
-     * @param year the year to filter with
+     * @param day      the day of the month to filter with
+     * @param month    the month of the year to filter with
+     * @param year     the year to filter with
      * @param pageable the pagination information
      * @return the page of posts the user wrote in the specified day, month and year
      */
@@ -33,8 +34,9 @@ public interface PostRepository extends JpaRepository<Post, String> {
             AND (:day IS NULL OR DAY(p.postTime) = :day)
             AND (:month IS NULL OR MONTH(p.postTime) = :month)
             AND (:year IS NULL OR YEAR(p.postTime) = :year)
+            ORDER BY p.postTime DESC
             """)
-    Page<Post> findDiaryByUsernameAndDayMonthYear(
+    Page<Post> findDiaryByUsernameAndDayMonthYearSortedByDate(
             @Param("userName") String userName,
             @Param("day") Integer day,
             @Param("month") Integer month,
@@ -43,11 +45,11 @@ public interface PostRepository extends JpaRepository<Post, String> {
     );
 
 
-
     /**
      * This query returns the feelings the user wrote about in their last 5 posts, and their frequency the inner
      * query returns the feelings in the user's last 5 posts the outer query sums those feelings and returns
      * their frequency
+     *
      * @param id the id of the user
      * @return the list of feelings and their frequency
      */
@@ -108,6 +110,7 @@ public interface PostRepository extends JpaRepository<Post, String> {
     /**
      * To select the posts excluding the posts that the logged-in user wrote and filter them by feelings including any
      * post have any one of the feelings that the user specified and sort them by wrote time descendingly.
+     *
      * @param userName the username of the user
      * @param feelings the list of feelings to filter with
      * @param pageable the pagination information
@@ -123,9 +126,9 @@ public interface PostRepository extends JpaRepository<Post, String> {
             ORDER BY p.post_time DESC
             """,
             countQuery = """
-            SELECT count(p.id) FROM post p JOIN user u ON u.id = p.user_id
-            JOIN post_feelings pf ON pf.post_id = p.id
-            WHERE u.username != :userName AND (pf.feeling IN (:feelings))
-            """, nativeQuery = true)
+                    SELECT count(p.id) FROM post p JOIN user u ON u.id = p.user_id
+                    JOIN post_feelings pf ON pf.post_id = p.id
+                    WHERE u.username != :userName AND (pf.feeling IN (:feelings))
+                    """, nativeQuery = true)
     Page<Post> findFeed(@Param("userName") String userName, @Param("feelings") List<String> feelings, Pageable pageable);
 }
