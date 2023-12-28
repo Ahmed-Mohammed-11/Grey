@@ -14,24 +14,14 @@ import java.util.List;
 public interface PostService {
 
     String add(PostDTO postDTO);
-
     void report(String postId);
-
     Post findPostById(String id);
-
     Page<PostDTO> getReportedPosts(PostFilterDTO postFilterDTO);
-
     Page<PostDTO> getDiary(PostFilterDTO postFilterDTO);
-
     Page<PostDTO> getFeed(PostFilterDTO postFilterDTO);
-
     void delete(String postId);
-
     List<FeelingCountProjection> getCountOfPostedFeelings(User user);
-
     List<Post> getByFeelings(Feeling feeling, String userId, Pageable page);
-
     void deleteReportedPost(String postId);
-
     void removeReportedPost(String postId);
 }

@@ -30,11 +30,8 @@ import java.util.Optional;
 public class SavedPostServiceImpl implements SavedPostService {
 
     private SavedPostRepository savedPostRepository;
-
     private PostRepository postRepository;
-
     private SecurityUtils securityUtils;
-
     private PostMapper postMapper;
 
     @Override

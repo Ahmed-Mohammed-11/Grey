@@ -7,6 +7,5 @@ import org.springframework.data.domain.Page;
 public interface SavedPostService {
 
     String toggleSavedPost(String postId);
-
     Page<PostDTO> getSavedPosts(PostFilterDTO postFilterDTO);
 }

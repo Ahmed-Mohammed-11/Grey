@@ -12,6 +12,5 @@ import java.util.List;
 public class RecommendedPostsDTO {
 
     private List<PostDTO> content;
-
     private boolean last;
 }

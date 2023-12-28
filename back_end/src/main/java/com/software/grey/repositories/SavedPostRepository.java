@@ -32,10 +32,10 @@ public interface SavedPostRepository extends JpaRepository<SavedPost, SavedPostI
             JOIN user u ON u.id = sp.user_id
             JOIN post_feelings pf ON pf.post_id = p.id
             WHERE u.username = :username
-            AND (pf.feeling IN (:feelings))
-            AND (:day IS NULL OR DAY(sp.post_saved_time) = :day)
-            AND (:month IS NULL OR MONTH(sp.post_saved_time) = :month)
-            AND (:year IS NULL OR YEAR(sp.post_saved_time) = :year)
+                AND (pf.feeling IN (:feelings))
+                AND (:day IS NULL OR DAY(sp.post_saved_time) = :day)
+                AND (:month IS NULL OR MONTH(sp.post_saved_time) = :month)
+                AND (:year IS NULL OR YEAR(sp.post_saved_time) = :year)
             ORDER BY sp.post_saved_time DESC
             """, countQuery = """
             SELECT count(sp.user_id)
@@ -44,10 +44,10 @@ public interface SavedPostRepository extends JpaRepository<SavedPost, SavedPostI
             JOIN user u ON u.id = sp.user_id
             JOIN post_feelings pf ON pf.post_id = p.id
             WHERE u.username = :username
-            AND (pf.feeling IN (:feelings))
-            AND (:day IS NULL OR DAY(sp.post_saved_time) = :day)
-            AND (:month IS NULL OR MONTH(sp.post_saved_time) = :month)
-            AND (:year IS NULL OR YEAR(sp.post_saved_time) = :year)
+                AND (pf.feeling IN (:feelings))
+                AND (:day IS NULL OR DAY(sp.post_saved_time) = :day)
+                AND (:month IS NULL OR MONTH(sp.post_saved_time) = :month)
+                AND (:year IS NULL OR YEAR(sp.post_saved_time) = :year)
             ORDER BY sp.post_saved_time DESC
             """, nativeQuery = true,
             countProjection = "com.software.grey.models.entities.Post")

@@ -1,4 +1,4 @@
-package com.software.grey.ServiceTest;
+package com.software.grey.services;
 
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;

@@ -9,7 +9,6 @@ import java.util.Map;
 public class StrategyPercentage {
 
     private final Map<RecommendationStrategy, Integer> percentageMap;
-
     private final Map<RecommendationStrategy, List<Post>> postsMap;
 
     public StrategyPercentage() {

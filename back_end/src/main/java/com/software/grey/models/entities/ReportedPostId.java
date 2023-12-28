@@ -12,8 +12,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReportedPostId implements Serializable {
+
     @ManyToOne(cascade = CascadeType.MERGE)
     private Post post;
+
     @ManyToOne(cascade = CascadeType.MERGE)
     private User reporter;
 }

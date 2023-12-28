@@ -13,13 +13,9 @@ import java.util.List;
 public class Recommender {
 
     private final Combiner combiner;
-
     private final SameFeelingStrat sameFeelingStrat;
-
     private final InverseFeelingStrat inverseFeelingStrat;
-
     private final CollaborativeFeelingStrat collaborativeFeelingStrat;
-
     private final SecurityUtils securityUtils;
 
     @Value("${grey.same.feeling}")

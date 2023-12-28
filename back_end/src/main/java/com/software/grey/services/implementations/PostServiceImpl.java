@@ -34,11 +34,8 @@ import java.util.Optional;
 public class PostServiceImpl implements PostService {
 
     private PostRepository postRepository;
-
     private ReportedPostRepository reportedPostRepository;
-
     private PostMapper postMapper;
-
     private SecurityUtils securityUtils;
 
     public String add(PostDTO postDTO) {

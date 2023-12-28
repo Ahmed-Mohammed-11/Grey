@@ -35,21 +35,13 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
-
     private final BasicUserRepo basicUserRepo;
-
     private final GoogleUserRepo googleUserRepo;
-
     private final UserVerificationRepo userVerificationRepo;
-
     private final UserMapper userMapper;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
     private final EmailSender emailSender;
-
     private final SecurityUtils securityUtils;
-
     private final boolean ENABLEMAIL = false;
 
     public UserResponseDTO getUser() {

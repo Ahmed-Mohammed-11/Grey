@@ -17,7 +17,6 @@ import java.util.List;
 public class ExploreServiceImpl implements ExploreService {
 
     private Recommender recommender;
-
     private PostMapper postMapper;
 
     public RecommendedPostsDTO getRecommendedPosts(int pageNumber, int pageSize) {

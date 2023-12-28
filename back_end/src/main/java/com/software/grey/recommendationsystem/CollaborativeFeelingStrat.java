@@ -18,7 +18,6 @@ import java.util.List;
 public class CollaborativeFeelingStrat extends RecommendationStrategy {
 
     private PostService postService;
-
     private PostRepository postRepository;
 
     @Override

@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
 
     private PostService postService;
-
     private SavedPostService savedPostService;
 
     @Operation(

@@ -12,6 +12,7 @@ import static com.software.grey.utils.EndPoints.LOGIN_SUCCESS;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class LoginController {
+
     @GetMapping(LOGIN_SUCCESS)
     public ResponseEntity<String> loginSuccess() {
         return ResponseEntity.status(HttpStatus.OK).body("Log in success!");

@@ -31,9 +31,9 @@ public interface PostRepository extends JpaRepository<Post, String> {
     @Query("""
             SELECT p FROM Post p
             WHERE p.user.username = :userName
-            AND (:day IS NULL OR DAY(p.postTime) = :day)
-            AND (:month IS NULL OR MONTH(p.postTime) = :month)
-            AND (:year IS NULL OR YEAR(p.postTime) = :year)
+                AND (:day IS NULL OR DAY(p.postTime) = :day)
+                AND (:month IS NULL OR MONTH(p.postTime) = :month)
+                AND (:year IS NULL OR YEAR(p.postTime) = :year)
             ORDER BY p.postTime DESC
             """)
     Page<Post> findDiaryByUsernameAndDayMonthYearSortedByDate(
@@ -85,7 +85,8 @@ public interface PostRepository extends JpaRepository<Post, String> {
             SELECT DISTINCT up.id, up.text, up.user_id, up.post_time, up.feeling
             FROM UserPosts up
             WHERE up.user_id in (SELECT DISTINCT user_id FROM FeelingPosts)
-            AND up.feeling != ?1 AND up.user_id != ?2
+                AND up.feeling != ?1
+                AND up.user_id != ?2
             ORDER BY up.post_time DESC;
             """, nativeQuery = true)
     List<Post> findByCollaborativeFiltering(String feeling, String userId, Pageable pageable);
@@ -105,12 +106,13 @@ public interface PostRepository extends JpaRepository<Post, String> {
             JOIN user u ON u.id = p.user_id
             JOIN post_feelings pf ON pf.post_id = p.id
             WHERE u.username != :userName
-            AND (pf.feeling IN (:feelings))
+                AND (pf.feeling IN (:feelings))
             ORDER BY p.post_time DESC
             """, countQuery = """
             SELECT count(p.id) FROM post p JOIN user u ON u.id = p.user_id
             JOIN post_feelings pf ON pf.post_id = p.id
-            WHERE u.username != :userName AND (pf.feeling IN (:feelings))
+            WHERE u.username != :userName
+               AND (pf.feeling IN (:feelings))
             """, nativeQuery = true)
     Page<Post> findFeed(@Param("userName") String userName, @Param("feelings") List<String> feelings, Pageable pageable);
 }

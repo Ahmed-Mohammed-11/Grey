@@ -1,4 +1,4 @@
-package com.software.grey.ServiceTest;
+package com.software.grey.services;
 
 import com.software.grey.TestDataUtil.ObjectsBuilder;
 import com.software.grey.controllers.SignupController;

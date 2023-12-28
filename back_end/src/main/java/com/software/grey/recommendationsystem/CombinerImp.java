@@ -19,8 +19,7 @@ public class CombinerImp implements Combiner {
     public List<Post> combine(List<List<Post>> posts) {
         Set<Post> set = new TreeSet<>();
         // merge sorted lists into one using a set
-        for (List<Post> postList : posts)
-            set.addAll(postList);
+        posts.stream().flatMap(List::stream).forEach(set::add);
 
         return new ArrayList<>(set);
     }

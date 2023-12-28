@@ -12,6 +12,5 @@ import java.io.Serializable;
 public class SavedPostId implements Serializable {
 
     private User user;
-
     private Post post;
 }

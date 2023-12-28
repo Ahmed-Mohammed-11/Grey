@@ -8,8 +8,6 @@ import lombok.Builder;
 public class UserResponseDTO {
 
     public String username;
-
     public String email;
-
     public String role;
 }
