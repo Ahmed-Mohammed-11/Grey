@@ -79,6 +79,7 @@ export default function FeelingsFilter(props: any) {
                         icon={emojiMap.get(feeling) ?  emojiMap.get(feeling) : <FaceIcon/>}
                         label = {feeling}
                         className={`${feeling} ${styles.chip}`}
+                        style={{margin: '0.5%', borderRadius: '5px'}}
                         onDelete={handleDelete(feeling)}
                         key={feelingIndex}
                     />

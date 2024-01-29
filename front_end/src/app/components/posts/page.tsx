@@ -85,8 +85,6 @@ export default function Posts(props: any) {
             if (!response.ok) {
                 if(response.status == 403) {
                     toast.error("You are not authorized to see this", toastStyleTopRight);
-                    // setEmptyPosts(true);
-                    // setNoSkeleton(true);
                     setLastPage(true);
                 }
                 throw new Error('Network response was not ok');
@@ -102,15 +100,6 @@ export default function Posts(props: any) {
                 newData.content = newData.content.filter((post: any) => !uniqueIds.has(post.id));
                 return [...(prevPosts ?? []), ...newData.content];
             });
-            // if(newData.content.length == 0) {
-            //     console.log("empty posts")
-            //     setEmptyPosts(true);
-            // }else {
-            //     console.log(newData.content.length)
-            //     console.log(posts.length)
-            //     console.log("not empty posts")
-            //     setEmptyPosts(false);
-            // }
         } catch (error) {
             console.error('Error fetching data:', error);
         }

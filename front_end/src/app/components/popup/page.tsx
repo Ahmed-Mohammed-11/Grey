@@ -102,7 +102,9 @@ export default function PopupScreen(props: any) {
                                 maxLength={5000}
                                 placeholder={"Pour it out to the world"}
                                 value={isPostTextValid}
-                                onChange={handlePostText}></TextareaAutosize>
+                                onChange={handlePostText}
+                                style={{border: 'none', backgroundColor: 'transparent', color: '#526D82'}}
+                            ></TextareaAutosize>
 
                             <div className={styles.actions}>
                                 <button className={styles.button} onClick={close}>
