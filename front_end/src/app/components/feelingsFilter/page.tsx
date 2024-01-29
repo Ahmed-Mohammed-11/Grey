@@ -37,7 +37,6 @@ export default function FeelingsFilter(props: any) {
 
     const emojiMap = new Map<Feeling, any>(
         [
-            // <TagFacesIcon style={{color: '#26c08a', fontSize: '21px'}}/>
             [Feeling.HAPPY, <MdOutlineEmojiEmotions style={{color: '#26c08a', fontSize: '21px'}}/>],
             [Feeling.ANXIOUS, <MdOutlineEmojiEmotions style={{color: '#fdc358', fontSize: '21px'}}/>],
             [Feeling.DISGUST, <BiAngry style={{color: '#d29f6fff', fontSize: '21px'}}/>],
@@ -81,22 +80,22 @@ export default function FeelingsFilter(props: any) {
                         label = {feeling}
                         className={`${feeling} ${styles.chip}`}
                         onDelete={handleDelete(feeling)}
-                        style={{borderRadius: '5px'}}
                         key={feelingIndex}
                     />
                 ))}
             </Box>
 
-            <Tooltip title="Feelings Filter" style={{borderRadius: '5px'}}>
+            <Tooltip title="Feelings Filter">
                 <IconButton
                     id="basic-button"
                     disabled={fullFeelings}
                     aria-controls={open ? 'basic-menu' : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
+                    className={styles.add_feeling_button}
                     onClick={handleClick}
                 >
-                    <IoMdAdd/>
+                    Select Feeling <IoMdAdd/>
                 </IconButton>
             </Tooltip>
             <Menu
@@ -104,10 +103,11 @@ export default function FeelingsFilter(props: any) {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClosePopup}
-                MenuListProps={{'aria-labelledby': 'basic-button'}}>
+                MenuListProps={{'aria-labelledby': 'basic-button'}}
+            >
                 {Array.from(allFeelings).filter((feeling) =>
                     !selectedFeelings.has(feeling)).map((feeling: any, feelingIndex: any) => (
-                    <MenuItem  className={`${feeling} ${styles.menu_item}`} onClick={handleAdd(feeling)}>
+                    <MenuItem className={`${feeling} ${styles.menu_item}`} onClick={handleAdd(feeling)}>
                         {emojiMap.get(feeling) ?  emojiMap.get(feeling) : <FaceIcon/>} <span>&nbsp;</span> {feeling}
                     </MenuItem>
                 ))}

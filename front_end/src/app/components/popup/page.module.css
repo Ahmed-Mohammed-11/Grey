@@ -83,20 +83,22 @@
 
 .create_button {
     display: flex;
-    position: relative;
-    flex-direction: row;
-    align-items: center;
     justify-content: center;
-    gap: 0 10px;
-    padding: 12px;
+    align-items: center;
+    padding: 10px;
+    background-color: #dbe6f1;
+    border : 2px solid #526D82;
     outline: none;
-    text-transform: capitalize;
-    font-size: calc(2 * calc(min(1vh, 1vw)));
-    border: none;
     border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.1s ease-in-out;
-    box-sizing: border-box;
+    border-bottom: 5px solid #526D82;
+    color: #526D82;
+    font-size: 1.5rem;
+    width: 20%;
+}
+
+.create_button:hover {
+    background-color: #526D82;
+    color: #dbe6f1;
 }
 
 .modal > .close {
