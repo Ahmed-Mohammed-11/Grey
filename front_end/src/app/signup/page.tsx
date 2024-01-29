@@ -19,6 +19,7 @@ import clientValidateForm from "@/app/security/userValidation/clientFormValidati
 import signupServerFormValidationMapper from "@/app/security/userValidation/signupServerFormValidationMapper";
 import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
 import {useRouter} from "next/navigation";
+import getUser from "@/app/utils/getUser";
 function Page() {
     const usernameRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
@@ -45,7 +46,7 @@ function Page() {
         }
 
         // validate user credentials on client side
-        let { isUserValid, errors} = clientValidateForm(user)
+        let {isUserValid, errors} = clientValidateForm(user)
         setIsUserValid(isUserValid)
         setErrors(errors);
 
@@ -69,13 +70,14 @@ function Page() {
         // toJSON util to convert ReadableStream to JSON
         let jsonResponse = await toJSON(response.body!);
         let responseStat = response.status;
-        //if response status is 200, redirect to home page
-        (responseStat == 200) && router.push(HOME_ROUTE);
         //if response status is not 200, map response from server to display appropriate error messages
         //and if 200 get auth token and store it in local storage
         let {isUserValid, errors} = signupServerFormValidationMapper(responseStat, jsonResponse, userDTO)
         setIsUserValid(isUserValid);
         setErrors(errors);
+
+        //if response status is 200, redirect to home page
+        (responseStat == 200) && await getUser().then(() => router.push(HOME_ROUTE));
     }
 
 
@@ -103,8 +105,8 @@ function Page() {
                         inputRef={usernameRef}
                         required
                         variant="filled"
-                        error = {!isUserValid.username}
-                        helperText = {(isUserValid.username)? "": errors.username}
+                        error={!isUserValid.username}
+                        helperText={(isUserValid.username) ? "" : errors.username}
                         InputProps={{style: {background: "#FFF"}}}
                     >
                     </TextField>

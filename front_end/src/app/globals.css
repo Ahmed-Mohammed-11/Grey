@@ -1,71 +1,101 @@
-.DISGUST{
+.DISGUST {
     margin: 0 1% 0 0;
-    background-color: #8B4513;
-    color: white;
+    background-color: #8B8682 !important;
+    color: white !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
-    font-weight: 700;
+    font-weight: 900;
 }
 
 .HAPPY {
     margin: 0 1% 0 0;
-    background-color: #FFD700;
-    color: black;
+    background-color: #FDD835 !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
-    font-weight: 700;
+    font-weight: 900;
 }
 
-.SAD{
+.SAD {
     margin: 0 1% 0 0;
-    background-color: #1976d2;
-    color: white;
+    background-color: #81D4FA !important;
+    color: white !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
-    font-weight: 700;
+    font-weight: 900;
 }
 
-.FEAR{
+.FEAR {
     margin: 0 1% 0 0;
-    background-color: #f64e4e;
-    color: white;
+    background-color: #78909C !important;
+    color: white !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
-    font-weight: 700;
+    font-weight: 900;
 }
 
-.ANGER{
+.ANGER {
     margin: 0 1% 0 0;
-    background-color: #FF0000;
-    color: white;
+    background-color: #EF5350 !important;
+    color: white !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
-    font-weight: 700;
+    font-weight: 900;
 }
 
-.ANXIOUS{
+.ANXIOUS {
     margin: 0 1% 0 0;
-    background-color: #00FFFF;
-    color: black;
+    background-color: #C5CAE9 !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
-    font-weight: 700;
+    font-weight: 900;
 }
 
-.LOVE{
+.LOVE {
     margin: 0 1% 0 0;
-    background-color: #dd4296;
-    color: white;
+    background-color: #FFC0D9 !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
-    font-weight: 700;
+    font-weight: 900;
 }
 
-.INSPIRE{
+.INSPIRE {
     margin: 0 1% 0 0;
-    background-color: #00FF00;
-    color: black;
+    background-color: #4CAF50 !important;
+    color: #FFFFFF !important;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
-    font-weight: 700;
+    font-weight: 900;
+}
+
+
+.ANGER:hover {
+    cursor: pointer;
+}
+
+.ANXIOUS:hover {
+    cursor: pointer;
+}
+
+.DISGUST:hover {
+    cursor: pointer;
+}
+
+.FEAR:hover {
+    cursor: pointer;
+}
+
+.HAPPY:hover {
+    cursor: pointer;
+}
+
+.INSPIRE:hover {
+    cursor: pointer;
+}
+
+.LOVE:hover {
+    cursor: pointer;
+}
+
+.SAD:hover {
+    cursor: pointer;
 }

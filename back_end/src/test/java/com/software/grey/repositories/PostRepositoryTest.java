@@ -4,19 +4,23 @@ import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.User;
 import com.software.grey.models.enums.Feeling;
 import com.software.grey.models.projections.FeelingCountProjection;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 
-import java.awt.print.Pageable;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -104,30 +108,10 @@ class PostRepositoryTest {
     }
 
     @Test
-    void collaborativesmoke() {
-        Set<Feeling> feelings = new TreeSet<>();
-        feelings.add(Feeling.LOVE);
-        Post post = Post.builder().postText("LOVE").user(user1).postFeelings(feelings).build();
-        postRepository.save(post);
-
-        Set<Feeling> feelings2 = new TreeSet<>();
-        feelings2.add(Feeling.HAPPY);
-        Post post2 = Post.builder().postText("HAPPY").user(user1).postFeelings(feelings2).build();
-        postRepository.save(post2);
-
-        PageRequest pageable = PageRequest.of(0, 20);
-        // Get the recent posts for user 1 and assert that only the latest 50 are returned
-        List<Post> result = postRepository.findByCollaborativeFiltering("LOVE", pageable);
-
-        assertEquals(1, result.size());
-        assertTrue(result.get(0).getPostFeelings().contains(Feeling.HAPPY));
-    }
-
-    @Test
     void collaborativeNoPosts() {
         // Ensure that a user with no 'LOVE' posts returns an empty list
         PageRequest pageable = PageRequest.of(0, 20);
-        List<Post> result = postRepository.findByCollaborativeFiltering("INSPIRATION", pageable);
+        List<Post> result = postRepository.findByCollaborativeFiltering("INSPIRATION", user1.getId(), pageable);
         assertTrue(result.isEmpty());
     }
 
@@ -154,12 +138,12 @@ class PostRepositoryTest {
         // Save a 'SAD' post for user2
         Set<Feeling> feelings4 = new TreeSet<>();
         feelings4.add(Feeling.SAD);
-        Post post4 = Post.builder().postText("SAD").user(user2).postFeelings(feelings4).build();
+        Post post4 = Post.builder().postText("SAD").user(user1).postFeelings(feelings4).build();
         postRepository.save(post4);
 
         PageRequest pageable = PageRequest.of(0, 20);
         // Ensure that collaborative filtering works for multiple users
-        List<Post> result = postRepository.findByCollaborativeFiltering("LOVE", pageable);
+        List<Post> result = postRepository.findByCollaborativeFiltering("LOVE", user2.getId(), pageable);
         assertEquals(2, result.size());
         assertTrue(result.stream().anyMatch(post -> post.getPostFeelings().contains(Feeling.HAPPY)));
         assertTrue(result.stream().anyMatch(post -> post.getPostFeelings().contains(Feeling.SAD)));
@@ -171,17 +155,19 @@ class PostRepositoryTest {
         for (int i = 0; i < 4; i++) {
             Set<Feeling> feelings2 = new TreeSet<>();
             feelings2.add(Feeling.SAD);
-            Post post2 = Post.builder().postText("SAD" + i).user(user1).postFeelings(feelings2).build();
+            Post post2 = Post.builder().postText("SAD" + i).user(user2).postFeelings(feelings2).build();
             postRepository.save(post2);
         }
         Set<Feeling> feelings = new TreeSet<>();
         feelings.add(Feeling.LOVE);
-        Post post = Post.builder().postText("LOVE").user(user1).postFeelings(feelings).build();
+        Post post = Post.builder().postText("LOVE").user(user2).postFeelings(feelings).build();
         postRepository.save(post);
+        postRepository.save(Post.builder().postText("LOVE").user(user1).postFeelings(Collections.singleton(Feeling.LOVE)).build());
+
 
         PageRequest pageable = PageRequest.of(0, 2);
         // Ensure that pagination is working correctly
-        List<Post> result = postRepository.findByCollaborativeFiltering("LOVE", pageable);
+        List<Post> result = postRepository.findByCollaborativeFiltering("LOVE", user1.getId(), pageable);
         assertEquals(2, result.size());
     }
 
@@ -203,7 +189,7 @@ class PostRepositoryTest {
 
         PageRequest pageable = PageRequest.of(0, 20);
         // Ensure that no 'SAD' posts are returned when searching for 'HAPPY'
-        List<Post> result = postRepository.findByCollaborativeFiltering("HAPPY", pageable);
+        List<Post> result = postRepository.findByCollaborativeFiltering("HAPPY", user1.getId(), pageable);
         assertTrue(result.isEmpty());
     }
 
@@ -233,7 +219,7 @@ class PostRepositoryTest {
         postRepository.save(post2);
 
         PageRequest pageable = PageRequest.of(0, 20);
-        List<Post> result = postRepository.findByCollaborativeFiltering("LOVE", pageable);
+        List<Post> result = postRepository.findByCollaborativeFiltering("LOVE", user2.getId(), pageable);
         assertEquals(1, result.size());
         assertEquals(2, result.get(0).getPostFeelings().size());
     }

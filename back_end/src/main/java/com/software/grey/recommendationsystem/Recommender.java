@@ -3,7 +3,6 @@ package com.software.grey.recommendationsystem;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.utils.SecurityUtils;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -12,11 +11,11 @@ import java.util.List;
 
 @Component
 public class Recommender {
-    private Combiner combiner;
-    private SameFeelingStrat sameFeelingStrat;
-    private InverseFeelingStrat inverseFeelingStrat;
-    private CollaborativeFeelingStrat collaborativeFeelingStrat;
-    private SecurityUtils securityUtils;
+    private final Combiner combiner;
+    private final SameFeelingStrat sameFeelingStrat;
+    private final InverseFeelingStrat inverseFeelingStrat;
+    private final CollaborativeFeelingStrat collaborativeFeelingStrat;
+    private final SecurityUtils securityUtils;
 
     @Value("${grey.same.feeling}")
     private int sameFeelingPercentage;

@@ -14,7 +14,7 @@ const lightTheme = createTheme({
         primary: {
             light: '#9DB2BF',
             main: '#526D82',
-            dark: '#526D82',
+            dark: '#314b60',
             contrastText: '#fff',
         },
         secondary: {
@@ -83,7 +83,6 @@ const lightTheme = createTheme({
     },
     typography: {
         fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-        fontSize: 20,
         fontWeightLight: 300,
         fontWeightRegular: 400,
         fontWeightMedium: 500,

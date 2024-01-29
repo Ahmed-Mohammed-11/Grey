@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 public class StrategyPercentage {
-    private Map<RecommendationStrategy, Integer> percentageMap;
-    private Map<RecommendationStrategy, List<Post>> postsMap;
+    private final Map<RecommendationStrategy, Integer> percentageMap;
+    private final Map<RecommendationStrategy, List<Post>> postsMap;
 
     public StrategyPercentage() {
         this.percentageMap = new HashMap<>();

@@ -1,19 +1,16 @@
 package com.software.grey.services;
 
-import com.software.grey.exceptions.exceptions.DataNotFoundException;
 import com.software.grey.models.dtos.PostDTO;
 import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.entities.Post;
 import com.software.grey.models.enums.Feeling;
-import com.software.grey.models.entities.User;
 import com.software.grey.repositories.BasicUserRepo;
 import com.software.grey.repositories.PostRepository;
 import com.software.grey.repositories.UserRepo;
 import com.software.grey.repositories.UserVerificationRepo;
 import com.software.grey.services.implementations.PostService;
 import com.software.grey.utils.SecurityUtils;
-import jakarta.validation.constraints.Null;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -38,7 +35,6 @@ import java.util.stream.Stream;
 
 import static com.software.grey.models.enums.Feeling.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -115,7 +111,7 @@ class PostServiceTest {
 
         when(securityUtils.getCurrentUserName()).thenReturn("mockedUserName");
 
-        UUID postId = postService.add(postDTO);
+        String postId = postService.add(postDTO);
 
         assertThat(postId).isNotNull();
         assertThat(postRepository.existsById(postId)).isTrue();
@@ -191,10 +187,10 @@ class PostServiceTest {
                 Arguments.of("PostServiceUsername2", 0, 10, null, List.of("4 user1", "3 user1", "2 user1", "1 user1", "0 user1")),
                 Arguments.of("PostServiceUsername1", 0, 10, List.of(LOVE), List.of("2 user2", "0 user2")),
                 Arguments.of("PostServiceUsername2", 0, 10, List.of(LOVE, HAPPY), List.of("4 user1", "3 user1", "1 user1", "0 user1")),
-                Arguments.of("PostServiceUsername1", 0, 10, List.of(LOVE, HAPPY, SAD),List.of("2 user2", "1 user2", "0 user2")),
-                Arguments.of("PostServiceUsername1", 0, 10, List.of(LOVE, HAPPY, SAD, INSPIRE),List.of("2 user2", "1 user2", "0 user2")),
-                Arguments.of("PostServiceUsername2", 0, 10, List.of(SAD),List.of("3 user1", "2 user1")),
-                Arguments.of("PostServiceUsername2", 0, 10, List.of(INSPIRE),List.of()),// return noting
+                Arguments.of("PostServiceUsername1", 0, 10, List.of(LOVE, HAPPY, SAD), List.of("2 user2", "1 user2", "0 user2")),
+                Arguments.of("PostServiceUsername1", 0, 10, List.of(LOVE, HAPPY, SAD, INSPIRE), List.of("2 user2", "1 user2", "0 user2")),
+                Arguments.of("PostServiceUsername2", 0, 10, List.of(SAD), List.of("3 user1", "2 user1")),
+                Arguments.of("PostServiceUsername2", 0, 10, List.of(INSPIRE), List.of()),// return noting
                 Arguments.of("PostServiceUsername2", 0, 10, List.of(), List.of("4 user1", "3 user1", "2 user1", "1 user1", "0 user1"))// return all
         );
     }

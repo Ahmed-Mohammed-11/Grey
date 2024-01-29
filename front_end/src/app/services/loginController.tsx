@@ -1,6 +1,6 @@
 import {BASE_BACKEND_URL} from "@/app/constants/apiConstants";
 
-class SigninController implements IPostRequestController {
+class LoginController implements IPostRequestController {
     sendPostRequest(payload: UserDTO, endpoint: string) {
         const url = BASE_BACKEND_URL + endpoint + "?" + "username=" + payload.username + "&" + "password=" + payload.password;
         return fetch(url, {
@@ -9,5 +9,5 @@ class SigninController implements IPostRequestController {
     }
 }
 
-const signinController = new SigninController();
-export default signinController;
+const loginController = new LoginController();
+export default loginController;

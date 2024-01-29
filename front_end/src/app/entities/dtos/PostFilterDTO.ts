@@ -1,4 +1,4 @@
-import Feeling from "@/app/models/dtos/Feeling";
+import Feeling from "@/app/entities/dtos/Feeling";
 
 class PostFilterDTO {
     pageSize!: number;
@@ -6,7 +6,7 @@ class PostFilterDTO {
     day?: number;
     month?: number;
     year?: number;
-    feelings?:Feeling[]
+    feelings?: Feeling[]
 }
 
 export default PostFilterDTO;

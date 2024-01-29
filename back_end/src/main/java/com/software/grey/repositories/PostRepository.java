@@ -4,20 +4,17 @@ import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.User;
 import com.software.grey.models.enums.Feeling;
 import com.software.grey.models.projections.FeelingCountProjection;
-import com.software.grey.models.projections.PostFilteringProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.UUID;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post, UUID> {
+public interface PostRepository extends JpaRepository<Post, String> {
 
 
     Post findByUser(User user);
@@ -56,9 +53,9 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
             GROUP BY latest_posts.feeling
             ORDER BY feelingCount DESC;
             """, nativeQuery = true)
-    public List<FeelingCountProjection> findCountOfFeelingsByUser(String id);
+    List<FeelingCountProjection> findCountOfFeelingsByUser(String id);
 
-    public List<Post> findByPostFeelingsAndUserIdNot(Feeling feeling, String userId, Pageable pageable);
+    List<Post> findByPostFeelingsAndUserIdNot(Feeling feeling, String userId, Pageable pageable);
 
     @Query(value = """
             WITH FeelingPosts AS (
@@ -92,10 +89,10 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
                 up.feeling
             FROM
                 UserPosts up
-                WHERE up.user_id in (SELECT DISTINCT user_id FROM FeelingPosts) AND up.feeling != ?1
+                WHERE up.user_id in (SELECT DISTINCT user_id FROM FeelingPosts) AND up.feeling != ?1 AND up.user_id != ?2
             ORDER BY up.post_time DESC;
             """, nativeQuery = true)
-    public List<Post> findByCollaborativeFiltering(String feeling, Pageable pageable);
+    List<Post> findByCollaborativeFiltering(String feeling, String userId,  Pageable pageable);
 
     /*
         To select the posts excluding the posts that the logged-in user wrote and filter them by

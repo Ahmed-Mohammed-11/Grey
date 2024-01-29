@@ -9,10 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
 import java.sql.Timestamp;
 import java.util.Set;
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -20,7 +18,7 @@ import java.util.UUID;
 @SuperBuilder
 public class PostDTO {
 
-    private UUID id;
+    private String id;
 
     @NotNull
     @Size(min = 1, max = 5000, message = ErrorMessages.POST_LENGTH_LIMIT)

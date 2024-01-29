@@ -1,4 +1,4 @@
-export const USERNAME_EMPTY_MSG =  "Username can't be empty" ;
+export const USERNAME_EMPTY_MSG = "Username can't be empty";
 export const USERNAME_INVALID_MSG = "Username shall be 5 - 20 characters long and only contain letters, numbers and underscores";
 
 export const EMAIL_EMPTY_MSG = "Email can't be empty";

@@ -19,7 +19,7 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
     @Value("${front.url}")
     private String frontUrl;
 
-    private UserService userService;
+    private final UserService userService;
 
     public OAuth2LoginSuccessHandler(@Lazy UserService userService) {
         this.userService = userService;

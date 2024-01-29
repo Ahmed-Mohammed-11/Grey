@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Entity
 @Table(name = "saved_post")
 @Data
@@ -24,4 +26,7 @@ public class SavedPost {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post post;
+
+    @Column(name = "post_saved_time")
+    private Timestamp SavedTime;
 }

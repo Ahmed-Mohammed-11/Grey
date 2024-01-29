@@ -1,7 +1,4 @@
-import
-{
-    USER_EMAIL_TAKEN_MSG
-} from "@/app/constants/displayErrorMessages";
+import {USER_EMAIL_TAKEN_MSG} from "@/app/constants/displayErrorMessages";
 import buildAuthToken from "@/app/utils/authTokenBuilder";
 
 
@@ -17,29 +14,24 @@ let errors = {
     password: ""
 };
 
-function handleTakenCredentials()
-{
-    isUserValid.username = false ;
+function handleTakenCredentials() {
+    isUserValid.username = false;
     isUserValid.email = false;
     errors.username = USER_EMAIL_TAKEN_MSG;
     errors.email = USER_EMAIL_TAKEN_MSG;
     return;
 }
 
-function handleInvalidCredentials(responseBody: UserValidationResponse)
-{
-    if (responseBody.username !== undefined)
-    {
+function handleInvalidCredentials(responseBody: UserValidationResponse) {
+    if (responseBody.username !== undefined) {
         isUserValid.username = false;
         errors.username = responseBody.username;
     }
-    if (responseBody.email !== undefined)
-    {
+    if (responseBody.email !== undefined) {
         isUserValid.email = false;
         errors.email = responseBody.email;
     }
-    if (responseBody.password !== undefined)
-    {
+    if (responseBody.password !== undefined) {
         isUserValid.password = false;
         errors.password = responseBody.password;
     }
@@ -47,14 +39,13 @@ function handleInvalidCredentials(responseBody: UserValidationResponse)
 }
 
 
-function handleAuth(userDTO: UserDTO)
-{
+function handleAuth(userDTO: UserDTO) {
     const authToken = buildAuthToken(userDTO);
     localStorage.setItem("Authorization", authToken);
 }
 
 
-function signupServerFormValidationMapper(responseStatus: number, responseBody: UserValidationResponse, userDTO: UserDTO){
+function signupServerFormValidationMapper(responseStatus: number, responseBody: UserValidationResponse, userDTO: UserDTO) {
 
     isUserValid = {
         username: true,

@@ -1,4 +1,4 @@
 interface IGetRequestController {
-    sendGetRequest(endpoint: string) : Promise<Response>
+    sendGetRequest(endpoint: string): Promise<Response>
 }
 
