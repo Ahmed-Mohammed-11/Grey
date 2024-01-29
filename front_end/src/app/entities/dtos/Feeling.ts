@@ -1,4 +1,5 @@
 enum Feeling {
+
     DISGUST = "DISGUST",
 
     HAPPY = "HAPPY",

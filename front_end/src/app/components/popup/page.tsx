@@ -96,7 +96,7 @@ export default function PopupScreen(props: any) {
                             <div className={styles.profile}>
                                 <User name={'@' + username} backgroundColor={"#9DB2BF"}/>
                             </div>
-                            <FeelingsFilter limit={3} onDataChange={setSelectedFeelings}/>
+                            <FeelingsFilter style={{borderRadius: '5px'}} limit={3} onDataChange={setSelectedFeelings}/>
                             <TextareaAutosize
                                 className={styles.input}
                                 maxLength={5000}

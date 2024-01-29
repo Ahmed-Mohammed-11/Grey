@@ -57,7 +57,7 @@ export default function Post(props: any) {
                 <Box className={styles.post_header}>
                     <ListItem>
                         {Array.from(post.postFeelings).map((feeling: any, feelingIndex: any) => (
-                            <Chip className={feeling} key={feelingIndex} label={feeling}></Chip>
+                            <Chip className={feeling} key={feelingIndex} label={feeling} style={{margin: '0.5%', borderRadius: '5px'}}></Chip>
                         ))}
                     </ListItem>
 
