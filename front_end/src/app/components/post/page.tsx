@@ -5,7 +5,7 @@ import {Box} from "@mui/system";
 import {BsBookmark, BsFillBookmarkFill} from "react-icons/bs";
 import {SlOptions} from "react-icons/sl";
 import {MdDelete, MdOutlineEmojiEmotions, MdReport} from "react-icons/md";
-import {Chip, IconButton, ListItem, Menu, MenuItem} from "@mui/material";
+import {Avatar, Chip, IconButton, ListItem, Menu, MenuItem} from "@mui/material";
 import 'react-toastify/dist/ReactToastify.css';
 import deletePostController from "@/app/services/deletePostController";
 import postRequestWithUrlParams from "@/app/services/postRequestWithUrlParams";
@@ -70,6 +70,7 @@ export default function Post(props: any) {
         <Box width={props.width}>
             <Box className={styles.post} key={post.id}>
                 <Box className={styles.post_header}>
+                    <Avatar src={"sloth_avatar.png"} className={styles.post_avatar} sx={{width: 40, height: 40, bgcolor: 'secondary.light'}}/>
                     <ListItem>
                         {Array.from(post.postFeelings).map((feeling: any, feelingIndex: any) => (
                             <Chip
