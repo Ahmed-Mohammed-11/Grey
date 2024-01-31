@@ -5,6 +5,7 @@ export const LOG_IN_BACKEND_ENDPOINT = '/login';
 export const SIGN_UP_VERIFICATION_ENDPOINT = '/verify';
 export const SIGN_UP_ROUTE = '/signup';
 export const SIGN_IN_ROUTE = '/login';
+export const ABOUT_ROUTE = '/welcome/about';
 export const HOME_ROUTE = '/home';
 export const LANDING_ROUTE = '/welcome';
 export const CREATE_POST_ENDPOINT = '/posts';

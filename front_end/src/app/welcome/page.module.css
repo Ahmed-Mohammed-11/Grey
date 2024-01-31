@@ -1,63 +1,68 @@
-.container {
+.nav_item:hover {
+    opacity: 0.8;
+    transition: all 0.3s ease-in-out !important;
+}
+
+.banner_head {
     display: flex;
     flex-direction: row;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    transform: translate(0, 0);
-    position: absolute;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold !important;
+    margin-top: 10rem !important;
+    margin-bottom: 1rem !important;
 }
 
-.welcome {
+.banner_text {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10rem !important;
+}
+
+.card_container {
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    width: 100%;
-    height: 55%;
+    margin: 1rem;
 }
 
-.welcome h2 {
-    font-size: 3.5rem;
-    color: #DDE6ED;
-    font-weight: 900;
-    margin: 0;
-    padding: 0;
+.card {
+    margin: 1rem;
+    border-radius: 60px !important;
+    border: 1px solid #fff !important;
+    box-shadow: rgba(17, 17, 26, 0.05) 0 4px 16px, rgba(17, 17, 26, 0.05) 0 8px 32px !important;
 }
 
-.welcome text {
-    font-size: 1.5rem;
-    color: #DDE6ED;
-    font-weight: 400;
-    margin: 0;
-    padding: 0;
-    width: 70%;
-    text-align: center;
-    word-wrap: break-word;
+.card:first-child {
+    width: 20em;
+    height: 20em;
 }
 
-.welcome button {
-    font-size: 1.8rem;
-    color: #2C3E50;
-    width: 100%;
-    height: 60%;
-    text-align: center;
-    word-wrap: break-word;
-    background-color: #DDE6ED !important;
-    border: none;
-    border-radius: 10px;
-    padding: 10px;
-    margin-top: 20px;
-    cursor: pointer;
-    transition: 0.3s;
-    text-transform: none !important;
+.card:nth-child(2) {
+    width: 25em;
+    height: 25em;
 }
+
+.card:nth-child(3) {
+    width: 20em;
+    height: 22em;
+}
+
+.card:hover {
+    transform: translateY(-5px) scale(1.005) translateZ(0);
+    transition: all .3s ease-in-out !important;
+    box-shadow: 0 24px 36px rgba(0,0,0,0.11),
+    0 24px 46px ;
+}
+
+.card:hover .overlay {
+    transform: scale(4) translateZ(0);
+    transition: all 0.3s ease-in-out !important;
+}
+
+
 
 
 

@@ -1,0 +1,10 @@
+.card_container {
+    height: 300px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: wrap !important;
+}
+
+.card {
+    flex: 1 1 40px;
+}
