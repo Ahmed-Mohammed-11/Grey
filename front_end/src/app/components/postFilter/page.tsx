@@ -5,6 +5,7 @@ import React, {useEffect, useState} from 'react';
 import PostFilterDTO from '@/app/entities/dtos/PostFilterDTO';
 import FeelingsFilter from "../feelingsFilter/page";
 import Feeling from "@/app/entities/dtos/Feeling";
+import styles from "./page.module.css"
 
 export default function PostFilters(props: any) {
     const {showDatePicker} = props;
@@ -28,7 +29,7 @@ export default function PostFilters(props: any) {
     };
 
     return (
-        <Box>
+        <Box className={styles.filter_container}>
             {props.showDatePicker && <CustomDatePicker onDateChange={handleDateFilter}/>}
             {props.showFeelingSelection && <FeelingsFilter limit={8} onDataChange={handleFeelingsFilter}/>}
             {/* Other content in the filter component */}

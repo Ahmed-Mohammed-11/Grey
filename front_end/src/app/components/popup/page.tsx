@@ -88,7 +88,7 @@ export default function PopupScreen(props: any) {
 
 
     return (
-        <Popup trigger={<button className={styles.create_button}><FaPen/>Express</button>} modal nested>
+        <Popup trigger={<button className={styles.create_button}><FaPen/>&nbsp;Express</button>} modal nested>
             {close => {
                 return (
                     <section className={styles.container}>
@@ -96,14 +96,15 @@ export default function PopupScreen(props: any) {
                             <div className={styles.profile}>
                                 <User name={'@' + username} backgroundColor={"#9DB2BF"}/>
                             </div>
-                            <FeelingsFilter limit={3} onDataChange={setSelectedFeelings}/>
+                            <FeelingsFilter style={{borderRadius: '5px'}} limit={3} onDataChange={setSelectedFeelings}/>
                             <TextareaAutosize
                                 className={styles.input}
                                 maxLength={5000}
                                 placeholder={"Pour it out to the world"}
                                 value={isPostTextValid}
-                                onChange={handlePostText}></TextareaAutosize>
-
+                                onChange={handlePostText}
+                                style={{border: 'none', backgroundColor: 'transparent', color: '#526D82'}}
+                            ></TextareaAutosize>
                             <div className={styles.actions}>
                                 <button className={styles.button} onClick={close}>
                                     cancel

@@ -102,15 +102,6 @@ export default function Posts(props: any) {
                 newData.content = newData.content.filter((post: any) => !uniqueIds.has(post.id));
                 return [...(prevPosts ?? []), ...newData.content];
             });
-            // if(newData.content.length == 0) {
-            //     console.log("empty posts")
-            //     setEmptyPosts(true);
-            // }else {
-            //     console.log(newData.content.length)
-            //     console.log(posts.length)
-            //     console.log("not empty posts")
-            //     setEmptyPosts(false);
-            // }
         } catch (error) {
             console.error('Error fetching data:', error);
         }

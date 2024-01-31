@@ -2,73 +2,76 @@ nextjs-portal {
     display: none;
 }
 
-.DISGUST {
-    margin: 0 1% 0 0;
-    background-color: #8B8682 !important;
-    color: white !important;
-    letter-spacing: 2px;
-    font-family: "Montserrat", sans-serif;
-    font-weight: 900;
-}
-
 .HAPPY {
-    margin: 0 1% 0 0;
-    background-color: #FDD835 !important;
-    letter-spacing: 2px;
-    font-family: "Montserrat", sans-serif;
-    font-weight: 900;
+    background-color: #e1f1e9 !important;
+    letter-spacing: 1px;
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    border-left: 5px solid #26c08a !important;
+    color: #26c08a !important;
 }
 
 .SAD {
-    margin: 0 1% 0 0;
-    background-color: #81D4FA !important;
-    color: white !important;
-    letter-spacing: 2px;
-    font-family: "Montserrat", sans-serif;
-    font-weight: 900;
+    background-color: #dbe6f1 !important;
+    letter-spacing: 1px;
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    border-left: 5px solid #689cbd !important;
+    color: #689cbd !important;
+}
+
+.DISGUST {
+    background-color: #fdede9 !important;
+    letter-spacing: 1px;
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    border-left: 5px solid #d29f6fff !important;
+    color: #d29f6fff !important;
 }
 
 .FEAR {
-    margin: 0 1% 0 0;
-    background-color: #78909C !important;
-    color: white !important;
-    letter-spacing: 2px;
-    font-family: "Montserrat", sans-serif;
-    font-weight: 900;
+    background-color: #ffecff !important;
+    letter-spacing: 1px;
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    border-left: 5px solid #a60dfd84 !important;
+    color: #a60dfd84 !important;
 }
 
 .ANGER {
-    margin: 0 1% 0 0;
-    background-color: #EF5350 !important;
-    color: white !important;
-    letter-spacing: 2px;
-    font-family: "Montserrat", sans-serif;
-    font-weight: 900;
+    background-color: #fde9e9 !important;
+    letter-spacing: 1px;
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    border-left: 5px solid #f86c6b !important;
+    color: #f86c6b !important;
 }
 
 .ANXIOUS {
-    margin: 0 1% 0 0;
-    background-color: #C5CAE9 !important;
-    letter-spacing: 2px;
-    font-family: "Montserrat", sans-serif;
-    font-weight: 900;
+    background-color: #fff7e9 !important;
+    letter-spacing: 1px;
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    border-left: 5px solid #fdc358 !important;
+    color: #fdc358 !important;
 }
 
 .LOVE {
-    margin: 0 1% 0 0;
-    background-color: #FFC0D9 !important;
-    letter-spacing: 2px;
-    font-family: "Montserrat", sans-serif;
-    font-weight: 900;
+    background-color: #ffe0eb !important;
+    letter-spacing: 1px;
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    border-left: 5px solid #f0769f !important;
+    color: #f0769f !important;
 }
 
 .INSPIRE {
-    margin: 0 1% 0 0;
-    background-color: #4CAF50 !important;
-    color: #FFFFFF !important;
-    letter-spacing: 2px;
-    font-family: "Montserrat", sans-serif;
-    font-weight: 900;
+    background-color: #ffffff !important;
+    letter-spacing: 1px;
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    border-left: 5px solid #5252528c !important;
+    color: #5252528c !important;
 }
 
 

@@ -66,6 +66,9 @@
     text-transform: capitalize;
     font-family: "Montserrat SemiBold", sans-serif;
     border-radius: 16px;
+    background: #DDE6ED;
+    cursor: pointer;
+    font-size: 1.5rem;
     box-sizing: border-box;
 }
 
@@ -82,21 +85,17 @@
 }
 
 .create_button {
-    display: flex;
-    position: relative;
-    flex-direction: row;
-    align-items: center;
     justify-content: center;
-    gap: 0 10px;
-    padding: 12px;
+    align-items: center;
+    padding: 10px;
+    background-color: #DDE6ED;
+    border : 2px solid #526D82;
     outline: none;
-    text-transform: capitalize;
-    font-size: calc(2 * calc(min(1vh, 1vw)));
-    border: none;
     border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.1s ease-in-out;
-    box-sizing: border-box;
+    border-bottom: 5px solid #526D82;
+    color: #526D82;
+    font-size: 1.5rem;
+    width: 20%;
 }
 
 .modal > .close {

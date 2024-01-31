@@ -4,15 +4,26 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 15px;
+    padding: 2%;
     box-sizing: border-box;
 }
 
+.add_feeling_button {
+    border: none !important;
+    outline: none !important;
+    cursor: pointer;
+}
+
+.add_feeling_button:hover {
+    outline: none !important;
+    border: none !important;
+    background-color: transparent !important;
+}
+
 .chip {
-    margin: 5px;
-    padding: 5px;
+    margin: 0.5%;
 }
 
 .menu_item:hover {
-    opacity: 0.8;
+    opacity: 0.9;
 }
