@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final EmailSender emailSender;
     private final SecurityUtils securityUtils;
-    private final boolean ENABLEMAIL = false;
+    private static final boolean ENABLE_MAIL = false;
 
     public UserResponseDTO getUser() {
         String username = securityUtils.getCurrentUserName();
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
                 .build();
         userVerificationRepo.save(userVerification);
 
-        if (ENABLEMAIL)
+        if (ENABLE_MAIL)
             emailSender.send(userDTO, confirmationCode);
     }
 

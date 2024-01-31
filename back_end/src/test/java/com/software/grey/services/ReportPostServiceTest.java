@@ -196,8 +196,9 @@ class ReportPostServiceTest {
         // loop over posts and report each one
         for (Post post : posts) {
             postService.report(post.getId());
+            String postId = post.getId();
             Assertions.assertThrows(UserReportedPostBeforeException.class,
-                    () -> postService.report(post.getId()));
+                    () -> postService.report(postId));
         }
     }
 
@@ -209,8 +210,9 @@ class ReportPostServiceTest {
         // loop over posts and report each one
         for (Post post : posts) {
             postService.report(post.getId());
+            String postId = post.getId();
             Assertions.assertThrows(UserReportedPostBeforeException.class,
-                    () -> postService.report(post.getId()));
+                    () -> postService.report(postId));
         }
     }
 
@@ -223,8 +225,8 @@ class ReportPostServiceTest {
 
         User user = userRepo.findByUsername("mocked User1");
         when(securityUtils.getCurrentUser()).thenReturn(user);
-
-        PostNotFoundException exception = assertThrows(PostNotFoundException.class, () -> postService.report(finalRandomUUID.toString()));
+        String UUIDString = finalRandomUUID.toString();
+        PostNotFoundException exception = assertThrows(PostNotFoundException.class, () -> postService.report(UUIDString));
         assertEquals("Post not found", exception.getMessage());
     }
 

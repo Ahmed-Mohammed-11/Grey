@@ -149,8 +149,9 @@ class TestSavedPostService {
         // Mock the securityUtils method
         when(securityUtils.getCurrentUser()).thenReturn(b);
 
+        String postId = postB.getId();
         UserIsAuthorException ex = assertThrows(UserIsAuthorException.class,
-                () -> savedPostService.toggleSavedPost(postB.getId()));
+                () -> savedPostService.toggleSavedPost(postId));
 
         assertThat(ex.getMessage()).isEqualTo("You have written this post");
     }
