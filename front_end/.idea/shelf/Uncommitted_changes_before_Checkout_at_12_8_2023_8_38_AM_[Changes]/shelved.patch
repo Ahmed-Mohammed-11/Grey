@@ -1,0 +1,344 @@
+Index: src/app/feed/page.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>'use client';\r\nimport React, {useEffect, useState} from \"react\";\r\nimport Posts from \"@/app/components/posts/page\";\r\nimport SideBar from \"@/app/components/sidebar/page\";\r\nimport {Box} from \"@mui/system\";\r\n\r\n\r\nfunction Feed() {\r\n\r\n    const [Auth, setAuth] = useState<string | null>(\"\")\r\n    useEffect(() => {\r\n        console.log(\"hello\");\r\n        setAuth(localStorage.getItem(\"Authorization\"));\r\n    })\r\n    return (\r\n        <Box>\r\n            <SideBar width={\"25%\"}/>\r\n            <Posts width={\"75%\"}/>\r\n        </Box>\r\n    )\r\n}\r\n\r\nexport default Feed\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/feed/page.tsx b/src/app/feed/page.tsx
+--- a/src/app/feed/page.tsx	
++++ b/src/app/feed/page.tsx	
+@@ -15,7 +15,7 @@
+     return (
+         <Box>
+             <SideBar width={"25%"}/>
+-            <Posts width={"75%"}/>
++            {/*<Posts width={"75%"}/>*/}
+         </Box>
+     )
+ }
+Index: src/app/components/popup/page.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"use client\";\r\nimport React from 'react';\r\nimport Popup from 'reactjs-popup';\r\nimport styles from \"./page.module.css\"\r\nimport Profile from \"@/app/components/sidebar/profile\";\r\nimport {Box} from \"@mui/system\";\r\nimport {FaPen} from \"react-icons/fa\";\r\nimport {IoSend} from \"react-icons/io5\";\r\nimport {IoMdAdd} from \"react-icons/io\";\r\nimport {Alert, Chip, IconButton, ListItem, Menu, MenuItem, Snackbar, TextareaAutosize, Tooltip} from \"@mui/material\";\r\nimport Feeling from \"@/app/models/dtos/Feeling\";\r\nimport PostDTO from \"@/app/models/dtos/PostDTO\";\r\nimport {CREATE_POST_ENDPOINT} from \"@/app/constants/apiConstants\";\r\nimport createPostController from \"@/app/services/createPostController\";\r\nimport toJSON from \"@/app/utils/readableStreamResponseBodytoJSON\";\r\n\r\nconst allFeelings = new Set<Feeling>([Feeling.HAPPY, Feeling.SAD,\r\n    Feeling.ANGER, Feeling.DISGUST,\r\n    Feeling.FEAR, Feeling.ANXIOUS,\r\n    Feeling.INSPIRE, Feeling.LOVE]);\r\n\r\nexport default function PopupScreen() {\r\n    // Feelings drop down menu\r\n    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);\r\n    const open = Boolean(anchorEl);\r\n    const handleClosePopup = () => {setAnchorEl(null);};\r\n    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {setAnchorEl(event.currentTarget);};\r\n\r\n\r\n    // Feelings chips\r\n    const [selectedFeelings, setSelectedFeelings] = React.useState(new Set<Feeling>());\r\n    const [isFeelingsValid, setIsFeelingsValid] = React.useState(false);\r\n    const [fullFeelings, setFullFeelings] = React.useState(false);\r\n\r\n    const handleFeelingsChange = () => {\r\n        if(selectedFeelings.size === 0) setIsFeelingsValid(false)\r\n        else setIsFeelingsValid(true)\r\n\r\n        if (selectedFeelings.size < 3) setFullFeelings(false)\r\n        else setFullFeelings(true)\r\n    }\r\n    const handleAdd = (feeling: Feeling) => () => {\r\n        if (selectedFeelings.size < 3)\r\n            setSelectedFeelings((feelings) => {\r\n                feelings.add(feeling);\r\n                return new Set<Feeling>(feelings);\r\n            });\r\n        handleFeelingsChange();\r\n    };\r\n    const handleDelete = (chipToDelete: Feeling) => () => {\r\n        setSelectedFeelings((feelings) => {\r\n            feelings.delete(chipToDelete);\r\n            return new Set<Feeling>(feelings);\r\n        });\r\n        handleFeelingsChange();\r\n    };\r\n\r\n\r\n    // Handling post text and send to server\r\n    const [isPostTextValid, setIsPostTextValid] = React.useState(\"\");\r\n    const handlePostText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {setIsPostTextValid(event.target.value);}\r\n    const handleCreatePost = () => {\r\n        let post: PostDTO = {\r\n            postText: isPostTextValid,\r\n            postFeelings: Array.from(selectedFeelings)\r\n        }\r\n        isFeelingsValid && isPostTextValid && sendInfoToServer(post)\r\n    }\r\n\r\n    async function sendInfoToServer(post: PostDTO) {\r\n        // prepare user data to send to server\r\n        let postDTO: PostDTO = {\r\n            postText: post.postText,\r\n            postFeelings: Array.from(post.postFeelings)\r\n        }\r\n        console.log(postDTO);\r\n        fetchResponse(postDTO);\r\n    }\r\n\r\n    const fetchResponse = async (postDTO : PostDTO) => {\r\n        let response = await createPostController.sendPostRequest(postDTO, CREATE_POST_ENDPOINT);\r\n        let jsonResponse = await toJSON(response.body!);\r\n        let responseStat = response.status;\r\n        if (responseStat === 201) {\r\n            handleOpenSnackbar();\r\n            console.log(jsonResponse);\r\n        }\r\n    }\r\n\r\n\r\n    // Handling server response\r\n    const [openSnackbar, setOpenSnackbar] = React.useState(false);\r\n    const handleOpenSnackbar = () => {setOpenSnackbar(true);};\r\n    const handleCloseSnackbar = (event: React.SyntheticEvent | Event, reason?: string) => {\r\n        if (reason === 'clickaway') return;\r\n        setOpenSnackbar(false);\r\n    };\r\n\r\n\r\n\r\n    return (\r\n        <Popup trigger={<button className={styles.create_button}><FaPen/>create post </button>} modal nested>\r\n            {close => {\r\n                return (\r\n                    <section className={styles.container}>\r\n                        <div className={styles.modal}>\r\n                            <div className={styles.profile}>\r\n                                <Profile name={\"@hesham09\"}/>\r\n                            </div>\r\n\r\n                            <Box className={styles.feelings}>\r\n                                <ListItem>\r\n                                    {Array.from(selectedFeelings).map((feeling: any, feelingIndex: any) => (\r\n                                        <Chip\r\n                                            label={feeling}\r\n                                            className={feeling}\r\n                                            onDelete={handleDelete(feeling)}\r\n                                            key={feelingIndex}/>\r\n                                    ))}\r\n                                </ListItem>\r\n                                <Tooltip title=\"Add Feeling\">\r\n                                    <IconButton\r\n                                        id=\"basic-button\"\r\n                                        disabled={fullFeelings}\r\n                                        className={styles.feeling_button}\r\n                                        aria-controls={open ? 'basic-menu' : undefined}\r\n                                        aria-haspopup=\"true\"\r\n                                        aria-expanded={open ? 'true' : undefined}\r\n                                        onClick={handleClick}>\r\n                                        <IoMdAdd/>\r\n                                    </IconButton>\r\n                                </Tooltip>\r\n                                <Menu\r\n                                    id=\"basic-menu\"\r\n                                    anchorEl={anchorEl}\r\n                                    open={open}\r\n                                    onClose={handleClosePopup}\r\n                                    MenuListProps={{'aria-labelledby': 'basic-button',}}>\r\n                                    {Array.from(allFeelings).filter((feeling) =>\r\n                                        !selectedFeelings.has(feeling)).map((feeling: any, feelingIndex: any) => (\r\n                                        <MenuItem className={feeling} onClick={handleAdd(feeling)}>\r\n                                            {feeling}\r\n                                        </MenuItem>\r\n                                    ))}\r\n                                </Menu>\r\n\r\n                            </Box>\r\n\r\n                            <TextareaAutosize\r\n                                className={styles.input}\r\n                                maxLength={5000}\r\n                                placeholder={\"Pour it out to the world\"}\r\n                                value={isPostTextValid}\r\n                                onChange={handlePostText}></TextareaAutosize>\r\n\r\n                            <div className={styles.actions}>\r\n                                <button className={styles.button} onClick={close}>\r\n                                    cancel\r\n                                </button>\r\n                                <button\r\n                                        className={`${styles.button} ${styles.filled}\r\n                                        ${!isFeelingsValid || !isPostTextValid ? styles.disabled : \"\"}`}\r\n                                        disabled={!isFeelingsValid || !isPostTextValid}\r\n                                        onClick={handleCreatePost}>\r\n                                    create post <IoSend/>\r\n                                </button>\r\n                            </div>\r\n\r\n                            <button className={styles.close} onClick={close}>\r\n                                &times;\r\n                            </button>\r\n\r\n                            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>\r\n                                <Alert onClose={handleCloseSnackbar} severity=\"success\" sx={{ width: '100%' }}>\r\n                                    Post created successfully\r\n                                </Alert>\r\n                            </Snackbar>\r\n                        </div>\r\n                    </section>\r\n                );\r\n            }}\r\n        </Popup>)\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/components/popup/page.tsx b/src/app/components/popup/page.tsx
+--- a/src/app/components/popup/page.tsx	
++++ b/src/app/components/popup/page.tsx	
+@@ -33,7 +33,11 @@
+     const [fullFeelings, setFullFeelings] = React.useState(false);
+ 
+     const handleFeelingsChange = () => {
+-        if(selectedFeelings.size === 0) setIsFeelingsValid(false)
++        if(selectedFeelings.size === 0) {
++            console.log("here");
++            console.log(selectedFeelings.size);
++            setIsFeelingsValid(false)
++        }
+         else setIsFeelingsValid(true)
+ 
+         if (selectedFeelings.size < 3) setFullFeelings(false)
+@@ -84,6 +88,8 @@
+         if (responseStat === 201) {
+             handleOpenSnackbar();
+             console.log(jsonResponse);
++            setSelectedFeelings(new Set<Feeling>());
++            setIsPostTextValid("");
+         }
+     }
+ 
+Index: src/app/page.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>'use client';\r\nimport React, {useEffect, useState} from \"react\";\r\n\r\n\r\nfunction Home() {\r\n\r\n    const [Auth, setAuth] = useState<string | null>(\"\")\r\n    useEffect(() => {\r\n        console.log(\"hello\");\r\n        setAuth(localStorage.getItem(\"Authorization\"));\r\n    })\r\n    return (\r\n        <>\r\n            <h2> &nbsp;&nbsp;   hello </h2>\r\n            <br/>\r\n            <h2>  &nbsp;&nbsp; {Auth} </h2>\r\n        </>\r\n    )\r\n}\r\n\r\nexport default Home\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/page.tsx b/src/app/page.tsx
+--- a/src/app/page.tsx	
++++ b/src/app/page.tsx	
+@@ -1,19 +1,7 @@
+-'use client';
+-import React, {useEffect, useState} from "react";
+-
+-
+ function Home() {
+ 
+-    const [Auth, setAuth] = useState<string | null>("")
+-    useEffect(() => {
+-        console.log("hello");
+-        setAuth(localStorage.getItem("Authorization"));
+-    })
+     return (
+         <>
+-            <h2> &nbsp;&nbsp;   hello </h2>
+-            <br/>
+-            <h2>  &nbsp;&nbsp; {Auth} </h2>
+         </>
+     )
+ }
+Index: src/app/signup/page.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>'use client';\r\nimport styles from './page.module.css'\r\nimport {Button, Link, TextField} from \"@mui/material\";\r\nimport {Box} from \"@mui/system\";\r\nimport ThemeRegistry from \"@/app/themes/themeRegistry\";\r\nimport GoogleAuthn from \"@/app/googleAuthentication/GoogleAuthn\";\r\nimport {FaArrowRight} from \"react-icons/fa\";\r\nimport {useRef, useState} from \"react\";\r\nimport signupController from \"@/app/services/signupController\";\r\nimport {SIGNUP_PANEL_TEXT} from \"@/app/constants/displayTextMessages\";\r\nimport {\r\n    HOME_ROUTE,\r\n    SIGN_IN_ROUTE,\r\n    SIGN_UP_BACKEND_ENDPOINT,\r\n    SIGN_UP_VERIFICATION_ENDPOINT\r\n} from \"@/app/constants/apiConstants\";\r\nimport classNames from \"classnames\";\r\nimport clientValidateForm from \"@/app/security/userValidation/clientFormValidation\";\r\nimport signupServerFormValidationMapper from \"@/app/security/userValidation/signupServerFormValidationMapper\";\r\nimport toJSON from \"@/app/utils/readableStreamResponseBodytoJSON\";\r\nimport {useRouter} from \"next/navigation\";\r\nfunction Page() {\r\n    const usernameRef = useRef<HTMLInputElement>(null);\r\n    const emailRef = useRef<HTMLInputElement>(null);\r\n    const passwordRef = useRef<HTMLInputElement>(null);\r\n    const [isUserValid, setIsUserValid] = useState({\r\n        username: true,\r\n        email: true,\r\n        password: true\r\n    });\r\n    const [errors, setErrors] = useState({\r\n        username: \"\",\r\n        email: \"\",\r\n        password: \"\"\r\n    });\r\n\r\n    const router = useRouter();\r\n\r\n    const handleSubmit = () => {\r\n        // user credentials\r\n        let user: User = {\r\n            username: usernameRef.current!.value,\r\n            email: emailRef.current!.value,\r\n            password: passwordRef.current!.value\r\n        }\r\n\r\n        // validate user credentials on client side\r\n        let { isUserValid, errors} = clientValidateForm(user)\r\n        setIsUserValid(isUserValid)\r\n        setErrors(errors);\r\n\r\n        // if user credentials are valid, try send to server\r\n        isUserValid.username && isUserValid.email && isUserValid.password && sendInfoToServer(user)\r\n    }\r\n\r\n    async function sendInfoToServer(user: UserDTO) {\r\n        // prepare user data to send to server\r\n        let userDTO: UserDTO = {\r\n            username: user.username,\r\n            email: user.email,\r\n            password: user.password\r\n        }\r\n\r\n        fetchResponse(userDTO);\r\n    }\r\n\r\n    const fetchResponse = async (userDTO: UserDTO) => {\r\n        let response = await signupController.sendPostRequest(userDTO, SIGN_UP_BACKEND_ENDPOINT);\r\n        // toJSON util to convert ReadableStream to JSON\r\n        let jsonResponse = await toJSON(response.body!);\r\n        let responseStat = response.status;\r\n        //if response status is 200, redirect to home page\r\n        (responseStat == 200) && router.push(HOME_ROUTE);\r\n        //if response status is not 200, map response from server to display appropriate error messages\r\n        //and if 200 get auth token and store it in local storage\r\n        let {isUserValid, errors} = signupServerFormValidationMapper(responseStat, jsonResponse, userDTO)\r\n        setIsUserValid(isUserValid);\r\n        setErrors(errors);\r\n    }\r\n\r\n\r\n    // classes of the corner shapes\r\n    let topLeftShapeClass = classNames(styles.topLeft, styles.cornerShapes);\r\n    let bottomRightShapeClass = classNames(styles.bottomRight, styles.cornerShapes);\r\n\r\n    return (\r\n\r\n        <ThemeRegistry options={{key: 'mui'}}>\r\n            <Box className={topLeftShapeClass}\r\n                 sx={{background: (theme) => theme.palette.primary.light}}>\r\n            </Box>\r\n            <Box className={bottomRightShapeClass}\r\n                 sx={{background: (theme) => theme.palette.primary.light}}>\r\n            </Box>\r\n\r\n\r\n            <Box className={styles.container}>\r\n                <Box className={styles.signupForm}>\r\n                    <TextField\r\n                        className={styles.textArea}\r\n                        label='Username'\r\n                        placeholder='Pick a username'\r\n                        inputRef={usernameRef}\r\n                        required\r\n                        variant=\"filled\"\r\n                        error = {!isUserValid.username}\r\n                        helperText = {(isUserValid.username)? \"\": errors.username}\r\n                        InputProps={{style: {background: \"#FFF\"}}}\r\n                    >\r\n                    </TextField>\r\n\r\n                    <TextField\r\n                        className={styles.textArea}\r\n                        label='Email' type=\"email\"\r\n                        placeholder='Email'\r\n                        inputRef={emailRef}\r\n                        required\r\n                        variant=\"filled\"\r\n                        error = {!isUserValid.email}\r\n                        helperText = {(isUserValid.email)? \"\": errors.email}\r\n                        InputProps={{style: {background: \"#FFF\"}}}\r\n                    >\r\n                    </TextField>\r\n                    <TextField\r\n                        className={styles.textArea}\r\n                        label='Password'\r\n                        type=\"password\"\r\n                        placeholder='pick a password'\r\n                        inputRef={passwordRef}\r\n                        required\r\n                        variant=\"filled\"\r\n                        error = {!isUserValid.password}\r\n                        helperText = {(isUserValid.password)? \"Make it strong\": errors.password}\r\n                        InputProps={{style: {background: \"#FFF\"}}}\r\n                    >\r\n                    </TextField>\r\n                    <Button\r\n                        className={styles.button}\r\n                        variant=\"contained\"\r\n                        size=\"large\"\r\n                        onClick={handleSubmit}>\r\n                        Create Account\r\n                    </Button>\r\n                    <text> OR</text>\r\n                    <GoogleAuthn/>\r\n\r\n                </Box>\r\n\r\n                <Box className={styles.panel}>\r\n                    <Box className={styles.panelBanner}> GREY </Box>\r\n                    <text className={styles.panelText}> {SIGNUP_PANEL_TEXT} </text>\r\n                </Box>\r\n\r\n                <Link href={SIGN_IN_ROUTE}>\r\n                    <Button className={[styles.iconButton].join()} variant=\"contained\" size=\"large\">\r\n                        <FaArrowRight size={40} style={{strokeWidth: '2', stroke: 'black'}}/>\r\n                    </Button>\r\n                </Link>\r\n\r\n            </Box>\r\n        </ThemeRegistry>\r\n\r\n    )\r\n}\r\n\r\nexport default Page;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/signup/page.tsx b/src/app/signup/page.tsx
+--- a/src/app/signup/page.tsx	
++++ b/src/app/signup/page.tsx	
+@@ -12,7 +12,6 @@
+     HOME_ROUTE,
+     SIGN_IN_ROUTE,
+     SIGN_UP_BACKEND_ENDPOINT,
+-    SIGN_UP_VERIFICATION_ENDPOINT
+ } from "@/app/constants/apiConstants";
+ import classNames from "classnames";
+ import clientValidateForm from "@/app/security/userValidation/clientFormValidation";
+Index: src/app/googleAuthentication/GoogleAuthn.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"use client\";\r\nimport {Link} from \"@mui/material\";\r\nimport {signOut, useSession} from \"next-auth/react\";\r\nimport {useState} from 'react';\r\nimport {GOOGLE_AUTH_URL} from \"@/app/constants/apiConstants\";\r\nimport styles from \"@/app/signup/page.module.css\";\r\nimport classNames from \"classnames\";\r\n\r\n\r\nconst GoogleLogo = (props: any) => (\r\n    <svg\r\n        width=\"24\"\r\n        height=\"24\"\r\n        viewBox=\"0 0 775 794\"\r\n        fill=\"none\"\r\n        xmlns=\"http://www.w3.org/2000/svg\"\r\n        {...props}>\r\n        <path\r\n            d=\"M775 405.797C775 373.248 772.362 349.496 766.653 324.865H395.408V471.773H613.32C608.929 508.282 585.204 563.264 532.482 600.209L531.743 605.127L649.124 696.166L657.256 696.979C731.943 627.921 775 526.315 775 405.797\"\r\n            fill=\"#4285F4\"/>\r\n        <path\r\n            d=\"M395.408 792.866C502.167 792.866 591.792 757.676 657.256 696.979L532.482 600.209C499.093 623.521 454.279 639.796 395.408 639.796C290.845 639.796 202.099 570.741 170.463 475.294L165.826 475.688L43.772 570.256L42.1759 574.698C107.198 704.013 240.758 792.866 395.408 792.866Z\"\r\n            fill=\"#34A853\"/>\r\n        <path\r\n            d=\"M170.463 475.294C162.116 450.662 157.285 424.269 157.285 397C157.285 369.728 162.116 343.338 170.024 318.706L169.803 313.46L46.2193 217.373L42.1759 219.299C15.3772 272.961 0 333.222 0 397C0 460.778 15.3772 521.036 42.1759 574.698L170.463 475.294\"\r\n            fill=\"#FBBC05\"/>\r\n        <path\r\n            d=\"M395.408 154.201C469.656 154.201 519.74 186.31 548.298 213.143L659.891 104.059C591.356 40.2812 502.167 1.13428 395.408 1.13428C240.758 1.13428 107.198 89.9835 42.1759 219.299L170.024 318.706C202.099 223.259 290.845 154.201 395.408 154.201\"\r\n            fill=\"#EB4335\"/>\r\n    </svg>\r\n);\r\n\r\nconst GoogleAuthn = () => {\r\n    const {data: session, status} = useSession();\r\n    const [loading, setLoading] = useState(false);\r\n    let googleButtonClasses = classNames(styles.googleButton, styles.googleButtonText);\r\n\r\n\r\n    if (status === \"loading\") {\r\n        return <p>Loading...</p>;\r\n    }\r\n\r\n    if (session && session.user) {\r\n        return (\r\n            <Link onClick={() => signOut()}>\r\n                Signed in {session.user.name}\r\n            </Link>)\r\n\r\n    } else\r\n\r\n\r\n        return (\r\n\r\n            <Link className={googleButtonClasses} href={GOOGLE_AUTH_URL}>\r\n                <GoogleLogo size={8}/> &nbsp;\r\n                Continue with Google\r\n            </Link>\r\n        );\r\n};\r\n\r\n\r\n// const GoogleAuthn = () => {\r\n//     const { data: session } = useSession();\r\n//     const [loading, setLoading] = useState(false);\r\n//\r\n//     const handleSignInWithGoogle = async () => {\r\n//         await signIn('google')\r\n//     }\r\n//\r\n//     const sendInfoToServer = async (userInfo : UserDTO) => {\r\n//         userController.sendCredentials(userInfo)\r\n//     };\r\n//\r\n//     if (session && session.user) {\r\n//         return (\r\n//             <Link onClick={() => signOut()}>\r\n//                 Signed in {session.user.name}\r\n//             </Link>)\r\n//\r\n//     } else\r\n//         return (\r\n//\r\n//         <Button\r\n//             className={[styles.googleButton].join()}\r\n//             onClick={() => {\r\n//                 handleSignInWithGoogle().then(r => {\r\n//                     sendInfoToServer(session?.user as UserDTO)\r\n//                 })\r\n//             }}\r\n//             disabled={loading}>\r\n//                 <GoogleLogo size={10}/>\r\n//                 {loading ? 'Signing in ...' : 'Continue with Google'}\r\n//         </Button>\r\n//\r\n//     );\r\n// };\r\n//\r\nexport default GoogleAuthn;\r\n//\r\n//\r\n//\r\n//\r\n//\r\n//\r\n//\r\n//\r\n//\r\n\r\n//\r\n// const GoogleAuthn = () => {\r\n//     const {data: session} = useSession();\r\n//\r\n//     if (session && session.user) {\r\n//         return (\r\n//             <Link onClick={() => signOut()}>\r\n//                 Signed in {session.user.name}\r\n//             </Link>)\r\n//\r\n//     } else return (\r\n//\r\n//         <Button\r\n//             className={[styles.googleButton].join()}\r\n//             onClick={() => {\r\n//                 signIn().then(r => {\r\n//                         sendInfoToServer({username: session?.user?.name, email: session?.user?.email})\r\n//                     }\r\n//                 )\r\n//             }}>\r\n//             <GoogleLogo size={10}/> Sign in with Google\r\n//         </Button>\r\n//\r\n//     );\r\n// };\r\n//\r\n// function sendInfoToServer(formData: any) {\r\n//     let userDTO = {\r\n//         name: formData.username,\r\n//         email: formData.email,\r\n//         password: formData.password\r\n//     }\r\n//     userController.sendCredentials(userDTO)\r\n// }\r\n//\r\n// export default GoogleAuthn;\r\n//\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/googleAuthentication/GoogleAuthn.tsx b/src/app/googleAuthentication/GoogleAuthn.tsx
+--- a/src/app/googleAuthentication/GoogleAuthn.tsx	
++++ b/src/app/googleAuthentication/GoogleAuthn.tsx	
+@@ -59,87 +59,4 @@
+ };
+ 
+ 
+-// const GoogleAuthn = () => {
+-//     const { data: session } = useSession();
+-//     const [loading, setLoading] = useState(false);
+-//
+-//     const handleSignInWithGoogle = async () => {
+-//         await signIn('google')
+-//     }
+-//
+-//     const sendInfoToServer = async (userInfo : UserDTO) => {
+-//         userController.sendCredentials(userInfo)
+-//     };
+-//
+-//     if (session && session.user) {
+-//         return (
+-//             <Link onClick={() => signOut()}>
+-//                 Signed in {session.user.name}
+-//             </Link>)
+-//
+-//     } else
+-//         return (
+-//
+-//         <Button
+-//             className={[styles.googleButton].join()}
+-//             onClick={() => {
+-//                 handleSignInWithGoogle().then(r => {
+-//                     sendInfoToServer(session?.user as UserDTO)
+-//                 })
+-//             }}
+-//             disabled={loading}>
+-//                 <GoogleLogo size={10}/>
+-//                 {loading ? 'Signing in ...' : 'Continue with Google'}
+-//         </Button>
+-//
+-//     );
+-// };
+-//
+ export default GoogleAuthn;
+-//
+-//
+-//
+-//
+-//
+-//
+-//
+-//
+-//
+-
+-//
+-// const GoogleAuthn = () => {
+-//     const {data: session} = useSession();
+-//
+-//     if (session && session.user) {
+-//         return (
+-//             <Link onClick={() => signOut()}>
+-//                 Signed in {session.user.name}
+-//             </Link>)
+-//
+-//     } else return (
+-//
+-//         <Button
+-//             className={[styles.googleButton].join()}
+-//             onClick={() => {
+-//                 signIn().then(r => {
+-//                         sendInfoToServer({username: session?.user?.name, email: session?.user?.email})
+-//                     }
+-//                 )
+-//             }}>
+-//             <GoogleLogo size={10}/> Sign in with Google
+-//         </Button>
+-//
+-//     );
+-// };
+-//
+-// function sendInfoToServer(formData: any) {
+-//     let userDTO = {
+-//         name: formData.username,
+-//         email: formData.email,
+-//         password: formData.password
+-//     }
+-//     userController.sendCredentials(userDTO)
+-// }
+-//
+-// export default GoogleAuthn;
+-//
+Index: ../back_end/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>spring.profiles.active=dev\r\norg.springframework.batch.level=ERROR\r\n# Database configuration\r\nspring.datasource.url=jdbc:mysql://localhost:3306/grey?createDatabaseIfNotExist=true\r\nspring.datasource.username=grey.user\r\nspring.datasource.password=password grey\r\n\r\n# Google oAuth configuration\r\nspring.security.oauth2.client.registration.google.client-id=915852862463-lhg3fcm3q472ka2ls3ijqu86pnco6q24.apps.googleusercontent.com\r\nspring.security.oauth2.client.registration.google.client-secret=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\r\n#spring.security.oauth2.client.registration.google.redirect-uri={baseUrl}/login/oauth2/code/{registrationId}\r\nspring.security.oauth2.client.registration.google.scope=email,profile,openid\r\nspring.security.oauth2.client.provider.google.user-info-uri=https://www.googleapis.com/oauth2/v3/userinfo\r\n\r\n\r\nfront.url=http://localhost:3000\r\nback.url = http://localhost:8080/\r\n\r\n# Hibernate configuration\r\nspring.jpa.hibernate.ddl-auto=validate\r\n\r\n\r\n# email constants\r\ngrey.from=greynoreply@gmail.com\r\ngrey.password=xkjhaauagkxaqhhp\r\ngrey.email.port=25\r\ngrey.email.host=smtp.gmail.com
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../back_end/src/main/resources/application.properties b/../back_end/src/main/resources/application.properties
+--- a/../back_end/src/main/resources/application.properties	
++++ b/../back_end/src/main/resources/application.properties	
+@@ -2,8 +2,8 @@
+ org.springframework.batch.level=ERROR
+ # Database configuration
+ spring.datasource.url=jdbc:mysql://localhost:3306/grey?createDatabaseIfNotExist=true
+-spring.datasource.username=grey.user
+-spring.datasource.password=password grey
++spring.datasource.username=root
++spring.datasource.password=Password
+ 
+ # Google oAuth configuration
+ spring.security.oauth2.client.registration.google.client-id=915852862463-lhg3fcm3q472ka2ls3ijqu86pnco6q24.apps.googleusercontent.com
+Index: src/app/layout.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import type {Metadata} from 'next'\r\nimport {Inter} from 'next/font/google'\r\nimport './globals.css'\r\nimport Providers from \"@/app/googleAuthentication/Providers\";\r\n\r\nconst inter = Inter({subsets: ['latin']})\r\n\r\nexport const metadata: Metadata = {\r\n    title: 'Create Next App',\r\n    description: 'Generated by create next app',\r\n}\r\n\r\n\r\nexport default function RootLayout({\r\n                                       children,\r\n                                   }: {\r\n    children: React.ReactNode\r\n}) {\r\n    return (\r\n        <html lang=\"en\">\r\n        <body className={inter.className}>\r\n        <Providers>\r\n            {children}\r\n        </Providers>\r\n        </body>\r\n        </html>\r\n    )\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/layout.tsx b/src/app/layout.tsx
+--- a/src/app/layout.tsx	
++++ b/src/app/layout.tsx	
+@@ -2,6 +2,7 @@
+ import {Inter} from 'next/font/google'
+ import './globals.css'
+ import Providers from "@/app/googleAuthentication/Providers";
++import ThemeRegistry from "@/app/themes/themeRegistry";
+ 
+ const inter = Inter({subsets: ['latin']})
+ 
+@@ -20,7 +21,9 @@
+         <html lang="en">
+         <body className={inter.className}>
+         <Providers>
+-            {children}
++            {/*<ThemeRegistry options={{key: 'mui'}}>*/}
++                {children}
++            {/*</ThemeRegistry>*/}
+         </Providers>
+         </body>
+         </html>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"f049c4c5-4e42-40af-95ac-c71fd7a6a4ac\" name=\"Changes\" comment=\"SG-103 Merging complete\">\r\n      <change beforePath=\"$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/DTO/Feeling.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/models/dtos/Feeling.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/DTO/PostDTO.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/models/dtos/PostDTO.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/Feed/page.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/Feed/page.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/Popup/page.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/Popup/page.tsx\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"DaemonCodeAnalyzer\">\r\n    <disable_hints>\r\n      <file url=\"file://$PROJECT_DIR$/src/app/signup/page.tsx\" />\r\n    </disable_hints>\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"JavaScript File\" />\r\n        <option value=\"TypeScript File\" />\r\n        <option value=\"TypeScript JSX File\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$/..\" value=\"SG-44-Front-Sign-up-Google-OAuth-Integration\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$/..\" />\r\n  </component>\r\n  <component name=\"HighlightingSettingsPerFile\">\r\n    <setting file=\"file://$PROJECT_DIR$/src/app/signup/page.tsx\" root0=\"SKIP_INSPECTION\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProblemsViewState\">\r\n    <hideBySeverity>\r\n      <option value=\"11\" />\r\n      <option value=\"12\" />\r\n      <option value=\"13\" />\r\n      <option value=\"14\" />\r\n      <option value=\"15\" />\r\n      <option value=\"16\" />\r\n      <option value=\"100\" />\r\n      <option value=\"200\" />\r\n    </hideBySeverity>\r\n    <option name=\"selectedTabId\" value=\"ProjectErrors\" />\r\n    <option name=\"sortBySeverity\" value=\"false\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2Y9aHTjHe9A24X1QS3X4VZHrB5L\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n    <option name=\"showMembers\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ASKED_ADD_EXTERNAL_FILES\": \"true\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"WebServerToolWindowFactoryState\": \"false\",\r\n    \"git-widget-placeholder\": \"SG-37-Front-represent-the-status-code-to-user-for-writing-posts\",\r\n    \"ignore.virus.scanning.warn.message\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Omar/Projects/Grey/SWE-Project/back_end\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"settings.editor.selected.configurable\": \"terminal\",\r\n    \"ts.external.directory.path\": \"C:\\\\Users\\\\Belal\\\\Desktop\\\\First Semester\\\\Software Engineering\\\\Project\\\\SWE-Project\\\\front_end\\\\node_modules\\\\typescript\\\\lib\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Belal\\Desktop\\First Semester\\Software Engineering\\Project\\SWE-Project\\front_end\\src\\app\\models\\dtos\" />\r\n      <recent name=\"D:\\Projects\\SWE-Grey\\SWE-Project\\front_end\\src\\app\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"grey\" type=\"js.build_tools.npm\">\r\n      <package-json value=\"$PROJECT_DIR$/package.json\" />\r\n      <command value=\"run\" />\r\n      <scripts>\r\n        <script value=\"dev\" />\r\n      </scripts>\r\n      <node-interpreter value=\"project\" />\r\n      <envs />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"f049c4c5-4e42-40af-95ac-c71fd7a6a4ac\" name=\"Changes\" comment=\"\" />\r\n      <created>1699940167339</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1699940167339</updated>\r\n      <workItem from=\"1699940168122\" duration=\"2147000\" />\r\n      <workItem from=\"1699942357958\" duration=\"1819000\" />\r\n      <workItem from=\"1699957661065\" duration=\"5284000\" />\r\n      <workItem from=\"1699967597966\" duration=\"19307000\" />\r\n      <workItem from=\"1700058387702\" duration=\"18182000\" />\r\n      <workItem from=\"1700120692601\" duration=\"1188000\" />\r\n      <workItem from=\"1701168511715\" duration=\"630000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Google button enhanced &amp; side button added\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1699959647319</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1699959647319</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Edited text fields UI according to figma\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1699962863563</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1699962863563</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"SG-44 Sign in button for traverse added\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1699971739313</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1699971739313</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"SG-44 Prepare data for Back-end integration\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1699981933635</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1699981933635</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"SG-103 Controller created but not tested\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1699982863176</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1699982863176</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"SG-103 APIs added but not working\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1699993990923</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1699993990923</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"SG-103 APIs added but not working\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1699996161352</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1699996161352</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"SG-103 Merging complete\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1701277688638</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1701277688638</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"9\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n    <MESSAGE value=\"Google button enhanced &amp; side button added\" />\r\n    <MESSAGE value=\"Edited text fields UI according to figma\" />\r\n    <MESSAGE value=\"Sign in button for traverse added\" />\r\n    <MESSAGE value=\"SG-44 Sign in button for traverse added\" />\r\n    <MESSAGE value=\"SG-44 Prepare data for Back-end integration\" />\r\n    <MESSAGE value=\"SG-103 Controller created but not tested\" />\r\n    <MESSAGE value=\"SG-103 APIs added but not working\" />\r\n    <MESSAGE value=\"SG-103 Merging complete\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"SG-103 Merging complete\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -5,11 +5,30 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="SG-103 Merging complete">
+-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/utils/EndPoints.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/DTO/Feeling.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/models/dtos/Feeling.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/DTO/PostDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/models/dtos/PostDTO.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/Feed/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Feed/page.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/Popup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Popup/page.tsx" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/security/OAuth2LoginSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/java/com/software/grey/security/OAuth2LoginSuccessHandler.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../back_end/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/resources/application.properties" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_1.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_12_22_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_12_22_PM__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_21_2023_4_02_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_21_2023_4_02_PM__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_20_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_20_AM__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_20_AM__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_20_AM__Changes_1.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_32_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_32_AM__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_12_19_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_12_19_PM__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_12_19_PM__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_12_19_PM__Changes_1.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_12_21_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_12_21_PM__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_7_50_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_7_50_PM__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_28_2023_7_38_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_28_2023_7_38_PM__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_28_2023_7_38_PM__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_28_2023_7_38_PM__Changes_1.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_21_2023_1_13_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_21_2023_1_13_PM__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/app/components/popup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/popup/page.tsx" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/app/feed/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/feed/page.tsx" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/app/googleAuthentication/GoogleAuthn.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/googleAuthentication/GoogleAuthn.tsx" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/app/signup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/signup/page.tsx" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/app/themes/darkTheme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/themes/darkTheme.tsx" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -39,6 +58,10 @@
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+   </component>
+   <component name="HighlightingSettingsPerFile">
++    <setting file="file://$PROJECT_DIR$/src/app/components/popup/page.tsx" root0="SKIP_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/src/app/login/page.tsx" root0="SKIP_INSPECTION" />
++    <setting file="file://$PROJECT_DIR$/src/app/security/userValidation/signinServerFormValidationMapper.tsx" root0="SKIP_INSPECTION" />
++    <setting file="file://$PROJECT_DIR$/src/app/services/signinController.tsx" root0="SKIP_INSPECTION" />
+     <setting file="file://$PROJECT_DIR$/src/app/signup/page.tsx" root0="SKIP_INSPECTION" />
+   </component>
+   <component name="MarkdownSettingsMigration">
+@@ -76,7 +99,7 @@
+     "RunOnceActivity.OpenProjectViewOnStart": "true",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+     "WebServerToolWindowFactoryState": "false",
+-    "git-widget-placeholder": "SG-37-Front-represent-the-status-code-to-user-for-writing-posts",
++    "git-widget-placeholder": "SG-3-milestone1",
+     "ignore.virus.scanning.warn.message": "true",
+     "last_opened_file_path": "C:/Omar/Projects/Grey/SWE-Project/back_end",
+     "node.js.detected.package.eslint": "true",
+@@ -85,7 +108,7 @@
+     "node.js.selected.package.tslint": "(autodetect)",
+     "nodejs_package_manager_path": "npm",
+     "settings.editor.selected.configurable": "terminal",
+-    "ts.external.directory.path": "C:\\Users\\Belal\\Desktop\\First Semester\\Software Engineering\\Project\\SWE-Project\\front_end\\node_modules\\typescript\\lib",
++    "ts.external.directory.path": "D:\\Projects\\SWE-Grey\\SWE-Project\\front_end\\node_modules\\typescript\\lib",
+     "vue.rearranger.settings.migration": "true"
+   }
+ }]]></component>
+Index: ../back_end/src/main/java/com/software/grey/security/OAuth2LoginSuccessHandler.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.software.grey.security;\r\n\r\nimport com.software.grey.services.UserService;\r\nimport jakarta.servlet.ServletException;\r\nimport jakarta.servlet.http.HttpServletRequest;\r\nimport jakarta.servlet.http.HttpServletResponse;\r\nimport org.springframework.beans.factory.annotation.Value;\r\nimport org.springframework.context.annotation.Lazy;\r\nimport org.springframework.security.core.Authentication;\r\nimport org.springframework.security.oauth2.core.user.DefaultOAuth2User;\r\nimport org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;\r\nimport org.springframework.stereotype.Component;\r\n\r\nimport java.io.IOException;\r\n\r\n@Component\r\npublic class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {\r\n\r\n    @Value(\"${front.url}\")\r\n    private String frontUrl;\r\n\r\n    private UserService userService;\r\n\r\n    public OAuth2LoginSuccessHandler(@Lazy UserService userService) {\r\n        this.userService = userService;\r\n    }\r\n\r\n    @Override\r\n    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {\r\n        userService.saveGoogleUser((DefaultOAuth2User) authentication.getPrincipal());\r\n        this.setAlwaysUseDefaultTargetUrl(true);\r\n        this.setDefaultTargetUrl(frontUrl);\r\n        super.onAuthenticationSuccess(request, response, authentication);\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../back_end/src/main/java/com/software/grey/security/OAuth2LoginSuccessHandler.java b/../back_end/src/main/java/com/software/grey/security/OAuth2LoginSuccessHandler.java
+--- a/../back_end/src/main/java/com/software/grey/security/OAuth2LoginSuccessHandler.java	
++++ b/../back_end/src/main/java/com/software/grey/security/OAuth2LoginSuccessHandler.java	
+@@ -29,7 +29,7 @@
+     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
+         userService.saveGoogleUser((DefaultOAuth2User) authentication.getPrincipal());
+         this.setAlwaysUseDefaultTargetUrl(true);
+-        this.setDefaultTargetUrl(frontUrl);
++        this.setDefaultTargetUrl(frontUrl + "/feed");
+         super.onAuthenticationSuccess(request, response, authentication);
+     }
+ 
+diff --git a/src/app/themes/darkTheme.ts b/src/app/themes/darkTheme.tsx
+rename from src/app/themes/darkTheme.ts
+rename to src/app/themes/darkTheme.tsx

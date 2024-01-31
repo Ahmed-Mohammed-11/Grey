@@ -1,0 +1,199 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"f049c4c5-4e42-40af-95ac-c71fd7a6a4ac\" name=\"Changes\" comment=\"SG-103 Merging complete\">\r\n      <change afterPath=\"$PROJECT_DIR$/public/logo.png\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/../back_end/src/main/resources/application.properties\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/../back_end/src/main/resources/application.properties\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_21_2023_4_02_PM__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_21_2023_4_02_PM__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_20_AM__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_20_AM__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_12_19_PM__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_12_19_PM__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_7_50_PM__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_7_50_PM__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_28_2023_7_38_PM__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_28_2023_7_38_PM__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_21_2023_1_13_PM__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_21_2023_1_13_PM__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/components/feelingsFilter/page.module.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/components/feelingsFilter/page.module.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/components/feelingsFilter/page.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/components/feelingsFilter/page.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/components/popup/page.module.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/components/popup/page.module.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/components/popup/page.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/components/popup/page.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/components/post/page.module.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/components/post/page.module.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/components/post/page.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/components/post/page.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/components/posts/page.module.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/components/posts/page.module.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/components/posts/page.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/components/posts/page.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/components/sidebar/page.module.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/components/sidebar/page.module.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/components/sidebar/page.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/components/sidebar/page.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/components/sidebar/profile.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/components/sidebar/user.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/constants/displayTextMessages.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/constants/displayTextMessages.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/feed/page.module.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/feed/page.module.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/feed/page.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/feed/page.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/globals.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/globals.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/page.module.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/page.module.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/page.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/page.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/profile/page.module.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/profile/page.module.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/app/profile/page.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/app/profile/page.tsx\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"DaemonCodeAnalyzer\">\r\n    <disable_hints>\r\n      <file url=\"file://$PROJECT_DIR$/src/app/signup/page.tsx\" />\r\n    </disable_hints>\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"JavaScript File\" />\r\n        <option value=\"TypeScript File\" />\r\n        <option value=\"TypeScript JSX File\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$/..\" value=\"SG-44-Front-Sign-up-Google-OAuth-Integration\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$/..\" />\r\n  </component>\r\n  <component name=\"HighlightingSettingsPerFile\">\r\n    <setting file=\"file://$PROJECT_DIR$/package.json\" root0=\"FORCE_HIGHLIGHTING\" />\r\n    <setting file=\"file://$PROJECT_DIR$/src/app/signup/page.tsx\" root0=\"SKIP_INSPECTION\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProblemsViewState\">\r\n    <hideBySeverity>\r\n      <option value=\"11\" />\r\n      <option value=\"12\" />\r\n      <option value=\"13\" />\r\n      <option value=\"14\" />\r\n      <option value=\"15\" />\r\n      <option value=\"16\" />\r\n      <option value=\"100\" />\r\n      <option value=\"200\" />\r\n    </hideBySeverity>\r\n    <option name=\"selectedTabId\" value=\"ProjectErrors\" />\r\n    <option name=\"sortBySeverity\" value=\"false\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2Y9aHTjHe9A24X1QS3X4VZHrB5L\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n    <option name=\"showMembers\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ASKED_ADD_EXTERNAL_FILES\": \"true\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"WebServerToolWindowFactoryState\": \"false\",\r\n    \"git-widget-placeholder\": \"SG-120-Refactor-Frontend-code\",\r\n    \"ignore.virus.scanning.warn.message\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/Belal/Desktop/First Semester/Software Engineering/Project/SWE-Project/front_end/public\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"settings.editor.selected.configurable\": \"preferences.keymap\",\r\n    \"ts.external.directory.path\": \"C:\\\\Users\\\\Belal\\\\Desktop\\\\First Semester\\\\Software Engineering\\\\Project\\\\SWE-Project\\\\front_end\\\\node_modules\\\\typescript\\\\lib\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Belal\\Desktop\\First Semester\\Software Engineering\\Project\\SWE-Project\\front_end\\public\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Belal\\Desktop\\First Semester\\Software Engineering\\Project\\SWE-Project\\front_end\\src\\app\\components\\sidebar\" />\r\n      <recent name=\"C:\\Users\\Belal\\Desktop\\First Semester\\Software Engineering\\Project\\SWE-Project\\front_end\\src\\app\\profile\" />\r\n      <recent name=\"C:\\Users\\Belal\\Desktop\\First Semester\\Software Engineering\\Project\\SWE-Project\\front_end\\public\" />\r\n      <recent name=\"C:\\Users\\Belal\\Desktop\\First Semester\\Software Engineering\\Project\\SWE-Project\\front_end\\src\\app\\models\\dtos\" />\r\n      <recent name=\"D:\\Projects\\SWE-Grey\\SWE-Project\\front_end\\src\\app\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"grey\" type=\"js.build_tools.npm\">\r\n      <package-json value=\"$PROJECT_DIR$/package.json\" />\r\n      <command value=\"run\" />\r\n      <scripts>\r\n        <script value=\"dev\" />\r\n      </scripts>\r\n      <node-interpreter value=\"project\" />\r\n      <envs />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"f049c4c5-4e42-40af-95ac-c71fd7a6a4ac\" name=\"Changes\" comment=\"\" />\r\n      <created>1699940167339</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1699940167339</updated>\r\n      <workItem from=\"1699940168122\" duration=\"2147000\" />\r\n      <workItem from=\"1699942357958\" duration=\"1819000\" />\r\n      <workItem from=\"1699957661065\" duration=\"5284000\" />\r\n      <workItem from=\"1699967597966\" duration=\"19307000\" />\r\n      <workItem from=\"1700058387702\" duration=\"18182000\" />\r\n      <workItem from=\"1700120692601\" duration=\"1188000\" />\r\n      <workItem from=\"1701168511715\" duration=\"630000\" />\r\n      <workItem from=\"1702153206945\" duration=\"87000\" />\r\n      <workItem from=\"1702153450901\" duration=\"2853000\" />\r\n      <workItem from=\"1702226815689\" duration=\"4564000\" />\r\n      <workItem from=\"1702387395959\" duration=\"643000\" />\r\n      <workItem from=\"1702751037725\" duration=\"13239000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Google button enhanced &amp; side button added\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1699959647319</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1699959647319</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Edited text fields UI according to figma\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1699962863563</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1699962863563</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"SG-44 Sign in button for traverse added\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1699971739313</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1699971739313</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"SG-44 Prepare data for Back-end integration\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1699981933635</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1699981933635</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"SG-103 Controller created but not tested\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1699982863176</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1699982863176</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"SG-103 APIs added but not working\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1699993990923</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1699993990923</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"SG-103 APIs added but not working\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1699996161352</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1699996161352</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"SG-103 Merging complete\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1701277688638</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1701277688638</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"9\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n    <MESSAGE value=\"Google button enhanced &amp; side button added\" />\r\n    <MESSAGE value=\"Edited text fields UI according to figma\" />\r\n    <MESSAGE value=\"Sign in button for traverse added\" />\r\n    <MESSAGE value=\"SG-44 Sign in button for traverse added\" />\r\n    <MESSAGE value=\"SG-44 Prepare data for Back-end integration\" />\r\n    <MESSAGE value=\"SG-103 Controller created but not tested\" />\r\n    <MESSAGE value=\"SG-103 APIs added but not working\" />\r\n    <MESSAGE value=\"SG-103 Merging complete\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"SG-103 Merging complete\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -4,9 +4,7 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="SG-103 Merging complete">
+-      <change afterPath="$PROJECT_DIR$/public/logo.png" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/../back_end/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../back_end/src/main/resources/application.properties" afterDir="false" />
++    <list default="true" id="f049c4c5-4e42-40af-95ac-c71fd7a6a4ac" name="Changes" comment="SG-120 some code structure refactor and &#10;display bugs">
+       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_14_2023_11_07_AM__Changes_.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_21_2023_4_02_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_21_2023_4_02_PM__Changes_.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_20_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_26_2023_10_20_AM__Changes_.xml" afterDir="false" />
+@@ -15,25 +13,6 @@
+       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_28_2023_7_38_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_28_2023_7_38_PM__Changes_.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_21_2023_1_13_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_21_2023_1_13_PM__Changes_.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/components/feelingsFilter/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/feelingsFilter/page.module.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/components/feelingsFilter/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/feelingsFilter/page.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/components/popup/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/popup/page.module.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/components/popup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/popup/page.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/components/post/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/post/page.module.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/components/post/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/post/page.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/components/posts/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/posts/page.module.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/components/posts/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/posts/page.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/components/sidebar/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/sidebar/page.module.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/components/sidebar/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/sidebar/page.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/components/sidebar/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/sidebar/user.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/constants/displayTextMessages.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/constants/displayTextMessages.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/feed/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/feed/page.module.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/feed/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/feed/page.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.module.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/profile/page.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/page.module.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/app/profile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/profile/page.tsx" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -57,10 +36,35 @@
+   <component name="Git.Settings">
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$/.." value="SG-44-Front-Sign-up-Google-OAuth-Integration" />
++        <entry key="$PROJECT_DIR$/.." value="main" />
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
++  </component>
++  <component name="GitToolBoxStore">
++    <option name="recentBranches">
++      <RecentBranches>
++        <option name="branchesForRepo">
++          <list>
++            <RecentBranchesForRepo>
++              <option name="branches">
++                <list>
++                  <RecentBranch>
++                    <option name="branchName" value="SG-120-Refactor-Frontend-code" />
++                    <option name="lastUsedInstant" value="1702796113" />
++                  </RecentBranch>
++                  <RecentBranch>
++                    <option name="branchName" value="main" />
++                    <option name="lastUsedInstant" value="1702796112" />
++                  </RecentBranch>
++                </list>
++              </option>
++              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$/.." />
++            </RecentBranchesForRepo>
++          </list>
++        </option>
++      </RecentBranches>
++    </option>
+   </component>
+   <component name="HighlightingSettingsPerFile">
+     <setting file="file://$PROJECT_DIR$/package.json" root0="FORCE_HIGHLIGHTING" />
+@@ -95,35 +99,35 @@
+     <option name="showLibraryContents" value="true" />
+     <option name="showMembers" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "ASKED_ADD_EXTERNAL_FILES": "true",
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "WebServerToolWindowFactoryState": "false",
+-    "git-widget-placeholder": "SG-120-Refactor-Frontend-code",
+-    "ignore.virus.scanning.warn.message": "true",
+-    "last_opened_file_path": "C:/Users/Belal/Desktop/First Semester/Software Engineering/Project/SWE-Project/front_end/public",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "settings.editor.selected.configurable": "preferences.keymap",
+-    "ts.external.directory.path": "C:\\Users\\Belal\\Desktop\\First Semester\\Software Engineering\\Project\\SWE-Project\\front_end\\node_modules\\typescript\\lib",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;SG-120-Refactor-Frontend-code&quot;,
++    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/Belal/Desktop/First Semester/Software Engineering/Project/SWE-Project/front_end/public&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
++    &quot;ts.external.directory.path&quot;: &quot;D:\\Projects\\SWE-Grey\\SWE-Project\\front_end\\node_modules\\typescript\\lib&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="CopyFile.RECENT_KEYS">
+       <recent name="C:\Users\Belal\Desktop\First Semester\Software Engineering\Project\SWE-Project\front_end\public" />
+     </key>
+     <key name="MoveFile.RECENT_KEYS">
++      <recent name="D:\Projects\SWE-Grey\SWE-Project\front_end\src\app\entities" />
++      <recent name="D:\Projects\SWE-Grey\SWE-Project\front_end\src\app" />
+       <recent name="C:\Users\Belal\Desktop\First Semester\Software Engineering\Project\SWE-Project\front_end\src\app\components\sidebar" />
+       <recent name="C:\Users\Belal\Desktop\First Semester\Software Engineering\Project\SWE-Project\front_end\src\app\profile" />
+       <recent name="C:\Users\Belal\Desktop\First Semester\Software Engineering\Project\SWE-Project\front_end\public" />
+-      <recent name="C:\Users\Belal\Desktop\First Semester\Software Engineering\Project\SWE-Project\front_end\src\app\models\dtos" />
+-      <recent name="D:\Projects\SWE-Grey\SWE-Project\front_end\src\app" />
+     </key>
+   </component>
+   <component name="RunManager">
+@@ -158,6 +162,7 @@
+       <workItem from="1702226815689" duration="4564000" />
+       <workItem from="1702387395959" duration="643000" />
+       <workItem from="1702751037725" duration="13239000" />
++      <workItem from="1703420911675" duration="6237000" />
+     </task>
+     <task id="LOCAL-00001" summary="Google button enhanced &amp; side button added">
+       <option name="closed" value="true" />
+@@ -223,7 +228,39 @@
+       <option name="project" value="LOCAL" />
+       <updated>1701277688638</updated>
+     </task>
+-    <option name="localTasksCounter" value="9" />
++    <task id="LOCAL-00009" summary="SG-120 some code structure refactor and &#10;display bugs">
++      <option name="closed" value="true" />
++      <created>1703428699266</created>
++      <option name="number" value="00009" />
++      <option name="presentableId" value="LOCAL-00009" />
++      <option name="project" value="LOCAL" />
++      <updated>1703428699266</updated>
++    </task>
++    <task id="LOCAL-00010" summary="SG-120 some code structure refactor and &#10;display bugs">
++      <option name="closed" value="true" />
++      <created>1703428903474</created>
++      <option name="number" value="00010" />
++      <option name="presentableId" value="LOCAL-00010" />
++      <option name="project" value="LOCAL" />
++      <updated>1703428903474</updated>
++    </task>
++    <task id="LOCAL-00011" summary="SG-120 some code structure refactor and &#10;display bugs">
++      <option name="closed" value="true" />
++      <created>1703429291511</created>
++      <option name="number" value="00011" />
++      <option name="presentableId" value="LOCAL-00011" />
++      <option name="project" value="LOCAL" />
++      <updated>1703429291511</updated>
++    </task>
++    <task id="LOCAL-00012" summary="SG-120 some code structure refactor and &#10;display bugs">
++      <option name="closed" value="true" />
++      <created>1703429414825</created>
++      <option name="number" value="00012" />
++      <option name="presentableId" value="LOCAL-00012" />
++      <option name="project" value="LOCAL" />
++      <updated>1703429414825</updated>
++    </task>
++    <option name="localTasksCounter" value="13" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -250,6 +287,7 @@
+     <MESSAGE value="SG-103 Controller created but not tested" />
+     <MESSAGE value="SG-103 APIs added but not working" />
+     <MESSAGE value="SG-103 Merging complete" />
+-    <option name="LAST_COMMIT_MESSAGE" value="SG-103 Merging complete" />
++    <MESSAGE value="SG-120 some code structure refactor and &#10;display bugs" />
++    <option name="LAST_COMMIT_MESSAGE" value="SG-120 some code structure refactor and &#10;display bugs" />
+   </component>
+ </project>
+\ No newline at end of file
