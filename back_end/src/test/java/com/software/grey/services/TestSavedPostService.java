@@ -8,7 +8,6 @@ import com.software.grey.models.entities.Post;
 import com.software.grey.models.entities.SavedPost;
 import com.software.grey.models.entities.User;
 import com.software.grey.repositories.*;
-import com.software.grey.services.SavedPostService;
 import com.software.grey.services.implementations.PostServiceImpl;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.AfterAll;

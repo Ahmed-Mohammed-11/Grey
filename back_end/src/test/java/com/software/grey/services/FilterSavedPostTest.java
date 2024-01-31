@@ -5,8 +5,6 @@ import com.software.grey.models.dtos.PostFilterDTO;
 import com.software.grey.models.dtos.UserDTO;
 import com.software.grey.models.enums.Feeling;
 import com.software.grey.repositories.*;
-import com.software.grey.services.SavedPostService;
-import com.software.grey.services.UserService;
 import com.software.grey.services.implementations.PostServiceImpl;
 import com.software.grey.utils.SecurityUtils;
 import org.junit.jupiter.api.AfterAll;
