@@ -1,5 +1,6 @@
 .side_bar {
     display: flex;
+    width: 25% !important;
     font-family: "Montserrat ExtraBold", sans-serif !important;
     flex-direction: column;
     box-sizing: border-box;
@@ -11,6 +12,9 @@
     display: flex;
     gap: 10px;
     margin-top: 10%;
+    width: 100%;
+    height: 100%;
+    font-size: calc(3 * calc(min(1vh, 1vw))) !important;
     flex-direction: column;
 }
 
@@ -62,15 +66,14 @@
     display: flex;
     margin-bottom: 5%;
     padding-left: 7%;
-    text-transform: capitalize;
     gap: 15px;
     justify-content: flex-start !important;
     letter-spacing: calc(min(.5vh, .5vw)) !important;
     align-items: center;
-    font-size: calc(2.5 * calc(min(1vh, 1vw)));
+    font-size: calc(2.5 * calc(min(1vh, 1vw))) !important;
     border-radius: 16px;
     box-sizing: border-box;
-    transition: all .5s ease-in-out, color .3s cubic-bezier(0.075, 0.82, 0.165, 1) !important;
+    transition: all .3s ease-in-out, color .3s cubic-bezier(0.075, 0.82, 0.165, 1) !important;
 }
 
 .button:hover,
@@ -101,7 +104,7 @@
     transform: scaleX(0);
     background: #526D82 !important;
     z-index: -2;
-    transition: transform 0.4s ease-in-out;
+    transition: transform 0.3s ease-in-out;
 }
 
 .button:hover::before,
@@ -126,7 +129,7 @@
     opacity: 0.4;
     transform: scaleX(0);
     transform-origin: right;
-    transition: transform 0.4s ease-in-out .6s;
+    transition: transform 0.3s ease-in-out .4s;
 }
 
 .active {

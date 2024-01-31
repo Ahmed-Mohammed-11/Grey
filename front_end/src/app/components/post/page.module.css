@@ -12,6 +12,11 @@
     padding: 0 16px 0 0;
 }
 
+.post > .post_header > .post_avatar {
+    margin-left: 1vh;
+    color: #526D82;
+}
+
 .menu_item {
     padding: 8px 16px;
     align-items: stretch;
