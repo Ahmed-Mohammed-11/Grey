@@ -19,6 +19,7 @@ public class EndPoints {
     public static final String ROOT = "http://localhost:3000";
     public static final String GET_DIARY = "/diary";
     public static final String GET_FEED = "/feed";
+    public static final String FEELING_DASHBOARD = "/feeling-dashboard";
     public static final String USER = "/user";
     public static final String UPDATE_USER = "/update";
     public static final String GET_SAVED_POSTS = "/saved";

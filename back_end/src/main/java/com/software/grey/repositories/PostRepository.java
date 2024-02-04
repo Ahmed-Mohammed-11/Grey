@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, String> {
@@ -114,4 +115,51 @@ public interface PostRepository extends JpaRepository<Post, String> {
     WHERE u.username != :userName AND (pf.feeling IN (:feelings))
     """, nativeQuery = true)
     Page<Post> findFeed(@Param("userName") String userName, @Param("feelings") List<String> feelings, Pageable pageable);
+
+    /*
+        To select the posts excluding the posts that the logged-in user wrote and filter them by
+        feelings including any post have any one of the feelings that the user specified
+        and sort them by writing time descendingly.
+     */
+    @Query(value = """
+            SELECT post_feelings.feeling, COUNT(post_feelings.feeling) AS feelingCount 
+            FROM post_feelings
+            JOIN post ON post.id = post_feelings.post_id
+            join user ON user.id = post.user_id
+            WHERE user.id = user_id
+                AND DATE(post.post_time) = CURRENT_DATE
+            GROUP BY post_feelings.feeling
+            ORDER BY feelingCount DESC; 
+            """,
+            nativeQuery = true)
+    List<FeelingCountProjection> findFeelingsFrequencyForSpecificUser(@Param("user_id") String user_id);
+
+    /*
+        To select the feelings and their frequency in the posts of all users and sort them by frequency descendingly.
+     */
+    @Query(value = """
+            SELECT feeling, COUNT(feeling) AS feelingCount
+            FROM post_feelings
+            JOIN post ON post.id = post_feelings.post_id
+            WHERE DATE(post.post_time) = CURRENT_DATE
+            GROUP BY feeling
+            ORDER BY feelingCount DESC;
+            """,
+            nativeQuery = true)
+    List<FeelingCountProjection> findGlobalFeelingFrequency();
+
+    @Query(value = """
+            SELECT COUNT(post.id) FROM post
+            WHERE DATE(post_time) = CURRENT_DATE
+            """,
+            nativeQuery = true)
+    long countPostsToday();
+
+    @Query(value = """
+            SELECT COUNT(post.id) FROM post
+            WHERE DATE(post_time) = CURRENT_DATE
+            AND user_id = :user_id
+            """,
+            nativeQuery = true)
+    long countPostsTodayByUserId(@Param("user_id") String user_id);
 }
