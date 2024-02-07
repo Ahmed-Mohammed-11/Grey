@@ -117,7 +117,7 @@ export default function Posts(props: any) {
     };
 
     const renderPosts = () => {
-        return props.feedType === 0 ?
+        return props.feedType === 5 ?
             posts.map((post: any) => <ReportedPost post={post} setPosts={setPosts} posts={posts} />) :
             posts.map((post: any) => <Post key={post.id} post={post} feedType={props.feedType} setPosts={setPosts} posts={posts} />);
     };
