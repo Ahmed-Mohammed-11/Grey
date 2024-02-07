@@ -4,7 +4,7 @@ import styles from "./page.module.css"
 import {Box} from "@mui/system";
 import {BsBookmark, BsFillBookmarkFill} from "react-icons/bs";
 import {SlOptions} from "react-icons/sl";
-import {MdDelete, MdOutlineEmojiEmotions, MdReport} from "react-icons/md";
+import {MdDelete, MdGppBad, MdOutlineEmojiEmotions, MdReport} from "react-icons/md";
 import {Avatar, Chip, IconButton, ListItem, Menu, MenuItem} from "@mui/material";
 import 'react-toastify/dist/ReactToastify.css';
 import deletePostController from "@/app/services/deletePostController";
@@ -18,6 +18,12 @@ import toastResponse from "@/app/utils/notifyToast";
 import Feeling from "@/app/entities/dtos/Feeling";
 import {BiAngry} from "react-icons/bi";
 import FaceIcon from "@mui/icons-material/Face";
+
+import { FaCircleCheck } from "react-icons/fa6";
+import { IoShieldCheckmark } from "react-icons/io5";
+import { IoCloseCircle } from "react-icons/io5";
+import NestedModal from "@/app/components/modal/page";
+import {AiFillSafetyCertificate} from "react-icons/ai";
 
 export default function Post(props: any) {
     let post = props.post;
@@ -122,6 +128,24 @@ export default function Post(props: any) {
                             </MenuItem>
                         )}
                     </Menu>
+
+                    {/*TODO remove it if not appropriate*/}
+                    {props.reported && false
+                        &&
+                        (<NestedModal
+                                postId={post.id}
+                                type={"safe"}
+                                icon={<AiFillSafetyCertificate/>}
+                                title={"Mark Safe"}/>
+                        )
+                        &&
+                        (<NestedModal
+                                postId={post.id}
+                                type={"safe"}
+                                icon={<AiFillSafetyCertificate/>}
+                                title={"Mark Safe"}/>
+                        )
+                    }
                 </Box>
                 <p className={styles.post_text}>{post.postText}</p>
             </Box>

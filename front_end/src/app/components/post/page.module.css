@@ -32,6 +32,10 @@
     font-size: 23px;
     color: #DDE6ED;
 }
+.safe_icon {
+    font-size: 25px;
+    color: #35f144;
+}
 
 .menu_item:hover {
     color: #DDE6ED;

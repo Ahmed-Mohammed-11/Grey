@@ -117,7 +117,7 @@ export default function Posts(props: any) {
     };
 
     const renderPosts = () => {
-        return props.feedType === 5 ?
+        return props.feedType === 0 ?
             posts.map((post: any) => <ReportedPost post={post} setPosts={setPosts} posts={posts} />) :
             posts.map((post: any) => <Post key={post.id} post={post} feedType={props.feedType} setPosts={setPosts} posts={posts} />);
     };
@@ -136,12 +136,12 @@ export default function Posts(props: any) {
 
     return (
         <Box className={styles.feed} width={props.width}>
-            <Box className={styles.posts_bar}>
-                <PopupScreen setPosts={setPosts} posts={posts}/>
+            <PopupScreen setPosts={setPosts} posts={posts}/>
+            {/*<Box className={styles.posts_bar}>*/}
                 <PostFilters showDatePicker = {datePickerActiveIndex.includes(props.feedType)}
                              showFeelingSelection = {feelingsActiveIndex.includes(props.feedType)}
                              applyFilters = {applyFilters}/>
-            </Box>
+            {/*</Box>*/}
             <Box className={styles.posts}>
                 {!emptyPosts ? renderPosts() : renderPosts()}
             </Box>

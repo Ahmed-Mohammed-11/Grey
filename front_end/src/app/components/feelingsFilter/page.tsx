@@ -71,7 +71,7 @@ export default function FeelingsFilter(props: any) {
 
     return (
         <Box className={styles.feelings}>
-            <Box>
+            <Box className={styles.feelings_grid}>
                 {Array.from(selectedFeelings).map((feeling: any, feelingIndex: any) => (
                     <Chip
                         //initiate to empty object to avoid error
@@ -85,16 +85,15 @@ export default function FeelingsFilter(props: any) {
                 ))}
             </Box>
 
-            <Tooltip title="Feelings Filter">
+            <Tooltip title="Select Feelings">
                 <IconButton
                     id="basic-button"
                     disabled={fullFeelings}
                     aria-controls={open ? 'basic-menu' : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}
-                >
-                    Select Feeling <IoMdAdd/>
+                    onClick={handleClick}>
+                        <IoMdAdd/>
                 </IconButton>
             </Tooltip>
             <Menu

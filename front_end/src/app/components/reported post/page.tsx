@@ -10,11 +10,18 @@ import Post from "@/app/components/post/page";
 import Button from "@mui/material/Button";
 import {AiFillSafetyCertificate} from "react-icons/ai";
 import toastResponse from "@/app/utils/notifyToast";
+import NestedModal from "@/app/components/modal/page";
 
 
 export default function ReportedPost(props: any) {
     let post = props.post;
+
+    const pre_text = "You think this is a "
+    const post_text = " post! Make sure no falsest occur, " +
+        "then confirm what you think"
+
     const handleSafePost = async (postId: string) => {
+        console.log(postId)
         const data = deletePostController.sendDeleteRequest({postId: postId}, SAFE_POST_ENDPOINT);
         if ((await data).status === 200) {
             // delete post from the frontend
@@ -39,17 +46,24 @@ export default function ReportedPost(props: any) {
 
     return (
         <Box className={styles.reported_post}>
-            <Post key={post.id} post={post} feedType={props.feedType} reported={true} setPosts={props.setPosts} posts={props.posts}/>
+            <Post key={post.id} post={post} feedType={props.feedType} reported={true}
+                  setPosts={props.setPosts} posts={props.posts}/>
 
-            <hr className={styles.hr}></hr>
-
-            <Box className={styles.post_footer} sx={{background: (theme) => theme.palette.primary.dark}}>
-                <Button className={styles.button} onClick={() => handleSafePost(post.id)}>
-                    <AiFillSafetyCertificate/>safe
-                </Button>
-                <Button className={styles.button} onClick={() => handleNotSafePost(post.id)}>
-                    <MdGppBad/>not safe
-                </Button>
+            <Box className={styles.post_footer}>
+                <NestedModal
+                    postId={post.id}
+                    type={"safe"}
+                    icon={<AiFillSafetyCertificate/>}
+                    title={"Mark Safe"}
+                    text={pre_text + "safe" + post_text}
+                    handle={handleSafePost}/>
+                <NestedModal
+                    postId={post.id}
+                    type={"violating"}
+                    icon={<MdGppBad/>}
+                    title={"Mark Violating"}
+                    text={pre_text + "violating" + post_text}
+                    handle={handleNotSafePost}/>
             </Box>
         </Box>
     )
