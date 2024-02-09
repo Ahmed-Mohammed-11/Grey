@@ -1,12 +1,14 @@
+"use client";
 import * as React from 'react';
 import clsx from 'clsx';
-import {styled, css, Box} from '@mui/system';
-import { Modal as BaseModal } from '@mui/base/Modal';
-import { Button } from '@mui/base/Button';
+import {Box, css, styled} from '@mui/system';
+import {Modal as BaseModal} from '@mui/base/Modal';
+import {Button} from '@mui/base/Button';
 import styles from "./page.module.css"
 import {IconButton} from "@mui/material";
 
 export default function NestedModal(props : any) {
+    const title = props.title
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -15,19 +17,11 @@ export default function NestedModal(props : any) {
         setOpen(false);
     };
 
-    const [triggerText, setTriggerText] = React.useState("")
-    const showTriggerText = () => {
-        setTriggerText(props.title)
-    }
-    const hideTriggerText = () => {
-        setTriggerText("")
-    }
-
     return (
         <div>
-            <TriggerButton className={props.type} onClick={handleOpen} onMouseEnter={showTriggerText} onMouseLeave={hideTriggerText}>
+            <TriggerButton className={props.type} onClick={handleOpen}>
                 <Icon onClick={handleOpen}>{props.icon}{}</Icon>
-                {triggerText}
+                <span>{props.title}</span>
             </TriggerButton>
             <Modal
                 open={open}
@@ -48,7 +42,10 @@ export default function NestedModal(props : any) {
                             cancel
                         </Button>
                         <Button className={`${styles.button} ${props.type}`}
-                                onClick={() => props.handle(props.postId)}>
+                                onClick={() => {
+                                    props.handle(props.postId)
+                                    handleClose()
+                                }}>
                             confirm {props.type}
                         </Button>
                     </Box>
@@ -204,13 +201,14 @@ const TriggerButton = styled(Button)(
   font-size: 0.875rem;
   padding: 8px;
   border-radius: 30px;
-  color: white;
+  position: relative; 
   transition: all 150ms ease;
   cursor: pointer;
   background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
   border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
   color: ${theme.palette.mode === 'dark' ? grey[200] : grey[900]};
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      
   
   &.safe {
     background: #51ef5f;
@@ -220,10 +218,18 @@ const TriggerButton = styled(Button)(
     background: #e02b2b;
     color: #cfe9ff;
   }
-  // &:hover {
+  
+  & span {
+    padding-right: 10px;
+    display: none;
+  }
+  &:hover span{
+    display: inline;
+  }
+   &:hover {
   //   background: ${theme.palette.mode === 'dark' ? grey[800] : grey[50]};
   //   border-color: ${theme.palette.mode === 'dark' ? grey[600] : grey[300]};
-  // }
+   }
   //
   // &:active {
   //   background: ${theme.palette.mode === 'dark' ? grey[700] : grey[100]};
