@@ -13,6 +13,7 @@ import {
     SIGN_IN_ROUTE
 } from '../constants/apiConstants';
 import Profile from '../profile/page';
+import Dashboard from '../components/dashboard/page';
 import {useRouter} from "next/navigation";
 
 const Home = () => {
@@ -27,6 +28,7 @@ const Home = () => {
   };
 
     const profile = <Profile/>
+    const [isDashboardModalOpen, setIsDashboardModalOpen] = useState(false)
     const [display, setDisplay] = useState(<Posts width={'80%'}
                                                   feedTypeEndPoint={endpointMapping[0]}
                                                   feedType={0}/>)
@@ -34,7 +36,11 @@ const Home = () => {
   const handleChange = (newSelectedPageIndex: number) => {
     if (newSelectedPageIndex === 4) {
       setDisplay(profile)
-    } else {
+    }
+    else if (newSelectedPageIndex === 6) {
+        setDisplay(<Dashboard />)
+    }
+    else {
       const posts = <Posts width={'80%'}
                            feedTypeEndPoint={endpointMapping[newSelectedPageIndex]}
                            feedType={newSelectedPageIndex} />

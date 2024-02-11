@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.1",
     "@mui/material": "^5.14.18",
+    "@mui/x-charts": "^6.19.3",
     "@mui/x-date-pickers": "^6.18.3",
     "axios": "^1.6.1",
     "classnames": "^2.3.2",

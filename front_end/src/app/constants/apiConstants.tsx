@@ -19,4 +19,5 @@ export const EXPLORE_ENDPOINT = CREATE_POST_ENDPOINT + '/explore';
 export const DIARY_ENDPOINT = CREATE_POST_ENDPOINT + '/diary';
 export const SAVED_ENDPOINT = CREATE_POST_ENDPOINT + '/saved';
 export const REPORTED_ENDPOINT = CREATE_POST_ENDPOINT + '/report';
+export const FEELING_DASHBOARD_ENDPOINT = '/feeling-dashboard';
 export const UPDATE_USER_ENDPOINT = '/user/update'

@@ -1,8 +1,8 @@
 import {BASE_BACKEND_URL} from "@/app/constants/apiConstants";
 
-class GetUserController implements IGetRequestController{
+class GetRequestNoParams implements IGetRequestController{
     sendGetRequest(endpoint: string) {
-        const url = BASE_BACKEND_URL + "/" + endpoint;
+        const url = BASE_BACKEND_URL+ endpoint;
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', localStorage.getItem("Authorization")!);
@@ -14,5 +14,5 @@ class GetUserController implements IGetRequestController{
     }
 }
 
-const getUserController = new GetUserController();
+const getUserController = new GetRequestNoParams();
 export default getUserController;

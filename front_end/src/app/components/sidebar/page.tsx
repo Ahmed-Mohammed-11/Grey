@@ -2,7 +2,7 @@
 import Button from '@mui/material/Button';
 import styles from "./page.module.css"
 import {Box} from "@mui/system";
-import {MdExplore, MdReport} from "react-icons/md";
+import {MdExplore, MdReport, MdSpaceDashboard} from "react-icons/md";
 import {AiFillHome} from "react-icons/ai";
 import {FaUserLarge} from "react-icons/fa6";
 import {BsFillBookmarkFill} from "react-icons/bs";
@@ -15,14 +15,15 @@ export default function SideBar(props: any) {
   const [activeTab, setActiveTab] = useState(0);
   const username = localStorage.getItem('username')!;
 
-  const buttonsText = ["feed", "explore", "diary", "saved", "profile", "reported"];
+    const buttonsText = ["feed", "explore", "diary", "saved", "profile", "reported", "dashboard"];
   const buttonsIcons = [
     <AiFillHome />,
     <MdExplore />,
     <FaBookOpen />,
-    <BsFillBookmarkFill />,
+      <BsFillBookmarkFill/>,
     <FaUserLarge />,
-    <MdReport />
+    <MdReport />,
+      <MdSpaceDashboard/>
   ];
 
     const handleButtonClick = (index: number) => {

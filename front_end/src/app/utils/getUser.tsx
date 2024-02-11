@@ -1,8 +1,8 @@
-import getUserController from "@/app/services/getUserController";
+import getUserController from "@/app/services/getRequestNoParams";
 import toJSON from "@/app/utils/readableStreamResponseBodytoJSON";
 
 async function getUser () {
-    const response = await getUserController.sendGetRequest("user");
+    const response = await getUserController.sendGetRequest("/user");
     const user = await toJSON(response.body!);
     console.log("my user" + user.username)
 
