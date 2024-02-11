@@ -126,7 +126,7 @@ public interface PostRepository extends JpaRepository<Post, String> {
             FROM post_feelings
             JOIN post ON post.id = post_feelings.post_id
             join user ON user.id = post.user_id
-            WHERE user.id = user_id
+            WHERE user.id = :user_id
                 AND DATE(post.post_time) = CURRENT_DATE
             GROUP BY post_feelings.feeling
             ORDER BY feelingCount DESC; 
